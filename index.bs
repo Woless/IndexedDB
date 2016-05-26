@@ -416,7 +416,7 @@ An object store can derive a <a>key</a> for a <a>record</a> from one of three so
 3. Keys can also be explicitly specified when a <a>value</a> is stored
     in the object store.
 
-<h5 id=object-store-handle>Object Store Handle</h5>
+<h5 id=concept-object-store-handle>Object Store Handle</h5>
 
 Script does not interact with <a>object stores</a> directly. Instead,
 within a <a>transaction</a>, script has indirect access via an
@@ -455,8 +455,8 @@ data-lt="conforming user agent">Conforming user agents</a> MUST
 support any ECMAScript [[!ECMA-262]] value supported by the
 <a>structured clone algorithm</a> [[!HTML]]. This includes simple
 types such as <a>String</a> primitive values and <a>Date</a> objects
-as well as <a>Object</a> and <a>Array</a> instances, <a>File</a>
-objects, <a>Blob</a> objects, <a>ImageData</a> objects, and so on.
+as well as <a>Object</a> and <a>Array</a> instances, {{File}}
+objects, {{Blob}} objects, <a>ImageData</a> objects, and so on.
 Record <a>values</a> are stored and retrieved by value rather than by
 reference; later changes to a value have no effect on the record
 stored in the database.
@@ -661,8 +661,8 @@ following type-specific properties:
 
 <table>
   <tr><th>Type</th><th>Properties</th></tr>
-  <tr><td><a>Blob</a></td><td><code>size</code>, <code>type</code></td></tr>
-  <tr><td><a>File</a></td><td><code>name</code>, <code>lastModified</code>, <code>lastModifiedDate</code></td></tr>
+  <tr><td>{{Blob}}</td><td><code>size</code>, <code>type</code></td></tr>
+  <tr><td>{{File}}</td><td><code>name</code>, <code>lastModified</code>, <code>lastModifiedDate</code></td></tr>
   <tr><td><a>Array</a></td><td><code>length</code></td></tr>
   <tr><td><a>String</a></td><td><code>length</code></td></tr>
 </table>
@@ -758,7 +758,7 @@ the <a>multiEntry flag</a> is unset, then a single <a>record</a> whose
 the index for each of the <a>subkeys</a>.
 
 
-<h5 id=index-handle>Index Handle</h5>
+<h5 id=concept-index-handle>Index Handle</h5>
 
 Script does not interact with <a>indexes</a> directly. Instead, within
 a <a>transaction</a>, script has indirect access via an <dfn>index
@@ -1688,23 +1688,23 @@ errors.
 <h3 id=async-api>API</h3>
 
 The API methods return without blocking the calling thread. All
-asynchronous operations immediately return an <a>IDBRequest</a>
+asynchronous operations immediately return an {{IDBRequest}}
 instance. This object does not initially contain any information about
 the result of the operation. Once information becomes available, an
 event is fired on the request and the information becomes available
-through the properties of the <a>IDBRequest</a> instance.
+through the properties of the {{IDBRequest}} instance.
 
 The <span>task source</span> for these tasks is the <dfn
 id="database-access-task-source">database access task source</dfn>.
 
 <h4 id=request-api>The <code>IDBRequest</code> interface</h4>
 
-The <a>IDBRequest</a> interface provides the means to access results of
+The {{IDBRequest}} interface provides the means to access results of
 asynchronous requests to <a>databases</a> and <a>database</a>
 objects using <a>event handler IDL attributes</a> [[!HTML]].
 
 Every method for making asynchronous requests returns an
-<a>IDBRequest</a> object that communicates back to the requesting
+{{IDBRequest}} object that communicates back to the requesting
 application through events. This design means that any number of
 requests can be active on any <a>database</a> at a time.
 
@@ -1759,26 +1759,23 @@ attribute's getter must return the <a
 data-lt="request.source">source</a> of the <a>request</a>, or null if
 no <a data-lt="request.source">source</a> is set.
 
-The <dfn data-lt-noDefault
-data-lt="IDBRequest.transaction">transaction</dfn> attribute's getter
+The {{transaction}} attribute's getter
 must return the <a data-lt="request.transaction">transaction</a> of
 the <a>request</a>. This property can be null for certain requests,
 such as for <a>request</a> returned from <a
 data-lt="IDBFactory.open">IDBFactory.open()</a>.
 
-The <dfn data-lt-noDefault
-data-lt="IDBRequest.readyState">readyState</dfn> attribute's getter
-must return "<code>pending</code>" if the <a>done flag</a> is unset,
-and "<code>done</code>" otherwise.
+The {{readyState}} attribute's getter must return
+"<code>pending</code>" if the <a>done flag</a> is unset, and
+"<code>done</code>" otherwise.
 
-The <dfn data-lt-noDefault
-data-lt="IDBRequest.onsuccess">onsuccess</dfn> attribute is the event
-handler for the <code>success</code> event.
+The {{onsuccess}} attribute is the event handler for the
+<code>success</code> event.
 
- The <dfn data-lt-noDefault data-lt="IDBRequest.onerror">onerror</dfn>
-attribute is the event handler for the <code>error</code> event. q
+The {{onerror}} attribute is the event handler for the
+<code>error</code> event.
 
-Methods on <a>IDBFactory</a> that return a <a>open request</a> use
+Methods on {{IDBFactory}} that return a <a>open request</a> use
 an extended interface to allow listening to the
 <a>blocked</a> event and <a>upgradeneeded</a> event.
 
@@ -1791,13 +1788,11 @@ interface IDBOpenDBRequest : IDBRequest {
 };
 </pre>
 
-The <dfn data-lt-noDefault
-data-lt="IDBOpenDBRequest.onblocked">onblocked</dfn> attribute is the
-event handler for the <a>blocked</a> event.
+The {{onblocked}} attribute is the event handler for the
+<a>blocked</a> event.
 
-The <dfn data-lt-noDefault
-data-lt="IDBOpenDBRequest.onupgradeneeded">onupgradeneeded</dfn>
-attribute is the event handler for the <a>upgradeneeded</a> event.
+The {{onupgradeneeded}} attribute is the event handler for the
+<a>upgradeneeded</a> event.
 
 
 <h4 id=events>Event interfaces</h4>
@@ -1817,12 +1812,10 @@ dictionary IDBVersionChangeEventInit : EventInit {
 };
 </pre>
 
-The <dfn data-lt-noDefault
-data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</dfn> attribute
+The {{oldVersion}} attribute
 getter returns the previous version of the database.
 
-The <dfn data-lt-noDefault
-data-lt="IDBVersionChangeEvent.newVersion">newVersion</dfn> attribute
+The {{newVersion}} attribute
 getter returns the new version of the database, or null if the
 database is being deleted. See the <a>steps for running an upgrade
 transaction</a>.
@@ -1850,7 +1843,7 @@ cancelable.
 <h4 id=factory-interface>The <code>IDBFactory</code> interface</h4>
 
 <a>Database</a> objects are accessed through methods on the
-<a>IDBFactory</a> interface. A single object implementing this
+{{IDBFactory}} interface. A single object implementing this
 interface is present in the global scope of environments that support
 Indexed DB operations.
 
@@ -1864,8 +1857,7 @@ Window implements IDBEnvironment;
 WorkerGlobalScope implements IDBEnvironment;
 </pre>
 
-The <dfn data-lt-noDefault
-data-lt="IDBEnvironment.indexedDB">indexedDB</dfn> attribute provides
+The {{indexedDB}} attribute provides
 applications a mechanism for accessing capabilities of indexed
 databases.
 
@@ -1879,7 +1871,7 @@ interface IDBFactory {
 };
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBFactory.open">open(<var>name</var>, <var>version</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> method, when invoked, must run these steps:
 
 1. If <var>version</var> is 0 (zero), <a>throw</a> a <a>TypeError</a>.
 
@@ -1888,7 +1880,7 @@ The <dfn data-lt-noDefault data-lt="IDBFactory.open">open(<var>name</var>, <var>
 3. <a>Queue a task</a> to run these substeps:
 
     1. Let <var>result</var> be the result of running the <a>steps for opening a database</a>, with
-        the origin of the <a>IDBEnvironment</a> used to access this <a>IDBFactory</a>,
+        the origin of the <a>IDBEnvironment</a> used to access this {{IDBFactory}},
         <var>name</var>,
         <var>version</var> if given and undefined otherwise, and
         <var>request</var>.
@@ -1937,7 +1929,7 @@ The <dfn data-lt-noDefault data-lt="IDBFactory.open">open(<var>name</var>, <var>
 4. Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBFactory.deleteDatabase">deleteDatabase(<var>name</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>request</var> be a new <a>open request</a>.
 
@@ -1945,7 +1937,7 @@ The <dfn data-lt-noDefault data-lt="IDBFactory.deleteDatabase">deleteDatabase(<v
 
     1. Let <var>result</var> be the result of running the <a>steps for
         deleting a database</a>, with the origin of the
-        <a>IDBEnvironment</a> used to access this <a>IDBFactory</a>,
+        <a>IDBEnvironment</a> used to access this {{IDBFactory}},
         <var>name</var>, and <var>request</var>.
 
     2. If <var>result</var> is an error set the <a
@@ -1971,7 +1963,7 @@ The <dfn data-lt-noDefault data-lt="IDBFactory.deleteDatabase">deleteDatabase(<v
 3. Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBFactory.cmp">cmp(<var>first</var>, <var>second</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>a</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>first</var>. If this throws an
@@ -1991,15 +1983,15 @@ The <dfn data-lt-noDefault data-lt="IDBFactory.cmp">cmp(<var>first</var>, <var>s
 
 <h4 id=database-interface>The <code>IDBDatabase</code> interface</h4>
 
-The <a>IDBDatabase</a>
+The {{IDBDatabase}}
 interface represents a <a>connection</a> to a <a>database</a>.
 
-An <a>IDBDatabase</a> object MUST NOT be garbage collected if its
+An {{IDBDatabase}} object MUST NOT be garbage collected if its
 associated <a>connection</a>'s <a>close pending flag</a> is unset
 and it has one or more event listeners registers whose type is one of
 <code>abort</code>, <code>error</code>, or <code>versionchange</code>.
 
-If an <a>IDBDatabase</a> object is garbage collected, the
+If an {{IDBDatabase}} object is garbage collected, the
 associated <a>connection</a> must be <a data-lt="database close">closed</a>.
 
 
@@ -2029,15 +2021,15 @@ dictionary IDBObjectStoreParameters {
 };
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.name">name</dfn>
+The {{name}}
 attribute's getter must return the <a data-lt="database.name">name</a>
 of the <a data-lt="connection">connected</a> <a>database</a>. The
 attribute MUST return this name even if the <a>close pending flag</a>
 is set on the <a>connection</a>. In other words, the value of this
-attribute stays constant for the lifetime of the <a>IDBDatabase</a>
+attribute stays constant for the lifetime of the {{IDBDatabase}}
 instance.
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.version">version</dfn>
+The {{version}}
 attribute's getter must return this <a>connection</a>'s <a
 data-lt="connection.version">version</a>.
 
@@ -2051,8 +2043,7 @@ data-lt="connection.version">version</a>.
 </aside>
 
 
-The <dfn data-lt-noDefault
-data-lt="IDBDatabase.objectStoreNames">objectStoreNames</dfn>
+The {{objectStoreNames}}
 attribute's getter must return a <a>sorted list</a> of the <a
 data-lt="objectStore.name">names</a> of the <a>object stores</a> in
 this <a>connection</a>'s <a>object store set</a>.
@@ -2068,7 +2059,7 @@ this <a>connection</a>'s <a>object store set</a>.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.createObjectStore">createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>database</var> be the <a>database</a> associated with this <a>connection</a>.
 
@@ -2106,7 +2097,7 @@ transaction</a>.
 
 This method synchronously modifies the <a
 data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
-on the <a>IDBDatabase</a> instance on which it was called.
+on the {{IDBDatabase}} instance on which it was called.
 
 In some implementations it is possible for the implementation to run
 into problems after queuing a task to create the <a>object store</a>
@@ -2122,7 +2113,7 @@ the appropriate error. For example if creating the <a>object store</a>
 failed due to quota reasons, <a>QuotaExceededError</a> MUST be used as
 error.
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.deleteObjectStore">deleteObjectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>database</var> be the <a>database</a> associated with this <a>connection</a>.
 
@@ -2145,18 +2136,18 @@ method must only be called from within an <a>upgrade transaction</a>.
 
 This method synchronously modifies the <a
 data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
-on the <a>IDBDatabase</a> instance on which it was called.
+on the {{IDBDatabase}} instance on which it was called.
 
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.transaction">transaction(<var>storeNames</var>, <var>mode</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</var>)</dfn> method, when invoked, must run these steps:
 
 1. If <var>mode</var> parameter is not "<code>readonly</code>" or "<code>readwrite</code>",
     <a>throw</a> a <a>TypeError</a>.
 
-2. If this method is called on <a>IDBDatabase</a> object for which an <a>upgrade transaction</a> is still running,
+2. If this method is called on {{IDBDatabase}} object for which an <a>upgrade transaction</a> is still running,
     <a>throw</a> an <a>InvalidStateError</a> exception.
 
-3. If this method is called on an <a>IDBDatabase</a> instance where the <a>close pending flag</a> is set,
+3. If this method is called on an {{IDBDatabase}} instance where the <a>close pending flag</a> is set,
     <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. Let <var>scope</var> be the set of unique strings in <var>storeNames</var> if it is a sequence,
@@ -2182,29 +2173,27 @@ The <dfn data-lt-noDefault data-lt="IDBDatabase.transaction">transaction(<var>st
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.close">close()</dfn> method, when invoked, must run these steps:
-
+The <dfn method for=IDBDatabase>close()</dfn> method, when invoked, must run these steps:
 
 1. Run the <a>steps for closing a database connection</a> with this <a>connection</a>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onabort">onabort</dfn>
-attribute is the event handler for the <code>abort</code> event.
+The {{onabort}} attribute is the event handler for the
+<code>abort</code> event.
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onclose">onclose</dfn>
-attribute is the event handler for the <code>close</code> event.
-<aside class="note">&#9752; The <a>IDBDatabase.onclose</a> attribute
-is new in this edition. &#9752;</aside>
+The {{onclose}} attribute is the event handler for the
+<code>close</code> event. <aside class="note">&#9752; The
+<a>IDBDatabase.onclose</a> attribute is new in this edition.
+&#9752;</aside>
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onerror">onerror</dfn>
-attribute is the event handler for the <code>error</code> event.
+The {{onerror}} attribute is the event handler for the
+<code>error</code> event.
 
-The <dfn data-lt-noDefault
-data-lt="IDBDatabase.onversionchange">onversionchange</dfn> attribute
-is the event handler for the <code>versionchange</code> event.
+The {{onversionchange}} attribute is the event handler for the
+<code>versionchange</code> event.
 
 
-<h4 id=object-store>The <code>IDBObjectStore</code> interface</h4>
+<h4 id=object-store-interface>The <code>IDBObjectStore</code> interface</h4>
 
 The <a>IDBObjectStore</a>
 interface represents an <a>object store handle</a>.
@@ -2243,9 +2232,8 @@ dictionary IDBIndexParameters {
 };
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.name">name</dfn>
-attribute's getter must return this <a>object store handle</a>'s <a
-data-lt="objectStore.name">name</a>.
+The {{name}} attribute's getter must return this <a>object store
+handle</a>'s <a data-lt="objectStore.name">name</a>.
 
 <aside class="note">
   As long as the <a>transaction</a> has not <a data-lt="transaction
@@ -2258,7 +2246,7 @@ data-lt="objectStore.name">name</a>.
 </aside>
 
 
-The <code>name</code> attribute's setter must run these steps:
+The {{name}} attribute's setter must run these steps:
 
 1. Let <var>name</var> be the given value.
 
@@ -2288,8 +2276,7 @@ The <code>name</code> attribute's setter must run these steps:
 <aside class="note">&#9752; The <a>IDBObjectStore.name</a> attribute's setter is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault
-data-lt="IDBObjectStore.keyPath">keyPath</dfn> attribute's getter must
+The {{keyPath}} attribute's getter must
 return this <a>object store handle</a>'s <a
 data-lt="objectStoreHandle.objectStore">object store</a>'s <a
 data-lt="objectStore.keyPath">key path</a>, or null if none.
@@ -2305,8 +2292,7 @@ instance every time it is inspected. Changing the properties of the
 object has no effect on the <a>object store</a>.
 
 
-The <dfn data-lt-noDefault
-data-lt="IDBObjectStore.indexNames">indexNames</dfn> attribute's
+The {{indexNames}} attribute's
 getter must return a <a>sorted list</a> of the <a
 data-lt="index.name">names</a> of <a>indexes</a> in this <a>object
 store handle</a>'s <a>index set</a>.
@@ -2321,19 +2307,17 @@ store handle</a>'s <a>index set</a>.
   with a later <a>upgrade transaction</a>.
 </aside>
 
-The <dfn data-lt-noDefault
-data-lt="IDBObjectStore.transaction">transaction</dfn> attribute's
+The {{transaction}} attribute's
 getter must return this <a>object store handle</a>'s <a
 data-lt="objectStoreHandle.transaction">transaction</a>,
 
-The <dfn data-lt-noDefault
-data-lt="IDBObjectStore.autoIncrement">autoIncrement</dfn> attribute's
+The {{autoIncrement}} attribute's
 getter must return true if this <a>object store handle</a>'s <a
 data-lt="objectStoreHandle.objectStore">object store</a> has a <a>key
 generator</a>, and false otherwise.
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.put">put(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
 
@@ -2385,7 +2369,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.put">put(<var>value</var>, <v
         generator</a>, <a>throw</a> a <a>DataError</a> exception.
 
 11. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for storing a record into an object store</a> as
     <var>operation</var>, using <var>store</var>, the <var>clone</var>
@@ -2393,7 +2377,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.put">put(<var>value</var>, <v
     <var>no-overwrite flag</var> unset.
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.add">add(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2450,14 +2434,14 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.add">add(<var>value</var>, <v
         generator</a>, <a>throw</a> a <a>DataError</a> exception.
 
 11. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for storing a record into an object store</a> as
     <var>operation</var>, using <var>store</var>, <var>clone</var> as
     <var>value</var>, <var>key</var>, and with the <var>no-overwrite
     flag</var> set.
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.delete">delete(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2480,7 +2464,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.delete">delete(<var>query</va
     <a>rethrow</a> it.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for deleting records from an object store</a> as
     <var>operation</var>, using <var>store</var> and <var>range</var>.
@@ -2496,7 +2480,7 @@ the risk that a small bug would clear a whole object store.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.clear">clear()</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>clear()</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2514,13 +2498,13 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.clear">clear()</dfn> method, 
     <a>throw</a> a <a>ReadOnlyError</a> exception.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for clearing an object store</a> as
     <var>operation</var>, using <var>store</var>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.get">get(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2540,7 +2524,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.get">get(<var>query</var>)</d
     <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-      return the <a>IDBRequest</a> created by these steps. The steps
+      return the {{IDBRequest}} created by these steps. The steps
       are run with this <a>object store handle</a> as
       <var>source</var> and the <a>steps for retrieving a value from
       an object store</a> as <var>operation</var>, using
@@ -2561,7 +2545,7 @@ that range.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.getKey">getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -2581,7 +2565,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.getKey">getKey(<var>query</va
     <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-      return the <a>IDBRequest</a> created by these steps. The steps
+      return the {{IDBRequest}} created by these steps. The steps
       are run with this <a>object store handle</a> as
       <var>source</var> and the <a>steps for retrieving a key from an
       object store</a> as <var>operation</var>, using <var>store</var>
@@ -2595,7 +2579,7 @@ the first existing key in that range.
 <aside class="note">&#9752; The <a>IDBObjectStore.getKey</a> method is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.getAll">getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2614,7 +2598,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.getAll">getAll(<var>query</va
     this throws an exception, <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for retrieving multiple values from an object
     store</a> as <var>operation</var>, using <var>store</var>,
@@ -2628,7 +2612,7 @@ records in range, only the first <var>count</var> will be retrieved.
 
 <aside class="note">&#9752; The <a>IDBObjectStore.getAll</a> method is new in this edition. &#9752;</aside>
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.getAllKeys">getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2647,7 +2631,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.getAllKeys">getAllKeys(<var>q
     this throws an exception, <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for retrieving multiple keys from an object store</a>
     as <var>operation</var>, using <var>store</var>, <var>range</var>,
@@ -2663,7 +2647,7 @@ only the first <var>count</var> will be retrieved.
 <aside class="note">&#9752; The <a>IDBObjectStore.getAllKeys</a> method is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.count">count(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2682,7 +2666,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.count">count(<var>query</var>
     this throws an exception, <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps to count the records in a range</a> as
     <var>operation</var>, with <var>source</var> and <var>range</var>.
@@ -2693,7 +2677,7 @@ counted. If null or not given, an <a>unbounded key
 range</a> is used.
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.openCursor">openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2722,7 +2706,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.openCursor">openCursor(<var>q
     <var>range</var>.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
@@ -2732,7 +2716,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 If null or not given, an <a>unbounded key range</a> is used.
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.openKeyCursor">openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2762,7 +2746,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.openKeyCursor">openKeyCursor(
     set.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>object store handle</a> as <var>source</var> and
     the <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
@@ -2774,7 +2758,7 @@ or not given, an <a>unbounded key range</a> is used.
 <aside class="note">&#9752; The <a>IDBObjectStore.openKeyCursor</a> method is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.createIndex">createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2840,7 +2824,7 @@ the createIndex call.
 This method synchronously modifies the <a
 data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
 <a>IDBObjectStore</a> instance on which it was called. Although this
-method does not return an <a>IDBRequest</a> object, the index creation
+method does not return an {{IDBRequest}} object, the index creation
 itself is processed as an asynchronous request within the <a>upgrade
 transaction</a>.
 
@@ -2880,7 +2864,7 @@ the constraint fails.
 
 </aside>
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.index">index(<var>name</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2916,7 +2900,7 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.index">index(<var>name</var>)
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.deleteIndex">deleteIndex(<var>name</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBObjectStore>deleteIndex(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
     data-lt="objectStoreHandle.transaction">transaction</a>.
@@ -2950,12 +2934,12 @@ within an <a>upgrade transaction</a>.
 This method synchronously modifies the <a
 data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
 <a>IDBObjectStore</a> instance on which it was called. Although this
-method does not return an <a>IDBRequest</a> object, the index
+method does not return an {{IDBRequest}} object, the index
 destruction itself is processed as an asynchronous request within the
 <a>upgrade transaction</a>.
 
 
-<h4 id=index>The <code>IDBIndex</code> interface</h4>
+<h4 id=index-interface>The <code>IDBIndex</code> interface</h4>
 
 The <a>IDBIndex</a> interface represents an <a>index handle</a>.
 
@@ -2981,7 +2965,7 @@ interface IDBIndex {
 </pre>
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.name">name</dfn>
+The {{name}}
 attribute's getter must return this <a>index handle</a>'s <a
 data-lt="index.name">name</a>.
 
@@ -2996,7 +2980,7 @@ data-lt="index.name">name</a>.
 </aside>
 
 
-The <code>name</code> attribute's setter must run these steps:
+The {{name}} attribute's setter must run these steps:
 
 1. Let <var>name</var> be the given value.
 
@@ -3031,13 +3015,12 @@ The <code>name</code> attribute's setter must run these steps:
 <aside class="note">&#9752; The <a>IDBIndex.name</a> attribute's setter is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault
-data-lt="IDBIndex.objectStore">objectStore</dfn> attribute's getter
+The {{objectStore}} attribute's getter
 must return this <a>index handle</a>'s <a
 data-lt="indexHandle.objectStoreHandle">object store handle</a>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.keyPath">keyPath</dfn>
+The {{keyPath}}
 attribute's getter must return this <a>index handle</a>'s <a
 data-lt="indexHandle.index">index</a>'s <a
 data-lt="objectStore.keyPath">key path</a>.
@@ -3052,18 +3035,17 @@ The returned value is not the same instance that was used when the
 every time it is inspected. Changing the properties of the object has
 no effect on the <a>index</a>.
 
-The <dfn data-lt-noDefault
-data-lt="IDBIndex.multiEntry">multiEntry</dfn> attribute's getter must
+The {{multiEntry}} attribute's getter must
 return true if this <a>index handle</a>'s <a
 data-lt="indexHandle.index">index</a>'s <a>multiEntry flag</a> is set,
 and false otherwise.
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.unique">unique</dfn>
+The {{unique}}
 attribute's getter must return true if this <a>index handle</a>'s <a
 data-lt="indexHandle.index">index</a>'s <a>unique flag</a> is set, and
 false otherwise.
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.get">get(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -3083,7 +3065,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.get">get(<var>query</var>)</dfn> me
     <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-      return the <a>IDBRequest</a> created by these steps. The steps
+      return the {{IDBRequest}} created by these steps. The steps
       are run with this <a>index handle</a> as <var>source</var> and
       the <a>steps for retrieving a referenced value from an index</a>
       as <var>operation</var>, using <var>index</var> and
@@ -3105,7 +3087,7 @@ that range.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.getKey">getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -3125,7 +3107,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.getKey">getKey(<var>query</var>)</d
     <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps
+    return the {{IDBRequest}} created by these steps. The steps
     are run with this <a>index handle</a> as <var>source</var> and
     the <a>steps for retrieving a value from an index</a> as
     <var>operation</var>, using <var>index</var> and
@@ -3137,7 +3119,7 @@ If a range is specified, the method retrieves the first existing key
 in that range.
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.getAll">getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -3156,7 +3138,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.getAll">getAll(<var>query</var>, <v
     this throws an exception, <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>index handle</a> as <var>source</var> and the
     <a>steps for retrieving multiple referenced values from an
     index</a> as <var>operation</var>, using <var>index</var>,
@@ -3171,7 +3153,7 @@ records in range, only the first <var>count</var> will be retrieved.
 <aside class="note">&#9752; The <a>IDBIndex.getAll</a> method is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.getAllKeys">getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -3190,7 +3172,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.getAllKeys">getAllKeys(<var>query</
     this throws an exception, <a>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps
+    return the {{IDBRequest}} created by these steps. The steps
     are run with this <a>index handle</a> as <var>source</var> and
     the <a>steps for retrieving multiple values from an index</a>
     as <var>operation</var>, using <var>index</var>,
@@ -3206,7 +3188,8 @@ be retrieved.
 <aside class="note">&#9752; The <a>IDBIndex.getAllKeys</a> method is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.count">count(<var>query</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
+
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
 
@@ -3225,7 +3208,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.count">count(<var>query</var>)</dfn
 
 
 6. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>index handle</a> as <var>source</var> and the
     <a>steps to count the records in a range</a> as
     <var>operation</var>, with <a>index</a> as <var>source</var> and
@@ -3236,7 +3219,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 If null or not given, an <a>unbounded key range</a> is used.
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.openCursor">openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -3265,7 +3248,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.openCursor">openCursor(<var>query</
     <var>range</var>.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>index handle</a> as <var>source</var> and the
     <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
@@ -3275,7 +3258,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 or not given, an <a>unbounded key range</a> is used.
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.openKeyCursor">openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.transaction">transaction</a>.
@@ -3305,7 +3288,7 @@ The <dfn data-lt-noDefault data-lt="IDBIndex.openKeyCursor">openKeyCursor(<var>q
     set.
 
 8. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>index handle</a> as <var>source</var> and the
     <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
@@ -3338,27 +3321,25 @@ interface IDBKeyRange {
 };
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.lower">lower</dfn>
+The {{lower}}
 attribute's getter must return result of running the steps to
 <a>convert a key to a value</a> with the <a>lower bound</a> if it is
 not null, or undefined otherwise.
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.upper">upper</dfn>
+The {{upper}}
 attribute's getter must return the result of running the steps to
 <a>convert a key to a value</a> with the <a>upper bound</a> if it is
 not null, or undefined otherwise.
 
-The <dfn data-lt-noDefault
-data-lt="IDBKeyRange.lowerOpen">lowerOpen</dfn> attribute's getter
+The {{lowerOpen}} attribute's getter
 must return true if the <a>lower open flag</a> is set, and false
 otherwise.
 
-The <dfn data-lt-noDefault
-data-lt="IDBKeyRange.upperOpen">upperOpen</dfn> attribute's getter
+The {{upperOpen}} attribute's getter
 must return true if the <a>upper open flag</a> is set, and false
 otherwise.
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.only">only(<var>value</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBKeyRange>only(<var>value</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>key</var> be the result of running the steps to <a>convert
     a value to a key</a> with <var>value</var>. If this throws an an
@@ -3371,7 +3352,7 @@ The <dfn data-lt-noDefault data-lt="IDBKeyRange.only">only(<var>value</var>)</df
     <var>key</var>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.lowerBound">lowerBound(<var>lower</var>, <var>lowerOpen</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBKeyRange>lowerBound(<var>lower</var>, <var>lowerOpen</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>lowerKey</var> be the result of running the steps to
     <a>convert a value to a key</a> with <var>lower</var>. If this
@@ -3387,7 +3368,7 @@ The <dfn data-lt-noDefault data-lt="IDBKeyRange.lowerBound">lowerBound(<var>lowe
     <a>upper open flag</a> set.
 
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.upperBound">upperBound(<var>upper</var>, <var>upperOpen</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBKeyRange>upperBound(<var>upper</var>, <var>upperOpen</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let
     <var>upperKey</var> be the result of running the steps to <a>convert a value to a key</a> with <var>upper</var>.
@@ -3402,7 +3383,7 @@ The <dfn data-lt-noDefault data-lt="IDBKeyRange.upperBound">upperBound(<var>uppe
     <a>upper bound</a> set if <var>upperKey</var>, and
     <a>upper open flag</a> set to <var>upperOpen</var>.
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.bound">bound(<var>lower</var>, <var>upper</var>, <var>lowerOpen</var>, <var>upperOpen</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBKeyRange>bound(<var>lower</var>, <var>upper</var>, <var>lowerOpen</var>, <var>upperOpen</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>lowerKey</var> be the result of running the steps to
     <a>convert a value to a key</a> with <var>lower</var>. If this
@@ -3428,7 +3409,7 @@ The <dfn data-lt-noDefault data-lt="IDBKeyRange.bound">bound(<var>lower</var>, <
     <a>upper open flag</a> set if <var>upperOpen</var> is true.
 
 
-The <dfn data-lt-noDefault data-lt="IDBKeyRange.includes">includes(<var>key</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>k</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>key</var>. If this throws an an
@@ -3443,7 +3424,7 @@ The <dfn data-lt-noDefault data-lt="IDBKeyRange.includes">includes(<var>key</var
 <aside class="note">&#9752; The <a>IDBKeyRange.includes</a> method is new in this edition. &#9752;</aside>
 
 
-<h4 id=cursor>The <code>IDBCursor</code> interface</h4>
+<h4 id=cursor-interface>The <code>IDBCursor</code> interface</h4>
 
 <a>Cursor</a> objects implement the <a>IDBCursor</a> interface. There
 is only ever one <a>IDBCursor</a> instance representing a given
@@ -3476,20 +3457,17 @@ enum IDBCursorDirection {
 </pre>
 
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.source">source</dfn>
-attribute's getter must return the <a
+The {{source}} attribute's getter must return the <a
 data-lt="cursor.source">source</a> of this <a>cursor</a>. This
 attribute never returns null or throws an exception, even if the
 cursor is currently being iterated, has iterated past its end, or its
 <a>transaction</a> is not <a>active</a>.
 
-The <dfn data-lt-noDefault
-data-lt="IDBCursor.direction">direction</dfn> attribute's getter must
-return the <a>direction</a> of the <a>cursor</a>.
+The {{direction}} attribute's getter must return the <a>direction</a>
+of the <a>cursor</a>.
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.key">key</dfn>
-attribute's getter must return the result of running the steps to
-<a>convert a key to a value</a> with the cursor's current <a
+The {{key}} attribute's getter must return the result of running the
+steps to <a>convert a key to a value</a> with the cursor's current <a
 data-lt="cursor.key">key</a>. Note that if this property returns an
 object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
 object instance every time it is inspected, until the cursor's <a
@@ -3498,19 +3476,18 @@ is modified, those modifications will be seen by anyone inspecting the
 value of the cursor. However modifying such an object does not modify
 the contents of the database.
 
-The <dfn data-lt-noDefault
-data-lt="IDBCursor.primaryKey">primaryKey</dfn> attribute's getter
-must return the result of running the steps to <a>convert a key to a
-value</a> with the cursor's current <a>effective key</a>. Note that if
-this property returns an object (e.g. a <a>Date</a> or <a>Array</a>),
-it returns the same object instance every time it is inspected, until
-the cursor's <a>effective key</a> is changed. This means that if the
-object is modified, those modifications will be seen by anyone
-inspecting the value of the cursor. However modifying such an object
-does not modify the contents of the database.
+The {{primaryKey}} attribute's getter must return the result of
+running the steps to <a>convert a key to a value</a> with the cursor's
+current <a>effective key</a>. Note that if this property returns an
+object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
+object instance every time it is inspected, until the cursor's
+<a>effective key</a> is changed. This means that if the object is
+modified, those modifications will be seen by anyone inspecting the
+value of the cursor. However modifying such an object does not modify
+the contents of the database.
 
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.update">update(<var>value</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
     data-lt="cursor.transaction">transaction</a>.
@@ -3549,7 +3526,7 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.update">update(<var>value</var>)</
         <a>DataError</a> exception.
 
 9. Run <a>steps for asynchronously executing a request</a> and return
-    the <a>IDBRequest</a> created by these steps. The steps are run
+    the {{IDBRequest}} created by these steps. The steps are run
     with this <a>cursor</a> as <var>source</var> and the <a>steps for
     storing a record into an object store</a> as <var>operation</var>,
     using this cursor's <a>effective object store</a> as
@@ -3565,7 +3542,7 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.update">update(<var>value</var>)</
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.advance">advance(<var>count</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. If <var>count</var> is 0 (zero), <a>throw</a> a <a>TypeError</a>.
 
@@ -3604,7 +3581,7 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.advance">advance(<var>count</var>)
   <a>got value flag</a> has been unset.
 </aside>
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.continue">continue(<var>key</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
     data-lt="cursor.transaction">transaction</a>.
@@ -3665,7 +3642,7 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.continue">continue(<var>key</var>)
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.continuePrimaryKey">continuePrimaryKey(<var>key</var>, <var>primaryKey</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
     data-lt="cursor.transaction">transaction</a>.
@@ -3754,7 +3731,7 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.continuePrimaryKey">continuePrimar
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.delete">delete()</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
     data-lt="cursor.transaction">transaction</a>.
@@ -3777,7 +3754,7 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.delete">delete()</dfn> method, whe
     <a>InvalidStateError</a> exception.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
-    return the <a>IDBRequest</a> created by these steps. The steps are
+    return the {{IDBRequest}} created by these steps. The steps are
     run with this <a>cursor</a> as <var>source</var> and the <a>steps
     for deleting records from an object store</a> as
     <var>operation</var>, using this cursor's <a>effective object
@@ -3794,8 +3771,8 @@ interface IDBCursorWithValue : IDBCursor {
 };
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBCursorWithValue.value">value</dfn> attribute's getter must return
-the cursor's current <a data-lt="cursor.value">value</a>.
+The {{value}} attribute's getter must return the cursor's current <a
+data-lt="cursor.value">value</a>.
 
 Note that if this property returns an object, it returns the same
 object instance every time it is inspected, until the cursor's <a
@@ -3833,7 +3810,7 @@ enum IDBTransactionMode {
 };
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.objectStoreNames">objectStoreNames</dfn> attribute's getter must run the following steps:
+The {{objectStoreNames}} attribute's getter must run the following steps:
 
 1. If this <a>transaction</a> is an <a>upgrade transaction</a>, return a
     <a>sorted list</a> of the <a data-lt="objectStore.name">names</a>
@@ -3854,15 +3831,15 @@ The <dfn data-lt-noDefault data-lt="IDBTransaction.objectStoreNames">objectStore
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.mode">mode</dfn>
+The {{mode}}
 attribute's getter must return the <a>mode</a> of the
 <a>transaction</a>.
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.db">db</dfn>
+The {{db}}
 attribute's getter must return the <a>database</a> <a>connection</a>
 of which this <a>transaction</a> is a part.
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.error">error</dfn>
+The {{error}}
 attribute's getter must return this <a>transaction</a>'s <a
 data-lt="transaction error">error</a>, or null if none.
 
@@ -3881,7 +3858,7 @@ data-lt="transaction error">error</a>, or null if none.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.objectStore">objectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. If <var>transaction</var> has <a data-lt="transaction
     finish">finished</a>, <a>throw</a> an <a>InvalidStateError</a>
@@ -3908,7 +3885,7 @@ The <dfn data-lt-noDefault data-lt="IDBTransaction.objectStore">objectStore(<var
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.abort">abort()</dfn> method, when invoked, must run these steps:
+The <dfn method for=IDBTransaction>abort()</dfn> method, when invoked, must run these steps:
 
 1. If this <a>transaction</a> is <a data-lt="transaction finish">finished</a>,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -3917,16 +3894,13 @@ The <dfn data-lt-noDefault data-lt="IDBTransaction.abort">abort()</dfn> method, 
     <a>steps for aborting a transaction</a> with null as <var>error</var>.
 
 
-The <dfn data-lt-noDefault
-data-lt="IDBTransaction.onabort">onabort</dfn> attribute is the event
+The {{onabort}} attribute is the event
 handler for the <code>abort</code> event.
 
-The <dfn data-lt-noDefault
-data-lt="IDBTransaction.oncomplete">oncomplete</dfn> attribute is the
+The {{oncomplete}} attribute is the
 event handler for the <code>complete</code> event.
 
-The <dfn data-lt-noDefault
-data-lt="IDBTransaction.onerror">onerror</dfn> attribute is the event
+The {{onerror}} attribute is the event
 handler for the <code>error</code> event.
 
 <aside class="note">
@@ -4371,7 +4345,7 @@ Set <var>connection</var>'s <a data-lt="connection.version">version</a> to <var>
 if <var>database</var> previously existed,
 or 0 (zero) if <var>database</var> was newly created
 <aside class="note">
-This reverts the value of <code>version</code> returned by the <a>IDBDatabase</a> object.
+This reverts the value of <code>version</code> returned by the {{IDBDatabase}} object.
 </aside>
 
 <li>
@@ -4380,7 +4354,7 @@ set of <a>object stores</a> in <var>database</var>
 if <var>database</var> previously existed,
 or the empty set if <var>database</var> was newly created.
 <aside class="note">
-This reverts the value of <code>objectStoreNames</code> returned by the <a>IDBDatabase</a> object.
+This reverts the value of <code>objectStoreNames</code> returned by the {{IDBDatabase}} object.
 </aside>
 
 <li>
@@ -4434,7 +4408,7 @@ can be queried.
 </ol>
 
 <aside class="note">
-The <code>name</code> property of the <a>IDBDatabase</a> instance is not modified,
+The <code>name</code> property of the {{IDBDatabase}} instance is not modified,
 even if the aborted <a>upgrade transaction</a> was creating a new <a>database</a>.
 </aside>
 
@@ -5575,7 +5549,7 @@ document's Revision History</a>.
     <a>IDBIndex.getKey</a>,
     <a>IDBIndex.openKeyCursor</a>.
 
-* Added details around garbage collection of <a>IDBDatabase</a> objects.
+* Added details around garbage collection of {{IDBDatabase}} objects.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25223">bug #25223</a>)
 
 * Added <code>[Exposed=(Window,Worker)]</code> annotations to interfaces.
