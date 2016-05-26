@@ -394,11 +394,11 @@ Each connection has a <dfn>close pending flag</dfn> which is initially
 unset.
 
 When a <a>connection</a> is initially created it is in
-<dfn>opened</dfn> state. The connection can be <dfn data-lt="database
-close">closed</dfn> through several means. If the execution context
-where the <a>connection</a> was created is destroyed (for example due
-to the user navigating away from that page), the connection is closed.
-The connection can also be closed explicitly using the <a>steps for
+<dfn>opened</dfn> state. The connection can be <dfn>closed</dfn>
+through several means. If the execution context where the
+<a>connection</a> was created is destroyed (for example due to the
+user navigating away from that page), the connection is closed. The
+connection can also be closed explicitly using the <a>steps for
 closing a database connection</a>. When the connection is closed the
 <a>close pending flag</a> is always set if it hasn't already been.
 
@@ -427,18 +427,20 @@ A <a>connection</a>'s <a>get the parent</a> algorithm returns null.
 An <dfn>object store</dfn> is the primary
 storage mechanism for storing data in a <a>database</a>.
 
+<div dfn-for="object store">
+
 Each database has a set of <a>object stores</a>. The set of <a>object
 stores</a> can be changed, but only using an <a>upgrade
 transaction</a>, i.e. in response to an <a>upgradeneeded</a> event.
 When a new database is created it doesn't contain any <a>object
 stores</a>.
 
-An <a>object store</a> has a <dfn data-lt-noDefault data-lt="object
-store record list">list of records</dfn> which hold the data stored in
-the object store. Each <dfn data-lt="records">record</dfn> consists of
-a <a>key</a> and a <a>value</a>. The list is sorted according to key
-in ascending order. There can never be multiple records in a given
-object store with the same key.
+An <a>object store</a> has a <dfn>list of records</dfn> which hold the
+data stored in the object store. Each <dfn
+data-lt="records">record</dfn> consists of a <a>key</a> and a
+<a>value</a>. The list is sorted according to key in ascending order.
+There can never be multiple records in a given object store with the
+same key.
 
 An <a>object store</a> has a <dfn data-lt-noDefault
 data-lt="objectStore.name">name</dfn>. The name can be any string
@@ -463,6 +465,8 @@ An object store can derive a <a>key</a> for a <a>record</a> from one of three so
 
 3. Keys can also be explicitly specified when a <a>value</a> is stored
     in the object store.
+
+</div>
 
 <!-- ============================================================ -->
 <h5 id=concept-object-store-handle>Object Store Handle</h5>
@@ -2072,7 +2076,7 @@ and it has one or more event listeners registers whose type is one of
 <code>abort</code>, <code>error</code>, or <code>versionchange</code>.
 
 If an {{IDBDatabase}} object is garbage collected, the
-associated <a>connection</a> must be <a data-lt="database close">closed</a>.
+associated <a>connection</a> must be <a for=connection>closed</a>.
 
 
 <pre class=idl>
@@ -2117,9 +2121,9 @@ for=connection>version</a>.
   As long as the <a>connection</a> is open, this is the same as the
   connected <a>database</a>'s <a for=database>version</a>.
 
-  Once the <a>connection</a> has <a data-lt="database
-  close">closed</a>, this attribute will not reflect changes made with
-  a later <a>upgrade transaction</a>.
+  Once the <a>connection</a> has <a for=connection>closed</a>, this
+  attribute will not reflect changes made with a later <a>upgrade
+  transaction</a>.
 </aside>
 
 
@@ -2133,9 +2137,9 @@ this <a>connection</a>'s <a>object store set</a>.
   connected <a>database</a>'s <a>object store</a> <a
   data-lt="objectStore.name">names</a>.
 
-  Once the <a>connection</a> has <a data-lt="database
-  close">closed</a>, this attribute will not reflect changes made with
-  a later <a>upgrade transaction</a>.
+  Once the <a>connection</a> has <a for=connection>closed</a>, this
+  attribute will not reflect changes made with a later <a>upgrade
+  transaction</a>.
 </aside>
 
 The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
@@ -4064,7 +4068,7 @@ Run the <a>steps for running an upgrade transaction</a>
 using <var>connection</var>, <var>version</var> and <var>request</var>.
 
 <li>
-If <var>connection</var> was <a data-lt="database close">closed</a>,
+If <var>connection</var> was <a for=connection>closed</a>,
 create and return a new <a>AbortError</a> exception and abort these steps.
 
 <li>
@@ -4100,7 +4104,7 @@ using <var>connection</var> run the <a>steps for aborting a transaction</a> with
 
 <li>
 Wait for all transactions <a data-lt="transaction create">created</a> using <var>connection</var> to complete.
-Once they are complete, <var>connection</var> is <a data-lt="database close">closed</a>.
+Once they are complete, <var>connection</var> is <a for=connection>closed</a>.
 
 <li>
 If the <var>forced flag</var> is set, then fire a <code>close</code> event at
@@ -4161,7 +4165,7 @@ If any of the <a>connections</a> in <var>openConnections</var> are still not clo
 at <var>request</var> with <var>db</var>'s <a for=database>version</a> and null.
 
 <li id="delete-close-block">
-Wait until all <a>connections</a> in <var>openConnections</var> are <a data-lt="database close">closed</a> and all of
+Wait until all <a>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
 their transactions are <a data-lt="transaction finish">finished</a>.
 
 <li>
@@ -4356,7 +4360,7 @@ If any of the <a>connections</a> in <var>openConnections</var> are still not clo
 at <var>request</var> with <var>db</var>'s <a for=database>version</a> and <var>version</var>.
 
 <li id="version-change-close-block">
-Wait until all <a>connections</a> in <var>openConnections</var> are <a data-lt="database close">closed</a> and all of
+Wait until all <a>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
 their transactions are <a data-lt="transaction finish">finished</a>.
 
 <li>
@@ -4647,7 +4651,7 @@ remove the <a>record</a> from <var>store</var> using the <a>steps for deleting r
 
 <li>
 Store a record in <var>store</var> containing <var>key</var> as its key and <var>value</var> as its
-value. The record is stored in the object store's <a data-lt="object store record list">list</a> such
+value. The record is stored in the object store's <a for="object store">list of records</a> such
 that the list is sorted according key of the records in ascending order.
 
 <li>
@@ -4716,7 +4720,7 @@ The <dfn>steps for retrieving a value from an object store</dfn> with
 
 <ol class=algorithm>
 <li>
-Let <var>record</var> be the first <a>record</a> in <var>store</var>'s <a data-lt="object store record list">list of records</a>
+Let <var>record</var> be the first <a>record</a> in <var>store</var>'s <a for="object store">list of records</a>
 whose key is <a data-lt="in a key range">in</a> <var>range</var>,
 if any.
 
@@ -4737,7 +4741,7 @@ The <dfn>steps for retrieving multiple values from an object store</dfn> with
 <li>If <var>count</var> is not given or is 0 (zero), let <var>count</var> be infinity.
 <li>
 Let <var>records</var> be a list containing the first <var>count</var> <a>records</a>
-in <var>store</var>'s <a data-lt="object store record list">list of records</a>
+in <var>store</var>'s <a for="object store">list of records</a>
 whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 <li>Let <var>array</var> be a new <a>Array</a> object.
@@ -4760,7 +4764,7 @@ The <dfn>steps for retrieving a key from an object store</dfn> with
 
 <ol class=algorithm>
 <li>
-Let <var>record</var> be the first <a>record</a> in <var>store</var>'s <a data-lt="object store record list">list of records</a>
+Let <var>record</var> be the first <a>record</a> in <var>store</var>'s <a for="object store">list of records</a>
 whose key is <a data-lt="in a key range">in</a> <var>range</var>,
 if any.
 
@@ -4782,7 +4786,7 @@ The <dfn>steps for retrieving multiple keys from an object store</dfn> with
 <li>If <var>count</var> is not given or is 0 (zero), let <var>count</var> be infinity.
 <li>
 Let <var>records</var> be a list containing the first <var>count</var> <a>records</a>
-in <var>store</var>'s <a data-lt="object store record list">list of records</a>
+in <var>store</var>'s <a for="object store">list of records</a>
 whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 <li>Let <var>array</var> be a new <a>Array</a> object.
@@ -4901,7 +4905,7 @@ with <var>store</var> and <var>range</var> are as follows.
 
 <ol class=algorithm>
 <li>
-Remove all records, if any, from <var>store</var>'s <a data-lt="object store record list">list of records</a>
+Remove all records, if any, from <var>store</var>'s <a for="object store">list of records</a>
 with key <a data-lt="in a key range">in</a> <var>range</var>.
 
 <li>
