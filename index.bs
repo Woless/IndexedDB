@@ -1696,19 +1696,16 @@ The <a>IDBRequest</a> interface provides the means to access results of
 asynchronous requests to <a>databases</a> and <a>database</a>
 objects using <a>event handler IDL attributes</a> [[!HTML]].
 
-
-
 Every method for making asynchronous requests returns an
 <a>IDBRequest</a> object that communicates back to the requesting
-application through events.
-This design means that any number of requests can be active on any <a>database</a>
-at a time.
-
+application through events. This design means that any number of
+requests can be active on any <a>database</a> at a time.
 
 <aside class="example">
 
-In the following example, we open a <a>database</a> asynchronously. Various
-event handlers are registered for responding to various situations.
+In the following example, we open a <a>database</a> asynchronously.
+Various event handlers are registered for responding to various
+situations.
 
 <pre class=lang-javascript>
 var request = indexedDB.open('AddressBook', 15);
@@ -1720,166 +1717,160 @@ request.onerror = function(evt) {...};
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBRequest : EventTarget {
-readonly    attribute any                                        result;
-readonly    attribute DOMException                               error;
-readonly    attribute (IDBObjectStore or IDBIndex or IDBCursor)? source;
-readonly    attribute IDBTransaction                             transaction;
-readonly    attribute IDBRequestReadyState                       readyState;
+  readonly    attribute any                                        result;
+  readonly    attribute DOMException                               error;
+  readonly    attribute (IDBObjectStore or IDBIndex or IDBCursor)? source;
+  readonly    attribute IDBTransaction                             transaction;
+  readonly    attribute IDBRequestReadyState                       readyState;
 
-// Event handlers:
-attribute EventHandler                               onsuccess;
-attribute EventHandler                               onerror;
+  // Event handlers:
+  attribute EventHandler                               onsuccess;
+  attribute EventHandler                               onerror;
 };
 
 enum IDBRequestReadyState {
-"pending",
-"done"
+  "pending",
+  "done"
 };
 </pre>
 
 
-The <dfn data-lt-noDefault data-lt="IDBRequest.result">result</dfn> attribute's getter must
-<a>throw</a> an <a>InvalidStateError</a> exception
-if the <a>done flag</a> is unset.
-Otherwise, the attribute's getter
-must return the <a data-lt="request.result">result</a> of
-the request, or undefined if the request.resulted in an error.
+The <dfn data-lt-noDefault data-lt="IDBRequest.result">result</dfn>
+attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
+exception if the <a>done flag</a> is unset. Otherwise, the attribute's
+getter must return the <a data-lt="request.result">result</a> of the
+request, or undefined if the request.resulted in an error.
 
+The <dfn data-lt-noDefault data-lt="IDBRequest.error">error</dfn>
+attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
+exception if the <a>done flag</a> is unset. Otherwise, the attribute's
+getter must return the <a data-lt="request.error">error</a> of the
+request, or null if no error occurred.
 
+The <dfn data-lt-noDefault data-lt="IDBRequest.source">source</dfn>
+attribute's getter must return the <a
+data-lt="request.source">source</a> of the <a>request</a>, or null if
+no <a data-lt="request.source">source</a> is set.
 
-The <dfn data-lt-noDefault data-lt="IDBRequest.error">error</dfn> attribute's getter must
-<a>throw</a> an <a>InvalidStateError</a> exception
-if the <a>done flag</a> is unset.
-Otherwise, the attribute's getter
-must return the <a data-lt="request.error">error</a> of the request,
-or null if no error occurred.
+The <dfn data-lt-noDefault
+data-lt="IDBRequest.transaction">transaction</dfn> attribute's getter
+must return the <a data-lt="request.transaction">transaction</a> of
+the <a>request</a>. This property can be null for certain requests,
+such as for <a>request</a> returned from <a
+data-lt="IDBFactory.open">IDBFactory.open()</a>.
 
-
-
-The <dfn data-lt-noDefault data-lt="IDBRequest.source">source</dfn> attribute's getter
-must return the <a data-lt="request.source">source</a> of the <a>request</a>, or
-null if no <a data-lt="request.source">source</a> is set.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBRequest.transaction">transaction</dfn> attribute's getter
-must return the <a data-lt="request.transaction">transaction</a> of the <a>request</a>.
-This property can be null for certain requests, such as for <a>request</a>
-returned from <a data-lt="IDBFactory.open">IDBFactory.open()</a>.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBRequest.readyState">readyState</dfn> attribute's getter
+The <dfn data-lt-noDefault
+data-lt="IDBRequest.readyState">readyState</dfn> attribute's getter
 must return "<code>pending</code>" if the <a>done flag</a> is unset,
 and "<code>done</code>" otherwise.
 
+The <dfn data-lt-noDefault
+data-lt="IDBRequest.onsuccess">onsuccess</dfn> attribute is the event
+handler for the <code>success</code> event.
 
-The <dfn data-lt-noDefault data-lt="IDBRequest.onsuccess">onsuccess</dfn> attribute is the event handler for the <code>success</code> event.
-The <dfn data-lt-noDefault data-lt="IDBRequest.onerror">onerror</dfn> attribute is the event handler for the <code>error</code> event.
-
+ The <dfn data-lt-noDefault data-lt="IDBRequest.onerror">onerror</dfn>
+attribute is the event handler for the <code>error</code> event. q
 
 Methods on <a>IDBFactory</a> that return a <a>open request</a> use
 an extended interface to allow listening to the
 <a>blocked</a> event and <a>upgradeneeded</a> event.
 
-
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBOpenDBRequest : IDBRequest {
-// Event handlers:
-attribute EventHandler onblocked;
-attribute EventHandler onupgradeneeded;
+  // Event handlers:
+  attribute EventHandler onblocked;
+  attribute EventHandler onupgradeneeded;
 };
 </pre>
 
+The <dfn data-lt-noDefault
+data-lt="IDBOpenDBRequest.onblocked">onblocked</dfn> attribute is the
+event handler for the <a>blocked</a> event.
 
-The <dfn data-lt-noDefault data-lt="IDBOpenDBRequest.onblocked">onblocked</dfn> attribute is the event handler for the <a>blocked</a> event.
-The <dfn data-lt-noDefault data-lt="IDBOpenDBRequest.onupgradeneeded">onupgradeneeded</dfn> attribute is the event handler for the <a>upgradeneeded</a> event.
+The <dfn data-lt-noDefault
+data-lt="IDBOpenDBRequest.onupgradeneeded">onupgradeneeded</dfn>
+attribute is the event handler for the <a>upgradeneeded</a> event.
 
-</section>
 
-<section class="section" id="events">
-<h4>Event interfaces</h4>
+<h4 id=events>Event interfaces</h4>
 
 This specification fires events with the following custom interfaces:
-
 
 <pre class="idl">
 [Exposed=(Window,Worker), Constructor(DOMString type, optional IDBVersionChangeEventInit eventInitDict)]
 interface IDBVersionChangeEvent : Event {
-readonly    attribute unsigned long long  oldVersion;
-readonly    attribute unsigned long long? newVersion;
+  readonly    attribute unsigned long long  oldVersion;
+  readonly    attribute unsigned long long? newVersion;
 };
 
 dictionary IDBVersionChangeEventInit : EventInit {
-unsigned long long  oldVersion = 0;
-unsigned long long? newVersion = null;
+  unsigned long long  oldVersion = 0;
+  unsigned long long? newVersion = null;
 };
 </pre>
 
+The <dfn data-lt-noDefault
+data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</dfn> attribute
+getter returns the previous version of the database.
 
-The <dfn data-lt-noDefault data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</dfn>
-attribute getter returns the previous version of the database.
-
-
-The <dfn data-lt-noDefault data-lt="IDBVersionChangeEvent.newVersion">newVersion</dfn>
-attribute getter returns the new version of the database,
-or null if the database is being deleted.
-See the <a>steps for running an upgrade transaction</a>.
-
-
-
-Events are constructed as defined in <a href="https://dom.spec.whatwg.org/#constructing-events">Constructing events</a>,
-in [[!WHATWG-DOM]].
+The <dfn data-lt-noDefault
+data-lt="IDBVersionChangeEvent.newVersion">newVersion</dfn> attribute
+getter returns the new version of the database, or null if the
+database is being deleted. See the <a>steps for running an upgrade
+transaction</a>.
 
 
+Events are constructed as defined in <a
+href="https://dom.spec.whatwg.org/#constructing-events">Constructing
+events</a>, in [[!WHATWG-DOM]].
 
-To <dfn data-lt="fire a version change event">fire a version change event named <var>e</var></dfn> at <var>target</var>
-given <var>oldVersion</var> and <var>newVersion</var>,
-dispatch an event at <var>target</var>.
+To <dfn data-lt="fire a version change event">fire a version change
+event named <var>e</var></dfn> at <var>target</var> given
+<var>oldVersion</var> and <var>newVersion</var>, dispatch an event at
+<var>target</var>.
 
-The event MUST use the <a>IDBVersionChangeEvent</a> interface
-with its <code>type</code> set to <var>e</var>,
-its <a data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</a> attribute set to <var>oldVersion</var>, and
-its <a data-lt="IDBVersionChangeEvent.newVersion">newVersion</a> attribute set to <var>newVersion</var>.
-This event MUST NOT bubble or be cancelable.
+The event MUST use the <a>IDBVersionChangeEvent</a> interface with its
+<code>type</code> set to <var>e</var>, its <a
+data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</a> attribute
+set to <var>oldVersion</var>, and its <a
+data-lt="IDBVersionChangeEvent.newVersion">newVersion</a> attribute
+set to <var>newVersion</var>. This event MUST NOT bubble or be
+cancelable.
 
-</section>
 
-<section class="section" id="factory-interface">
-<h4>The <code>IDBFactory</code> interface</h4>
+
+<h4 id=factory-interface>The <code>IDBFactory</code> interface</h4>
 
 <a>Database</a> objects are accessed through methods on the
-<a>IDBFactory</a> interface.
-A single object implementing this interface is present in the global scope of environments
-that support Indexed DB operations.
+<a>IDBFactory</a> interface. A single object implementing this
+interface is present in the global scope of environments that support
+Indexed DB operations.
 
 
 <pre class="idl">
 [NoInterfaceObject]
 interface IDBEnvironment {
-readonly    attribute IDBFactory indexedDB;
+  readonly    attribute IDBFactory indexedDB;
 };
 Window implements IDBEnvironment;
 WorkerGlobalScope implements IDBEnvironment;
 </pre>
 
-The <dfn data-lt-noDefault data-lt="IDBEnvironment.indexedDB">indexedDB</dfn>
-attribute provides applications a mechanism for accessing
-capabilities of indexed databases.
-
-
+The <dfn data-lt-noDefault
+data-lt="IDBEnvironment.indexedDB">indexedDB</dfn> attribute provides
+applications a mechanism for accessing capabilities of indexed
+databases.
 
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBFactory {
-IDBOpenDBRequest open(DOMString name, [EnforceRange] optional unsigned long long version);
-IDBOpenDBRequest deleteDatabase(DOMString name);
+  IDBOpenDBRequest open(DOMString name, [EnforceRange] optional unsigned long long version);
+  IDBOpenDBRequest deleteDatabase(DOMString name);
 
-short            cmp(any first, any second);
+  short            cmp(any first, any second);
 };
 </pre>
-
 
 The <dfn data-lt-noDefault data-lt="IDBFactory.open">open(<var>name</var>, <var>version</var>)</dfn> method, when invoked, must run these steps:
 
