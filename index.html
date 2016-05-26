@@ -1581,8 +1581,8 @@ providing a means of traversing keys in a deterministic order. This is
 often implemented through the use of persistent B-tree data structures
 that are considered efficient for insertion and deletion as well as
 in-order traversal of very large numbers of data records.</p>
-   <aside class="example" id="example-6d6a80f1">
-    <a class="self-link" href="#example-6d6a80f1"></a> In the following example, the API is used to access a "library"
+   <aside class="example" id="example-8cc44ff1">
+    <a class="self-link" href="#example-8cc44ff1"></a> In the following example, the API is used to access a "library"
 database that holds books stored by their "isbn" attribute.
 Additionally, an index is maintained on the "title" attribute of the
 objects stored in the object store. This index can be used to look up
@@ -1611,8 +1611,7 @@ use in subsequent examples.</p>
 <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">db</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
 <span class="p">};</span></pre>
-    <p>The following example populates the
-database using a transaction.</p>
+    <p>The following example populates the database using a transaction.</p>
 <pre class="lang-javascript highlight"><span></span><span class="kd">var</span> <span class="nx">tx</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">(</span><span class="s2">"books"</span><span class="p">,</span> <span class="s2">"readwrite"</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">tx</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="s2">"books"</span><span class="p">);</span>
 
@@ -1708,6 +1707,7 @@ opening an older version of the database.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="sorted list" data-noexport="" id="sorted-list">sorted list<span class="dfn-panel" data-deco=""><b><a href="#sorted-list">#sorted-list</a></b><b>Referenced in:</b><span><a href="#ref-for-sorted-list-1">2.3.4. The IDBDatabase interface</a></span><span><a href="#ref-for-sorted-list-2">2.3.5. The IDBObjectStore interface</a></span><span><a href="#ref-for-sorted-list-3">2.3.9. The IDBTransaction interface</a> <a href="#ref-for-sorted-list-4">(2)</a></span></span></dfn> is a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#domstringlist">DOMStringList</a></code> containing strings
 sorted in ascending order using the algorithm defined by step 4 of <cite>section 11.8.5, The Abstract Relational Comparison
 Algorithm</cite> of the ECMAScript Language Specification <a data-link-type="biblio" href="#biblio-ecma-262">[ECMA-262]</a>.</p>
+   <div class="issue" id="issue-fd386c70"><a class="self-link" href="#issue-fd386c70"></a>Make this reference more robust.</div>
    <h3 class="heading settled" data-level="2.1" id="constructs"><span class="secno">2.1. </span><span class="content">Constructs</span><a class="self-link" href="#constructs"></a></h3>
    <h4 class="heading settled" data-level="2.1.1" id="database-concept"><span class="secno">2.1.1. </span><span class="content">Database</span><a class="self-link" href="#database-concept"></a></h4>
    <p>A database’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#origin">origin</a> is the same as the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#origin">origin</a> of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document">document</a> or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#worker">worker</a>. Each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#origin">origin</a> has an associated
@@ -1722,13 +1722,13 @@ Database names are always compared in a case-sensitive manner, as
 opaque sequences of 16-bit code units. Implementations MUST support
 all names.</p>
    <aside class="note" role="note"> If an implementation uses a storage mechanism which can’t handle
-arbitrary database names, the implementation must use an escaping
-mechanism or something similar to map the provided name to a name that
-it can handle. </aside>
+  arbitrary database names, the implementation must use an escaping
+  mechanism or something similar to map the provided name to a name that
+  it can handle. </aside>
    <p>A <a data-link-type="dfn" href="#databases" id="ref-for-databases-3">database</a> has a <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="version" data-noexport="" id="version">version<span class="dfn-panel" data-deco=""><b><a href="#version">#version</a></b><b>Referenced in:</b><span><a href="#ref-for-version-1">2.1.1. Database</a></span><span><a href="#ref-for-version-2">2.1.7.1. Upgrade Transactions</a> <a href="#ref-for-version-3">(2)</a> <a href="#ref-for-version-4">(3)</a> <a href="#ref-for-version-5">(4)</a></span><span><a href="#ref-for-version-6">2.3.3. The IDBFactory interface</a> <a href="#ref-for-version-7">(2)</a></span><span><a href="#ref-for-version-8">2.3.4. The IDBDatabase interface</a></span><span><a href="#ref-for-version-9">2.4.1. Opening a database</a> <a href="#ref-for-version-10">(2)</a> <a href="#ref-for-version-11">(3)</a> <a href="#ref-for-version-12">(4)</a> <a href="#ref-for-version-13">(5)</a></span><span><a href="#ref-for-version-14">2.4.3. Deleting a database</a> <a href="#ref-for-version-15">(2)</a> <a href="#ref-for-version-16">(3)</a></span><span><a href="#ref-for-version-17">2.4.5. Steps for aborting a transaction</a></span><span><a href="#ref-for-version-18">2.4.7. Upgrade transaction steps</a> <a href="#ref-for-version-19">(2)</a> <a href="#ref-for-version-20">(3)</a></span><span><a href="#ref-for-version-21">2.4.8. Steps for aborting an upgrade transaction</a> <a href="#ref-for-version-22">(2)</a></span></span></dfn>. When a database is first
 created, its <a data-link-type="dfn" href="#version" id="ref-for-version-1">version</a> is 0 (zero).</p>
    <aside class="note" role="note"> Each <a data-link-type="dfn" href="#databases" id="ref-for-databases-4">database</a> has one version at a time; a <a data-link-type="dfn" href="#databases" id="ref-for-databases-5">database</a> can’t exist in multiple versions at once. The only way to change the
-version is using an <a data-link-type="dfn" href="#upgrade-transactions" id="ref-for-upgrade-transactions-1">upgrade transaction</a>. </aside>
+  version is using an <a data-link-type="dfn" href="#upgrade-transactions" id="ref-for-upgrade-transactions-1">upgrade transaction</a>. </aside>
    <p>A database has a <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="delete pending flag" data-noexport="" id="delete-pending-flag">delete pending flag<span class="dfn-panel" data-deco=""><b><a href="#delete-pending-flag">#delete-pending-flag</a></b><b>Referenced in:</b><span><a href="#ref-for-delete-pending-flag-1">2.4.1. Opening a database</a></span><span><a href="#ref-for-delete-pending-flag-2">2.4.3. Deleting a database</a></span></span></dfn> which is used during
 deletion. When a database is requested to be deleted the flag is set
 and all attempts at opening the database are stalled until the
@@ -5113,8 +5113,8 @@ shared hosts are therefore recommended to avoid using these
 features, as it would be trivial for other authors to read the data
 and overwrite it.</p>
    <aside class="note" role="note"> Even if a path-restriction feature was made available, the usual DOM
-scripting security model would make it trivial to bypass this
-protection and access the data from any path. </aside>
+  scripting security model would make it trivial to bypass this
+  protection and access the data from any path. </aside>
    <h3 class="heading settled" data-level="4.3" id="implementation-risks"><span class="secno">4.3. </span><span class="content">Implementation risks</span><a class="self-link" href="#implementation-risks"></a></h3>
    <p>The two primary risks when implementing these persistent storage
 features are letting hostile sites read information from other
@@ -6004,6 +6004,7 @@ enum <a href="#enumdef-idbtransactionmode">IDBTransactionMode</a> {
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue">Make this reference more robust.<a href="#issue-fd386c70"> ↵ </a></div>
    <div class="issue">Specify this more precisely in terms of tasks and microtasks.<a href="#issue-bbc3895d"> ↵ </a></div>
    <div class="issue"> Simplify this section as much as possible by relying more on <a data-link-type="biblio" href="#biblio-webidl">[WEBIDL]</a> for key conversion logic. <a href="#issue-8f674373"> ↵ </a></div>
   </div>

@@ -18,14 +18,7 @@ Group: webplatform
 Test Suite: https://github.com/w3c/web-platform-tests/tree/master/IndexedDB
 </pre>
 
-<!--
-implementationReportURI: 'https://w3c.github.io/test-results/IndexedDB/all.html',
-{value: "Open Issues", href: "https://github.com/w3c/IndexedDB/issues/"},
-{value: "New Issue", href: "https://github.com/w3c/IndexedDB/issues/new"}
--->
-
-
-<pre class="anchors">
+<pre class=anchors>
 spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
     urlPrefix: browsers.html
         type: dfn
@@ -63,7 +56,6 @@ spec: webidl; urlPrefix: https://heycam.github.io/webidl/
         text: throw; url: #dfn-throw
         text: rethrow; url: #dfn-throw
         text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
-
 </pre>
 
 This is the Second Edition of Indexed Database API. The
@@ -90,7 +82,7 @@ that are considered efficient for insertion and deletion as well as
 in-order traversal of very large numbers of data records.
 
 
-<aside class="example">
+<aside class=example>
 In the following example, the API is used to access a "library"
 database that holds books stored by their "isbn" attribute.
 Additionally, an index is maintained on the "title" attribute of the
@@ -125,8 +117,7 @@ request.onsuccess = function() {
 };
 </pre>
 
-The following example populates the
-database using a transaction.
+The following example populates the database using a transaction.
 
 <pre class=lang-javascript>
 var tx = db.transaction("books", "readwrite");
@@ -318,18 +309,24 @@ sorted in ascending order using the algorithm defined by step 4 of
 Algorithm</cite> of the ECMAScript Language Specification
 [[!ECMA-262]].
 
+<div class=issue>Make this reference more robust.</div>
 
 
+<!-- ============================================================ -->
 <h3 id=constructs>Constructs</h3>
+<!-- ============================================================ -->
 
+<!-- ============================================================ -->
 <h4 id=database-concept>Database</h4>
+<!-- ============================================================ -->
 
 A database's <a>origin</a> is the same as the <a>origin</a> of the
 <a>document</a> or <a>worker</a>. Each <a>origin</a> has an associated
 set of databases.
 
-<aside class="note">
-The database origin is not affected by changes to <code>document.domain</code>.
+<aside class=note>
+  The database origin is not affected by changes to
+  <code>document.domain</code>.
 </aside>
 
 Each <a>origin</a> has an associated set of <a>databases</a>. A <dfn
@@ -344,20 +341,20 @@ Database names are always compared in a case-sensitive manner, as
 opaque sequences of 16-bit code units. Implementations MUST support
 all names.
 
-<aside class="note">
-If an implementation uses a storage mechanism which can't handle
-arbitrary database names, the implementation must use an escaping
-mechanism or something similar to map the provided name to a name that
-it can handle.
+<aside class=note>
+  If an implementation uses a storage mechanism which can't handle
+  arbitrary database names, the implementation must use an escaping
+  mechanism or something similar to map the provided name to a name that
+  it can handle.
 </aside>
 
 A <a>database</a> has a <dfn>version</dfn>. When a database is first
 created, its <a>version</a> is 0 (zero).
 
-<aside class="note">
-Each <a>database</a> has one version at a time; a <a>database</a>
-can't exist in multiple versions at once. The only way to change the
-version is using an <a>upgrade transaction</a>.
+<aside class=note>
+  Each <a>database</a> has one version at a time; a <a>database</a>
+  can't exist in multiple versions at once. The only way to change the
+  version is using an <a>upgrade transaction</a>.
 </aside>
 
 A database has a <dfn>delete pending flag</dfn> which is used during
@@ -365,7 +362,9 @@ deletion. When a database is requested to be deleted the flag is set
 and all attempts at opening the database are stalled until the
 database can be deleted.
 
+<!-- ============================================================ -->
 <h5 id=database-connection>Database Connection</h5>
+<!-- ============================================================ -->
 
 Script does not interact with <a>databases</a> directly. Instead,
 script has indirect access via a <dfn>connection</dfn>.
@@ -417,7 +416,9 @@ transaction</a> is running.
 A <a>connection</a>'s <a>get the parent</a> algorithm returns null.
 
 
+<!-- ============================================================ -->
 <h4 id=object-store-concept>Object Store</h4>
+<!-- ============================================================ -->
 
 An <dfn>object store</dfn> is the primary
 storage mechanism for storing data in a <a>database</a>.
@@ -459,7 +460,9 @@ An object store can derive a <a>key</a> for a <a>record</a> from one of three so
 3. Keys can also be explicitly specified when a <a>value</a> is stored
     in the object store.
 
+<!-- ============================================================ -->
 <h5 id=concept-object-store-handle>Object Store Handle</h5>
+<!-- ============================================================ -->
 
 Script does not interact with <a>object stores</a> directly. Instead,
 within a <a>transaction</a>, script has indirect access via an
@@ -491,7 +494,10 @@ data-lt="objectStoreHandle.objectStore">object store</a> when the
 The name will remain constant except when an <a>upgrade
 transaction</a> is running.
 
+
+<!-- ============================================================ -->
 <h4 id=value-construct>Values</h4>
+<!-- ============================================================ -->
 
 Each record is associated with a <dfn data-lt="values">value</dfn>.
 User agents MUST support any ECMAScript [[!ECMA-262]] value supported
@@ -504,7 +510,9 @@ reference; later changes to a value have no effect on the record
 stored in the database.
 
 
+<!-- ============================================================ -->
 <h4 id=key-construct>Keys</h4>
+<!-- ============================================================ -->
 
 In order to efficiently retrieve <a>records</a> stored in an indexed
 database, each <a>record</a> is organized according to its <dfn
@@ -518,7 +526,7 @@ A <a>key</a> has an associated <dfn data-lt="key.type">type</dfn> which is one o
 or
 <i>array</i>.
 
-<aside class="note">&#9752; Support for <i>binary</i> keys is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; Support for <i>binary</i> keys is new in this edition. &#9752;</aside>
 
 A <a>key</a> also has an associated <dfn data-lt-noDefault data-lt="key.value">value</dfn>, which will
 be either:
@@ -531,7 +539,7 @@ or a list of other <a>keys</a> if type is <i>array</i>.
 An ECMAScript [[!ECMA-262]] value can be converted to a <a>key</a> by
 following the steps to <a>convert a value to a key</a>.
 
-<aside class="note">
+<aside class=note>
 The following ECMAScript types are valid keys:
 
 * <a>Number</a> primitive values, except NaN. This includes Infinity and -Infinity.
@@ -590,7 +598,7 @@ To <dfn>compare two keys</dfn> <var>a</var> and <var>b</var>, run these steps:
 
 14. Switch on <var>ta</var>:
 
-    <dl class="switch">
+    <dl class=switch>
       <dt><i>number</i></dt>
       <dt><i>date</i></dt>
       <dd>
@@ -662,7 +670,7 @@ The <a>key</a> <var>a</var> is <dfn>equal to</dfn> the <a>key</a>
 keys</a> with <var>a</var> and <var>b</var> is 0.
 
 
-<aside class="note">
+<aside class=note>
 As a result of the above rules, negative infinity is the lowest possible value for a <a>key</a>.
 <i>Number</i> keys are less than <i>date</i> keys.
 <i>Date</i> keys are less than <i>string</i> keys.
@@ -672,14 +680,16 @@ There is no highest possible <a>key</a> value.
 This is because an array of any candidate highest <a>key</a> followed by another <a>key</a> is even higher.
 </aside>
 
-<aside class="note">
+<aside class=note>
 Members of <i>binary</i> keys are compared as unsigned octet values
 (in the range [0, 255]) rather than signed bytes (in the range [-128,
 127]).
 </aside>
 
 
+<!-- ============================================================ -->
 <h4 id=key-path-construct>Key Path</h4>
+<!-- ============================================================ -->
 
 A <dfn data-lt="key paths">key path</dfn> is a <a>DOMString</a> or
 <a>sequence&lt;DOMString&gt;</a> that defines how to extract a
@@ -693,7 +703,7 @@ A <dfn data-lt="key paths">key path</dfn> is a <a>DOMString</a> or
 * A non-empty <a>sequence&lt;DOMString&gt;</a> containing only strings conforming to
     the above requirements.
 
-<aside class="note">
+<aside class=note>
 Spaces are not allowed within a key path.
 </aside>
 
@@ -710,7 +720,9 @@ following type-specific properties:
 </table>
 
 
+<!-- ============================================================ -->
 <h4 id=index-concept>Index</h4>
+<!-- ============================================================ -->
 
 It is sometimes useful to retrieve <a>records</a> in an <a>object
 store</a> through other means than their <a>key</a>. An <dfn
@@ -739,7 +751,7 @@ the <a data-lt="index.keyPath">index's key path</a> on <var>A</var>
 yields the result <var>Y</var>, then the index will contain a record
 with key <var>Y</var> and value <var>X</var>.
 
-<aside class="example">
+<aside class=example>
 For example, if an index's <a>referenced</a> object store contains a
 record with the key <code>123</code> and the value <code>{ first:
 "Alice", last: "Smith" }</code>, and the <a
@@ -754,14 +766,14 @@ which has a key equal to the index's record's value. So in the example
 above, the record in the index whose key is <var>Y</var> and value is
 <var>X</var> has a <a>referenced value</a> of <var>A</var>.
 
-<aside class="example">
+<aside class=example>
 In the preceding example, the record in the index with key
 "<code>Alice</code>" and value <code>123</code> would have a
 <a>referenced value</a> of <code>{ first: "Alice", last: "Smith"
 }</code>.
 </aside>
 
-<aside class="note">
+<aside class=note>
 Each record in an index references one and only one record in the
 index's <a>referenced</a> object store. However there can be multiple
 records in an index which reference the same record in the object
@@ -800,7 +812,9 @@ the <a>multiEntry flag</a> is unset, then a single <a>record</a> whose
 the index for each of the <a>subkeys</a>.
 
 
+<!-- ============================================================ -->
 <h5 id=concept-index-handle>Index Handle</h5>
+<!-- ============================================================ -->
 
 Script does not interact with <a>indexes</a> directly. Instead, within
 a <a>transaction</a>, script has indirect access via an <dfn>index
@@ -827,7 +841,10 @@ created.
 The name will remain constant except when an <a>upgrade
 transaction</a> is running.
 
+
+<!-- ============================================================ -->
 <h4 id=transaction-concept>Transactions</h4>
+<!-- ============================================================ -->
 
 A <dfn data-lt="transactions">Transaction</dfn> is used to interact
 with the data in a <a>database</a>. Whenever data is read or written
@@ -906,7 +923,7 @@ Transactions are expected to be short lived. This is encouraged by the
 <a data-lt="transaction commit">automatic committing</a> functionality
 described below.
 
-<aside class="note">
+<aside class=note>
 Authors can still cause transactions to run for a long time; however,
 this usage pattern is not generally recommended as it can lead to a
 bad user experience.
@@ -1017,7 +1034,7 @@ data-lt="transaction start">started</a>:
     found and the result is that data, and for the case when data is
     not found and a lack of data is indicated.
 
-    <aside class="note">
+    <aside class=note>
       There are a number of ways that an implementation can ensure
       this. The implementation could prevent any <a>read/write
       transaction</a>, whose scope overlaps the scope of the
@@ -1061,7 +1078,7 @@ data-lt="transaction start">started</a>:
     in that overlapping <a>scope</a> until the A transaction is <a
     data-lt="transaction finish">finished</a>.
 
-    <aside class="note">
+    <aside class=note>
       Generally speaking, the above requirements mean that any
       transaction which has an overlapping scope with a <a>read/write
       transaction</a> and which was created after that <a>read/write
@@ -1077,7 +1094,9 @@ data-lt="transaction start">started</a>:
     start">starting</a>.
 
 
+<!-- ============================================================ -->
 <h5 id=upgrade-transaction>Upgrade Transactions</h5>
+<!-- ============================================================ -->
 
 An <dfn data-lt="upgrade transactions">upgrade transaction</dfn> is a
 <a>transaction</a> with <a>mode</a> "<code>versionchange</code>".
@@ -1110,7 +1129,9 @@ queued against the same <a>database</a> as long as the transaction is
 running.
 
 
+<!-- ============================================================ -->
 <h4 id=request-concept>Requests</h4>
+<!-- ============================================================ -->
 
 Each asynchronous operation on a <a>database</a> is done using a <dfn
 data-lt="requests">request</dfn>. Every request represents one
@@ -1160,7 +1181,7 @@ fired.
 
 An <a>open request</a>'s <a>get the parent</a> algorithm returns null.
 
-<aside class="note">
+<aside class=note>
   Requests are not typically re-used, but there are exceptions. When a
   <a>cursor</a> is iterated, the success of the iteration is reported
   on the same <a>request</a> object used to open the cursor. And when
@@ -1173,7 +1194,9 @@ An <a>open request</a>'s <a>get the parent</a> algorithm returns null.
 
 
 
+<!-- ============================================================ -->
 <h4 id=range-concept>Key Range</h4>
+<!-- ============================================================ -->
 
 Records can be retrieved from <a>object stores</a> and <a>indexes</a>
 using either <a>keys</a> or <a>key ranges</a>. A <dfn data-lt="key
@@ -1210,7 +1233,7 @@ conditions are fulfilled:
     <var>key</var>, or it is both <a>equal to</a> <var>key</var> and
     the <a>upper open flag</a> is unset.
 
-<aside class="note">
+<aside class=note>
 
   * If the <a>lower open flag</a> of a <a>key range</a> is unset, the
     <a>lower bound</a> <a>key</a> of the <a>key range</a> is included
@@ -1255,7 +1278,9 @@ follows:
 5. Return a <a>key range</a> <a>containing only</a> <var>key</var>.
 
 
+<!-- ============================================================ -->
 <h4 id=cursor-concept>Cursor</h4>
+<!-- ============================================================ -->
 
 A <dfn>cursor</dfn> is used to iterate over a range of records in an
 <a>index</a> or an <a>object store</a> in a specific direction.
@@ -1370,7 +1395,9 @@ whether the cursor's <a data-lt="cursor.value">value</a> is exposed
 via the API. Unless stated otherwise it is unset.
 
 
+<!-- ============================================================ -->
 <h4 id=key-generator-concept>Key Generators</h4>
+<!-- ============================================================ -->
 
 When a <a>object store</a> is created it can be specified to use a
 <dfn data-lt="key generators">key generator</dfn>. A <a>key
@@ -1408,7 +1435,7 @@ when a <a>key generator</a> is used.
     keys</a>, by passing a key argument to the call to store the
     <a>record</a>.
 
-    <aside class="note">
+    <aside class=note>
       Only specified keys of <a data-lt="key.type">type</a>
       <i>number</i> may affect the <a>current number</a> of the key
       generator. Keys of <a data-lt="key.type">type</a> <i>date</i>,
@@ -1445,7 +1472,7 @@ when a <a>key generator</a> is used.
     key, however the only way to use a key generator again for the
     object store is to delete the object store and create a new one.
 
-    <aside class="note">
+    <aside class=note>
       As long as key generators are used in a normal fashion this will
       not be a problem. If you generate a new key 1000 times per
       second day and night, you won't run into this limit for over
@@ -1467,7 +1494,7 @@ integer higher than the highest numeric key in the store. The same key
 is never generated twice for the same object store unless a
 transaction is rolled back.
 
-<aside class="example">
+<aside class=example>
 
 Each object store gets its own key generator:
 
@@ -1548,7 +1575,7 @@ store_t2.put("d"); // Will get key 2
 </pre>
 </aside>
 
-<aside class="example">
+<aside class=example>
 
 The following examples illustrate the different behaviors when trying
 to use in-line <a>keys</a> and <a>key generators</a> to save an object
@@ -1645,7 +1672,9 @@ store.put([10]); // will throw DataError
 </aside>
 
 
+<!-- ============================================================ -->
 <h3 id=exceptions>Exceptions</h3>
+<!-- ============================================================ -->
 
 Each of the exceptions defined in this document is a
 <a>DOMException</a> with a specific type. The exception types and
@@ -1718,7 +1747,7 @@ or the storage quota was reached and the user declined to give more space to the
 </tr>
 </table>
 
-<aside class="note">
+<aside class=note>
 Given that multiple Indexed DB operations can throw the same type of
 error, and that a even single operation can throw the same type of
 error for multiple reasons, implementations are encouraged to provide
@@ -1726,7 +1755,9 @@ more specific messages to enable developers to identify the cause of
 errors.
 </aside>
 
+<!-- ============================================================ -->
 <h3 id=async-api>API</h3>
+<!-- ============================================================ -->
 
 The API methods return without blocking the calling thread. All
 asynchronous operations immediately return an {{IDBRequest}}
@@ -1738,7 +1769,10 @@ through the properties of the {{IDBRequest}} instance.
 The <span>task source</span> for these tasks is the <dfn
 id="database-access-task-source">database access task source</dfn>.
 
+
+<!-- ============================================================ -->
 <h4 id=request-api>The <code>IDBRequest</code> interface</h4>
+<!-- ============================================================ -->
 
 The {{IDBRequest}} interface provides the means to access results of
 asynchronous requests to <a>databases</a> and <a>database</a>
@@ -1749,7 +1783,7 @@ Every method for making asynchronous requests returns an
 application through events. This design means that any number of
 requests can be active on any <a>database</a> at a time.
 
-<aside class="example">
+<aside class=example>
 
 In the following example, we open a <a>database</a> asynchronously.
 Various event handlers are registered for responding to various
@@ -1835,7 +1869,9 @@ The {{IDBOpenDBRequest/onupgradeneeded}} attribute is the event handler for the
 <a>upgradeneeded</a> event.
 
 
+<!-- ============================================================ -->
 <h4 id=events>Event interfaces</h4>
+<!-- ============================================================ -->
 
 This specification fires events with the following custom interfaces:
 
@@ -1877,7 +1913,9 @@ attribute set to <var>newVersion</var>. This event MUST NOT bubble or
 be cancelable.
 
 
+<!-- ============================================================ -->
 <h4 id=factory-interface>The <code>IDBFactory</code> interface</h4>
+<!-- ============================================================ -->
 
 <a>Database</a> objects are accessed through methods on the
 {{IDBFactory}} interface. A single object implementing this
@@ -1921,7 +1959,7 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
         <var>version</var> if given and undefined otherwise, and
         <var>request</var>.
 
-        <aside class="note">
+        <aside class=note>
           If <var>version</var> is not given and a <a>database</a>
           with that name already exists, a connection will be opened
           without changing the <a>version</a>. If <var>version</var>
@@ -1947,7 +1985,7 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
         "<code>success</code>" event MUST be done after the <a>upgrade
         transaction</a> completes.
 
-        <aside class="note">
+        <aside class=note>
           The last requirement is to ensure that in case another
           version upgrade is about to happen, the success event is
           fired on the connection first so that the script gets a
@@ -1955,7 +1993,7 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
           <code>versionchange</code> event.
         </aside>
 
-        <aside class="note">
+        <aside class=note>
           The firing of "<code>success</code>" or "<code>error</code>"
           events do not follow the normal steps to <a>fire a success
           event</a> or <a>fire an error event</a> as there is no
@@ -1988,7 +2026,7 @@ The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, whe
         event</a> named <code>success</code> at <a>request</a> with
         <var>result</var> and null.
 
-        <aside class="note">
+        <aside class=note>
           The firing of "<code>success</code>" or "<code>error</code>"
           events do not follow the normal steps to <a>fire a success
           event</a> or <a>fire an error event</a> as there is no
@@ -2016,7 +2054,9 @@ The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> me
     with <var>a</var> and <var>b</var>.
 
 
+<!-- ============================================================ -->
 <h4 id=database-interface>The <code>IDBDatabase</code> interface</h4>
+<!-- ============================================================ -->
 
 The {{IDBDatabase}}
 interface represents a <a>connection</a> to a <a>database</a>.
@@ -2068,7 +2108,7 @@ The {{IDBDatabase/version}}
 attribute's getter must return this <a>connection</a>'s <a
 data-lt="connection.version">version</a>.
 
-<aside class="note">
+<aside class=note>
   As long as the <a>connection</a> is open, this is the same as the
   connected <a>database</a>'s <a>version</a>.
 
@@ -2083,7 +2123,7 @@ attribute's getter must return a <a>sorted list</a> of the <a
 data-lt="objectStore.name">names</a> of the <a>object stores</a> in
 this <a>connection</a>'s <a>object store set</a>.
 
-<aside class="note">
+<aside class=note>
   As long as the <a>connection</a> is open, this is the same as the
   connected <a>database</a>'s <a>object store</a> <a
   data-lt="objectStore.name">names</a>.
@@ -2202,7 +2242,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 
 9. Return an {{IDBTransaction}} object representing <var>transaction</var>.
 
-<aside class="note">
+<aside class=note>
   The created <var>transaction</var> will follow the <a>transaction lifetime</a> rules.
 </aside>
 
@@ -2218,7 +2258,7 @@ The {{IDBDatabase/onabort}} attribute is the event handler for the
 The {{IDBDatabase/onclose}} attribute is the event handler for the
 <code>close</code> event.
 
-<aside class="note">&#9752; The {{IDBDatabase/onclose}} attribute is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBDatabase/onclose}} attribute is new in this edition. &#9752;</aside>
 
 The {{IDBDatabase/onerror}} attribute is the event handler for the
 <code>error</code> event.
@@ -2227,7 +2267,9 @@ The {{IDBDatabase/onversionchange}} attribute is the event handler for the
 <code>versionchange</code> event.
 
 
+<!-- ============================================================ -->
 <h4 id=object-store-interface>The <code>IDBObjectStore</code> interface</h4>
+<!-- ============================================================ -->
 
 The {{IDBObjectStore}}
 interface represents an <a>object store handle</a>.
@@ -2269,7 +2311,7 @@ dictionary IDBIndexParameters {
 The {{IDBObjectStore/name}} attribute's getter must return this <a>object store
 handle</a>'s <a data-lt="objectStore.name">name</a>.
 
-<aside class="note">
+<aside class=note>
   As long as the <a>transaction</a> has not <a data-lt="transaction
   finish">finished</a>, this is the same as the associated <a>object
   store</a>'s <a data-lt="objectStore.name">name</a>.
@@ -2307,7 +2349,7 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 10. Set this <a>object store handle</a>'s <a data-lt="objectStoreHandle.name">name</a> to <var>name</var>.
 
-<aside class="note">&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
 The {{IDBObjectStore/keyPath}} attribute's getter must
@@ -2331,7 +2373,7 @@ getter must return a <a>sorted list</a> of the <a
 data-lt="index.name">names</a> of <a>indexes</a> in this <a>object
 store handle</a>'s <a>index set</a>.
 
-<aside class="note">
+<aside class=note>
   As long as the <a>transaction</a> has not <a data-lt="transaction
   finish">finished</a>, this is the same as the associated <a>object
   store</a>'s list of <a>index</a> <a data-lt="index.name">names</a>.
@@ -2507,7 +2549,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> keys to be
 deleted.
 
-<aside class="note">
+<aside class=note>
 Unlike other methods which take keys or key ranges, this method does
 <strong>not</strong> allow null to be given as key. This is to reduce
 the risk that a small bug would clear a whole object store.
@@ -2569,7 +2611,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 range is specified, the method retrieves the first existing value in
 that range.
 
-<aside class="note">
+<aside class=note>
   This method produces the same result if a record with the given key
   doesn't exist as when a record exists, but has undefined as value.
   If you need to tell the two situations apart, you can use
@@ -2610,7 +2652,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 retrieved. If a range is specified, the method retrieves
 the first existing key in that range.
 
-<aside class="note">&#9752; The {{IDBObjectStore/getKey()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBObjectStore/getKey()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
@@ -2644,7 +2686,7 @@ null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
 records in range, only the first <var>count</var> will be retrieved.
 
-<aside class="note">&#9752; The {{IDBObjectStore/getAll()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBObjectStore/getAll()}} method is new in this edition. &#9752;</aside>
 
 The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
@@ -2678,7 +2720,7 @@ range</a> is used. If <var>count</var> is specified and
 there are more than <var>count</var> keys in range,
 only the first <var>count</var> will be retrieved.
 
-<aside class="note">&#9752; The {{IDBObjectStore/getAllKeys()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBObjectStore/getAllKeys()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
@@ -2789,7 +2831,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
-<aside class="note">&#9752; The {{IDBObjectStore/openKeyCursor()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBObjectStore/openKeyCursor()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
@@ -2876,7 +2918,7 @@ to quota reasons, <a>QuotaExceededError</a> MUST be used as error and
 if the index can't be created due to <a>unique flag</a> constraints,
 <a>ConstraintError</a> MUST be used as error.
 
-<aside class="example">
+<aside class=example>
 
 The asynchronous creation of indexes is observable in the following example:
 
@@ -2920,12 +2962,12 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
 6. Return an <a>index handle</a> associated with <var>index</var> and
     this <a>object store handle</a>.
 
-<aside class="note">
+<aside class=note>
   Each call to this method on the same {{IDBObjectStore}} instance
   with the same name returns the same {{IDBIndex}} instance.
 </aside>
 
-<aside class="note">
+<aside class=note>
   The returned {{IDBIndex}} instance is specific to this
   {{IDBObjectStore}} instance. If this method is called on a
   different {{IDBObjectStore}} instance with the same name, a
@@ -2971,7 +3013,9 @@ index destruction itself is processed as an asynchronous request
 within the <a>upgrade transaction</a>.
 
 
+<!-- ============================================================ -->
 <h4 id=index-interface>The <code>IDBIndex</code> interface</h4>
+<!-- ============================================================ -->
 
 The {{IDBIndex}} interface represents an <a>index handle</a>.
 
@@ -3001,7 +3045,7 @@ The {{IDBIndex/name}}
 attribute's getter must return this <a>index handle</a>'s <a
 data-lt="index.name">name</a>.
 
-<aside class="note">
+<aside class=note>
   As long as the <a>transaction</a> has not <a data-lt="transaction
   finish">finished</a>, this is the same as the associated
   <a>index</a>'s <a data-lt="index.name">name</a>.
@@ -3044,7 +3088,7 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
 10. Set this <a>index handle</a>'s <a
     data-lt="indexHandle.name">name</a> to <var>name</var>.
 
-<aside class="note">&#9752; The {{IDBIndex/name}} attribute's setter is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBIndex/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
 The {{IDBIndex/objectStore}} attribute's getter
@@ -3105,7 +3149,7 @@ range is specified, the method retrieves the first existing record in
 that range.
 
 
-<aside class="note">
+<aside class=note>
   This method produces the same result if a record with the given key
   doesn't exist as when a record exists, but has undefined as value.
   If you need to tell the two situations apart, you can use
@@ -3178,7 +3222,7 @@ null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
 records in range, only the first <var>count</var> will be retrieved.
 
-<aside class="note">&#9752; The {{IDBIndex/getAll()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBIndex/getAll()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
@@ -3213,7 +3257,7 @@ used. If <var>count</var> is specified and there are more than
 <var>count</var> keys in range, only the first <var>count</var> will
 be retrieved.
 
-<aside class="note">&#9752; The {{IDBIndex/getAllKeys()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBIndex/getAllKeys()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
@@ -3326,7 +3370,9 @@ The <var>query</var> parameter may be a <a>key</a> or an
 or not given, an <a>unbounded key range</a> is used.
 
 
+<!-- ============================================================ -->
 <h4 id=keyrange>The <code>IDBKeyRange</code> interface</h4>
+<!-- ============================================================ -->
 
 The {{IDBKeyRange}} interface represents a
 <a>key range</a>.
@@ -3445,10 +3491,12 @@ The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invo
 3. Return true if <var>k</var> is <a data-lt="in a key range">in</a>
     this range, and false otherwise.
 
-<aside class="note">&#9752; The {{IDBKeyRange/includes()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBKeyRange/includes()}} method is new in this edition. &#9752;</aside>
 
 
+<!-- ============================================================ -->
 <h4 id=cursor-interface>The <code>IDBCursor</code> interface</h4>
+<!-- ============================================================ -->
 
 <a>Cursor</a> objects implement the {{IDBCursor}} interface. There
 is only ever one {{IDBCursor}} instance representing a given
@@ -3557,7 +3605,7 @@ The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoke
     <var>no-overwrite flag</var> unset.
 
 
-<aside class="note">
+<aside class=note>
   A result of running the <a>steps for storing a record into an object
   store</a> is that if the record has been deleted since the cursor
   moved to it, a new record will be created.
@@ -3595,7 +3643,7 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
     this <a>cursor</a> and <var>count</var>, and <var>request</var>.
 
 
-<aside class="note">
+<aside class=note>
   Calling this method more than once before new cursor data has been
   loaded - for example, calling <code>advance()</code> twice from the
   same onsuccess handler - results in an <a>InvalidStateError</a>
@@ -3655,7 +3703,7 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
     <var>request</var>.
 
 
-<aside class="note">
+<aside class=note>
   Calling this method more than once before new cursor data has been
   loaded - for example, calling <code>continue()</code> twice from the
   same onsuccess handler - results in an <a>InvalidStateError</a>
@@ -3742,9 +3790,9 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
     this <a>cursor</a>, <var>key</var>, <var>primaryKey</var>, and
     <var>request</var>.
 
-<aside class="note">&#9752; The {{IDBCursor/continuePrimaryKey()}} method is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBCursor/continuePrimaryKey()}} method is new in this edition. &#9752;</aside>
 
-<aside class="note">
+<aside class=note>
   Calling this method more than once before new cursor data has been
   loaded - for example, calling <code>continuePrimaryKey()</code>
   twice from the same onsuccess handler - results in an
@@ -3804,7 +3852,9 @@ inspecting the value of the cursor. However modifying such an object
 does not modify the contents of the database.
 
 
+<!-- ============================================================ -->
 <h4 id=transaction>The <code>IDBTransaction</code> interface</h4>
+<!-- ============================================================ -->
 
 <a>Transaction</a> objects implement the following interface:
 
@@ -3844,9 +3894,9 @@ the following steps:
     of the <a>object stores</a> in this <a>transaction</a>'s <a>scope</a>.
 
 
-<aside class="note">&#9752; The {{IDBTransaction/objectStoreNames}} attribute is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; The {{IDBTransaction/objectStoreNames}} attribute is new in this edition. &#9752;</aside>
 
-<aside class="note">
+<aside class=note>
   The contents of each list returned by this attribute does not
   change, but subsequent calls to this attribute during an <a>upgrade
   transaction</a> may return lists with different contents as
@@ -3864,7 +3914,7 @@ The {{IDBTransaction/error}} attribute's getter must return this
 <a>transaction</a>'s <a data-lt="transaction error">error</a>, or null
 if none.
 
-<aside class="note">
+<aside class=note>
   If this <a>transaction</a> was aborted due to a failed
   <a>request</a>, this will be the same as the <a>request</a>'s <a
   data-lt="request.error">error</a>.
@@ -3893,12 +3943,12 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
 3. Return an <a>object store handle</a> associated with
     <var>store</var> and this <a>transaction</a>.
 
-<aside class="note">
+<aside class=note>
   Each call to this method on the same {{IDBTransaction}} instance
   with the same name returns the same {{IDBObjectStore}} instance.
 </aside>
 
-<aside class="note">
+<aside class=note>
   The returned {{IDBObjectStore}} instance is specific to this
   {{IDBTransaction}}. If this method is called on a different
   {{IDBTransaction}}, a different {{IDBObjectStore}} instance is
@@ -3924,7 +3974,7 @@ the <code>complete</code> event.
 The {{IDBTransaction/onerror}} attribute is the event handler for the
 <code>error</code> event.
 
-<aside class="note">
+<aside class=note>
   To determine if a <a>transaction</a> has completed successfully,
   listen to the <a>transaction</a>'s <code>complete</code> event
   rather than the <code>success</code> event of a particular
@@ -3934,9 +3984,13 @@ The {{IDBTransaction/onerror}} attribute is the event handler for the
 
 
 
+<!-- ============================================================ -->
 <h3 id=algorithms>Algorithms</h3>
+<!-- ============================================================ -->
 
+<!-- ============================================================ -->
 <h4 id=opening>Opening a database</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for opening a database</dfn> are defined in the following steps. The algorithm in these steps
 takes four arguments:
@@ -3965,7 +4019,7 @@ If <var>db</var> has its <a>delete pending flag</a> set, wait until <var>db</var
 been deleted.
 
 </ul>
-<aside class="note">
+<aside class=note>
 If several requests with the same <var>origin</var> and <var>name</var> are waiting due to the above conditions,
 and those connections have a higher version than the database's current version, then once any of
 those connections can proceed to the next step in this algorithm it will immediately start
@@ -4022,7 +4076,9 @@ Return <var>connection</var>.
 
 
 
+<!-- ============================================================ -->
 <h4 id=closing-connection>Closing a database</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for closing a database connection</dfn> are as follows.
 These steps take two arguments, a <var>connection</var> object, and an
@@ -4046,16 +4102,16 @@ If the <var>forced flag</var> is set, then fire a <code>close</code> event at
 <var>connection</var>. The event MUST use the <a>Event</a> interface and have its
 type set to "<code>close</code>". The event MUST NOT bubble or be cancelable.
 
-<aside class="note">&#9752; This behavior is new in this edition. &#9752;</aside>
+<aside class=note>&#9752; This behavior is new in this edition. &#9752;</aside>
 
 </ol>
-<aside class="note">
+<aside class=note>
 Once the <a>close pending flag</a> has been set no new transactions can be
 <a data-lt="transaction create">created</a> using <var>connection</var>. All methods that
 <a data-lt="transaction create">create</a> transactions first check the <a>close pending flag</a> first and
 throw an exception if it is set.
 </aside>
-<aside class="note">
+<aside class=note>
 Once the <a>connection</a> is closed, this can unblock the <a>steps for running an upgrade
 transaction</a>, and the <a>steps for deleting a database</a>, which <a href="#delete-close-block">both</a>
 <a href="#version-change-close-block">wait</a> for <a>connections</a> to a given <a>database</a> to be closed
@@ -4063,7 +4119,9 @@ before continuing.
 </aside>
 
 
+<!-- ============================================================ -->
 <h4 id=deleting-a-database>Deleting a database</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for deleting a database</dfn> are as follows.
 The algorithm in these steps takes three arguments:
@@ -4087,7 +4145,7 @@ associated with <var>db</var>.
 For each <var>entry</var> in <var>openConnections</var> that does not have its <a>close pending flag</a> set,
 <a>fire a version change event</a> named <code>versionchange</code>
 at <var>entry</var> with <var>db</var>'s <a>version</a> and null.
-<aside class="note">
+<aside class=note>
 Firing this event might cause one or more of the other objects in <var>openConnections</var> to be closed, in which case
 the <code>versionchange</code> event MUST NOT be fired at those objects if that hasn't yet been done.
 </aside>
@@ -4113,7 +4171,9 @@ Return <var>version</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=commit-transaction>Steps for committing a transaction</h4>
+<!-- ============================================================ -->
 
 When taking the <dfn>steps for committing a transaction</dfn> the implementation MUST
 execute the following algorithm. This algorithm takes one argument, the <var>transaction</var> to commit.
@@ -4132,7 +4192,7 @@ and an appropriate for the error, for example <a>QuotaExceededError</a> or <a>Un
 The event must use the <a>Event</a> interface and have its <code>type</code> set to "<code>complete</code>".
 The event does not bubble and is not cancelable.
 
-<aside class="note">
+<aside class=note>
 Even if an exception is thrown from one of the event handlers of this event, the transaction is still
 committed since writing the database changes happens before the event takes places. Only after the transaction
 has been successfully written is the "<code>complete</code>" event fired.
@@ -4141,7 +4201,9 @@ has been successfully written is the "<code>complete</code>" event fired.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=abort-transaction>Steps for aborting a transaction</h4>
+<!-- ============================================================ -->
 
 When taking the <dfn>steps for aborting a transaction</dfn> the implementation MUST
 execute the following algorithm. This algorithm takes two arguments:
@@ -4188,7 +4250,7 @@ the <a>Event</a> interface and have its <code>type</code> set to "<code>error</c
 The event bubbles and is cancelable.
 
 </ol>
-<aside class="note">
+<aside class=note>
 This does not always result in any <code>error</code> events being fired. For example if a transaction is aborted
 due to an error while <a data-lt="transaction commit">committing</a> the transaction, or if it was the last remaining request
 that failed.
@@ -4202,7 +4264,9 @@ The event does bubble but is not cancelable.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=async-execute-request>Steps for asynchronously executing a <a>request</a></h4>
+<!-- ============================================================ -->
 
 When taking the <dfn>steps for asynchronously executing a request</dfn> the implementation MUST run the
 following algorithm. The algorithm takes a <var>source</var> object and an <var>operation</var> to
@@ -4244,7 +4308,7 @@ set <a data-lt="request.result">result</a> of <var>request</var>
 to undefined and set the <a data-lt="request.error">error</a> on <var>request</var>
 to <var>result</var>.
 Finally <a>fire an error event</a> at <var>request</var>.
-<aside class="note">
+<aside class=note>
 This only reverts the changes done by this request, not any other changes made by the transaction.
 </aside>
 
@@ -4257,7 +4321,9 @@ Finally <a>fire a success event</a> at <var>request</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=upgrade-transaction-steps>Upgrade transaction steps</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for running an upgrade transaction</dfn> are
 as follows. This algorithm takes three arguments:
@@ -4274,7 +4340,7 @@ except <var>connection</var>, connected to the same <a>database</a> as <var>conn
 For each <var>entry</var> in <var>openConnections</var> that does not have its <a>close pending flag</a> set,
 <a>fire a version change event</a> named <code>versionchange</code>
 at <var>entry</var> with <var>db</var>'s <a>version</a> and <var>version</var>.
-<aside class="note">
+<aside class=note>
 Firing this event might cause one or more of the other objects in <var>openConnections</var> to be closed, in which case
 the <code>versionchange</code> event MUST NOT be fired at those objects if that hasn't yet been done.
 </aside>
@@ -4345,11 +4411,13 @@ This MUST be done in the same task as the task firing the
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=abort-upgrade-transaction>Steps for aborting an upgrade transaction</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for aborting an upgrade transaction</dfn> <var>transaction</var> are as follows.
 
-<aside class="note">
+<aside class=note>
 The steps are run after the normal <a>steps for aborting a transaction</a>, which revert
 changes to the <a>database</a> including the set of associated <a>object stores</a>
 and <a>indexes</a>, as well as the change to the <a>version</a>.
@@ -4365,7 +4433,7 @@ Let <var>database</var> be <var>connection</var>'s <a>database</a>.
 Set <var>connection</var>'s <a data-lt="connection.version">version</a> to <var>database</var>'s <a>version</a>
 if <var>database</var> previously existed,
 or 0 (zero) if <var>database</var> was newly created
-<aside class="note">
+<aside class=note>
 This reverts the value of <code>version</code> returned by the {{IDBDatabase}} object.
 </aside>
 
@@ -4374,7 +4442,7 @@ Set <var>connection</var>'s <a>object store set</a> to the
 set of <a>object stores</a> in <var>database</var>
 if <var>database</var> previously existed,
 or the empty set if <var>database</var> was newly created.
-<aside class="note">
+<aside class=note>
 This reverts the value of <code>objectStoreNames</code> returned by the {{IDBDatabase}} object.
 </aside>
 
@@ -4392,7 +4460,7 @@ Set <var>handle</var>'s <a>index set</a> to the
 set of <a>indexes</a> that reference its <a data-lt="objectStoreHandle.objectStore">object store</a>.
 
 </ol>
-<aside class="note">
+<aside class=note>
 This reverts the values of <code>name</code> and <code>indexNames</code> returned by related {{IDBObjectStore}} objects.
 
 
@@ -4414,7 +4482,7 @@ Set <var>handle</var>'s <a data-lt="indexHandle.name">name</a> to
 its <a data-lt="indexHandle.index">index</a>'s <a data-lt="index.name">name</a>.
 
 </ol>
-<aside class="note">
+<aside class=note>
 This reverts the value of <code>name</code> returned by related {{IDBIndex}} objects.
 
 
@@ -4428,13 +4496,15 @@ can be queried.
 
 </ol>
 
-<aside class="note">
+<aside class=note>
 The <code>name</code> property of the {{IDBDatabase}} instance is not modified,
 even if the aborted <a>upgrade transaction</a> was creating a new <a>database</a>.
 </aside>
 
 
+<!-- ============================================================ -->
 <h4 id=fire-success-event>Fire a success event</h4>
+<!-- ============================================================ -->
 
 To <dfn>fire a success event</dfn> at a <a>request</a>,
 the implementation MUST run the following steps:
@@ -4462,7 +4532,9 @@ abort the transaction by following the <a>steps for aborting a transaction</a> w
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=fire-error-event>Fire an error event</h4>
+<!-- ============================================================ -->
 
 To <dfn>fire an error event</dfn> at a <a><var>request</var></a>,
 the implementation MUST run the following steps:
@@ -4487,7 +4559,7 @@ If an exception was propagated out from any event handler while dispatching the 
 abort the transaction by following the <a>steps for aborting a transaction</a> with
 <var>transaction</var> and a newly created <a>AbortError</a> exception and terminate these steps.
 This is done even if the event's <a>canceled flag</a> is not set.
-<aside class="note">
+<aside class=note>
 This means that if an error event is fired and any of the event handlers throw an exception,
 <var>transaction</var>'s <code>error</code> property is set to an <a>AbortError</a> exception rather than <var>request</var>'s
 <a data-lt="request.error">error</a>, even if <code>preventDefault()</code> is never called.
@@ -4502,12 +4574,16 @@ using <var>transaction</var> and <a>request</a>'s <a data-lt="request.error">err
 
 
 
+<!-- ============================================================ -->
 <h3 id=database-operations>Database operations</h3>
+<!-- ============================================================ -->
 
 This section describes various operations done on the data in <a>object stores</a> and <a>indexes</a>
 in a <a>database</a>. These operations are run by the <a>steps for asynchronously executing a request</a>.
 
+<!-- ============================================================ -->
 <h4 id=object-store-storage-operation>Object Store Storage Operation</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for storing a record into an object store</dfn> with
 <var>store</var>,
@@ -4579,7 +4655,7 @@ and <var>index</var>'s <a>multiEntry flag</a>.
 
 <li>If <var>index key</var> is an exception, or invalid, or failure, take no further actions for this index,
 and continue these substeps for the next index.
-<aside class="note">
+<aside class=note>
 An exception thrown in this step is not rethrown.
 </aside>
 
@@ -4608,10 +4684,10 @@ then for each <var>subkey</var> of the <a>subkeys</a> of <var>index key</var> st
 <var>subkey</var> as its key and <var>key</var> as its value. The records are stored in <var>index</var>'s
 <a data-lt="index record list">list of records</a> such that the list is sorted primarily on the records keys,
 and secondarily on the records values, in ascending order.
-<aside class="note">
+<aside class=note>
 It is valid for there to be no <a>subkeys</a>. In this case no records are added to the index.
 </aside>
-<aside class="note">
+<aside class=note>
 Even if any member of <a>subkeys</a> is an <a>array key</a>, the member is used directly
 as the key for the index record. Nested <a>array keys</a> are not flattened
 or "unpacked" to produce multiple rows; only the outer-most <a>array key</a>
@@ -4625,7 +4701,9 @@ Return <var>key</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=object-store-retrieval-operation>Object Store Retrieval Operations</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for retrieving a value from an object store</dfn> with
 <var>store</var> and <var>range</var> are as follows:
@@ -4716,7 +4794,9 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=index-retrieval-operation>Index Retrieval Operations</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for retrieving a referenced value from an index</dfn> with
 <var>index</var> and <var>range</var> are as follows.
@@ -4807,7 +4887,9 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=object-store-deletion-operation>Object Store Deletion Operation</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for deleting records from an object store</dfn>
 with <var>store</var> and <var>range</var> are as follows.
@@ -4828,7 +4910,9 @@ Return undefined.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=record-counting-operation>Record Counting Operation</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps to count the records in a range</dfn> with <var>source</var> and <var>range</var> are as follows:
 
@@ -4843,7 +4927,9 @@ Return <var>count</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=object-store-clear-operation>Object Store Clear Operation</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for clearing an object store</dfn> with <var>store</var> are as follows.
 
@@ -4861,7 +4947,9 @@ Return undefined.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=cursor-iteration-operation>Cursor Iteration Operation</h4>
+<!-- ============================================================ -->
 
 The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <var>key</var> and <var>primaryKey</var> to iterate to, and an optional <var>count</var> are as follows.
@@ -4873,7 +4961,7 @@ The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <var>direction</var> is "<code>next</code>" or "<code>prev</code>".
 
 <li>Let <var>records</var> be the list of <a>records</a> in <var>source</var>.
-<aside class="note">
+<aside class=note>
 <var>records</var> is always sorted in ascending <a>key</a> order. In the case of
 <var>source</var> being an <a>index</a>, <var>records</var> is secondarily sorted in ascending
 <a>value</a> order (where the value in an <a>index</a> is the <a>key</a> of the <a>record</a> in the referenced <a>object store</a>).
@@ -4889,7 +4977,7 @@ The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <ol>
 <li>
 Switch on <var>direction</var>:
-<dl class="switch">
+<dl class=switch>
 <dt>"<code>next</code>"</dt>
 <dd>
 Let <var>found record</var> be the first record in <var>records</var> which
@@ -5012,7 +5100,9 @@ set <var>cursor</var>'s <a data-lt="cursor.value">value</a> to a <a>structured c
 
 
 
+<!-- ============================================================ -->
 <h3 id=binding>ECMAScript binding</h3>
+<!-- ============================================================ -->
 
 This section defines how <a>key</a> values defined in this specification
 are converted to and from ECMAScript values, and how they may be
@@ -5026,7 +5116,9 @@ types and algorithms from the ECMAScript Language Specification. [[!ECMA-262]]
   for key conversion logic.
 </aside>
 
+<!-- ============================================================ -->
 <h4 id=extract-key-from-value>Steps to extract a key from a value using a <a>key path</a></h4>
+<!-- ============================================================ -->
 
 
 The steps to <dfn>extract a key from a value using a key path</dfn>
@@ -5072,7 +5164,7 @@ using <var>item</var> as <var>keyPath</var> and <var>value</var> as <var>value</
 
 <li>
 Return <var>result</var>.
-<aside class="note">
+<aside class=note>
 This will only ever "recurse" one level since <a>key path</a> sequences can't ever be nested.
 </aside>
 
@@ -5102,7 +5194,9 @@ Return <var>value</var>.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=inject-key-into-value>Steps to inject a key into a value using a key path</h4>
+<!-- ============================================================ -->
 
 The steps to <dfn>inject a key into a value using a key path</dfn> are as follows.
 The algorithm takes a <var>value</var>, a <var>key</var> and a <var>keyPath</var>.
@@ -5149,20 +5243,22 @@ CreateDataProperty(<var>value</var>, <var>last</var>, <var>keyValue</var>)
 <li>Assert: <var>status</var> is true
 </ol>
 
-<aside class="note">
+<aside class=note>
 The <a>key path</a> used here is always a string and never a sequence, since it is not
 possible to create a <a>object store</a> which has a <a>key generator</a> and
 also has a <a data-lt="objectStore.keyPath">key path</a> that is a sequence.
 </aside>
 
-<aside class="note">
+<aside class=note>
 Assertions can be made in the above steps because this algorithm
 is only applied to values that are the output of the
 <a>structured clone algorithm</a>.
 </aside>
 
 
+<!-- ============================================================ -->
 <h4 id=convert-key-to-value>Steps to convert a key to a value</h4>
+<!-- ============================================================ -->
 
 The steps to <dfn>convert a key to a value</dfn> are as follows. These
 steps take one argument, <var>key</var>, and return an ECMAScript value.
@@ -5171,7 +5267,7 @@ steps take one argument, <var>key</var>, and return an ECMAScript value.
 <li>Let <var>type</var> be <var>key</var>'s <a data-lt="key.type">type</a>.
 <li>Let <var>value</var> be <var>key</var>'s <a data-lt="key.value">value</a>.
 <li>Switch on <var>type</var>:
-<dl class="switch">
+<dl class=switch>
 <dt><i>number</i></dt>
 <dd>Return an ECMAScript Number value equal to <var>value</var></dd>
 
@@ -5223,7 +5319,9 @@ with the <var>index</var>th entry of <var>value</var> as input.
 </ol>
 
 
+<!-- ============================================================ -->
 <h4 id=convert-value-to-key>Steps to convert a value to a key</h4>
+<!-- ============================================================ -->
 
 The steps to <dfn>convert a value to a key</dfn> are as follows. These
 steps take two arguments, an ECMAScript value <var>input</var>, and
@@ -5234,7 +5332,7 @@ or the steps may throw an exception.
 <li>If <var>seen</var> was not given, let <var>seen</var> be a new empty set
 <li>If <var>input</var> is in <var>seen</var> return invalid
 <li>Jump to the appropriate step below:
-<dl class="switch">
+<dl class=switch>
 
 <!-- Number -->
 <dt>If Type(<var>input</var>) is Number</dt>
@@ -5347,7 +5445,7 @@ with argument <var>input</var>.
 
 </ol>
 
-<aside class="note">
+<aside class=note>
   These steps are similar to those to <a>convert a value to a key</a>
   but if the top-level value is an <a>Array</a> then members which can
   not be converted to keys are ignored, and duplicates are removed.
@@ -5515,10 +5613,10 @@ shared hosts are therefore recommended to avoid using these
 features, as it would be trivial for other authors to read the data
 and overwrite it.
 
-<aside class="note">
-Even if a path-restriction feature was made available, the usual DOM
-scripting security model would make it trivial to bypass this
-protection and access the data from any path.
+<aside class=note>
+  Even if a path-restriction feature was made available, the usual DOM
+  scripting security model would make it trivial to bypass this
+  protection and access the data from any path.
 </aside>
 
 <h3 id=implementation-risks>Implementation risks</h3>
