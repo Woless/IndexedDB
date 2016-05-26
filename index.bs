@@ -20,10 +20,16 @@ spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
             text: worker; url: #worker
     urlPrefix: infrastructure.html
         type: dfn
+            text: strictly splitting the string; url: #strictly-split-a-string
+            text: structured clone; url: #safe-passing-of-structured-data
             text: structured clone algorithm; url: #safe-passing-of-structured-data
     urlPrefix: webappapis.html
         type: dfn
-            text: queue a task
+            text: queue a task; url: #queue-a-task
+            text: event handler idl attributes; url: #event-handler-idl-attributes
+spec: dom; urlPrefix: https://dom.spec.whatwg.org
+    type: idl
+        text: DOMError; url: #domerror
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
         text: Promise; url: #sec-promise-objects
@@ -31,6 +37,7 @@ spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
         text: Array; url: #sec-array-objects
         text: Uint8Array; url: #sec-typedarray-objects
         text: IdentifierName; url: #prod-IdentifierName
+        text: TypeError; url: #sec-native-error-types-used-in-this-standard-typeerror
 spec: webidl; urlPrefix: https://heycam.github.io/webidl/
     type: dfn
         text: unrestricted double; url: #idl-unrestricted-double
@@ -38,6 +45,10 @@ spec: webidl; urlPrefix: https://heycam.github.io/webidl/
         text: DOMException; url: #idl-DOMException
         text: sequence<DOMString>; url: #idl-sequence
         text: octet; url: #idl-octet
+        text: throw; url: #dfn-throw
+        text: rethrow; url: #dfn-throw
+        text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
+
 </pre>
 
 <!--
@@ -480,14 +491,13 @@ transaction</a> is running.
 
 <h4 id=value-construct>Values</h4>
 
-Each record is associated with a <dfn data-lt="values">value</dfn>. <a
-data-lt="conforming user agent">Conforming user agents</a> MUST
-support any ECMAScript [[!ECMA-262]] value supported by the
-<a>structured clone algorithm</a> [[!HTML]]. This includes simple
-types such as <a>String</a> primitive values and <a>Date</a> objects
-as well as <a>Object</a> and <a>Array</a> instances, {{File}}
-objects, {{Blob}} objects, {{ImageData}}} objects, and so on.
-Record <a>values</a> are stored and retrieved by value rather than by
+Each record is associated with a <dfn data-lt="values">value</dfn>.
+User agents MUST support any ECMAScript [[!ECMA-262]] value supported
+by the <a>structured clone algorithm</a> [[!HTML]]. This includes
+simple types such as <a>String</a> primitive values and <a>Date</a>
+objects as well as <a>Object</a> and <a>Array</a> instances, {{File}}
+objects, {{Blob}} objects, {{ImageData}}} objects, and so on. Record
+<a>values</a> are stored and retrieved by value rather than by
 reference; later changes to a value have no effect on the record
 stored in the database.
 
@@ -1444,8 +1454,7 @@ when a <a>key generator</a> is used.
     than as a result of database operations being reverted. Deleting a
     <a>record</a> from an <a>object store</a> never affects the object
     store's key generator. Even clearing all records from an object
-    store, for example using the <a
-    data-lt="IDBObjectStore.clear"><code>clear()</code></a> method,
+    store, for example using the {{clear()}} method,
     does not affect the <a>current number</a> of the object store's
     key generator.
 
@@ -1771,39 +1780,38 @@ enum IDBRequestReadyState {
 };
 </pre>
 
-
-The {{result}}
+The {{IDBRequest/result}}
 attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
 getter must return the <a data-lt="request.result">result</a> of the
 request, or undefined if the request.resulted in an error.
 
-The {{error}}
+The {{IDBRequest/error}}
 attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
 getter must return the <a data-lt="request.error">error</a> of the
 request, or null if no error occurred.
 
-The {{source}}
+The {{IDBRequest/source}}
 attribute's getter must return the <a
 data-lt="request.source">source</a> of the <a>request</a>, or null if
 no <a data-lt="request.source">source</a> is set.
 
-The {{transaction}} attribute's getter
+The {{IDBRequest/transaction}} attribute's getter
 must return the <a data-lt="request.transaction">transaction</a> of
 the <a>request</a>. This property can be null for certain requests,
-such as for <a>request</a> returned from <a
-data-lt="IDBFactory.open">IDBFactory.open()</a>.
+such as for <a>request</a> returned from {{IDBFactory/open()}}.
 
-The {{readyState}} attribute's getter must return
+The {{IDBRequest/readyState}} attribute's getter must return
 "<code>pending</code>" if the <a>done flag</a> is unset, and
 "<code>done</code>" otherwise.
 
-The {{onsuccess}} attribute is the event handler for the
+The {{IDBRequest/onsuccess}} attribute is the event handler for the
 <code>success</code> event.
 
-The {{onerror}} attribute is the event handler for the
+The {{IDBRequest/onerror}} attribute is the event handler for the
 <code>error</code> event.
+
 
 Methods on {{IDBDatabase}} that return a <a>open request</a> use
 an extended interface to allow listening to the
@@ -1818,10 +1826,10 @@ interface IDBOpenDBRequest : IDBRequest {
 };
 </pre>
 
-The {{onblocked}} attribute is the event handler for the
+The {{IDBOpenDBRequest/onblocked}} attribute is the event handler for the
 <a>blocked</a> event.
 
-The {{onupgradeneeded}} attribute is the event handler for the
+The {{IDBOpenDBRequest/onupgradeneeded}} attribute is the event handler for the
 <a>upgradeneeded</a> event.
 
 
@@ -1842,10 +1850,10 @@ dictionary IDBVersionChangeEventInit : EventInit {
 };
 </pre>
 
-The {{oldVersion}} attribute
+The {{IDBVersionChangeEvent/oldVersion}} attribute
 getter returns the previous version of the database.
 
-The {{newVersion}} attribute
+The {{IDBVersionChangeEvent/newVersion}} attribute
 getter returns the new version of the database, or null if the
 database is being deleted. See the <a>steps for running an upgrade
 transaction</a>.
@@ -1860,13 +1868,11 @@ To <dfn>fire a version change event</dfn> named <var>e</var> at
 <var>newVersion</var>, dispatch an event at <var>target</var>.
 
 The event MUST use the {{IDBVersionChangeEvent}} interface with its
-<code>type</code> set to <var>e</var>, its <a
-data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</a> attribute
-set to <var>oldVersion</var>, and its <a
-data-lt="IDBVersionChangeEvent.newVersion">newVersion</a> attribute
-set to <var>newVersion</var>. This event MUST NOT bubble or be
-cancelable.
-
+<code>type</code> set to <var>e</var>, its
+{{IDBVersionChangeEvent/oldVersion}} attribute set to
+<var>oldVersion</var>, and its {{IDBVersionChangeEvent/newVersion}}
+attribute set to <var>newVersion</var>. This event MUST NOT bubble or
+be cancelable.
 
 
 <h4 id=factory-interface>The <code>IDBFactory</code> interface</h4>
@@ -1886,9 +1892,8 @@ Window implements IDBEnvironment;
 WorkerGlobalScope implements IDBEnvironment;
 </pre>
 
-The {{indexedDB}} attribute provides
-applications a mechanism for accessing capabilities of indexed
-databases.
+The {{IDBEnvironment/indexedDB}} attribute provides applications a
+mechanism for accessing capabilities of indexed databases.
 
 <pre class="idl">
 [Exposed=(Window,Worker)]
@@ -2049,9 +2054,7 @@ dictionary IDBObjectStoreParameters {
 };
 </pre>
 
-<section dfn-for=IDBDatabase>
-
-The {{name}}
+The {{IDBDatabase/name}}
 attribute's getter must return the <a data-lt="database.name">name</a>
 of the <a data-lt="connection">connected</a> <a>database</a>. The
 attribute MUST return this name even if the <a>close pending flag</a>
@@ -2059,7 +2062,7 @@ is set on the <a>connection</a>. In other words, the value of this
 attribute stays constant for the lifetime of the {{IDBDatabase}}
 instance.
 
-The {{version}}
+The {{IDBDatabase/version}}
 attribute's getter must return this <a>connection</a>'s <a
 data-lt="connection.version">version</a>.
 
@@ -2073,7 +2076,7 @@ data-lt="connection.version">version</a>.
 </aside>
 
 
-The {{objectStoreNames}}
+The {{IDBDatabase/objectStoreNames}}
 attribute's getter must return a <a>sorted list</a> of the <a
 data-lt="objectStore.name">names</a> of the <a>object stores</a> in
 this <a>connection</a>'s <a>object store set</a>.
@@ -2087,9 +2090,6 @@ this <a>connection</a>'s <a>object store set</a>.
   close">closed</a>, this attribute will not reflect changes made with
   a later <a>upgrade transaction</a>.
 </aside>
-
-
-</section>
 
 The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
@@ -2127,9 +2127,9 @@ given name in the <a lt="connection">connected</a> <a>database</a>.
 Note that this method must only be called from within an <a>upgrade
 transaction</a>.
 
-This method synchronously modifies the <a
-data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
-on the {{IDBDatabase}} instance on which it was called.
+This method synchronously modifies the
+{{IDBDatabase/objectStoreNames}} property on the {{IDBDatabase}}
+instance on which it was called.
 
 In some implementations it is possible for the implementation to run
 into problems after queuing a task to create the <a>object store</a>
@@ -2166,9 +2166,9 @@ This method destroys the <a>object store</a> with the given name in
 the <a lt="connection">connected</a> <a>database</a>. Note that this
 method must only be called from within an <a>upgrade transaction</a>.
 
-This method synchronously modifies the <a
-data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
-on the {{IDBDatabase}} instance on which it was called.
+This method synchronously modifies the
+{{IDBDatabase/objectStoreNames}} property on the {{IDBDatabase}}
+instance on which it was called.
 
 
 The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</var>)</dfn> method, when invoked, must run these steps:
@@ -2210,18 +2210,18 @@ The <dfn method for=IDBDatabase>close()</dfn> method, when invoked, must run the
 1. Run the <a>steps for closing a database connection</a> with this <a>connection</a>.
 
 
-The {{onabort}} attribute is the event handler for the
+The {{IDBDatabase/onabort}} attribute is the event handler for the
 <code>abort</code> event.
 
-The {{onclose}} attribute is the event handler for the
-<code>close</code> event. <aside class="note">&#9752; The
-<a>IDBDatabase.onclose</a> attribute is new in this edition.
-&#9752;</aside>
+The {{IDBDatabase/onclose}} attribute is the event handler for the
+<code>close</code> event.
 
-The {{onerror}} attribute is the event handler for the
+<aside class="note">&#9752; The {{IDBDatabase/onclose}} attribute is new in this edition. &#9752;</aside>
+
+The {{IDBDatabase/onerror}} attribute is the event handler for the
 <code>error</code> event.
 
-The {{onversionchange}} attribute is the event handler for the
+The {{IDBDatabase/onversionchange}} attribute is the event handler for the
 <code>versionchange</code> event.
 
 
@@ -2264,7 +2264,7 @@ dictionary IDBIndexParameters {
 };
 </pre>
 
-The {{name}} attribute's getter must return this <a>object store
+The {{IDBObjectStore/name}} attribute's getter must return this <a>object store
 handle</a>'s <a data-lt="objectStore.name">name</a>.
 
 <aside class="note">
@@ -2278,7 +2278,7 @@ handle</a>'s <a data-lt="objectStore.name">name</a>.
 </aside>
 
 
-The {{name}} attribute's setter must run these steps:
+The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 1. Let <var>name</var> be the given value.
 
@@ -2305,10 +2305,10 @@ The {{name}} attribute's setter must run these steps:
 
 10. Set this <a>object store handle</a>'s <a data-lt="objectStoreHandle.name">name</a> to <var>name</var>.
 
-<aside class="note">&#9752; The <a>IDBObjectStore.name</a> attribute's setter is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
-The {{keyPath}} attribute's getter must
+The {{IDBObjectStore/keyPath}} attribute's getter must
 return this <a>object store handle</a>'s <a
 data-lt="objectStoreHandle.objectStore">object store</a>'s <a
 data-lt="objectStore.keyPath">key path</a>, or null if none.
@@ -2324,7 +2324,7 @@ instance every time it is inspected. Changing the properties of the
 object has no effect on the <a>object store</a>.
 
 
-The {{indexNames}} attribute's
+The {{IDBObjectStore/indexNames}} attribute's
 getter must return a <a>sorted list</a> of the <a
 data-lt="index.name">names</a> of <a>indexes</a> in this <a>object
 store handle</a>'s <a>index set</a>.
@@ -2339,11 +2339,11 @@ store handle</a>'s <a>index set</a>.
   with a later <a>upgrade transaction</a>.
 </aside>
 
-The {{transaction}} attribute's
+The {{IDBObjectStore/transaction}} attribute's
 getter must return this <a>object store handle</a>'s <a
 data-lt="objectStoreHandle.transaction">transaction</a>,
 
-The {{autoIncrement}} attribute's
+The {{IDBObjectStore/autoIncrement}} attribute's
 getter must return true if this <a>object store handle</a>'s <a
 data-lt="objectStoreHandle.objectStore">object store</a> has a <a>key
 generator</a>, and false otherwise.
@@ -2570,10 +2570,10 @@ that range.
 <aside class="note">
   This method produces the same result if a record with the given key
   doesn't exist as when a record exists, but has undefined as value.
-  If you need to tell the two situations apart, you can use <a
-  data-lt="IDBObjectStore.openCursor">openCursor</a> with the same
-  key. This will return a cursor with undefined as value if a record
-  exists, or no cursor if no such record exists.
+  If you need to tell the two situations apart, you can use
+  {{IDBObjectStore/openCursor()}} with the same key. This will return
+  a cursor with undefined as value if a record exists, or no cursor if
+  no such record exists.
 </aside>
 
 
@@ -2608,7 +2608,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 retrieved. If a range is specified, the method retrieves
 the first existing key in that range.
 
-<aside class="note">&#9752; The <a>IDBObjectStore.getKey</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBObjectStore/getKey()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
@@ -2642,7 +2642,7 @@ null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
 records in range, only the first <var>count</var> will be retrieved.
 
-<aside class="note">&#9752; The <a>IDBObjectStore.getAll</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBObjectStore/getAll()}} method is new in this edition. &#9752;</aside>
 
 The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
@@ -2676,7 +2676,7 @@ range</a> is used. If <var>count</var> is specified and
 there are more than <var>count</var> keys in range,
 only the first <var>count</var> will be retrieved.
 
-<aside class="note">&#9752; The <a>IDBObjectStore.getAllKeys</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBObjectStore/getAllKeys()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
@@ -2787,7 +2787,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
-<aside class="note">&#9752; The <a>IDBObjectStore.openKeyCursor</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBObjectStore/openKeyCursor()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
@@ -2853,12 +2853,11 @@ task</a> to abort the <a>upgrade transaction</a> which was used for
 the createIndex call.
 
 
-This method synchronously modifies the <a
-data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
-{{IDBObjectStore}} instance on which it was called. Although this
-method does not return an {{IDBRequest}} object, the index creation
-itself is processed as an asynchronous request within the <a>upgrade
-transaction</a>.
+This method synchronously modifies the {{IDBObjectStore/indexNames}}
+property on the {{IDBObjectStore}} instance on which it was called.
+Although this method does not return an {{IDBRequest}} object, the
+index creation itself is processed as an asynchronous request within
+the <a>upgrade transaction</a>.
 
 In some implementations it is possible for the implementation to
 asynchronously run into problems creating the index after the
@@ -2963,12 +2962,11 @@ This method destroys the <a>index</a> with the given name in the
 <a>object store</a>. Note that this method must only be called from
 within an <a>upgrade transaction</a>.
 
-This method synchronously modifies the <a
-data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
-{{IDBObjectStore}} instance on which it was called. Although this
-method does not return an {{IDBRequest}} object, the index
-destruction itself is processed as an asynchronous request within the
-<a>upgrade transaction</a>.
+This method synchronously modifies the {{IDBObjectStore/indexNames}}
+property on the {{IDBObjectStore}} instance on which it was called.
+Although this method does not return an {{IDBRequest}} object, the
+index destruction itself is processed as an asynchronous request
+within the <a>upgrade transaction</a>.
 
 
 <h4 id=index-interface>The <code>IDBIndex</code> interface</h4>
@@ -2997,7 +2995,7 @@ interface IDBIndex {
 </pre>
 
 
-The {{name}}
+The {{IDBIndex/name}}
 attribute's getter must return this <a>index handle</a>'s <a
 data-lt="index.name">name</a>.
 
@@ -3012,7 +3010,7 @@ data-lt="index.name">name</a>.
 </aside>
 
 
-The {{name}} attribute's setter must run these steps:
+The {{IDBIndex/name}} attribute's setter must run these steps:
 
 1. Let <var>name</var> be the given value.
 
@@ -3044,17 +3042,15 @@ The {{name}} attribute's setter must run these steps:
 10. Set this <a>index handle</a>'s <a
     data-lt="indexHandle.name">name</a> to <var>name</var>.
 
-<aside class="note">&#9752; The <a>IDBIndex.name</a> attribute's setter is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBIndex/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
-The {{objectStore}} attribute's getter
+The {{IDBIndex/objectStore}} attribute's getter
 must return this <a>index handle</a>'s <a
 data-lt="indexHandle.objectStoreHandle">object store handle</a>.
 
-
-The {{keyPath}}
-attribute's getter must return this <a>index handle</a>'s <a
-data-lt="indexHandle.index">index</a>'s <a
+The {{IDBIndex/keyPath}} attribute's getter must return this <a>index
+handle</a>'s <a data-lt="indexHandle.index">index</a>'s <a
 data-lt="objectStore.keyPath">key path</a>.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic
@@ -3067,15 +3063,13 @@ The returned value is not the same instance that was used when the
 every time it is inspected. Changing the properties of the object has
 no effect on the <a>index</a>.
 
-The {{multiEntry}} attribute's getter must
-return true if this <a>index handle</a>'s <a
-data-lt="indexHandle.index">index</a>'s <a>multiEntry flag</a> is set,
-and false otherwise.
+The {{IDBIndex/multiEntry}} attribute's getter must return true if
+this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>'s
+<a>multiEntry flag</a> is set, and false otherwise.
 
-The {{unique}}
-attribute's getter must return true if this <a>index handle</a>'s <a
-data-lt="indexHandle.index">index</a>'s <a>unique flag</a> is set, and
-false otherwise.
+The {{IDBIndex/unique}} attribute's getter must return true if this
+<a>index handle</a>'s <a data-lt="indexHandle.index">index</a>'s
+<a>unique flag</a> is set, and false otherwise.
 
 The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
@@ -3112,10 +3106,10 @@ that range.
 <aside class="note">
   This method produces the same result if a record with the given key
   doesn't exist as when a record exists, but has undefined as value.
-  If you need to tell the two situations apart, you can use <a
-  data-lt="IDBIndex.openCursor">openCursor</a> with the same key. This
-  will return a cursor with undefined as value if a record exists, or
-  no cursor if no such record exists.
+  If you need to tell the two situations apart, you can use
+  {{IDBIndex/openCursor()}} with the same key. This will return a cursor
+  with undefined as value if a record exists, or no cursor if no such
+  record exists.
 </aside>
 
 
@@ -3182,7 +3176,7 @@ null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
 records in range, only the first <var>count</var> will be retrieved.
 
-<aside class="note">&#9752; The <a>IDBIndex.getAll</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBIndex/getAll()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
@@ -3217,7 +3211,7 @@ used. If <var>count</var> is specified and there are more than
 <var>count</var> keys in range, only the first <var>count</var> will
 be retrieved.
 
-<aside class="note">&#9752; The <a>IDBIndex.getAllKeys</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBIndex/getAllKeys()}} method is new in this edition. &#9752;</aside>
 
 
 The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
@@ -3353,23 +3347,19 @@ interface IDBKeyRange {
 };
 </pre>
 
-The {{lower}}
-attribute's getter must return result of running the steps to
-<a>convert a key to a value</a> with the <a>lower bound</a> if it is
-not null, or undefined otherwise.
+The {{IDBKeyRange/lower}} attribute's getter must return result of
+running the steps to <a>convert a key to a value</a> with the <a>lower
+bound</a> if it is not null, or undefined otherwise.
 
-The {{upper}}
-attribute's getter must return the result of running the steps to
-<a>convert a key to a value</a> with the <a>upper bound</a> if it is
-not null, or undefined otherwise.
+The {{IDBKeyRange/upper}} attribute's getter must return the result of
+running the steps to <a>convert a key to a value</a> with the <a>upper
+bound</a> if it is not null, or undefined otherwise.
 
-The {{lowerOpen}} attribute's getter
-must return true if the <a>lower open flag</a> is set, and false
-otherwise.
+The {{IDBKeyRange/lowerOpen}} attribute's getter must return true if
+the <a>lower open flag</a> is set, and false otherwise.
 
-The {{upperOpen}} attribute's getter
-must return true if the <a>upper open flag</a> is set, and false
-otherwise.
+The {{IDBKeyRange/upperOpen}} attribute's getter must return true if
+the <a>upper open flag</a> is set, and false otherwise.
 
 The <dfn method for=IDBKeyRange>only(<var>value</var>)</dfn> method, when invoked, must run these steps:
 
@@ -3453,7 +3443,7 @@ The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invo
 3. Return true if <var>k</var> is <a data-lt="in a key range">in</a>
     this range, and false otherwise.
 
-<aside class="note">&#9752; The <a>IDBKeyRange.includes</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBKeyRange/includes()}} method is new in this edition. &#9752;</aside>
 
 
 <h4 id=cursor-interface>The <code>IDBCursor</code> interface</h4>
@@ -3488,17 +3478,16 @@ enum IDBCursorDirection {
 };
 </pre>
 
-
-The {{source}} attribute's getter must return the <a
+The {{IDBCursor/source}} attribute's getter must return the <a
 data-lt="cursor.source">source</a> of this <a>cursor</a>. This
 attribute never returns null or throws an exception, even if the
 cursor is currently being iterated, has iterated past its end, or its
 <a>transaction</a> is not <a>active</a>.
 
-The {{direction}} attribute's getter must return the <a>direction</a>
+The {{IDBCursor/direction}} attribute's getter must return the <a>direction</a>
 of the <a>cursor</a>.
 
-The {{key}} attribute's getter must return the result of running the
+The {{IDBCursor/key}} attribute's getter must return the result of running the
 steps to <a>convert a key to a value</a> with the cursor's current <a
 data-lt="cursor.key">key</a>. Note that if this property returns an
 object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
@@ -3508,7 +3497,7 @@ is modified, those modifications will be seen by anyone inspecting the
 value of the cursor. However modifying such an object does not modify
 the contents of the database.
 
-The {{primaryKey}} attribute's getter must return the result of
+The {{IDBCursor/primaryKey}} attribute's getter must return the result of
 running the steps to <a>convert a key to a value</a> with the cursor's
 current <a>effective key</a>. Note that if this property returns an
 object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
@@ -3517,7 +3506,6 @@ object instance every time it is inspected, until the cursor's
 modified, those modifications will be seen by anyone inspecting the
 value of the cursor. However modifying such an object does not modify
 the contents of the database.
-
 
 The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoked, must run these steps:
 
@@ -3752,7 +3740,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
     this <a>cursor</a>, <var>key</var>, <var>primaryKey</var>, and
     <var>request</var>.
 
-<aside class="note">&#9752; The <a>IDBCursor.continuePrimaryKey</a> method is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBCursor/continuePrimaryKey()}} method is new in this edition. &#9752;</aside>
 
 <aside class="note">
   Calling this method more than once before new cursor data has been
@@ -3803,8 +3791,8 @@ interface IDBCursorWithValue : IDBCursor {
 };
 </pre>
 
-The {{value}} attribute's getter must return the cursor's current <a
-data-lt="cursor.value">value</a>.
+The {{IDBCursorWithValue/value}} attribute's getter must return the
+cursor's current <a data-lt="cursor.value">value</a>.
 
 Note that if this property returns an object, it returns the same
 object instance every time it is inspected, until the cursor's <a
@@ -3842,7 +3830,8 @@ enum IDBTransactionMode {
 };
 </pre>
 
-The {{objectStoreNames}} attribute's getter must run the following steps:
+The {{IDBTransaction/objectStoreNames}} attribute's getter must run
+the following steps:
 
 1. If this <a>transaction</a> is an <a>upgrade transaction</a>, return a
     <a>sorted list</a> of the <a data-lt="objectStore.name">names</a>
@@ -3853,7 +3842,7 @@ The {{objectStoreNames}} attribute's getter must run the following steps:
     of the <a>object stores</a> in this <a>transaction</a>'s <a>scope</a>.
 
 
-<aside class="note">&#9752; The <a>IDBTransaction.objectStoreNames</a> attribute is new in this edition. &#9752;</aside>
+<aside class="note">&#9752; The {{IDBTransaction/objectStoreNames}} attribute is new in this edition. &#9752;</aside>
 
 <aside class="note">
   The contents of each list returned by this attribute does not
@@ -3862,18 +3851,16 @@ The {{objectStoreNames}} attribute's getter must run the following steps:
   <a>object stores</a> are created and deleted.
 </aside>
 
+The {{IDBTransaction/mode}} attribute's getter must return the
+<a>mode</a> of the <a>transaction</a>.
 
-The {{mode}}
-attribute's getter must return the <a>mode</a> of the
-<a>transaction</a>.
+The {{IDBTransaction/db}} attribute's getter must return the
+<a>database</a> <a>connection</a> of which this <a>transaction</a> is
+a part.
 
-The {{db}}
-attribute's getter must return the <a>database</a> <a>connection</a>
-of which this <a>transaction</a> is a part.
-
-The {{error}}
-attribute's getter must return this <a>transaction</a>'s <a
-data-lt="transaction error">error</a>, or null if none.
+The {{IDBTransaction/error}} attribute's getter must return this
+<a>transaction</a>'s <a data-lt="transaction error">error</a>, or null
+if none.
 
 <aside class="note">
   If this <a>transaction</a> was aborted due to a failed
@@ -3926,14 +3913,14 @@ The <dfn method for=IDBTransaction>abort()</dfn> method, when invoked, must run 
     <a>steps for aborting a transaction</a> with null as <var>error</var>.
 
 
-The {{onabort}} attribute is the event
-handler for the <code>abort</code> event.
+The {{IDBTransaction/onabort}} attribute is the event handler for the
+<code>abort</code> event.
 
-The {{oncomplete}} attribute is the
-event handler for the <code>complete</code> event.
+The {{IDBTransaction/oncomplete}} attribute is the event handler for
+the <code>complete</code> event.
 
-The {{onerror}} attribute is the event
-handler for the <code>error</code> event.
+The {{IDBTransaction/onerror}} attribute is the event handler for the
+<code>error</code> event.
 
 <aside class="note">
   To determine if a <a>transaction</a> has completed successfully,
@@ -5093,7 +5080,7 @@ This will only ever "recurse" one level since <a>key path</a> sequences can't ev
 If <var>keyPath</var> is the empty string, return <var>value</var> and skip the remaining steps.
 
 <li>
-Let <var>identifiers</var> be the result of <a data-lt="strictly split a string">strictly splitting the string</a> <var>keyPath</var> on
+Let <var>identifiers</var> be the result of <a>strictly splitting the string</a> <var>keyPath</var> on
 U+002E FULL STOP characters (.).
 
 <li>
@@ -5121,7 +5108,7 @@ The algorithm takes a <var>value</var>, a <var>key</var> and a <var>keyPath</var
 <ol class=algorithm>
 <li>
 Let <var>identifiers</var> be the result of
-<a data-lt="strictly split a string">strictly splitting the string</a>
+<a>strictly splitting the string</a>
 <var>keyPath</var> on U+002E FULL STOP characters (.).
 
 <li>Assert: <var>identifiers</var> is not empty.
@@ -5573,13 +5560,13 @@ document's Revision History</a>.
 * Address comparison of empty arrays.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27712">bug #27712</a>)
 
-* Added <a>IDBObjectStore.openKeyCursor</a>.
+* Added {{IDBObjectStore/openKeyCursor()}}.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=19955">bug #19955</a>)
 
 * Correct <var>source</var> used for
-    <a>IDBIndex.get</a>,
-    <a>IDBIndex.getKey</a>,
-    <a>IDBIndex.openKeyCursor</a>.
+    {{IDBIndex/get()}},
+    {{IDBIndex/getKey()}} and
+    {{IDBIndex/openKeyCursor()}}.
 
 * Added details around garbage collection of {{IDBDatabase}} objects.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25223">bug #25223</a>)
@@ -5588,7 +5575,7 @@ document's Revision History</a>.
 
 * Added <var>forced flag</var> to the <a>steps for closing a database connection</a>,
     described the firing of a "<code>close</code>" event, and
-    <a>IDBDatabase.onclose</a>.
+    {{IDBDatabase/onclose}}.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22540">bug #22540</a>)
 
 * Converted specification to a more algorithmic style,
@@ -5596,32 +5583,32 @@ document's Revision History</a>.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=17681">bug #17681</a>)
 
 * Added
-    <a>IDBObjectStore.getAll</a>,
-    <a>IDBObjectStore.getAllKeys</a>,
-    <a>IDBIndex.getAll</a>,
-    <a>IDBIndex.getAllKeys</a>.
+    {{IDBObjectStore/getAll()}},
+    {{IDBObjectStore/getAllKeys()}},
+    {{IDBIndex/getAll()}},
+    {{IDBIndex/getAllKeys()}}.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=16595">bug #16595</a>)
 
-* Replaced <code>DOMError</code> with <code>DOMException</code>.
+* Replaced {{DOMError}} with <a>DOMException</a>.
     (<a href="https://github.com/w3c/IndexedDB/issues/16">bug #16</a>)
 
-* Added <a>IDBTransaction.objectStoreNames</a>.
+* Added {{IDBTransaction/objectStoreNames}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/18">bug #18</a>)
 
 * Added <i>binary</i> <a>keys</a>, including comparisons and ECMAScript bindings.
     (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #21</a>)
 
-* Allow renaming stores and indexes via <a>IDBObjectStore.name</a>
-    and <a>IDBIndex.name</a> attribute setters.
+* Allow renaming stores and indexes via {{IDBObjectStore/name}}
+    and {{IDBIndex/name}} attribute setters.
     (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #22</a>)
 
-* Added <a>IDBCursor.continuePrimaryKey</a>.
+* Added {{IDBCursor/continuePrimaryKey()}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/14">bug #14</a>)
 
-* Added <a>IDBKeyRange.includes</a>.
+* Added {{IDBKeyRange/includes()}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/41">bug #41</a>)
 
-* Added <a>IDBObjectStore.getKey</a>.
+* Added {{IDBObjectStore/getKey()}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/26">bug #26</a>)
 
 
