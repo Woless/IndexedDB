@@ -25,7 +25,7 @@ This is the Second Edition of Indexed Database API. The
 <a href="https://www.w3.org/TR/IndexedDB/">First Edition</a>
 became a W3C Recommendation on 8 January 2015.
 
-</section>
+
 
 <!-- ============================================================ -->
 <h2 id=introduction>Introduction</h2>
@@ -273,7 +273,7 @@ sorted in ascending order using the algorithm defined by step 4 of
 Algorithm</cite> of the ECMAScript Language Specification
 [[!ECMA-262]].
 
-</section>
+
 
 <h3 id=constructs>Constructs</h3>
 
@@ -1988,7 +1988,7 @@ If this throws an exception, <a>rethrow</a> it.
 </ol>
 
 
-</section>
+
 
 <section id="database-interface" class="section">
 <h4>The <code>IDBDatabase</code> interface</h4>
@@ -2218,7 +2218,7 @@ The <dfn data-lt-noDefault data-lt="IDBDatabase.onerror">onerror</dfn> attribute
 The <dfn data-lt-noDefault data-lt="IDBDatabase.onversionchange">onversionchange</dfn> attribute is the event handler for the <code>versionchange</code> event.
 
 
-</section>
+
 
 <section class="section" id="object-store">
 <h4>The <code>IDBObjectStore</code> interface</h4>
@@ -2998,7 +2998,7 @@ processed as an asynchronous request within the <a>upgrade transaction</a>.
 
 
 
-</section>
+
 
 <section class="section" id="index">
 <h4>The <code>IDBIndex</code> interface</h4>
@@ -3382,7 +3382,7 @@ The <var>query</var> parameter may be a <a>key</a> or an
 <a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>.
 If null or not given, an <a>unbounded key range</a> is used.
 
-</section>
+
 
 <section class="section" id="keyrange">
 <h4>The <code>IDBKeyRange</code> interface</h4>
@@ -3506,7 +3506,7 @@ If this throws an an exception, <a>rethrow</a> it.
 <li>Return true if <var>k</var> is <a data-lt="in a key range">in</a> this range, and false otherwise.
 </ol>
 <aside class="note">&#9752; The <a>IDBKeyRange.includes</a> method is new in this edition. &#9752;</aside>
-</section>
+
 
 <section class="section" id="cursor">
 <h4>The <code>IDBCursor</code> interface</h4>
@@ -3849,7 +3849,7 @@ those modifications will be seen by anyone inspecting the value of the cursor. H
 does not modify the contents of the database.
 
 
-</section>
+
 
 <section class="section" id="transaction">
 <h4>The <code>IDBTransaction</code> interface</h4>
@@ -3979,8 +3979,8 @@ because the <a>transaction</a> may still fail after the <code>success</code> eve
 </aside>
 
 
-</section>
-</section>
+
+
 
 <section class="section" id="algorithms">
 <h3>Algorithms</h3>
@@ -4069,7 +4069,7 @@ create and return a new <a>AbortError</a> exception and abort these steps.
 Return <var>connection</var>.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Closing a database</h4>
@@ -4110,7 +4110,7 @@ transaction</a>, and the <a>steps for deleting a database</a>, which <a href="#d
 <a href="#version-change-close-block">wait</a> for <a>connections</a> to a given <a>database</a> to be closed
 before continuing.
 </aside>
-</section>
+
 
 <section class="section">
 <h4>Deleting a database</h4>
@@ -4161,7 +4161,7 @@ Delete <var>db</var>.
 Return <var>version</var>.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Steps for committing a transaction</h4>
@@ -4190,7 +4190,7 @@ has been successfully written is the "<code>complete</code>" event fired.
 </aside>
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Steps for aborting a transaction</h4>
@@ -4252,7 +4252,7 @@ The event must use the <a>Event</a> interface and have its <code>type</code> set
 The event does bubble but is not cancelable.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Steps for asynchronously executing a <a>request</a></h4>
@@ -4308,7 +4308,7 @@ to <var>result</var> set the <a data-lt="request.error">error</a> of <var>reques
 Finally <a>fire a success event</a> at <var>request</var>.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Upgrade transaction steps</h4>
@@ -4397,7 +4397,7 @@ This MUST be done in the same task as the task firing the
 <code>complete</code> or <code>abort</code> event, but after those events has been fired.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Steps for aborting an upgrade transaction</h4>
@@ -4487,7 +4487,7 @@ can be queried.
 The <code>name</code> property of the <a>IDBDatabase</a> instance is not modified,
 even if the aborted <a>upgrade transaction</a> was creating a new <a>database</a>.
 </aside>
-</section>
+
 
 <section class="section">
 <h4>Fire a success event</h4>
@@ -4516,7 +4516,7 @@ abort the transaction by following the <a>steps for aborting a transaction</a> w
 <var>transaction</var> and a newly created <a>AbortError</a> exception.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Fire an error event</h4>
@@ -4556,8 +4556,8 @@ run the <a>steps for aborting a transaction</a>
 using <var>transaction</var> and <a>request</a>'s <a data-lt="request.error">error</a>.
 
 </ol>
-</section>
-</section>
+
+
 
 <section class="section" id="database-operations">
 <h3>Database operations</h3>
@@ -4682,7 +4682,7 @@ or "unpacked" to produce multiple rows; only the outer-most <a>array key</a>
 Return <var>key</var>.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Object Store Retrieval Operations</h4>
@@ -4774,7 +4774,7 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 <li>Return <var>array</var>
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Index Retrieval Operations</h4>
@@ -4866,7 +4866,7 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 <li>Return <var>array</var>
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Object Store Deletion Operation</h4>
@@ -4888,7 +4888,7 @@ whose value is <a data-lt="in a key range">in</a> <var>range</var>, if any such 
 Return undefined.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Record Counting Operation</h4>
@@ -4904,7 +4904,7 @@ in <var>source</var>'s list of records with key <a data-lt="in a key range">in</
 Return <var>count</var>.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Object Store Clear Operation</h4>
@@ -4923,7 +4923,7 @@ In all <a>indexes</a> which <a>reference</a> <var>store</var>, remove all
 Return undefined.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Cursor Iteration Operation</h4>
@@ -5074,8 +5074,8 @@ set <var>cursor</var>'s <a data-lt="cursor.value">value</a> to a <a>structured c
 <li>Set <var>cursor</var>'s <a>got value flag</a>.
 <li>Return <var>cursor</var>.
 </ol>
-</section>
-</section>
+
+
 
 <section class="section" id="binding">
 <h3>ECMAScript binding</h3>
@@ -5168,7 +5168,7 @@ and <var>identifier</var> is "<code>length</code>", return a Number equal to the
 Return <var>value</var>.
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Steps to inject a key into a value using a key path</h4>
@@ -5229,7 +5229,7 @@ Assertions can be made in the above steps because this algorithm
 is only applied to values that are the output of the
 <a>structured clone algorithm</a>.
 </aside>
-</section>
+
 
 <section class="section">
 <h4>Steps to convert a key to a value</h4>
@@ -5291,7 +5291,7 @@ with the <var>index</var>th entry of <var>value</var> as input.
 </dl>
 
 </ol>
-</section>
+
 
 <section class="section">
 <h4>Steps to convert a value to a key</h4>
@@ -5429,12 +5429,12 @@ For example, the value <code>[10, 20, null, 30, 20]</code> is converted to an
 <a>array key</a> with <a>subkeys</a> 10, 20, 30.
 
 </aside>
-</section>
 
-</section>
+
+
 
 <!-- database-api -->
-</section>
+
 
 <section id="privacy" class="informative">
 <h2>Privacy</h2>
@@ -5559,7 +5559,7 @@ sites, using using visitors' IP addresses and other user-specific
 data (e.g. user-agent headers and configuration settings) to combine
 separate sessions into coherent user profiles.
 
-</section>
+
 
 <section id="cookie-resurrection" class="section">
 <h3>Cookie resurrection</h3>
@@ -5572,7 +5572,7 @@ to delete data in one and not the other. This would allow sites to
 use the two features as redundant backup for each other, defeating a
 user's attempts to protect his privacy.
 
-</section>
+
 
 <section id="sensitivity-of-data" class="section">
 <h3>Sensitivity of data</h3>
@@ -5587,8 +5587,8 @@ mechanism.
 To this end, user agents should ensure that when deleting data,
 it is promptly deleted from the underlying storage.
 
-</section>
-</section> <!-- Privacy -->
+
+ <!-- Privacy -->
 
 <section id="authorization" class="informative">
 <h2>Authorization</h2>
@@ -5604,7 +5604,7 @@ SSL can be sure that only pages using SSL that have certificates
 identifying them as being from the same domain can access their
 databases.
 
-</section>
+
 
 <section id="cross-directory-attacks" class="section">
 <h3>Cross-directory attacks</h3>
@@ -5627,7 +5627,7 @@ available, the usual DOM scripting security model would make it
 trivial to bypass this protection and access the data from any
 path.
 </aside>
-</section>
+
 
 <section id="implementation-risks" class="section">
 <h3>Implementation risks</h3>
@@ -5661,8 +5661,8 @@ the user's actions on the victim site.
 Thus, strictly following the <span>origin</span> model described
 in this specification is important for user security.
 
-</section>
-</section> <!-- authorization -->
+
+ <!-- authorization -->
 
 <section class="appendix section" id="requirements">
 <h2>Requirements</h2>
@@ -5670,7 +5670,7 @@ in this specification is important for user security.
 Requirements will be written with an aim to verify that these were actually
 met by the API specified in this document.
 </div>
-</section>
+
 <section class="appendix section" id="revision-history">
 <h2>Revision History</h2>
 
@@ -5736,18 +5736,18 @@ and <a>IDBIndex.name</a> attribute setters.
 (<a href="https://github.com/w3c/IndexedDB/issues/26">bug #26</a>)
 
 </ul>
-</section>
-<section class="section appendix" id="acknowledgements">
-<h2>Acknowledgements</h2>
-<div>
+
+<h2 id=acknowledgements>Acknowledgements</h2>
 
 Special thanks to Nikunj Mehta, the original author of
 the first edition, and Jonas Sicking, Eliot Graff, Andrei Popescu,
 and Jeremy Orlow, additional editors of the First Edition.
 
-
 Garret Swart was extremely influential in the design of this specification.
 
+Thanks to Tab Atkins, Jr. for creating and maintaining <a
+href="https://github.com/tabatkins/bikeshed">Bikeshed</a>, the
+specification authoring tool used to create this document.
 
 Special thanks to
 Chris Anderson,
@@ -5786,8 +5786,3 @@ Zhiqiang Zhang,
 and
 Kris Zyp,
 all of whose feedback and suggestions have led to improvements to this specification.
-
-</div>
-</section>
-</body>
-</html>
