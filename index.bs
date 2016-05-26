@@ -309,7 +309,7 @@ sorted in ascending order using the algorithm defined by step 4 of
 Algorithm</cite> of the ECMAScript Language Specification
 [[!ECMA-262]].
 
-<div class=issue>Make this reference more robust.</div>
+<aside class=issue>Make this reference more robust.</aside>
 
 
 <!-- ============================================================ -->
@@ -1796,7 +1796,7 @@ request.onerror = function(evt) {...};
 </pre>
 </aside>
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBRequest : EventTarget {
   readonly    attribute any                                        result;
@@ -1853,7 +1853,7 @@ Methods on {{IDBDatabase}} that return a <a>open request</a> use
 an extended interface to allow listening to the
 <a>blocked</a> event and <a>upgradeneeded</a> event.
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBOpenDBRequest : IDBRequest {
   // Event handlers:
@@ -1875,7 +1875,7 @@ The {{IDBOpenDBRequest/onupgradeneeded}} attribute is the event handler for the
 
 This specification fires events with the following custom interfaces:
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker), Constructor(DOMString type, optional IDBVersionChangeEventInit eventInitDict)]
 interface IDBVersionChangeEvent : Event {
   readonly    attribute unsigned long long  oldVersion;
@@ -1923,7 +1923,7 @@ interface is present in the global scope of environments that support
 Indexed DB operations.
 
 
-<pre class="idl">
+<pre class=idl>
 [NoInterfaceObject]
 interface IDBEnvironment {
   readonly    attribute IDBFactory indexedDB;
@@ -1935,7 +1935,7 @@ WorkerGlobalScope implements IDBEnvironment;
 The {{IDBEnvironment/indexedDB}} attribute provides applications a
 mechanism for accessing capabilities of indexed databases.
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBFactory {
   IDBOpenDBRequest open(DOMString name, [EnforceRange] optional unsigned long long version);
@@ -2070,7 +2070,7 @@ If an {{IDBDatabase}} object is garbage collected, the
 associated <a>connection</a> must be <a data-lt="database close">closed</a>.
 
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBDatabase : EventTarget {
   readonly    attribute DOMString          name;
@@ -2238,7 +2238,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 
 8. When control is returned to the event loop, the implementation MUST unset the <a>active flag</a>.
 
-    <aside class="issue">Specify this more precisely in terms of tasks and microtasks.</aside>
+    <aside class=issue>Specify this more precisely in terms of tasks and microtasks.</aside>
 
 9. Return an {{IDBTransaction}} object representing <var>transaction</var>.
 
@@ -2274,7 +2274,7 @@ The {{IDBDatabase/onversionchange}} attribute is the event handler for the
 The {{IDBObjectStore}}
 interface represents an <a>object store handle</a>.
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBObjectStore {
   attribute DOMString      name;
@@ -3020,7 +3020,7 @@ within the <a>upgrade transaction</a>.
 The {{IDBIndex}} interface represents an <a>index handle</a>.
 
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBIndex {
   attribute DOMString      name;
@@ -3377,7 +3377,7 @@ or not given, an <a>unbounded key range</a> is used.
 The {{IDBKeyRange}} interface represents a
 <a>key range</a>.
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBKeyRange {
   readonly    attribute any     lower;
@@ -3504,7 +3504,7 @@ is only ever one {{IDBCursor}} instance representing a given
 the same time.
 
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBCursor {
   readonly    attribute (IDBObjectStore or IDBIndex) source;
@@ -3834,7 +3834,7 @@ The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run thes
 A <a>cursor</a> that has the <a>key only flag</a> unset implements the {{IDBCursorWithValue}} interface as well.
 
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBCursorWithValue : IDBCursor {
   readonly    attribute any value;
@@ -3858,7 +3858,7 @@ does not modify the contents of the database.
 
 <a>Transaction</a> objects implement the following interface:
 
-<pre class="idl">
+<pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBTransaction : EventTarget {
   readonly    attribute DOMStringList      objectStoreNames;
@@ -5111,7 +5111,7 @@ This section references
 types and algorithms from the ECMAScript Language Specification. [[!ECMA-262]]
 
 
-<aside class="issue">
+<aside class=issue>
   Simplify this section as much as possible by relying more on [[!WEBIDL]]
   for key conversion logic.
 </aside>
