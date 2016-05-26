@@ -2911,53 +2911,44 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.index">index(<var>name</var>)
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.deleteIndex">deleteIndex(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>transaction</var> is not an <a>upgrade transaction</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
+4. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
+6. Let <var>index</var> be the <a>index</a> <a
+    data-lt="index.name">named</a> <var>name</var> in <var>store</var>
+    if one exists, or <a>throw</a> a <a>NotFoundError</a> exception
+    otherwise.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+7. Remove <var>index</var> from this <a>object store handle</a>'s
+    <a>index set</a>.
 
+8. Destroy <var>index</var>.
 
-<li>
-Let <var>index</var> be the <a>index</a> <a data-lt="index.name">named</a> <var>name</var> in <var>store</var>
-if one exists, or <a>throw</a> a <a>NotFoundError</a> exception otherwise.
+This method destroys the <a>index</a> with the given name in the
+<a>object store</a>. Note that this method must only be called from
+within an <a>upgrade transaction</a>.
 
-
-<li>
-Remove <var>index</var> from this <a>object store handle</a>'s <a>index set</a>.
-
-
-<li>Destroy <var>index</var>.
-
-</ol>
-
-This method destroys the <a>index</a> with the given name in the <a>object store</a>.
-Note that this method must only be called from within an <a>upgrade transaction</a>.
-
-
-This method synchronously modifies the
-<a data-lt="IDBObjectStore.indexNames">indexNames</a> property
-on the <a>IDBObjectStore</a> instance on which it was called.
-Although this method does not return an <a>IDBRequest</a> object, the index destruction itself is
-processed as an asynchronous request within the <a>upgrade transaction</a>.
+This method synchronously modifies the <a
+data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
+<a>IDBObjectStore</a> instance on which it was called. Although this
+method does not return an <a>IDBRequest</a> object, the index
+destruction itself is processed as an asynchronous request within the
+<a>upgrade transaction</a>.
 
 
-
-
-
-<section class="section" id="index">
-<h4>The <code>IDBIndex</code> interface</h4>
-<!-- TODO Add example. Should examples be in a separate section?-->
+<h4 id=index>The <code>IDBIndex</code> interface</h4>
 
 The <a>IDBIndex</a> interface represents an <a>index handle</a>.
 
@@ -2965,258 +2956,245 @@ The <a>IDBIndex</a> interface represents an <a>index handle</a>.
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBIndex {
-attribute DOMString      name;
-readonly    attribute IDBObjectStore objectStore;
-readonly    attribute any            keyPath;
-readonly    attribute boolean        multiEntry;
-readonly    attribute boolean        unique;
+  attribute DOMString      name;
+  readonly    attribute IDBObjectStore objectStore;
+  readonly    attribute any            keyPath;
+  readonly    attribute boolean        multiEntry;
+  readonly    attribute boolean        unique;
 
-IDBRequest get(any query);
-IDBRequest getKey(any query);
-IDBRequest getAll(optional any query, [EnforceRange] optional unsigned long count);
-IDBRequest getAllKeys(optional any query, [EnforceRange] optional unsigned long count);
-IDBRequest count(optional any query);
+  IDBRequest get(any query);
+  IDBRequest getKey(any query);
+  IDBRequest getAll(optional any query, [EnforceRange] optional unsigned long count);
+  IDBRequest getAllKeys(optional any query, [EnforceRange] optional unsigned long count);
+  IDBRequest count(optional any query);
 
-IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
-IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
+  IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
+  IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
 };
 </pre>
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.name">name</dfn> attribute's getter must return
-this <a>index handle</a>'s <a data-lt="index.name">name</a>.
+The <dfn data-lt-noDefault data-lt="IDBIndex.name">name</dfn>
+attribute's getter must return this <a>index handle</a>'s <a
+data-lt="index.name">name</a>.
 
 <aside class="note">
-As long as the <a>transaction</a> has not <a data-lt="transaction finish">finished</a>,
-this is the same as the associated <a>index</a>'s <a data-lt="index.name">name</a>.
+  As long as the <a>transaction</a> has not <a data-lt="transaction
+  finish">finished</a>, this is the same as the associated
+  <a>index</a>'s <a data-lt="index.name">name</a>.
 
-Once the <a>transaction</a> has <a data-lt="transaction finish">finished</a>,
-this attribute will not reflect changes made with a later <a>upgrade transaction</a>.
+  Once the <a>transaction</a> has <a data-lt="transaction
+  finish">finished</a>, this attribute will not reflect changes made
+  with a later <a>upgrade transaction</a>.
 </aside>
 
 
 The <code>name</code> attribute's setter must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>name</var> be the given value.
+1. Let <var>name</var> be the given value.
 
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+2. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+3. Let <var>index</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.index">index</a>.
 
-<li>If <var>transaction</var> is not an <a>upgrade transaction</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If <var>transaction</var> is not an <a>upgrade transaction</a>,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
+5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+6. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
+7. If <var>index</var>'s <a data-lt="index.name">name</a> is equal to
+    <var>name</var>, terminate these steps.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+8. If an <a>index</a> <a data-lt="index.name">named</a>
+    <var>name</var> already exists in <var>index</var>'s <a>object
+    store</a>, <a>throw</a> a <a>ConstraintError</a> exception.
 
-<li>If <var>index</var>'s <a data-lt="index.name">name</a> is equal to <var>name</var>, terminate these steps.
+9. Set <var>index</var>'s <a data-lt="index.name">name</a> to
+    <var>name</var>.
 
-<li>
-If an <a>index</a> <a data-lt="index.name">named</a> <var>name</var> already exists in
-<var>index</var>'s <a>object store</a>,
-<a>throw</a> a <a>ConstraintError</a> exception.
+10. Set this <a>index handle</a>'s <a
+    data-lt="indexHandle.name">name</a> to <var>name</var>.
 
-
-<li>
-Set <var>index</var>'s <a data-lt="index.name">name</a> to <var>name</var>.
-
-<li>
-Set this <a>index handle</a>'s <a data-lt="indexHandle.name">name</a> to <var>name</var>.
-
-</ol>
 <aside class="note">&#9752; The <a>IDBIndex.name</a> attribute's setter is new in this edition. &#9752;</aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.objectStore">objectStore</dfn> attribute's getter
-must return this <a>index handle</a>'s
-<a data-lt="indexHandle.objectStoreHandle">object store handle</a>.
+The <dfn data-lt-noDefault
+data-lt="IDBIndex.objectStore">objectStore</dfn> attribute's getter
+must return this <a>index handle</a>'s <a
+data-lt="indexHandle.objectStoreHandle">object store handle</a>.
 
 
+The <dfn data-lt-noDefault data-lt="IDBIndex.keyPath">keyPath</dfn>
+attribute's getter must return this <a>index handle</a>'s <a
+data-lt="indexHandle.index">index</a>'s <a
+data-lt="objectStore.keyPath">key path</a>.
 
-The <dfn data-lt-noDefault data-lt="IDBIndex.keyPath">keyPath</dfn> attribute's getter must return
-this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>'s <a data-lt="objectStore.keyPath">key path</a>.
+The conversion is done following the normal [[!WEBIDL]] binding logic
+for <a>DOMString</a> and <a>sequence&lt;DOMString&gt;</a> values, as
+appropriate.
 
+The returned value is not the same instance that was used when the
+<a>index</a> was created. However, if this attribute returns an object
+(specifically an <a>Array</a>), it returns the same object instance
+every time it is inspected. Changing the properties of the object has
+no effect on the <a>index</a>.
 
-The conversion is done following the normal [[!WEBIDL]] binding logic for
-<a>DOMString</a> and <a>sequence&lt;DOMString&gt;</a> values,
-as appropriate.
+The <dfn data-lt-noDefault
+data-lt="IDBIndex.multiEntry">multiEntry</dfn> attribute's getter must
+return true if this <a>index handle</a>'s <a
+data-lt="indexHandle.index">index</a>'s <a>multiEntry flag</a> is set,
+and false otherwise.
 
-
-The returned value is not the same instance that was used when the <a>index</a>
-was created. However, if this attribute returns an object (specifically an <a>Array</a>),
-it returns the same object instance every time it is inspected. Changing
-the properties of the object has no effect on the <a>index</a>.
-
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBIndex.multiEntry">multiEntry</dfn> attribute's getter must return true if this
-<a>index handle</a>'s <a data-lt="indexHandle.index">index</a>'s
-<a>multiEntry flag</a> is set, and false otherwise.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBIndex.unique">unique</dfn> attribute's getter must return true if this
-<a>index handle</a>'s <a data-lt="indexHandle.index">index</a>'s
-<a>unique flag</a> is set, and false otherwise.
-
-
+The <dfn data-lt-noDefault data-lt="IDBIndex.unique">unique</dfn>
+attribute's getter must return true if this <a>index handle</a>'s <a
+data-lt="indexHandle.index">index</a>'s <a>unique flag</a> is set, and
+false otherwise.
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.get">get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+2. Let <var>index</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.index">index</a>.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var> and <var>null disallowed flag</var> set.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var> and
+    <var>null disallowed flag</var> set. If this throws an exception,
+    <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>index handle</a> as <var>source</var> and the <a>steps for retrieving a referenced value from an
-index</a> as <var>operation</var>, using <var>index</var> and
-<var>range</var>.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+      return the <a>IDBRequest</a> created by these steps. The steps
+      are run with this <a>index handle</a> as <var>source</var> and
+      the <a>steps for retrieving a referenced value from an index</a>
+      as <var>operation</var>, using <var>index</var> and
+      <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> to be
-retrieved. If a range is specified, the method retrieves
-the first existing record in that range.
+<a>IDBKeyRange</a> identifying the <a>record</a> to be retrieved. If a
+range is specified, the method retrieves the first existing record in
+that range.
 
 
 <aside class="note">
-This method produces the same result if a record with the given key doesn't exist as when a record
-exists, but has undefined as value. If you need to tell the two situations apart, you can use
-<a data-lt="IDBIndex.openCursor">openCursor</a> with the same key. This will return a cursor with
-undefined as value if a record exists, or no cursor if no such record exists.
+  This method produces the same result if a record with the given key
+  doesn't exist as when a record exists, but has undefined as value.
+  If you need to tell the two situations apart, you can use <a
+  data-lt="IDBIndex.openCursor">openCursor</a> with the same key. This
+  will return a cursor with undefined as value if a record exists, or
+  no cursor if no such record exists.
 </aside>
 
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.getKey">getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+2. Let <var>index</var> be this <a>index handle</a>'s <a
+data-lt="indexHandle.index">index</a>.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var> and <var>null disallowed flag</var> set.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var> and
+    <var>null disallowed flag</var> set. If this throws an exception,
+    <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>index handle</a> as <var>source</var> and the <a>steps for retrieving a value from an
-index</a> as <var>operation</var>, using <var>index</var> and
-<var>range</var>.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps
+    are run with this <a>index handle</a> as <var>source</var> and
+    the <a>steps for retrieving a value from an index</a> as
+    <var>operation</var>, using <var>index</var> and
+    <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> key to be
-retrieved. If a range is specified, the method retrieves
-the first existing key in that range.
-
+<a>IDBKeyRange</a> identifying the <a>record</a> key to be retrieved.
+If a range is specified, the method retrieves the first existing key
+in that range.
 
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.getAll">getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+2. Let <var>index</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.index">index</a>.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var>.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var>. If
+    this throws an exception, <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>index handle</a> as <var>source</var> and the <a>steps for retrieving multiple referenced values from an
-index</a> as <var>operation</var>, using <var>index</var>,
-<var>range</var>, and <var>count</var> if given.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>index handle</a> as <var>source</var> and the
+    <a>steps for retrieving multiple referenced values from an
+    index</a> as <var>operation</var>, using <var>index</var>,
+    <var>range</var>, and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> to be
-retrieved. If null or not given, an <a>unbounded key
-range</a> is used. If <var>count</var> is specified and
-there are more than <var>count</var> records in range,
-only the first <var>count</var> will be retrieved.
+<a>IDBKeyRange</a> identifying the <a>records</a> to be retrieved. If
+null or not given, an <a>unbounded key range</a> is used. If
+<var>count</var> is specified and there are more than <var>count</var>
+records in range, only the first <var>count</var> will be retrieved.
 
 <aside class="note">&#9752; The <a>IDBIndex.getAll</a> method is new in this edition. &#9752;</aside>
 
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.getAllKeys">getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+2. Let <var>index</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.index">index</a>.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var>.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var>. If
+    this throws an exception, <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>index handle</a> as <var>source</var> and the <a>steps for retrieving multiple values from an
-index</a> as <var>operation</var>, using <var>index</var>,
-<var>range</var>, and <var>count</var> if given.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps
+    are run with this <a>index handle</a> as <var>source</var> and
+    the <a>steps for retrieving multiple values from an index</a>
+    as <var>operation</var>, using <var>index</var>,
+    <var>range</var>, and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
 <a>IDBKeyRange</a> identifying the <a>records</a> keys to be
-retrieved. If null or not given, an <a>unbounded key
-range</a> is used. If <var>count</var> is specified and
-there are more than <var>count</var> keys in range,
-only the first <var>count</var> will be retrieved.
+retrieved. If null or not given, an <a>unbounded key range</a> is
+used. If <var>count</var> is specified and there are more than
+<var>count</var> keys in range, only the first <var>count</var> will
+be retrieved.
 
 <aside class="note">&#9752; The <a>IDBIndex.getAllKeys</a> method is new in this edition. &#9752;</aside>
 
