@@ -10,6 +10,36 @@ Editor: Joshua Bell, jsbell@google.com
 Group: webapps
 </pre>
 
+<pre class="anchors">
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
+    urlPrefix: browsers.html
+        type: dfn
+            text: origin; url: #origin
+    urlPrefix: workers.html
+        type: dfn
+            text: worker; url: #worker
+    urlPrefix: infrastructure.html
+        type: dfn
+            text: structured clone algorithm; url: #safe-passing-of-structured-data
+    urlPrefix: webappapis.html
+        type: dfn
+            text: queue a task
+spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
+    type: dfn
+        text: Promise; url: #sec-promise-objects
+        text: Date; url: #sec-date-objects
+        text: Array; url: #sec-array-objects
+        text: Uint8Array; url: #sec-typedarray-objects
+        text: IdentifierName; url: #prod-IdentifierName
+spec: webidl; urlPrefix: https://heycam.github.io/webidl/
+    type: dfn
+        text: unrestricted double; url: #idl-unrestricted-double
+        text: DOMString; url: #idl-DOMString
+        text: DOMException; url: #idl-DOMException
+        text: sequence<DOMString>; url: #idl-sequence
+        text: octet; url: #idl-octet
+</pre>
+
 <!--
 previousPublishDate:  "2015-01-08",
 previousMaturity:     "TR",
@@ -269,7 +299,7 @@ are defined by Web IDL [[!WEBIDL]].</dd>
 <h2 id=database-api>Indexed Database API</h2>
 <!-- ============================================================ -->
 
-A <dfn>sorted list</dfn> is a <a>DOMStringList</a> containing strings
+A <dfn>sorted list</dfn> is a {{DOMStringList}} containing strings
 sorted in ascending order using the algorithm defined by step 4 of
 <cite>section 11.8.5, The Abstract Relational Comparison
 Algorithm</cite> of the ECMAScript Language Specification
@@ -456,7 +486,7 @@ support any ECMAScript [[!ECMA-262]] value supported by the
 <a>structured clone algorithm</a> [[!HTML]]. This includes simple
 types such as <a>String</a> primitive values and <a>Date</a> objects
 as well as <a>Object</a> and <a>Array</a> instances, {{File}}
-objects, {{Blob}} objects, <a>ImageData</a> objects, and so on.
+objects, {{Blob}} objects, {{ImageData}}} objects, and so on.
 Record <a>values</a> are stored and retrieved by value rather than by
 reference; later changes to a value have no effect on the record
 stored in the database.
@@ -495,7 +525,7 @@ The following ECMAScript types are valid keys:
 * <a>Number</a> primitive values, except NaN. This includes Infinity and -Infinity.
 * <a>Date</a> objects, except where the [<span>[</span>DateValue]] internal slot is NaN
 * <a>String</a> primitive values.
-* <a>ArrayBuffer</a> objects (or views on buffers such as <a>Uint8Array</a>).
+* {{ArrayBuffer}} objects (or views on buffers such as <a>Uint8Array</a>).
 * <a>Array</a> objects, where every item is defined, is itself a valid key, and does not directly or indirectly contain itself. This includes empty arrays. Arrays may contain other arrays.
 
 Attempting to convert other ECMAScript values to a <a>key</a> will fail.
@@ -1742,19 +1772,19 @@ enum IDBRequestReadyState {
 </pre>
 
 
-The <dfn data-lt-noDefault data-lt="IDBRequest.result">result</dfn>
+The {{result}}
 attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
 getter must return the <a data-lt="request.result">result</a> of the
 request, or undefined if the request.resulted in an error.
 
-The <dfn data-lt-noDefault data-lt="IDBRequest.error">error</dfn>
+The {{error}}
 attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
 getter must return the <a data-lt="request.error">error</a> of the
 request, or null if no error occurred.
 
-The <dfn data-lt-noDefault data-lt="IDBRequest.source">source</dfn>
+The {{source}}
 attribute's getter must return the <a
 data-lt="request.source">source</a> of the <a>request</a>, or null if
 no <a data-lt="request.source">source</a> is set.
@@ -1775,7 +1805,7 @@ The {{onsuccess}} attribute is the event handler for the
 The {{onerror}} attribute is the event handler for the
 <code>error</code> event.
 
-Methods on {{IDBFactory}} that return a <a>open request</a> use
+Methods on {{IDBDatabase}} that return a <a>open request</a> use
 an extended interface to allow listening to the
 <a>blocked</a> event and <a>upgradeneeded</a> event.
 
@@ -1825,12 +1855,11 @@ Events are constructed as defined in <a
 href="https://dom.spec.whatwg.org/#constructing-events">Constructing
 events</a>, in [[!WHATWG-DOM]].
 
-To <dfn data-lt="fire a version change event">fire a version change
-event named <var>e</var></dfn> at <var>target</var> given
-<var>oldVersion</var> and <var>newVersion</var>, dispatch an event at
-<var>target</var>.
+To <dfn>fire a version change event</dfn> named <var>e</var> at
+<var>target</var> given <var>oldVersion</var> and
+<var>newVersion</var>, dispatch an event at <var>target</var>.
 
-The event MUST use the <a>IDBVersionChangeEvent</a> interface with its
+The event MUST use the {{IDBVersionChangeEvent}} interface with its
 <code>type</code> set to <var>e</var>, its <a
 data-lt="IDBVersionChangeEvent.oldVersion">oldVersion</a> attribute
 set to <var>oldVersion</var>, and its <a
@@ -1880,7 +1909,7 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
 3. <a>Queue a task</a> to run these substeps:
 
     1. Let <var>result</var> be the result of running the <a>steps for opening a database</a>, with
-        the origin of the <a>IDBEnvironment</a> used to access this {{IDBFactory}},
+        the origin of the {{IDBEnvironment}} used to access this {{IDBFactory}},
         <var>name</var>,
         <var>version</var> if given and undefined otherwise, and
         <var>request</var>.
@@ -1926,7 +1955,7 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
           active transaction at the time when they fire.
         </aside>
 
-4. Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
+4. Return a new {{IDBOpenDBRequest}} object for <var>request</var>.
 
 
 The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, when invoked, must run these steps:
@@ -1937,7 +1966,7 @@ The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, whe
 
     1. Let <var>result</var> be the result of running the <a>steps for
         deleting a database</a>, with the origin of the
-        <a>IDBEnvironment</a> used to access this {{IDBFactory}},
+        {{IDBEnvironment}} used to access this {{IDBFactory}},
         <var>name</var>, and <var>request</var>.
 
     2. If <var>result</var> is an error set the <a
@@ -1948,9 +1977,8 @@ The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, whe
         does bubble but is not cancelable.
 
     3. Otherwise, set the <a data-lt="request.result">result</a> of
-        <var>request</var> to undefined and <a data-lt="fire a version
-        change event">fire a version change event named
-        <code>success</code></a> at <a>request</a> with
+        <var>request</var> to undefined and <a>fire a version change
+        event</a> named <code>success</code> at <a>request</a> with
         <var>result</var> and null.
 
         <aside class="note">
@@ -1960,7 +1988,7 @@ The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, whe
           active transaction at the time when they fire.
         </aside>
 
-3. Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
+3. Return a new {{IDBOpenDBRequest}} object for <var>request</var>.
 
 
 The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> method, when invoked, must run these steps:
@@ -2021,6 +2049,8 @@ dictionary IDBObjectStoreParameters {
 };
 </pre>
 
+<section dfn-for=IDBDatabase>
+
 The {{name}}
 attribute's getter must return the <a data-lt="database.name">name</a>
 of the <a data-lt="connection">connected</a> <a>database</a>. The
@@ -2058,6 +2088,8 @@ this <a>connection</a>'s <a>object store set</a>.
   a later <a>upgrade transaction</a>.
 </aside>
 
+
+</section>
 
 The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
@@ -2106,7 +2138,7 @@ example in implementations where metadata about the newly created
 <a>object store</a> is inserted into the database asynchronously, or
 where the implementation might need to ask the user for permission for
 quota reasons. Such implementations MUST still create and return an
-<a>IDBObjectStore</a> object, and once the implementation determines
+{{IDBObjectStore}} object, and once the implementation determines
 that creating the <a>object store</a> has failed, it MUST abort the
 transaction using the <a>steps for aborting a transaction</a> using
 the appropriate error. For example if creating the <a>object store</a>
@@ -2166,7 +2198,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 
     <aside class="issue">Specify this more precisely in terms of tasks and microtasks.</aside>
 
-9. Return an <a>IDBTransaction</a> object representing <var>transaction</var>.
+9. Return an {{IDBTransaction}} object representing <var>transaction</var>.
 
 <aside class="note">
   The created <var>transaction</var> will follow the <a>transaction lifetime</a> rules.
@@ -2195,7 +2227,7 @@ The {{onversionchange}} attribute is the event handler for the
 
 <h4 id=object-store-interface>The <code>IDBObjectStore</code> interface</h4>
 
-The <a>IDBObjectStore</a>
+The {{IDBObjectStore}}
 interface represents an <a>object store handle</a>.
 
 <pre class="idl">
@@ -2470,7 +2502,7 @@ The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when i
     <var>operation</var>, using <var>store</var> and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> keys to be
+{{IDBKeyRange}} identifying the <a>records</a> keys to be
 deleted.
 
 <aside class="note">
@@ -2531,7 +2563,7 @@ The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invo
       <var>store</var> and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> to be retrieved. If a
+{{IDBKeyRange}} identifying the <a>record</a> to be retrieved. If a
 range is specified, the method retrieves the first existing value in
 that range.
 
@@ -2572,7 +2604,7 @@ The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when i
       and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> key to be
+{{IDBKeyRange}} identifying the <a>record</a> key to be
 retrieved. If a range is specified, the method retrieves
 the first existing key in that range.
 
@@ -2605,7 +2637,7 @@ The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</d
     <var>range</var>, and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> to be retrieved. If
+{{IDBKeyRange}} identifying the <a>records</a> to be retrieved. If
 null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
 records in range, only the first <var>count</var> will be retrieved.
@@ -2638,7 +2670,7 @@ The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>
     and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> keys to be
+{{IDBKeyRange}} identifying the <a>records</a> keys to be
 retrieved. If null or not given, an <a>unbounded key
 range</a> is used. If <var>count</var> is specified and
 there are more than <var>count</var> keys in range,
@@ -2672,7 +2704,7 @@ The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when in
     <var>operation</var>, with <var>source</var> and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> keys to be
+{{IDBKeyRange}} identifying the <a>records</a> keys to be
 counted. If null or not given, an <a>unbounded key
 range</a> is used.
 
@@ -2712,7 +2744,7 @@ The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</
     <var>operation</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>.
+{{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>.
 If null or not given, an <a>unbounded key range</a> is used.
 
 
@@ -2752,7 +2784,7 @@ The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>directio
     <var>operation</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>. If null
+{{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
 <aside class="note">&#9752; The <a>IDBObjectStore.openKeyCursor</a> method is new in this edition. &#9752;</aside>
@@ -2816,14 +2848,14 @@ keyPath. If the <a>referenced</a> object store already contains data
 which violates these constraints, this MUST NOT cause the
 implementation of createIndex to throw an exception or affect what it
 returns. The implementation MUST still create and return an
-<a>IDBIndex</a> object, and the implementation MUST <a>queue a
+{{IDBIndex}} object, and the implementation MUST <a>queue a
 task</a> to abort the <a>upgrade transaction</a> which was used for
 the createIndex call.
 
 
 This method synchronously modifies the <a
 data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
-<a>IDBObjectStore</a> instance on which it was called. Although this
+{{IDBObjectStore}} instance on which it was called. Although this
 method does not return an {{IDBRequest}} object, the index creation
 itself is processed as an asynchronous request within the <a>upgrade
 transaction</a>.
@@ -2834,7 +2866,7 @@ createIndex method has returned. For example in implementations where
 metadata about the newly created index is queued up to be inserted
 into the database asynchronously, or where the implementation might
 need to ask the user for permission for quota reasons. Such
-implementations MUST still create and return an <a>IDBIndex</a>
+implementations MUST still create and return an {{IDBIndex}}
 object, and once the implementation determines that creating the index
 has failed, it MUST abort the transaction using the <a>steps for
 aborting a transaction</a> using an appropriate error as
@@ -2888,15 +2920,15 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
     this <a>object store handle</a>.
 
 <aside class="note">
-  Each call to this method on the same <a>IDBObjectStore</a> instance
-  with the same name returns the same <a>IDBIndex</a> instance.
+  Each call to this method on the same {{IDBObjectStore}} instance
+  with the same name returns the same {{IDBIndex}} instance.
 </aside>
 
 <aside class="note">
-  The returned <a>IDBIndex</a> instance is specific to this
-  <a>IDBObjectStore</a> instance. If this method is called on a
-  different <a>IDBObjectStore</a> instance with the same name, a
-  different <a>IDBIndex</a> instance is returned.
+  The returned {{IDBIndex}} instance is specific to this
+  {{IDBObjectStore}} instance. If this method is called on a
+  different {{IDBObjectStore}} instance with the same name, a
+  different {{IDBIndex}} instance is returned.
 </aside>
 
 
@@ -2933,7 +2965,7 @@ within an <a>upgrade transaction</a>.
 
 This method synchronously modifies the <a
 data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
-<a>IDBObjectStore</a> instance on which it was called. Although this
+{{IDBObjectStore}} instance on which it was called. Although this
 method does not return an {{IDBRequest}} object, the index
 destruction itself is processed as an asynchronous request within the
 <a>upgrade transaction</a>.
@@ -2941,7 +2973,7 @@ destruction itself is processed as an asynchronous request within the
 
 <h4 id=index-interface>The <code>IDBIndex</code> interface</h4>
 
-The <a>IDBIndex</a> interface represents an <a>index handle</a>.
+The {{IDBIndex}} interface represents an <a>index handle</a>.
 
 
 <pre class="idl">
@@ -3072,7 +3104,7 @@ The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, m
       <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> to be retrieved. If a
+{{IDBKeyRange}} identifying the <a>record</a> to be retrieved. If a
 range is specified, the method retrieves the first existing record in
 that range.
 
@@ -3114,7 +3146,7 @@ The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked
     <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> key to be retrieved.
+{{IDBKeyRange}} identifying the <a>record</a> key to be retrieved.
 If a range is specified, the method retrieves the first existing key
 in that range.
 
@@ -3145,7 +3177,7 @@ The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> me
     <var>range</var>, and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> to be retrieved. If
+{{IDBKeyRange}} identifying the <a>records</a> to be retrieved. If
 null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
 records in range, only the first <var>count</var> will be retrieved.
@@ -3179,7 +3211,7 @@ The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn
     <var>range</var>, and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> keys to be
+{{IDBKeyRange}} identifying the <a>records</a> keys to be
 retrieved. If null or not given, an <a>unbounded key range</a> is
 used. If <var>count</var> is specified and there are more than
 <var>count</var> keys in range, only the first <var>count</var> will
@@ -3215,7 +3247,7 @@ The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked,
     <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> keys to be counted.
+{{IDBKeyRange}} identifying the <a>records</a> keys to be counted.
 If null or not given, an <a>unbounded key range</a> is used.
 
 
@@ -3254,7 +3286,7 @@ The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)<
     <var>operation</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>. If null
+{{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
 
@@ -3294,13 +3326,13 @@ The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var
     <var>operation</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>. If null
+{{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
 
 <h4 id=keyrange>The <code>IDBKeyRange</code> interface</h4>
 
-The <a>IDBKeyRange</a> interface represents a
+The {{IDBKeyRange}} interface represents a
 <a>key range</a>.
 
 <pre class="idl">
@@ -3426,8 +3458,8 @@ The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invo
 
 <h4 id=cursor-interface>The <code>IDBCursor</code> interface</h4>
 
-<a>Cursor</a> objects implement the <a>IDBCursor</a> interface. There
-is only ever one <a>IDBCursor</a> instance representing a given
+<a>Cursor</a> objects implement the {{IDBCursor}} interface. There
+is only ever one {{IDBCursor}} instance representing a given
 <a>cursor</a>. There is no limit on how many cursors can be used at
 the same time.
 
@@ -3761,7 +3793,7 @@ The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run thes
     store</a> and <a>effective key</a> as <var>store</var> and
     <var>key</var> respectively.
 
-A <a>cursor</a> that has the <a>key only flag</a> unset implements the <a>IDBCursorWithValue</a> interface as well.
+A <a>cursor</a> that has the <a>key only flag</a> unset implements the {{IDBCursorWithValue}} interface as well.
 
 
 <pre class="idl">
@@ -3873,14 +3905,14 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
     <var>store</var> and this <a>transaction</a>.
 
 <aside class="note">
-  Each call to this method on the same <a>IDBTransaction</a> instance
-  with the same name returns the same <a>IDBObjectStore</a> instance.
+  Each call to this method on the same {{IDBTransaction}} instance
+  with the same name returns the same {{IDBObjectStore}} instance.
 </aside>
 
 <aside class="note">
-  The returned <a>IDBObjectStore</a> instance is specific to this
-  <a>IDBTransaction</a>. If this method is called on a different
-  <a>IDBTransaction</a>, a different <a>IDBObjectStore</a> instance is
+  The returned {{IDBObjectStore}} instance is specific to this
+  {{IDBTransaction}}. If this method is called on a different
+  {{IDBTransaction}}, a different {{IDBObjectStore}} instance is
   returned.
 </aside>
 
@@ -4064,7 +4096,7 @@ associated with <var>db</var>.
 
 <li>
 For each <var>entry</var> in <var>openConnections</var> that does not have its <a>close pending flag</a> set,
-<a data-lt="fire a version change event">fire a version change event named <code>versionchange</code></a>
+<a>fire a version change event</a> named <code>versionchange</code>
 at <var>entry</var> with <var>db</var>'s <a>version</a> and null.
 <aside class="note">
 Firing this event might cause one or more of the other objects in <var>openConnections</var> to be closed, in which case
@@ -4073,7 +4105,7 @@ the <code>versionchange</code> event MUST NOT be fired at those objects if that 
 
 <li>
 If any of the <a>connections</a> in <var>openConnections</var> are still not closed,
-<a data-lt="fire a version change event">fire a version change event named <code>blocked</code></a>
+<a>fire a version change event</a> named <code>blocked</code>
 at <var>request</var> with <var>db</var>'s <a>version</a> and null.
 
 <li id="delete-close-block">
@@ -4251,7 +4283,7 @@ except <var>connection</var>, connected to the same <a>database</a> as <var>conn
 
 <li>
 For each <var>entry</var> in <var>openConnections</var> that does not have its <a>close pending flag</a> set,
-<a data-lt="fire a version change event">fire a version change event named <code>versionchange</code></a>
+<a>fire a version change event</a> named <code>versionchange</code>
 at <var>entry</var> with <var>db</var>'s <a>version</a> and <var>version</var>.
 <aside class="note">
 Firing this event might cause one or more of the other objects in <var>openConnections</var> to be closed, in which case
@@ -4260,7 +4292,7 @@ the <code>versionchange</code> event MUST NOT be fired at those objects if that 
 
 <li>
 If any of the <a>connections</a> in <var>openConnections</var> are still not closed,
-<a data-lt="fire a version change event">fire a version change event named <dfn><code>blocked</code></dfn></a>
+<a>fire a version change event</a> named <dfn><code>blocked</code></dfn>
 at <var>request</var> with <var>db</var>'s <a>version</a> and <var>version</var>.
 
 <li id="version-change-close-block">
@@ -4298,7 +4330,7 @@ Set <var>request</var>'s <a data-lt="request.transaction">transaction</a> to <va
 Set the <a>done flag</a> on the <a>request</a>.
 
 <li>
-<a data-lt="fire a version change event">Fire a version change event named <dfn><code>upgradeneeded</code></dfn></a>
+<a>Fire a version change event</a> named <dfn><code>upgradeneeded</code></dfn>
 at <var>request</var> with <var>old version</var> and <var>version</var>.
 
 <li>
@@ -4372,13 +4404,13 @@ set of <a>indexes</a> that reference its <a data-lt="objectStoreHandle.objectSto
 
 </ol>
 <aside class="note">
-This reverts the values of <code>name</code> and <code>indexNames</code> returned by related <a>IDBObjectStore</a> objects.
+This reverts the values of <code>name</code> and <code>indexNames</code> returned by related {{IDBObjectStore}} objects.
 
 
 Although script cannot access an <a>object store</a> by using the
-<code>objectStore()</code> method on an <a>IDBTransaction</a> instance after
+<code>objectStore()</code> method on an {{IDBTransaction}} instance after
 the <a>transaction</a> is aborted, it may still have references to
-<a>IDBObjectStore</a> instances where the <code>name</code> and <code>indexNames</code> properties
+{{IDBObjectStore}} instances where the <code>name</code> and <code>indexNames</code> properties
 can be queried.
 
 </aside>
@@ -4394,13 +4426,13 @@ its <a data-lt="indexHandle.index">index</a>'s <a data-lt="index.name">name</a>.
 
 </ol>
 <aside class="note">
-This reverts the value of <code>name</code> returned by related <a>IDBIndex</a> objects.
+This reverts the value of <code>name</code> returned by related {{IDBIndex}} objects.
 
 
 Although script cannot access an <a>index</a> by using the
-<code>index()</code> method on an <a>IDBObjectStore</a> instance after
+<code>index()</code> method on an {{IDBObjectStore}} instance after
 the <a>transaction</a> is aborted, it may still have references to
-<a>IDBIndex</a> instances where the <code>name</code> property
+{{IDBIndex}} instances where the <code>name</code> property
 can be queried.
 
 </aside>
