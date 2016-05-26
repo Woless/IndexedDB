@@ -329,12 +329,13 @@ set of databases.
   <code>document.domain</code>.
 </aside>
 
-Each <a>origin</a> has an associated set of <a>databases</a>. A <dfn
-data-lt="databases">database</dfn> has zero or more <a>object
-stores</a> which hold the data stored in the database.
+Each <a>origin</a> has an associated set of <a>databases</a>. A
+<dfn>database</dfn> has zero or more <a>object stores</a> which hold
+the data stored in the database.
 
-A <a>database</a> has a <dfn data-lt-noDefault
-data-lt="database.name">name</dfn> which identifies it within a
+<div dfn-for=database>
+
+A <a>database</a> has a <dfn>name</dfn> which identifies it within a
 specific <a>origin</a>. The name can be any string value, including
 the empty string, and stays constant for the lifetime of the database.
 Database names are always compared in a case-sensitive manner, as
@@ -349,7 +350,7 @@ all names.
 </aside>
 
 A <a>database</a> has a <dfn>version</dfn>. When a database is first
-created, its <a>version</a> is 0 (zero).
+created, its <a for=database>version</a> is 0 (zero).
 
 <aside class=note>
   Each <a>database</a> has one version at a time; a <a>database</a>
@@ -361,6 +362,8 @@ A database has a <dfn>delete pending flag</dfn> which is used during
 deletion. When a database is requested to be deleted the flag is set
 and all attempts at opening the database are stalled until the
 database can be deleted.
+
+</div>
 
 <!-- ============================================================ -->
 <h5 id=database-connection>Database Connection</h5>
@@ -377,14 +380,14 @@ The act of opening a <a>database</a> creates a <a>connection</a>.
 There MAY be multiple <a>connections</a> to a given <a>database</a> at
 any given time.
 
-A <a>connection</a> has a <dfn data-lt-noDefault
-data-lt="connection.version">version</dfn>, which is set when the
+<div dfn-for=connection>
+
+A <a>connection</a> has a <dfn>version</dfn>, which is set when the
 <a>connection</a> is created. It remains constant for the lifetime of
 the <a>connection</a> unless an <a data-lt="steps for aborting an
 upgrade transaction">upgrade is aborted</a>, in which case it is set
 to the previous version of the <a>database</a>. Once the
-<a>connection</a> is closed the <a
-data-lt="connection.version">version</a> does not change.
+<a>connection</a> is closed the <a for=connection>version</a> does not change.
 
 
 Each connection has a <dfn>close pending flag</dfn> which is initially
@@ -415,6 +418,7 @@ transaction</a> is running.
 
 A <a>connection</a>'s <a>get the parent</a> algorithm returns null.
 
+</div>
 
 <!-- ============================================================ -->
 <h4 id=object-store-concept>Object Store</h4>
@@ -1103,18 +1107,19 @@ An <dfn data-lt="upgrade transactions">upgrade transaction</dfn> is a
 
 An <a>upgrade transaction</a> is automatically created when running
 <a>steps for running an upgrade transaction</a> after a
-<a>connection</a> is opened to a <a>database</a> giving a greater
-<a>version</a> than the current <a>version</a>. This
-<a>transaction</a> will be active inside the <a>upgradeneeded</a>
+<a>connection</a> is opened to a <a>database</a> giving a greater <a
+for=database>version</a> than the current <a for=database>version</a>.
+This <a>transaction</a> will be active inside the <a>upgradeneeded</a>
 event handler, allowing the creation of new <a>object stores</a> and
 <a>indexes</a>.
 
 An <a>upgrade transaction</a> is never run concurrently with other
-transactions. When a database is opened with a <a>version</a> number
-higher than the current <a>version</a>, a new <a>upgrade
-transaction</a> is automatically created and made available through
-the <a>open request</a> when the <a>upgradeneeded</a> event is fired.
-The <a>upgradeneeded</a> event isn't fired, and thus the <a>upgrade
+transactions. When a database is opened with a <a
+for=database>version</a> number higher than the current <a
+for=database>version</a>, a new <a>upgrade transaction</a> is
+automatically created and made available through the <a>open
+request</a> when the <a>upgradeneeded</a> event is fired. The
+<a>upgradeneeded</a> event isn't fired, and thus the <a>upgrade
 transaction</a> isn't started, until all other <a>connections</a> to
 the same <a>database</a> are closed. This ensures that all other
 transactions are <a data-lt="transaction finish">finished</a>.
@@ -1953,19 +1958,19 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
 
 3. <a>Queue a task</a> to run these substeps:
 
-    1. Let <var>result</var> be the result of running the <a>steps for opening a database</a>, with
-        the origin of the {{IDBEnvironment}} used to access this {{IDBFactory}},
-        <var>name</var>,
-        <var>version</var> if given and undefined otherwise, and
-        <var>request</var>.
+    1. Let <var>result</var> be the result of running the <a>steps for
+        opening a database</a>, with the origin of the
+        {{IDBEnvironment}} used to access this {{IDBFactory}},
+        <var>name</var>, <var>version</var> if given and undefined
+        otherwise, and <var>request</var>.
 
         <aside class=note>
           If <var>version</var> is not given and a <a>database</a>
           with that name already exists, a connection will be opened
-          without changing the <a>version</a>. If <var>version</var>
-          is not given and no <a>database</a> with that name exists, a
-          new <a>database</a> will be created with <a>version</a>
-          equal to 1.
+          without changing the <a for=database>version</a>. If
+          <var>version</var> is not given and no <a>database</a> with
+          that name exists, a new <a>database</a> will be created with
+          <a for=database>version</a> equal to 1.
         </aside>
 
     2. If <var>result</var> is an error, set the <a
@@ -2097,7 +2102,7 @@ dictionary IDBObjectStoreParameters {
 </pre>
 
 The {{IDBDatabase/name}}
-attribute's getter must return the <a data-lt="database.name">name</a>
+attribute's getter must return the <a for="database">name</a>
 of the <a data-lt="connection">connected</a> <a>database</a>. The
 attribute MUST return this name even if the <a>close pending flag</a>
 is set on the <a>connection</a>. In other words, the value of this
@@ -2106,11 +2111,11 @@ instance.
 
 The {{IDBDatabase/version}}
 attribute's getter must return this <a>connection</a>'s <a
-data-lt="connection.version">version</a>.
+for=connection>version</a>.
 
 <aside class=note>
   As long as the <a>connection</a> is open, this is the same as the
-  connected <a>database</a>'s <a>version</a>.
+  connected <a>database</a>'s <a for=database>version</a>.
 
   Once the <a>connection</a> has <a data-lt="database
   close">closed</a>, this attribute will not reflect changes made with
@@ -4002,7 +4007,7 @@ and a <var>request</var>.
 
 <ol class=algorithm>
 <li>
-Let <var>db</var> be the <a>database</a> <a data-lt="database.name">named</a> <var>name</var> in the
+Let <var>db</var> be the <a>database</a> <a for=database>named</a> <var>name</var> in the
 origin <var>origin</var>, or null otherwise.
 
 <li>
@@ -4034,25 +4039,25 @@ If <var>db</var> was deleted, let <var>db</var> be null.
 
 <li>
 If <var>version</var> is undefined,
-let <var>version</var> be 1 if <var>db</var> is null, or <var>db</var>'s <a>version</a> otherwise.
+let <var>version</var> be 1 if <var>db</var> is null, or <var>db</var>'s <a for=database>version</a> otherwise.
 
 <li>
 If <var>db</var> is null, let <var>db</var> be a new <a>database</a> with
-<a data-lt="database.name">name</a> <var>name</var>, <a>version</a> 0 (zero) as <a>version</a>,
+<a for=database>name</a> <var>name</var>, <a for=database>version</a> 0 (zero) as <a for=database>version</a>,
 and with no <a>object stores</a>.
 
 <li>
-If <var>db</var>'s <a>version</a> is greater than <var>version</var>, abort these steps and return
+If <var>db</var>'s <a for=database>version</a> is greater than <var>version</var>, abort these steps and return
 a new <a>VersionError</a>.
 
 <li>
 Let <var>connection</var> be a new <a>connection</a> to <var>db</var>.
 
 <li>
-Set <var>connection</var>'s <a data-lt="connection.version">version</a> to <var>version</var>.
+Set <var>connection</var>'s <a for=connection>version</a> to <var>version</var>.
 
 <li>
-If <var>db</var>'s <a>version</a> is less than <var>version</var>, run these substeps:
+If <var>db</var>'s <a for=database>version</a> is less than <var>version</var>, run these substeps:
 <ol>
 <li>
 Run the <a>steps for running an upgrade transaction</a>
@@ -4144,7 +4149,7 @@ associated with <var>db</var>.
 <li>
 For each <var>entry</var> in <var>openConnections</var> that does not have its <a>close pending flag</a> set,
 <a>fire a version change event</a> named <code>versionchange</code>
-at <var>entry</var> with <var>db</var>'s <a>version</a> and null.
+at <var>entry</var> with <var>db</var>'s <a for=database>version</a> and null.
 <aside class=note>
 Firing this event might cause one or more of the other objects in <var>openConnections</var> to be closed, in which case
 the <code>versionchange</code> event MUST NOT be fired at those objects if that hasn't yet been done.
@@ -4153,14 +4158,14 @@ the <code>versionchange</code> event MUST NOT be fired at those objects if that 
 <li>
 If any of the <a>connections</a> in <var>openConnections</var> are still not closed,
 <a>fire a version change event</a> named <code>blocked</code>
-at <var>request</var> with <var>db</var>'s <a>version</a> and null.
+at <var>request</var> with <var>db</var>'s <a for=database>version</a> and null.
 
 <li id="delete-close-block">
 Wait until all <a>connections</a> in <var>openConnections</var> are <a data-lt="database close">closed</a> and all of
 their transactions are <a data-lt="transaction finish">finished</a>.
 
 <li>
-Let <var>version</var> be <var>db</var>'s <a>version</a>.
+Let <var>version</var> be <var>db</var>'s <a for=database>version</a>.
 
 <li>
 Delete <var>db</var>.
@@ -4217,7 +4222,7 @@ All the changes made to the <a>database</a> by the
 
 For <a>upgrade transactions</a> this includes changes to
 the set of <a>object stores</a> and <a>indexes</a>,
-as well as the change to the <a>version</a>. Any
+as well as the change to the <a for=database>version</a>. Any
 <a>object stores</a> and <a>indexes</a> which were
 created during the transaction are now considered
 deleted for the purposes of other algorithms.
@@ -4339,7 +4344,7 @@ except <var>connection</var>, connected to the same <a>database</a> as <var>conn
 <li>
 For each <var>entry</var> in <var>openConnections</var> that does not have its <a>close pending flag</a> set,
 <a>fire a version change event</a> named <code>versionchange</code>
-at <var>entry</var> with <var>db</var>'s <a>version</a> and <var>version</var>.
+at <var>entry</var> with <var>db</var>'s <a for=database>version</a> and <var>version</var>.
 <aside class=note>
 Firing this event might cause one or more of the other objects in <var>openConnections</var> to be closed, in which case
 the <code>versionchange</code> event MUST NOT be fired at those objects if that hasn't yet been done.
@@ -4348,7 +4353,7 @@ the <code>versionchange</code> event MUST NOT be fired at those objects if that 
 <li>
 If any of the <a>connections</a> in <var>openConnections</var> are still not closed,
 <a>fire a version change event</a> named <dfn><code>blocked</code></dfn>
-at <var>request</var> with <var>db</var>'s <a>version</a> and <var>version</var>.
+at <var>request</var> with <var>db</var>'s <a for=database>version</a> and <var>version</var>.
 
 <li id="version-change-close-block">
 Wait until all <a>connections</a> in <var>openConnections</var> are <a data-lt="database close">closed</a> and all of
@@ -4366,7 +4371,7 @@ Start <var>transaction</var>. Note that until this <a>transaction</a> is finishe
 no other <a>connections</a> can be opened to the same <a>database</a>.
 
 <li>
-Let <var>old version</var> be <var>database</var>'s <a>version</a>.
+Let <var>old version</var> be <var>database</var>'s <a for=database>version</a>.
 
 <li>
 Set the version of <var>database</var> to <var>version</var>. This change is considered part of the
@@ -4420,7 +4425,7 @@ The <dfn>steps for aborting an upgrade transaction</dfn> <var>transaction</var> 
 <aside class=note>
 The steps are run after the normal <a>steps for aborting a transaction</a>, which revert
 changes to the <a>database</a> including the set of associated <a>object stores</a>
-and <a>indexes</a>, as well as the change to the <a>version</a>.
+and <a>indexes</a>, as well as the change to the <a for=database>version</a>.
 </aside>
 <ol class=algorithm>
 <li>
@@ -4430,7 +4435,7 @@ Let <var>connection</var> be <var>transaction</var>'s <a>connection</a>.
 Let <var>database</var> be <var>connection</var>'s <a>database</a>.
 
 <li>
-Set <var>connection</var>'s <a data-lt="connection.version">version</a> to <var>database</var>'s <a>version</a>
+Set <var>connection</var>'s <a for=connection>version</a> to <var>database</var>'s <a for=database>version</a>
 if <var>database</var> previously existed,
 or 0 (zero) if <var>database</var> was newly created
 <aside class=note>
@@ -5660,13 +5665,13 @@ document's Revision History</a>.
 * Address comparison of empty arrays.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27712">bug #27712</a>)
 
-* Added {{IDBObjectStore/openKeyCursor()}}.
+* Added {{IDBObjectStore/openKeyCursor()}} on {{IDBObjectStore}}.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=19955">bug #19955</a>)
 
 * Correct <var>source</var> used for
     {{IDBIndex/get()}},
     {{IDBIndex/getKey()}} and
-    {{IDBIndex/openKeyCursor()}}.
+    {{IDBIndex/openKeyCursor()}} on {{IDBIndex}}.
 
 * Added details around garbage collection of {{IDBDatabase}} objects.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25223">bug #25223</a>)
@@ -5683,32 +5688,32 @@ document's Revision History</a>.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=17681">bug #17681</a>)
 
 * Added
-    {{IDBObjectStore/getAll()}},
-    {{IDBObjectStore/getAllKeys()}},
-    {{IDBIndex/getAll()}},
-    {{IDBIndex/getAllKeys()}}.
+    {{IDBObjectStore/getAll()}} and
+    {{IDBObjectStore/getAllKeys()}} on {{IDBObjectStore}}, and
+    {{IDBIndex/getAll()}} and
+    {{IDBIndex/getAllKeys()}} on {{IDBIndex}}.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=16595">bug #16595</a>)
 
 * Replaced {{DOMError}} with <a>DOMException</a>.
     (<a href="https://github.com/w3c/IndexedDB/issues/16">bug #16</a>)
 
-* Added {{IDBTransaction/objectStoreNames}}.
+* Added {{IDBTransaction/objectStoreNames}} on {{IDBTransaction}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/18">bug #18</a>)
 
 * Added <i>binary</i> <a>keys</a>, including comparisons and ECMAScript bindings.
     (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #21</a>)
 
-* Allow renaming stores and indexes via {{IDBObjectStore/name}}
-    and {{IDBIndex/name}} attribute setters.
+* Allow renaming stores and indexes via {{IDBObjectStore}}'s {{IDBObjectStore/name}}
+    and {{IDBIndex}}'s {{IDBIndex/name}} attribute setters.
     (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #22</a>)
 
-* Added {{IDBCursor/continuePrimaryKey()}}.
+* Added {{IDBCursor/continuePrimaryKey()}} on {{IDBCursor}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/14">bug #14</a>)
 
-* Added {{IDBKeyRange/includes()}}.
+* Added {{IDBKeyRange/includes()}} on {{IDBKeyRange}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/41">bug #41</a>)
 
-* Added {{IDBObjectStore/getKey()}}.
+* Added {{IDBObjectStore/getKey()}} on {{IDBObjectStore}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/26">bug #26</a>)
 
 
