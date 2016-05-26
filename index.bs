@@ -2450,144 +2450,135 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.add">add(<var>value</var>, <v
     <var>value</var>, <var>key</var>, and with the <var>no-overwrite
     flag</var> set.
 
-
-
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.delete">delete(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is a <a>read-only transaction</a>,
-<a>throw</a> a <a>ReadOnlyError</a> exception.
+5. If <var>transaction</var> is a <a>read-only transaction</a>,
+    <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var> and <var>null disallowed flag</var> set.
-If this throws an exception, <a>rethrow</a> it.
+6. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var> and
+    <var>null disallowed flag</var> set. If this throws an exception,
+    <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for
-asynchronously executing a request</a> and return the <a>IDBRequest</a> created by these steps.
-The steps are run with this <a>object store handle</a> as <var>source</var> and the <a>steps for deleting
-records from an object store</a> as <var>operation</var>, using
-<var>store</var> and <var>range</var>.
-
-</ol>
+7. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>object store handle</a> as <var>source</var> and
+    the <a>steps for deleting records from an object store</a> as
+    <var>operation</var>, using <var>store</var> and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
 <a>IDBKeyRange</a> identifying the <a>records</a> keys to be
 deleted.
 
 <aside class="note">
-Unlike other methods which take keys or key ranges, this method does <strong>not</strong> allow null to
-be given as key. This is to reduce the risk that a small bug would clear a whole object store.
+Unlike other methods which take keys or key ranges, this method does
+<strong>not</strong> allow null to be given as key. This is to reduce
+the risk that a small bug would clear a whole object store.
 </aside>
-
 
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.clear">clear()</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is a <a>read-only transaction</a>,
-<a>throw</a> a <a>ReadOnlyError</a> exception.
+5. If <var>transaction</var> is a <a>read-only transaction</a>,
+    <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-<li>Run the <a>steps for asynchronously executing a request</a> and return the
-<a>IDBRequest</a> created by these steps. The steps are run with this <a>object store handle</a> as
-<var>source</var> and the <a>steps for clearing an object store</a> as <var>operation</var>, using
-<var>store</var>.
-
-</ol>
-
+6. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>object store handle</a> as <var>source</var> and
+    the <a>steps for clearing an object store</a> as
+    <var>operation</var>, using <var>store</var>.
 
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.get">get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var> and <var>null disallowed flag</var> set.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var> and
+    <var>null disallowed flag</var> set. If this throws an exception,
+    <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>object store handle</a> as <var>source</var> and the <a>steps for retrieving a value from an
-object store</a> as <var>operation</var>, using <var>store</var> and
-<var>range</var>.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+      return the <a>IDBRequest</a> created by these steps. The steps
+      are run with this <a>object store handle</a> as
+      <var>source</var> and the <a>steps for retrieving a value from
+      an object store</a> as <var>operation</var>, using
+      <var>store</var> and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>record</a> to be
-retrieved. If a range is specified, the method retrieves
-the first existing value in that range.
+<a>IDBKeyRange</a> identifying the <a>record</a> to be retrieved. If a
+range is specified, the method retrieves the first existing value in
+that range.
 
 <aside class="note">
-This method produces the same result if a record with the given key doesn't exist as when a record
-exists, but has undefined as value. If you need to tell the two situations apart, you can use
-<a data-lt="IDBObjectStore.openCursor">openCursor</a> with the same key. This will return a cursor with
-undefined as value if a record exists, or no cursor if no such record exists.
+  This method produces the same result if a record with the given key
+  doesn't exist as when a record exists, but has undefined as value.
+  If you need to tell the two situations apart, you can use <a
+  data-lt="IDBObjectStore.openCursor">openCursor</a> with the same
+  key. This will return a cursor with undefined as value if a record
+  exists, or no cursor if no such record exists.
 </aside>
-
 
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.getKey">getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var> and <var>null disallowed flag</var> set.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var> and
+    <var>null disallowed flag</var> set. If this throws an exception,
+    <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>object store handle</a> as <var>source</var> and the <a>steps for retrieving a key from an
-object store</a> as <var>operation</var>, using <var>store</var> and
-<var>range</var>.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+      return the <a>IDBRequest</a> created by these steps. The steps
+      are run with this <a>object store handle</a> as
+      <var>source</var> and the <a>steps for retrieving a key from an
+      object store</a> as <var>operation</var>, using <var>store</var>
+      and <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
 <a>IDBKeyRange</a> identifying the <a>record</a> key to be
@@ -2599,41 +2590,36 @@ the first existing key in that range.
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.getAll">getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var>.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var>. If
+    this throws an exception, <a>rethrow</a> it.
 
-
-<li>
-Run the <a>steps for asynchronously executing
-a request</a> and return the <a>IDBRequest</a> created by these steps. The steps are run with this
-<a>object store handle</a> as <var>source</var> and the <a>steps for retrieving multiple values from an
-object store</a> as <var>operation</var>, using <var>store</var>,
-<var>range</var>, and <var>count</var> if given.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>object store handle</a> as <var>source</var> and
+    the <a>steps for retrieving multiple values from an object
+    store</a> as <var>operation</var>, using <var>store</var>,
+    <var>range</var>, and <var>count</var> if given.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> to be
-retrieved. If null or not given, an <a>unbounded key
-range</a> is used. If <var>count</var> is specified and
-there are more than <var>count</var> records in range,
-only the first <var>count</var> will be retrieved.
+<a>IDBKeyRange</a> identifying the <a>records</a> to be retrieved. If
+null or not given, an <a>unbounded key range</a> is used. If
+<var>count</var> is specified and there are more than <var>count</var>
+records in range, only the first <var>count</var> will be retrieved.
 
 <aside class="note">&#9752; The <a>IDBObjectStore.getAll</a> method is new in this edition. &#9752;</aside>
-
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.getAllKeys">getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
