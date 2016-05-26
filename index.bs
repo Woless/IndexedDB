@@ -1,14 +1,29 @@
 <pre class=metadata>
 Title: Indexed Database API (Second Edition)
 Shortname: IndexedDB
-Abstract: This document defines APIs for a database of records holding simple values and hierarchical objects. Each record consists of a key and some value. Moreover, the database maintains indexes over records it stores. An application developer directly uses an API to locate records either by their key or by using an index. A query language can be layered on this API. An indexed database can be implemented using a persistent B-tree data structure.
+Abstract: This document defines APIs for a database of records holding
+    simple values and hierarchical objects. Each record consists of a key
+    and some value. Moreover, the database maintains indexes over records
+    it stores. An application developer directly uses an API to locate
+    records either by their key or by using an index. A query language can
+    be layered on this API. An indexed database can be implemented using a
+    persistent B-tree data structure.
 Status: ED
+Previous Version: https://www.w3.org/TR/IndexedDB/
 ED: https://w3c.github.io/IndexedDB/
 Level: 2
 Editor: Ali Alabbas, alia@microsoft.com
 Editor: Joshua Bell, jsbell@google.com
-Group: webapps
+Group: webplatform
+Test Suite: https://github.com/w3c/web-platform-tests/tree/master/IndexedDB
 </pre>
+
+<!--
+implementationReportURI: 'https://w3c.github.io/test-results/IndexedDB/all.html',
+{value: "Open Issues", href: "https://github.com/w3c/IndexedDB/issues/"},
+{value: "New Issue", href: "https://github.com/w3c/IndexedDB/issues/new"}
+-->
+
 
 <pre class="anchors">
 spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
@@ -51,22 +66,9 @@ spec: webidl; urlPrefix: https://heycam.github.io/webidl/
 
 </pre>
 
-<!--
-previousPublishDate:  "2015-01-08",
-previousMaturity:     "TR",
-implementationReportURI: 'https://w3c.github.io/test-results/IndexedDB/all.html',
-testSuiteURI: 'https://github.com/w3c/web-platform-tests/tree/master/IndexedDB',
-{value: "Open Issues", href: "https://github.com/w3c/IndexedDB/issues/"},
-{value: "New Issue", href: "https://github.com/w3c/IndexedDB/issues/new"}
--->
-
-<section id='sotd'>
-
 This is the Second Edition of Indexed Database API. The
 <a href="https://www.w3.org/TR/IndexedDB/">First Edition</a>
 became a W3C Recommendation on 8 January 2015.
-
-
 
 <!-- ============================================================ -->
 <h2 id=introduction>Introduction</h2>
@@ -1234,7 +1236,7 @@ An <dfn>unbounded key range</dfn> is a <a>key range</a> that has both
 range</a>.
 
 The steps to <dfn>convert a value to a key range</dfn> with
-<var>value</var> and optional <var>null allowed flag</var> are as
+<var>value</var> and optional <var>null disallowed flag</var> are as
 follows:
 
 1. If <var>value</var> is a <a>key range</a>, return <var>value</var>.
@@ -2834,7 +2836,7 @@ The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</va
       set</a>.
 
 13. Return a new <a>index handle</a> associated with <var>index</var>
-    and this <var>object store handle</var>.
+    and this <a>object store handle</a>.
 
 
 This method creates and returns a new <a>index</a> with the given name
@@ -4563,7 +4565,7 @@ If a <a>record</a> already exists in <var>store</var> with its key <a>equal to</
 remove the <a>record</a> from <var>store</var> using the <a>steps for deleting records from an object store</a>.
 
 <li>
-Store a record in <var>store</var> containing <var>key</var> as its key and <var>object</var> as its
+Store a record in <var>store</var> containing <var>key</var> as its key and <var>value</var> as its
 value. The record is stored in the object store's <a data-lt="object store record list">list</a> such
 that the list is sorted according key of the records in ascending order.
 
@@ -5143,7 +5145,7 @@ CreateDataProperty(<var>value</var>, <var>identifier</var>, <var>o</var>)
 <li>Let <var>keyValue</var> be the result of running the steps to
 <a>convert a key to a value</a>.
 <li>Let <var>status</var> be
-CreateDataProperty(<var>value</var>, <var>identifier</var>, <var>keyValue</var>)
+CreateDataProperty(<var>value</var>, <var>last</var>, <var>keyValue</var>)
 <li>Assert: <var>status</var> is true
 </ol>
 
