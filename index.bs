@@ -2769,84 +2769,88 @@ or not given, an <a>unbounded key range</a> is used.
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.createIndex">createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>transaction</var> is not an <a>upgrade transaction</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
+4. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
+6. If an <a>index</a> <a data-lt="index.name">named</a>
+    <var>name</var> already exists in <var>store</var>, <a>throw</a> a
+    <a>ConstraintError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+7. If <var>keyPath</var> is not a <a>valid key path</a>, <a>throw</a>
+    a <a>SyntaxError</a> exception.
 
+8. Let <var>unique</var> be set if <var>options</var>'s
+    <code>unique</code> member is true, and unset otherwise.
 
-<li>If an <a>index</a> <a data-lt="index.name">named</a> <var>name</var> already exists in <var>store</var>,
-<a>throw</a> a <a>ConstraintError</a> exception.
+9. Let <var>multiEntry</var> be set if <var>options</var>'s
+    <code>multiEntry</code> member is true, and unset otherwise.
 
+10. If <var>keyPath</var> is a sequence and <var>multiEntry</var> is
+    set, <a>throw</a> an <a>InvalidAccessError</a> exception.
 
-<li>If <var>keyPath</var> is not a <a>valid key path</a>,
-<a>throw</a> a <a>SyntaxError</a> exception.
+11. Let <var>index</var> be a new <a>index</a> in <var>store</var>.
+    Set <var>index</var>'s <a data-lt="index.name">name</a> to
+    <var>name</var> and <a data-lt="index.keyPath">key path</a> to
+    <var>keyPath</var>. If <var>unique</var> is set, set
+    <var>index</var>'s <a>unique flag</a>. If <var>multiEntry</var> is
+    set, set <var>index</var>'s <a>multiEntry flag</a>.
 
+12. Add <var>index</var> to this <a>object store handle</a>'s <a>index
+      set</a>.
 
-<li>Let <var>unique</var> be set if <var>options</var>'s <code>unique</code> member is true, and unset otherwise.
-
-<li>Let <var>multiEntry</var> be set if <var>options</var>'s <code>multiEntry</code> member is true, and unset otherwise.
-
-<li>If <var>keyPath</var> is a sequence and <var>multiEntry</var> is set,
-<a>throw</a> an <a>InvalidAccessError</a> exception.
-
-
-<li>
-Let <var>index</var> be a new <a>index</a> in <var>store</var>.
-Set <var>index</var>'s <a data-lt="index.name">name</a> to <var>name</var> and <a data-lt="index.keyPath">key path</a> to <var>keyPath</var>.
-If <var>unique</var> is set, set <var>index</var>'s <a>unique flag</a>.
-If <var>multiEntry</var> is set, set <var>index</var>'s <a>multiEntry flag</a>.
-
-
-<li>
-Add <var>index</var> to this <a>object store handle</a>'s <a>index set</a>.
-
-
-<li>
-Return a new <a>index handle</a> associated with <var>index</var> and this <var>object store handle</var>.
-
-</ol>
-
-This method creates and returns a new <a>index</a> with the given name in the <a>object store</a>.
-Note that this method must only be called from within an <a>upgrade transaction</a>.
-
-The index that is requested to be created can contain constraints on the data allowed in the index's
-<a>referenced</a> object store, such as requiring uniqueness of the values referenced by the
-index's keyPath. If the <a>referenced</a> object store already contains data which violates these
-constraints, this MUST NOT cause the implementation of createIndex to throw an exception or affect what it returns.
-The implementation MUST still create and return an <a>IDBIndex</a> object,
-and the implementation MUST <a>queue a task</a> to abort the <a>upgrade transaction</a>
-which was used for the createIndex call.
+13. Return a new <a>index handle</a> associated with <var>index</var>
+    and this <var>object store handle</var>.
 
 
-This method synchronously modifies the
-<a data-lt="IDBObjectStore.indexNames">indexNames</a> property
-on the <a>IDBObjectStore</a> instance on which it was called.
-Although this method does not return an <a>IDBRequest</a> object, the index creation itself is
-processed as an asynchronous request within the <a>upgrade transaction</a>.
+This method creates and returns a new <a>index</a> with the given name
+in the <a>object store</a>. Note that this method must only be called
+from within an <a>upgrade transaction</a>.
+
+The index that is requested to be created can contain constraints on
+the data allowed in the index's <a>referenced</a> object store, such
+as requiring uniqueness of the values referenced by the index's
+keyPath. If the <a>referenced</a> object store already contains data
+which violates these constraints, this MUST NOT cause the
+implementation of createIndex to throw an exception or affect what it
+returns. The implementation MUST still create and return an
+<a>IDBIndex</a> object, and the implementation MUST <a>queue a
+task</a> to abort the <a>upgrade transaction</a> which was used for
+the createIndex call.
 
 
-In some implementations it is possible for the implementation to asynchronously run into problems
-creating the index after the createIndex method has returned.
-For example in implementations where metadata about the newly created index is
-queued up to be inserted into the database asynchronously,
-or where the implementation might need to ask the user for permission for quota reasons.
-Such implementations MUST still create and return an <a>IDBIndex</a> object, and
-once the implementation determines that creating the index has failed, it MUST abort the transaction
-using the <a>steps for aborting a transaction</a> using an appropriate error as <var>error</var>. For example if
-creating the <a>index</a> failed due to quota reasons, <a>QuotaExceededError</a> MUST be used as error and if the index
-can't be created due to <a>unique flag</a> constraints, <a>ConstraintError</a> MUST be used as error.
+This method synchronously modifies the <a
+data-lt="IDBObjectStore.indexNames">indexNames</a> property on the
+<a>IDBObjectStore</a> instance on which it was called. Although this
+method does not return an <a>IDBRequest</a> object, the index creation
+itself is processed as an asynchronous request within the <a>upgrade
+transaction</a>.
+
+In some implementations it is possible for the implementation to
+asynchronously run into problems creating the index after the
+createIndex method has returned. For example in implementations where
+metadata about the newly created index is queued up to be inserted
+into the database asynchronously, or where the implementation might
+need to ask the user for permission for quota reasons. Such
+implementations MUST still create and return an <a>IDBIndex</a>
+object, and once the implementation determines that creating the index
+has failed, it MUST abort the transaction using the <a>steps for
+aborting a transaction</a> using an appropriate error as
+<var>error</var>. For example if creating the <a>index</a> failed due
+to quota reasons, <a>QuotaExceededError</a> MUST be used as error and
+if the index can't be created due to <a>unique flag</a> constraints,
+<a>ConstraintError</a> MUST be used as error.
 
 <aside class="example">
 
@@ -2858,52 +2862,51 @@ var request2 = objectStore.put({name: "betty"}, 2);
 var index = objectStore.createIndex("by_name", "name", {unique: true});
 </pre>
 
-At the point where <code>createIndex</code> called, neither of the <a>requests</a>
-have executed. When the second request executes, a duplicate name is created. Since the index
-creation is considered an asynchronous <a>request</a>, the index's <a data-lt="unique flag">uniqueness</a>
-constraint does not cause the second <a>request</a> to fail. Instead, the <a>transaction</a> will be
-<a data-lt="transaction abort">aborted</a> when the index is created and the constraint fails.
+At the point where <code>createIndex</code> called, neither of the
+<a>requests</a> have executed. When the second request executes, a
+duplicate name is created. Since the index creation is considered an
+asynchronous <a>request</a>, the index's <a data-lt="unique
+flag">uniqueness</a> constraint does not cause the second
+<a>request</a> to fail. Instead, the <a>transaction</a> will be <a
+data-lt="transaction abort">aborted</a> when the index is created and
+the constraint fails.
 
 </aside>
-
-
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.index">index(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
+4. If <var>transaction</var> has <a data-lt="transaction
+    finish">finished</a>, <a>throw</a> an <a>InvalidStateError</a>
+    exception.
 
-<li>If <var>transaction</var> has <a data-lt="transaction finish">finished</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+5. Let <var>index</var> be the <a>index</a> <a
+    data-lt="index.name">named</a> <var>name</var> in this <a>object
+    store handle</a>'s <a>index set</a> if one exists, or <a>throw</a>
+    a <a>NotFoundError</a> exception otherwise.
 
-
-<li>
-Let <var>index</var> be the <a>index</a> <a data-lt="index.name">named</a> <var>name</var> in this
-<a>object store handle</a>'s <a>index set</a> if one exists, or <a>throw</a> a <a>NotFoundError</a> exception otherwise.
-
-
-<li>
-Return an <a>index handle</a> associated with <var>index</var> and this <a>object store handle</a>.
+6. Return an <a>index handle</a> associated with <var>index</var> and
+    this <a>object store handle</a>.
 
 <aside class="note">
-Each call to this method on the same
-<a>IDBObjectStore</a> instance with the same name returns the same <a>IDBIndex</a> instance.
+  Each call to this method on the same <a>IDBObjectStore</a> instance
+  with the same name returns the same <a>IDBIndex</a> instance.
 </aside>
 
 <aside class="note">
-The returned <a>IDBIndex</a> instance is specific to this <a>IDBObjectStore</a> instance. If this
-method is called on a different <a>IDBObjectStore</a> instance with the same name, a different <a>IDBIndex</a> instance is
-returned.
+  The returned <a>IDBIndex</a> instance is specific to this
+  <a>IDBObjectStore</a> instance. If this method is called on a
+  different <a>IDBObjectStore</a> instance with the same name, a
+  different <a>IDBIndex</a> instance is returned.
 </aside>
-
-</ol>
-
 
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.deleteIndex">deleteIndex(<var>name</var>)</dfn> method, when invoked, must run these steps:
