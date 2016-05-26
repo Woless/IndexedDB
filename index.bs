@@ -2388,58 +2388,67 @@ The <dfn data-lt-noDefault data-lt="IDBObjectStore.put">put(<var>value</var>, <v
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.add">add(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a
+    data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is a <a>read-only transaction</a>,
-<a>throw</a> a <a>ReadOnlyError</a> exception.
+5. If <var>transaction</var> is a <a>read-only transaction</a>,
+    <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-<li>If <var>store</var> uses <a>in-line keys</a> and <var>key</var> was given,
-<a>throw</a> a <a>DataError</a> exception.
+6. If <var>store</var> uses <a>in-line keys</a> and <var>key</var> was given,
+    <a>throw</a> a <a>DataError</a> exception.
 
-<li>If <var>store</var> uses <a>out-of-line keys</a> and has no <a>key generator</a>
-and <var>key</var> was not given,
-<a>throw</a> a <a>DataError</a> exception.
+7. If <var>store</var> uses <a>out-of-line keys</a> and has no <a>key generator</a>
+    and <var>key</var> was not given,
+    <a>throw</a> a <a>DataError</a> exception.
 
-<li>If <var>key</var> was given, run these substeps:
-<ol>
-<li>Let <var>r</var> be the result of running the steps to <a>convert a value to a key</a> with <var>key</var>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
-<li>Let <var>key</var> be <var>r</var>.
-</ol>
+8. If <var>key</var> was given, run these substeps:
 
+    1. Let <var>r</var> be the result of running the steps to
+        <a>convert a value to a key</a> with <var>key</var>. If this
+        throws an exception, <a>rethrow</a> it.
 
-<li>Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
-throws an exception, <a>rethrow</a> the exception.
+    2. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a>
+        exception.
 
-<li>If <var>store</var> uses <a>in-line keys</a>, run these substeps:
-<ol>
-<li>Let <var>kpk</var> be the result of running the steps to <a>extract a key from a value using a key path</a>
-with <var>clone</var> and <var>store</var>'s <a data-lt="objectStore.keyPath">key path</a>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>kpk</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
-<li>If <var>kpk</var> is not failure, let <var>key</var> be <var>kpk</var>.
-<li>Otherwise, if <var>store</var> does not have a <a>key generator</a>,
-<a>throw</a> a <a>DataError</a> exception.
-</ol>
+    3. Let <var>key</var> be <var>r</var>.
 
-<li>
-Run the <a>steps for asynchronously executing a request</a> and return the <a>IDBRequest</a> created by these steps.
-The steps are run with this <a>object store handle</a> as <var>source</var> and the <a>steps for
-storing a record into an object store</a> as <var>operation</var>, using
-<var>store</var>, <var>clone</var> as <var>value</var>,
-<var>key</var>, and with the <var>no-overwrite flag</var> set.
+9. Let <var>clone</var> be <a>structured clone</a> of
+    <var>value</var>. If this throws an exception, <a>rethrow</a> the
+    exception.
 
-</ol>
+10. If <var>store</var> uses <a>in-line keys</a>, run these substeps:
+
+    1. Let <var>kpk</var> be the result of running the steps to
+        <a>extract a key from a value using a key path</a> with
+        <var>clone</var> and <var>store</var>'s <a
+        data-lt="objectStore.keyPath">key path</a>. If this throws an
+        exception, <a>rethrow</a> it.
+
+    2. If <var>kpk</var> is invalid, <a>throw</a> a <a>DataError</a>
+        exception.
+
+    3. If <var>kpk</var> is not failure, let <var>key</var> be
+        <var>kpk</var>.
+
+    4. Otherwise, if <var>store</var> does not have a <a>key
+        generator</a>, <a>throw</a> a <a>DataError</a> exception.
+
+11. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>object store handle</a> as <var>source</var> and
+    the <a>steps for storing a record into an object store</a> as
+    <var>operation</var>, using <var>store</var>, <var>clone</var> as
+    <var>value</var>, <var>key</var>, and with the <var>no-overwrite
+    flag</var> set.
 
 
 
