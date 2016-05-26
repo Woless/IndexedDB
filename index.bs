@@ -3200,78 +3200,72 @@ be retrieved.
 
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.count">count(<var>query</var>)</dfn> method, when invoked, must run these steps:
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+2. Let <var>index</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.index">index</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
-
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var>.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var>. If
+    this throws an exception, <a>rethrow</a> it.
 
 
-<li>
-Run the <a>steps for asynchronously executing a request</a> and return the <a>IDBRequest</a> created by these steps.
-The steps are run with this <a>index handle</a> as <var>source</var> and the <a>steps to count the records in a range</a> as <var>operation</var>,
-with <a>index</a> as <var>source</var> and <var>range</var>.
-
-</ol>
+6. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>index handle</a> as <var>source</var> and the
+    <a>steps to count the records in a range</a> as
+    <var>operation</var>, with <a>index</a> as <var>source</var> and
+    <var>range</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> identifying the <a>records</a> keys to be
-counted. If null or not given, an <a>unbounded key
-range</a> is used.
-
+<a>IDBKeyRange</a> identifying the <a>records</a> keys to be counted.
+If null or not given, an <a>unbounded key range</a> is used.
 
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.openCursor">openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>index handle</a>'s <a data-lt="indexHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.transaction">transaction</a>.
 
-<li>Let <var>index</var> be this <a>index handle</a>'s <a data-lt="indexHandle.index">index</a>.
+2. Let <var>index</var> be this <a>index handle</a>'s <a
+    data-lt="indexHandle.index">index</a>.
 
-<li>If <var>index</var> or <var>index</var>'s <a>object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>Let <var>range</var> be the result of running
-the steps to <a>convert a value to a key range</a>
-with <var>query</var>.
-If this throws an exception, <a>rethrow</a> it.
+5. Let <var>range</var> be the result of running the steps to
+    <a>convert a value to a key range</a> with <var>query</var>. If
+    this throws an exception, <a>rethrow</a> it.
 
+6. Let <var>cursor</var> be a new <a>cursor</a> with <a
+    data-lt="cursor.transaction">transaction</a> set to
+    <var>transaction</var>, an undefined <a>position</a>,
+    <a>direction</a> set to <var>direction</var>, <a>got value
+    flag</a> unset, and undefined <a data-lt="cursor.key">key</a> and
+    <a data-lt="cursor.value">value</a>. The <a
+    data-lt="cursor.source">source</a> of <var>cursor</var> is
+    <var>index</var>. The <a>range</a> of <var>cursor</var> is
+    <var>range</var>.
 
-<li>
-Let <var>cursor</var> be a new <a>cursor</a>
-with <a data-lt="cursor.transaction">transaction</a> set to <var>transaction</var>,
-an undefined <a>position</a>, <a>direction</a> set to
-<var>direction</var>, <a>got value flag</a> unset, and undefined
-<a data-lt="cursor.key">key</a> and <a data-lt="cursor.value">value</a>. The <a data-lt="cursor.source">source</a>
-of <var>cursor</var> is <var>index</var>.
-The <a>range</a> of <var>cursor</var> is <var>range</var>.
-
-
-<li>
-Run the <a>steps for asynchronously executing a request</a> and return the <a>IDBRequest</a>
-created by these steps. The steps are run with this <a>index handle</a> as <var>source</var> and the
-<a>steps for iterating a cursor</a> with <var>cursor</var> as <var>operation</var>.
-
-</ol>
+7. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>index handle</a> as <var>source</var> and the
+    <a>steps for iterating a cursor</a> with <var>cursor</var> as
+    <var>operation</var>.
 
 The <var>query</var> parameter may be a <a>key</a> or an
-<a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>.
-If null or not given, an <a>unbounded key range</a> is used.
-
+<a>IDBKeyRange</a> to use as the <a>cursor</a>'s <a>range</a>. If null
+or not given, an <a>unbounded key range</a> is used.
 
 
 The <dfn data-lt-noDefault data-lt="IDBIndex.openKeyCursor">openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
