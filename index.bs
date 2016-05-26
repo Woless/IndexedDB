@@ -265,7 +265,9 @@ are defined by Web IDL [[!WEBIDL]].</dd>
 -->
 
 
+<!-- ============================================================ -->
 <h2 id=database-api>Indexed Database API</h2>
+<!-- ============================================================ -->
 
 A <dfn>sorted list</dfn> is a <a>DOMStringList</a> containing strings
 sorted in ascending order using the algorithm defined by step 4 of
@@ -3749,32 +3751,33 @@ The <dfn data-lt-noDefault data-lt="IDBCursor.continuePrimaryKey">continuePrimar
 
 The <dfn data-lt-noDefault data-lt="IDBCursor.delete">delete()</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>cursor</a>'s <a data-lt="cursor.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>cursor</a>'s <a
+    data-lt="cursor.transaction">transaction</a>.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is a <a>read-only transaction</a>,
-<a>throw</a> a <a>ReadOnlyError</a> exception.
+3. If <var>transaction</var> is a <a>read-only transaction</a>,
+    <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-<li>If the cursor's <a data-lt="cursor.source">source</a> or <a>effective object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If the cursor's <a data-lt="cursor.source">source</a> or
+    <a>effective object store</a> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If this cursor's <a>got value flag</a> is unset, indicating that the cursor is being iterated or has iterated past its end,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+5. If this cursor's <a>got value flag</a> is unset, indicating that
+    the cursor is being iterated or has iterated past its end,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If this cursor's <a>key only flag</a> is set,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+6. If this cursor's <a>key only flag</a> is set, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>
-Run the <a>steps for asynchronously executing a request</a> and return the
-<a>IDBRequest</a> created by these steps. The steps are run with this <a>cursor</a> as <var>source</var>
-and the <a>steps for deleting records from an object store</a> as <var>operation</var>, using this cursor's
-<a>effective object store</a> and <a>effective key</a> as <var>store</var> and <var>key</var> respectively.
-
-</ol>
-
+7. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>cursor</a> as <var>source</var> and the <a>steps
+    for deleting records from an object store</a> as
+    <var>operation</var>, using this cursor's <a>effective object
+    store</a> and <a>effective key</a> as <var>store</var> and
+    <var>key</var> respectively.
 
 A <a>cursor</a> that has the <a>key only flag</a> unset implements the <a>IDBCursorWithValue</a> interface as well.
 
@@ -3782,159 +3785,158 @@ A <a>cursor</a> that has the <a>key only flag</a> unset implements the <a>IDBCur
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBCursorWithValue : IDBCursor {
-readonly    attribute any value;
+  readonly    attribute any value;
 };
 </pre>
-
 
 The <dfn data-lt-noDefault data-lt="IDBCursorWithValue.value">value</dfn> attribute's getter must return
 the cursor's current <a data-lt="cursor.value">value</a>.
 
 Note that if this property returns an object, it returns the same
-object instance every time it is inspected, until the cursor's <a data-lt="cursor.value">value</a> is changed.
-This means that if the object is modified,
-those modifications will be seen by anyone inspecting the value of the cursor. However modifying such an object
+object instance every time it is inspected, until the cursor's <a
+data-lt="cursor.value">value</a> is changed. This means that if the
+object is modified, those modifications will be seen by anyone
+inspecting the value of the cursor. However modifying such an object
 does not modify the contents of the database.
 
 
-
-
-<section class="section" id="transaction">
-<h4>The <code>IDBTransaction</code> interface</h4>
-<!-- TODO Add example. Should examples be in a separate section?-->
+<h4 id=transaction>The <code>IDBTransaction</code> interface</h4>
 
 <a>Transaction</a> objects implement the following interface:
-
 
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBTransaction : EventTarget {
-readonly    attribute DOMStringList      objectStoreNames;
-readonly    attribute IDBTransactionMode mode;
-readonly    attribute IDBDatabase        db;
-readonly    attribute DOMException       error;
+  readonly    attribute DOMStringList      objectStoreNames;
+  readonly    attribute IDBTransactionMode mode;
+  readonly    attribute IDBDatabase        db;
+  readonly    attribute DOMException       error;
 
-IDBObjectStore objectStore(DOMString name);
-void           abort();
+  IDBObjectStore objectStore(DOMString name);
+  void           abort();
 
-// Event handlers:
-attribute EventHandler       onabort;
-attribute EventHandler       oncomplete;
-attribute EventHandler       onerror;
+  // Event handlers:
+  attribute EventHandler       onabort;
+  attribute EventHandler       oncomplete;
+  attribute EventHandler       onerror;
 };
 
 enum IDBTransactionMode {
-"readonly",
-"readwrite",
-"versionchange"
+  "readonly",
+  "readwrite",
+  "versionchange"
 };
 </pre>
 
-
 The <dfn data-lt-noDefault data-lt="IDBTransaction.objectStoreNames">objectStoreNames</dfn> attribute's getter must run the following steps:
 
-<ol class=algorithm>
-<li>
-If this <a>transaction</a> is an <a>upgrade transaction</a>, return a
-<a>sorted list</a> of the <a data-lt="objectStore.name">names</a>
-of the <a>object stores</a> in this <a>transaction</a>'s
-<a>connection</a>'s <a>object store set</a>.
+1. If this <a>transaction</a> is an <a>upgrade transaction</a>, return a
+    <a>sorted list</a> of the <a data-lt="objectStore.name">names</a>
+    of the <a>object stores</a> in this <a>transaction</a>'s
+    <a>connection</a>'s <a>object store set</a>.
 
-<li>
-Otherwise, return a <a>sorted list</a> of the <a data-lt="objectStore.name">names</a>
-of the <a>object stores</a> in this <a>transaction</a>'s <a>scope</a>.
+2. Otherwise, return a <a>sorted list</a> of the <a data-lt="objectStore.name">names</a>
+    of the <a>object stores</a> in this <a>transaction</a>'s <a>scope</a>.
 
-</ol>
+
 <aside class="note">&#9752; The <a>IDBTransaction.objectStoreNames</a> attribute is new in this edition. &#9752;</aside>
 
 <aside class="note">
-The contents of each list returned by this attribute does not change,
-but subsequent calls to this attribute during an <a>upgrade transaction</a>
-may return lists with different contents as <a>object stores</a>
-are created and deleted.
+  The contents of each list returned by this attribute does not
+  change, but subsequent calls to this attribute during an <a>upgrade
+  transaction</a> may return lists with different contents as
+  <a>object stores</a> are created and deleted.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.mode">mode</dfn> attribute's getter must return the <a>mode</a> of the <a>transaction</a>.
+The <dfn data-lt-noDefault data-lt="IDBTransaction.mode">mode</dfn>
+attribute's getter must return the <a>mode</a> of the
+<a>transaction</a>.
 
+The <dfn data-lt-noDefault data-lt="IDBTransaction.db">db</dfn>
+attribute's getter must return the <a>database</a> <a>connection</a>
+of which this <a>transaction</a> is a part.
 
-
-The <dfn data-lt-noDefault data-lt="IDBTransaction.db">db</dfn> attribute's getter must return the
-<a>database</a> <a>connection</a> of which this <a>transaction</a>
-is a part.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBTransaction.error">error</dfn> attribute's getter must return this <a>transaction</a>'s <a data-lt="transaction error">error</a>, or null if none.
+The <dfn data-lt-noDefault data-lt="IDBTransaction.error">error</dfn>
+attribute's getter must return this <a>transaction</a>'s <a
+data-lt="transaction error">error</a>, or null if none.
 
 <aside class="note">
-If this <a>transaction</a> was aborted due to a failed <a>request</a>,
-this will be the same as the <a>request</a>'s <a data-lt="request.error">error</a>.
+  If this <a>transaction</a> was aborted due to a failed
+  <a>request</a>, this will be the same as the <a>request</a>'s <a
+  data-lt="request.error">error</a>.
 
-If this <a>transaction</a> was aborted due to an uncaught exception in a event
-handler, the error will be <a>AbortError</a>.
+  If this <a>transaction</a> was aborted due to an uncaught exception
+  in a event handler, the error will be <a>AbortError</a>.
 
-If the <a>transaction</a> was aborted due to an error while committing,
-it will reflect the reason for the failure (e.g. <a>QuotaExceededError</a>,
-<a>ConstraintError</a>, or <a>UnknownError</a>).
+  If the <a>transaction</a> was aborted due to an error while
+  committing, it will reflect the reason for the failure (e.g.
+  <a>QuotaExceededError</a>, <a>ConstraintError</a>, or
+  <a>UnknownError</a>).
 </aside>
 
 
 The <dfn data-lt-noDefault data-lt="IDBTransaction.objectStore">objectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>If <var>transaction</var> has <a data-lt="transaction finish">finished</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+1. If <var>transaction</var> has <a data-lt="transaction
+    finish">finished</a>, <a>throw</a> an <a>InvalidStateError</a>
+    exception.
 
-<li>Let <var>store</var> be the <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> in this <a>transaction</a>'s <a>scope</a>,
-or <a>throw</a> a <a>NotFoundError</a> exception if none.
+2. Let <var>store</var> be the <a>object store</a> <a
+    data-lt="objectStore.name">named</a> <var>name</var> in this
+    <a>transaction</a>'s <a>scope</a>, or <a>throw</a> a
+    <a>NotFoundError</a> exception if none.
 
-
-<li>Return an <a>object store handle</a> associated with <var>store</var> and this <a>transaction</a>.
+3. Return an <a>object store handle</a> associated with
+    <var>store</var> and this <a>transaction</a>.
 
 <aside class="note">
-Each call to this method on the same <a>IDBTransaction</a> instance with the same
-name returns the same <a>IDBObjectStore</a> instance.
+  Each call to this method on the same <a>IDBTransaction</a> instance
+  with the same name returns the same <a>IDBObjectStore</a> instance.
 </aside>
 
 <aside class="note">
-The returned <a>IDBObjectStore</a> instance is specific to this <a>IDBTransaction</a>. If this
-method is called on a different <a>IDBTransaction</a>, a different <a>IDBObjectStore</a> instance is returned.
+  The returned <a>IDBObjectStore</a> instance is specific to this
+  <a>IDBTransaction</a>. If this method is called on a different
+  <a>IDBTransaction</a>, a different <a>IDBObjectStore</a> instance is
+  returned.
 </aside>
-
-</ol>
 
 
 The <dfn data-lt-noDefault data-lt="IDBTransaction.abort">abort()</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>If this <a>transaction</a> is <a data-lt="transaction finish">finished</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+1. If this <a>transaction</a> is <a data-lt="transaction finish">finished</a>,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>Unset the <a>transaction</a>'s <a>active flag</a> and run the
-<a>steps for aborting a transaction</a> with null as <var>error</var>.
+2. Unset the <a>transaction</a>'s <a>active flag</a> and run the
+    <a>steps for aborting a transaction</a> with null as <var>error</var>.
 
-</ol>
 
-The <dfn data-lt-noDefault data-lt="IDBTransaction.onabort">onabort</dfn> attribute is the event handler for the <code>abort</code> event.
-The <dfn data-lt-noDefault data-lt="IDBTransaction.oncomplete">oncomplete</dfn> attribute is the event handler for the <code>complete</code> event.
-The <dfn data-lt-noDefault data-lt="IDBTransaction.onerror">onerror</dfn> attribute is the event handler for the <code>error</code> event.
+The <dfn data-lt-noDefault
+data-lt="IDBTransaction.onabort">onabort</dfn> attribute is the event
+handler for the <code>abort</code> event.
+
+The <dfn data-lt-noDefault
+data-lt="IDBTransaction.oncomplete">oncomplete</dfn> attribute is the
+event handler for the <code>complete</code> event.
+
+The <dfn data-lt-noDefault
+data-lt="IDBTransaction.onerror">onerror</dfn> attribute is the event
+handler for the <code>error</code> event.
 
 <aside class="note">
-To determine if a <a>transaction</a> has completed successfully,
-listen to the <a>transaction</a>'s <code>complete</code> event rather than the <code>success</code> event of a particular <a>request</a>,
-because the <a>transaction</a> may still fail after the <code>success</code> event fires.
+  To determine if a <a>transaction</a> has completed successfully,
+  listen to the <a>transaction</a>'s <code>complete</code> event
+  rather than the <code>success</code> event of a particular
+  <a>request</a>, because the <a>transaction</a> may still fail after
+  the <code>success</code> event fires.
 </aside>
 
 
 
+<h3 id=algorithms>Algorithms</h3>
 
-
-<section class="section" id="algorithms">
-<h3>Algorithms</h3>
-
-<section class="section" id="opening">
-<h4>Opening a database</h4>
+<h4 id=opening>Opening a database</h4>
 
 The <dfn>steps for opening a database</dfn> are defined in the following steps. The algorithm in these steps
 takes four arguments:
@@ -4019,8 +4021,9 @@ Return <var>connection</var>.
 </ol>
 
 
-<section class="section">
+
 <h4>Closing a database</h4>
+
 The <dfn>steps for closing a database connection</dfn> are as follows.
 These steps take two arguments, a <var>connection</var> object, and an
 optional <var>forced flag</var>.
@@ -4060,7 +4063,6 @@ before continuing.
 </aside>
 
 
-<section class="section">
 <h4>Deleting a database</h4>
 
 The <dfn>steps for deleting a database</dfn> are as follows.
@@ -4111,7 +4113,6 @@ Return <var>version</var>.
 </ol>
 
 
-<section class="section">
 <h4>Steps for committing a transaction</h4>
 
 When taking the <dfn>steps for committing a transaction</dfn> the implementation MUST
@@ -4140,7 +4141,6 @@ has been successfully written is the "<code>complete</code>" event fired.
 </ol>
 
 
-<section class="section">
 <h4>Steps for aborting a transaction</h4>
 
 When taking the <dfn>steps for aborting a transaction</dfn> the implementation MUST
@@ -4202,7 +4202,6 @@ The event does bubble but is not cancelable.
 </ol>
 
 
-<section class="section">
 <h4>Steps for asynchronously executing a <a>request</a></h4>
 
 When taking the <dfn>steps for asynchronously executing a request</dfn> the implementation MUST run the
@@ -4258,7 +4257,6 @@ Finally <a>fire a success event</a> at <var>request</var>.
 </ol>
 
 
-<section class="section">
 <h4>Upgrade transaction steps</h4>
 
 The <dfn>steps for running an upgrade transaction</dfn> are
@@ -4347,7 +4345,6 @@ This MUST be done in the same task as the task firing the
 </ol>
 
 
-<section class="section">
 <h4>Steps for aborting an upgrade transaction</h4>
 
 The <dfn>steps for aborting an upgrade transaction</dfn> <var>transaction</var> are as follows.
@@ -4437,7 +4434,6 @@ even if the aborted <a>upgrade transaction</a> was creating a new <a>database</a
 </aside>
 
 
-<section class="section">
 <h4>Fire a success event</h4>
 
 To <dfn>fire a success event</dfn> at a <a>request</a>,
@@ -4466,7 +4462,6 @@ abort the transaction by following the <a>steps for aborting a transaction</a> w
 </ol>
 
 
-<section class="section">
 <h4>Fire an error event</h4>
 
 To <dfn>fire an error event</dfn> at a <a><var>request</var></a>,
@@ -4507,13 +4502,11 @@ using <var>transaction</var> and <a>request</a>'s <a data-lt="request.error">err
 
 
 
-<section class="section" id="database-operations">
-<h3>Database operations</h3>
+<h3 id=database-operations>Database operations</h3>
 
 This section describes various operations done on the data in <a>object stores</a> and <a>indexes</a>
 in a <a>database</a>. These operations are run by the <a>steps for asynchronously executing a request</a>.
 
-<section class="section">
 <h4>Object Store Storage Operation</h4>
 
 The <dfn>steps for storing a record into an object store</dfn> with
@@ -4632,7 +4625,6 @@ Return <var>key</var>.
 </ol>
 
 
-<section class="section">
 <h4>Object Store Retrieval Operations</h4>
 
 The <dfn>steps for retrieving a value from an object store</dfn> with
@@ -4724,7 +4716,6 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 </ol>
 
 
-<section class="section">
 <h4>Index Retrieval Operations</h4>
 
 The <dfn>steps for retrieving a referenced value from an index</dfn> with
@@ -4816,7 +4807,6 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 </ol>
 
 
-<section class="section">
 <h4>Object Store Deletion Operation</h4>
 
 The <dfn>steps for deleting records from an object store</dfn>
@@ -4838,7 +4828,6 @@ Return undefined.
 </ol>
 
 
-<section class="section">
 <h4>Record Counting Operation</h4>
 
 The <dfn>steps to count the records in a range</dfn> with <var>source</var> and <var>range</var> are as follows:
@@ -4854,7 +4843,6 @@ Return <var>count</var>.
 </ol>
 
 
-<section class="section">
 <h4>Object Store Clear Operation</h4>
 
 The <dfn>steps for clearing an object store</dfn> with <var>store</var> are as follows.
@@ -4873,7 +4861,6 @@ Return undefined.
 </ol>
 
 
-<section class="section">
 <h4>Cursor Iteration Operation</h4>
 
 The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
@@ -5025,9 +5012,7 @@ set <var>cursor</var>'s <a data-lt="cursor.value">value</a> to a <a>structured c
 
 
 
-<section class="section" id="binding">
-<h3>ECMAScript binding</h3>
-
+<h3 id=binding>ECMAScript binding</h3>
 
 This section defines how <a>key</a> values defined in this specification
 are converted to and from ECMAScript values, and how they may be
@@ -5037,11 +5022,10 @@ types and algorithms from the ECMAScript Language Specification. [[!ECMA-262]]
 
 
 <aside class="issue">
-Simplify this section as much as possible by relying more on [[!WEBIDL]]
-for key conversion logic.
+  Simplify this section as much as possible by relying more on [[!WEBIDL]]
+  for key conversion logic.
 </aside>
 
-<section class="section">
 <h4>Steps to extract a key from a value using a <a>key path</a></h4>
 
 
@@ -5118,7 +5102,6 @@ Return <var>value</var>.
 </ol>
 
 
-<section class="section">
 <h4>Steps to inject a key into a value using a key path</h4>
 
 The steps to <dfn>inject a key into a value using a key path</dfn> are as follows.
@@ -5179,7 +5162,6 @@ is only applied to values that are the output of the
 </aside>
 
 
-<section class="section">
 <h4>Steps to convert a key to a value</h4>
 
 The steps to <dfn>convert a key to a value</dfn> are as follows. These
@@ -5241,7 +5223,6 @@ with the <var>index</var>th entry of <var>value</var> as input.
 </ol>
 
 
-<section class="section">
 <h4>Steps to convert a value to a key</h4>
 
 The steps to <dfn>convert a value to a key</dfn> are as follows. These
@@ -5367,43 +5348,35 @@ with argument <var>input</var>.
 </ol>
 
 <aside class="note">
+  These steps are similar to those to <a>convert a value to a key</a>
+  but if the top-level value is an <a>Array</a> then members which can
+  not be converted to keys are ignored, and duplicates are removed.
 
-These steps are similar to those to <a>convert a value to a key</a> but if the top-level
-value is an <a>Array</a> then members which can not be converted to keys are ignored, and
-duplicates are removed.
-
-
-For example, the value <code>[10, 20, null, 30, 20]</code> is converted to an
-<a>array key</a> with <a>subkeys</a> 10, 20, 30.
-
+  For example, the value <code>[10, 20, null, 30, 20]</code> is
+  converted to an <a>array key</a> with <a>subkeys</a> 10, 20, 30.
 </aside>
 
 
 
 
-<!-- database-api -->
 
+<!-- ============================================================ -->
+<h2 id=privacy>Privacy</h2>
+<!-- ============================================================ -->
 
-<section id="privacy" class="informative">
-<h2>Privacy</h2>
-
-<section id="user-tracking" class="section">
-<h3>User tracking</h3>
-
+<h3 id=user-tracking>User tracking</h3>
 
 A third-party host (or any object capable of getting content
-distributed to multiple sites) could use a unique identifier
-stored in its client-side database to track a user across multiple
-sessions, building a profile of the user's activities. In conjunction
-with a site that is aware of the user's real id object (for
-example an e-commerce site that requires authenticated credentials),
-this could allow oppressive groups to target individuals with
-greater accuracy than in a world with purely anonymous Web usage.
+distributed to multiple sites) could use a unique identifier stored in
+its client-side database to track a user across multiple sessions,
+building a profile of the user's activities. In conjunction with a
+site that is aware of the user's real id object (for example an
+e-commerce site that requires authenticated credentials), this could
+allow oppressive groups to target individuals with greater accuracy
+than in a world with purely anonymous Web usage.
 
-
-
-There are a number of techniques that can be used to mitigate the
-risk of user tracking:
+There are a number of techniques that can be used to mitigate the risk
+of user tracking:
 
 
 <dl>
@@ -5421,8 +5394,6 @@ the API for pages from other domains running in <code>iframe</code>s.
 User agents MAY automatically delete stored data after a period
 of time.
 
-
-
 This can restrict the ability of a site to track a user, as the
 site would then only be able to track the user across multiple
 sessions when she authenticates with the site itself (e.g. by
@@ -5438,8 +5409,6 @@ However, this also puts the user's data at risk.
 User agents should present the database feature
 to the user in a way that associates them strongly with HTTP
 session cookies. [[COOKIES]]
-
-
 
 This might encourage users to view such storage with healthy
 suspicion.
@@ -5461,8 +5430,6 @@ User agents MAY record the <a>origins</a>
 of sites that contained content from third-party origins that
 caused data to be stored.
 
-
-
 If this information is then used to present the view of data
 currently in persistent storage, it would allow the user to make
 informed decisions about which parts of the persistent storage to
@@ -5478,14 +5445,11 @@ the use of persistent storage to sites that she trusts.
 User agents MAY allow users to share their persistent storage
 domain blacklists.
 
-
-
 This would allow communities to act together to protect their
 privacy.
 
 </dd>
 </dl>
-
 
 While these suggestions prevent trivial use of this API for user
 tracking, they do not block it altogether. Within a single domain, a
@@ -5496,8 +5460,6 @@ obtained by the site. If a third party cooperates with multiple
 sites to obtain such information, a profile can still be
 created.
 
-
-
 However, user tracking is to some extent possible even with no
 cooperation from the user agent whatsoever, for instance by using
 session identifiers in URLs, a technique already commonly used for
@@ -5507,11 +5469,7 @@ sites, using using visitors' IP addresses and other user-specific
 data (e.g. user-agent headers and configuration settings) to combine
 separate sessions into coherent user profiles.
 
-
-
-<section id="cookie-resurrection" class="section">
-<h3>Cookie resurrection</h3>
-
+<h3 id=cookie-resurrection>Cookie resurrection</h3>
 
 If the user interface for persistent storage presents data in the
 persistent storage features described in this specification
@@ -5521,29 +5479,22 @@ use the two features as redundant backup for each other, defeating a
 user's attempts to protect his privacy.
 
 
-
-<section id="sensitivity-of-data" class="section">
-<h3>Sensitivity of data</h3>
-
+<h3 id=sensitivity-of-data>Sensitivity of data</h3>
 
 User agents should treat persistently stored data as potentially
 sensitive; it is quite possible for e-mails, calendar appointments,
 health records, or other confidential documents to be stored in this
 mechanism.
 
-
 To this end, user agents should ensure that when deleting data,
 it is promptly deleted from the underlying storage.
 
 
- <!-- Privacy -->
+<!-- ============================================================ -->
+<h2 id=authorization>Authorization</h2>
+<!-- ============================================================ -->
 
-<section id="authorization" class="informative">
-<h2>Authorization</h2>
-
-<section id="dns-spoofing-attacks" class="section">
-<h3>DNS spoofing attacks</h3>
-
+<h3 id=dns-spoofing-attacks>DNS spoofing attacks</h3>
 
 Because of the potential for DNS spoofing attacks, one cannot
 guarantee that a host claiming to be in a certain domain really is
@@ -5553,40 +5504,29 @@ identifying them as being from the same domain can access their
 databases.
 
 
-
-<section id="cross-directory-attacks" class="section">
-<h3>Cross-directory attacks</h3>
-
+<h3 id=cross-directory-attacks>Cross-directory attacks</h3>
 
 Different authors sharing one host name, for example users
 hosting content on <code>geocities.com</code>, all share one
 set of databases.
-
-
 
 There is no feature to restrict the access by pathname. Authors on
 shared hosts are therefore recommended to avoid using these
 features, as it would be trivial for other authors to read the data
 and overwrite it.
 
-
-<aside class="note">Even if a path-restriction feature was made
-available, the usual DOM scripting security model would make it
-trivial to bypass this protection and access the data from any
-path.
+<aside class="note">
+Even if a path-restriction feature was made available, the usual DOM
+scripting security model would make it trivial to bypass this
+protection and access the data from any path.
 </aside>
 
-
-<section id="implementation-risks" class="section">
-<h3>Implementation risks</h3>
-
+<h3 id=implementation-risks>Implementation risks</h3>
 
 The two primary risks when implementing these persistent storage
 features are letting hostile sites read information from other
 domains, and letting hostile sites write information that is then
 read from other domains.
-
-
 
 Letting third-party sites read data that is not supposed to be
 read from their domain causes <em>information leakage</em>, For
@@ -5595,8 +5535,6 @@ another domain for targeted advertising; or a user's
 work-in-progress confidential documents stored by a word-processing
 site could be examined by the site of a competing company.
 
-
-
 Letting third-party sites write data to the persistent storage of
 other domains can result in <em>information spoofing</em>, which is
 equally dangerous. For example, a hostile site could add records to a
@@ -5604,23 +5542,13 @@ user's wish list; or a hostile site could set a user's session
 identifier to a known ID that the hostile site can then use to track
 the user's actions on the victim site.
 
-
-
 Thus, strictly following the <span>origin</span> model described
 in this specification is important for user security.
 
 
- <!-- authorization -->
-
-<section class="appendix section" id="requirements">
-<h2>Requirements</h2>
-<div class="ednote">
-Requirements will be written with an aim to verify that these were actually
-met by the API specified in this document.
-</div>
-
-<section class="appendix section" id="revision-history">
-<h2>Revision History</h2>
+<!-- ============================================================ -->
+<h2 id=revision-history>Revision History</h2>
+<!-- ============================================================ -->
 
 The following is an informative summary of the changes since the last
 publication of this specification.
@@ -5630,62 +5558,65 @@ For the revision history of the First Edition, see
 <a href="https://www.w3.org/TR/IndexedDB/#revision-history">that
 document's Revision History</a>.
 
-<ul>
-<li>Address comparison of empty arrays.
-(<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27712">bug #27712</a>)
 
-<li>Added <a>IDBObjectStore.openKeyCursor</a>.
-(<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=19955">bug #19955</a>)
+* Address comparison of empty arrays.
+    (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27712">bug #27712</a>)
 
-<li>Correct <var>source</var> used for
-<a>IDBIndex.get</a>,
-<a>IDBIndex.getKey</a>,
-<a>IDBIndex.openKeyCursor</a>.
+* Added <a>IDBObjectStore.openKeyCursor</a>.
+    (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=19955">bug #19955</a>)
 
-<li>Added details around garbage collection of <a>IDBDatabase</a> objects.
-(<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25223">bug #25223</a>)
+* Correct <var>source</var> used for
+    <a>IDBIndex.get</a>,
+    <a>IDBIndex.getKey</a>,
+    <a>IDBIndex.openKeyCursor</a>.
 
-<li>Added <code>[Exposed=(Window,Worker)]</code> annotations to interfaces.
-<li>Added <var>forced flag</var> to the <a>steps for closing a database connection</a>,
-described the firing of a "<code>close</code>" event, and
-<a>IDBDatabase.onclose</a>.
-(<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22540">bug #22540</a>)
+* Added details around garbage collection of <a>IDBDatabase</a> objects.
+    (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25223">bug #25223</a>)
 
-<li>Converted specification to a more algorithmic style,
-and define abstract types such as <a>key</a> more rigorously.
-(<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=17681">bug #17681</a>)
+* Added <code>[Exposed=(Window,Worker)]</code> annotations to interfaces.
 
-<li>Added
-<a>IDBObjectStore.getAll</a>,
-<a>IDBObjectStore.getAllKeys</a>,
-<a>IDBIndex.getAll</a>,
-<a>IDBIndex.getAllKeys</a>.
-(<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=16595">bug #16595</a>)
-<li>Replaced <code>DOMError</code> with <code>DOMException</code>.
-(<a href="https://github.com/w3c/IndexedDB/issues/16">bug #16</a>)
+* Added <var>forced flag</var> to the <a>steps for closing a database connection</a>,
+    described the firing of a "<code>close</code>" event, and
+    <a>IDBDatabase.onclose</a>.
+    (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22540">bug #22540</a>)
 
-<li>Added <a>IDBTransaction.objectStoreNames</a>.
-(<a href="https://github.com/w3c/IndexedDB/issues/18">bug #18</a>)
+* Converted specification to a more algorithmic style,
+    and define abstract types such as <a>key</a> more rigorously.
+    (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=17681">bug #17681</a>)
 
-<li>Added <i>binary</i> <a>keys</a>, including comparisons and ECMAScript bindings.
-(<a href="https://github.com/w3c/IndexedDB/issues/21">bug #21</a>)
+* Added
+    <a>IDBObjectStore.getAll</a>,
+    <a>IDBObjectStore.getAllKeys</a>,
+    <a>IDBIndex.getAll</a>,
+    <a>IDBIndex.getAllKeys</a>.
+    (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=16595">bug #16595</a>)
 
-<li>Allow renaming stores and indexes via <a>IDBObjectStore.name</a>
-and <a>IDBIndex.name</a> attribute setters.
-(<a href="https://github.com/w3c/IndexedDB/issues/21">bug #22</a>)
+* Replaced <code>DOMError</code> with <code>DOMException</code>.
+    (<a href="https://github.com/w3c/IndexedDB/issues/16">bug #16</a>)
 
-<li>Added <a>IDBCursor.continuePrimaryKey</a>.
-(<a href="https://github.com/w3c/IndexedDB/issues/14">bug #14</a>)
+* Added <a>IDBTransaction.objectStoreNames</a>.
+    (<a href="https://github.com/w3c/IndexedDB/issues/18">bug #18</a>)
 
-<li>Added <a>IDBKeyRange.includes</a>.
-(<a href="https://github.com/w3c/IndexedDB/issues/41">bug #41</a>)
+* Added <i>binary</i> <a>keys</a>, including comparisons and ECMAScript bindings.
+    (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #21</a>)
 
-<li>Added <a>IDBObjectStore.getKey</a>.
+* Allow renaming stores and indexes via <a>IDBObjectStore.name</a>
+    and <a>IDBIndex.name</a> attribute setters.
+    (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #22</a>)
+
+* Added <a>IDBCursor.continuePrimaryKey</a>.
+    (<a href="https://github.com/w3c/IndexedDB/issues/14">bug #14</a>)
+
+* Added <a>IDBKeyRange.includes</a>.
+    (<a href="https://github.com/w3c/IndexedDB/issues/41">bug #41</a>)
+
+* Added <a>IDBObjectStore.getKey</a>.
 (<a href="https://github.com/w3c/IndexedDB/issues/26">bug #26</a>)
 
-</ul>
 
+<!-- ============================================================ -->
 <h2 id=acknowledgements>Acknowledgements</h2>
+<!-- ============================================================ -->
 
 Special thanks to Nikunj Mehta, the original author of
 the first edition, and Jonas Sicking, Eliot Graff, Andrei Popescu,
