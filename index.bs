@@ -1874,130 +1874,118 @@ interface IDBFactory {
 
 The <dfn data-lt-noDefault data-lt="IDBFactory.open">open(<var>name</var>, <var>version</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>
-If <var>version</var> is 0 (zero), <a>throw</a> a <a>TypeError</a>.
+1. If <var>version</var> is 0 (zero), <a>throw</a> a <a>TypeError</a>.
 
-<li>
-Let <var>request</var> be a new <a>open request</a>.
+2. Let <var>request</var> be a new <a>open request</a>.
 
-<li>
-<a>Queue a task</a> to run these substeps:
-<ol>
-<li>Let <var>result</var> be the result of running the <a>steps for opening a database</a>, with
-the origin of the <a>IDBEnvironment</a> used to access this <a>IDBFactory</a>,
-<var>name</var>,
-<var>version</var> if given and undefined otherwise, and
-<var>request</var>.
-<aside class="note">
-If <var>version</var> is not given and a <a>database</a> with that name already exists,
-a connection will be opened without changing the <a>version</a>. If <var>version</var>
-is not given and no <a>database</a> with that name exists, a new <a>database</a>
-will be created with <a>version</a> equal to 1.
-</aside>
+3. <a>Queue a task</a> to run these substeps:
 
-<li>
-If <var>result</var> is an error, set the
-<a data-lt="request.error">error</a> of <var>request</var> to <var>result</var>
-and dispatch an event at <var>request</var>.
-The event must use the <a>Event</a> interface and set the <code>type</code> attribute
-to "<code>error</code>". The event does bubble but is not cancelable.
+    1. Let <var>result</var> be the result of running the <a>steps for opening a database</a>, with
+        the origin of the <a>IDBEnvironment</a> used to access this <a>IDBFactory</a>,
+        <var>name</var>,
+        <var>version</var> if given and undefined otherwise, and
+        <var>request</var>.
 
-<li>
-Otherwise, set the <a data-lt="request.result">result</a> of <var>request</var> to
-<var>result</var> and dispatch an event at <var>request</var>.
-The event must use the <a>Event</a> interface and set the <code>type</code> attribute
-to "<code>success</code>". The event does not bubble and is not cancelable.
+        <aside class="note">
+          If <var>version</var> is not given and a <a>database</a>
+          with that name already exists, a connection will be opened
+          without changing the <a>version</a>. If <var>version</var>
+          is not given and no <a>database</a> with that name exists, a
+          new <a>database</a> will be created with <a>version</a>
+          equal to 1.
+        </aside>
 
-If the steps above resulted in an <a>upgrade transaction</a> being
-run, then firing the "<code>success</code>" event MUST be done after the <a>upgrade transaction</a> completes.
+    2. If <var>result</var> is an error, set the <a
+        data-lt="request.error">error</a> of <var>request</var> to
+        <var>result</var> and dispatch an event at <var>request</var>.
+        The event must use the <a>Event</a> interface and set the
+        <code>type</code> attribute to "<code>error</code>". The event
+        does bubble but is not cancelable.
 
-<aside class="note">
-The last requirement is to ensure that in case another version upgrade is about to happen,
-the success event is fired on the connection first so that the script gets a chance to register
-a listener for the <code>versionchange</code> event.
-</aside>
+    3. Otherwise, set the <a data-lt="request.result">result</a> of
+        <var>request</var> to <var>result</var> and dispatch an event
+        at <var>request</var>. The event must use the <a>Event</a>
+        interface and set the <code>type</code> attribute to
+        "<code>success</code>". The event does not bubble and is not
+        cancelable. If the steps above resulted in an <a>upgrade
+        transaction</a> being run, then firing the
+        "<code>success</code>" event MUST be done after the <a>upgrade
+        transaction</a> completes.
 
-<aside class="note">
-The firing of "<code>success</code>" or "<code>error</code>" events do not follow the normal
-steps to <a>fire a success event</a> or <a>fire an error event</a> as there is no active
-transaction at the time when they fire.
-</aside>
+        <aside class="note">
+          The last requirement is to ensure that in case another
+          version upgrade is about to happen, the success event is
+          fired on the connection first so that the script gets a
+          chance to register a listener for the
+          <code>versionchange</code> event.
+        </aside>
 
-</ol>
+        <aside class="note">
+          The firing of "<code>success</code>" or "<code>error</code>"
+          events do not follow the normal steps to <a>fire a success
+          event</a> or <a>fire an error event</a> as there is no
+          active transaction at the time when they fire.
+        </aside>
 
-<li>
-Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
-
-</ol>
+4. Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
 
 
 The <dfn data-lt-noDefault data-lt="IDBFactory.deleteDatabase">deleteDatabase(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>
-Let <var>request</var> be a new <a>open request</a>.
+1. Let <var>request</var> be a new <a>open request</a>.
 
-<li>
-<a>Queue a task</a> to run these substeps:
-<ol>
-<li>Let <var>result</var> be the result of running the <a>steps for deleting a database</a>, with
-the origin of the <a>IDBEnvironment</a> used to access this <a>IDBFactory</a>,
-<var>name</var>, and
-<var>request</var>.
+2. <a>Queue a task</a> to run these substeps:
 
-<li>
-If <var>result</var> is an error
-set the <a data-lt="request.error">error</a> of <var>request</var> to <var>result</var>
-and dispatch an event at <var>request</var>.
-The event must use the <a>Event</a> interface and set the <code>type</code> attribute
-to "<code>error</code>". The event does bubble but is not cancelable.
+    1. Let <var>result</var> be the result of running the <a>steps for
+        deleting a database</a>, with the origin of the
+        <a>IDBEnvironment</a> used to access this <a>IDBFactory</a>,
+        <var>name</var>, and <var>request</var>.
 
-<li>
-Otherwise, set the <a data-lt="request.result">result</a> of <var>request</var> to undefined and
-<a data-lt="fire a version change event">fire a version change event named <code>success</code></a>
-at <a>request</a> with <var>result</var> and null.
+    2. If <var>result</var> is an error set the <a
+        data-lt="request.error">error</a> of <var>request</var> to
+        <var>result</var> and dispatch an event at <var>request</var>.
+        The event must use the <a>Event</a> interface and set the
+        <code>type</code> attribute to "<code>error</code>". The event
+        does bubble but is not cancelable.
 
-<aside class="note">
-The firing of "<code>success</code>" or "<code>error</code>" events do not follow the normal
-steps to <a>fire a success event</a> or <a>fire an error event</a> as there is no active
-transaction at the time when they fire.
-</aside>
+    3. Otherwise, set the <a data-lt="request.result">result</a> of
+        <var>request</var> to undefined and <a data-lt="fire a version
+        change event">fire a version change event named
+        <code>success</code></a> at <a>request</a> with
+        <var>result</var> and null.
 
-</ol>
+        <aside class="note">
+          The firing of "<code>success</code>" or "<code>error</code>"
+          events do not follow the normal steps to <a>fire a success
+          event</a> or <a>fire an error event</a> as there is no
+          active transaction at the time when they fire.
+        </aside>
 
-<li>
-Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
-
-</ol>
-
+3. Return a new <a>IDBOpenDBRequest</a> object for <var>request</var>.
 
 
 The <dfn data-lt-noDefault data-lt="IDBFactory.cmp">cmp(<var>first</var>, <var>second</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>a</var> be the result of running the steps to <a>convert a value to a key</a> with <var>first</var>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>a</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
+1. Let <var>a</var> be the result of running the steps to <a>convert a
+    value to a key</a> with <var>first</var>. If this throws an
+    exception, <a>rethrow</a> it.
 
-<li>Let <var>b</var> be the result of running the steps to <a>convert a value to a key</a> with <var>second</var>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>b</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
+2. If <var>a</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
 
-<li>Return the results of running the steps to <a>compare two keys</a> with <var>a</var> and <var>b</var>.
-</ol>
+3. Let <var>b</var> be the result of running the steps to <a>convert a
+    value to a key</a> with <var>second</var>. If this throws an
+    exception, <a>rethrow</a> it.
+
+4. If <var>b</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
+
+5. Return the results of running the steps to <a>compare two keys</a>
+    with <var>a</var> and <var>b</var>.
 
 
-
-
-<section id="database-interface" class="section">
-<h4>The <code>IDBDatabase</code> interface</h4>
-<!-- TODO Add example. Should examples be in a separate section?-->
+<h4 id=database-interface>The <code>IDBDatabase</code> interface</h4>
 
 The <a>IDBDatabase</a>
 interface represents a <a>connection</a> to a <a>database</a>.
-
-
 
 An <a>IDBDatabase</a> object MUST NOT be garbage collected if its
 associated <a>connection</a>'s <a>close pending flag</a> is unset
@@ -2011,217 +1999,206 @@ associated <a>connection</a> must be <a data-lt="database close">closed</a>.
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBDatabase : EventTarget {
-readonly    attribute DOMString          name;
-readonly    attribute unsigned long long version;
-readonly    attribute DOMStringList      objectStoreNames;
+  readonly    attribute DOMString          name;
+  readonly    attribute unsigned long long version;
+  readonly    attribute DOMStringList      objectStoreNames;
 
-IDBTransaction transaction((DOMString or sequence&lt;DOMString&gt;) storeNames, optional IDBTransactionMode mode = "readonly");
-void           close();
+  IDBTransaction transaction((DOMString or sequence&lt;DOMString&gt;) storeNames, optional IDBTransactionMode mode = "readonly");
+  void           close();
 
-IDBObjectStore createObjectStore(DOMString name, optional IDBObjectStoreParameters options);
-void           deleteObjectStore(DOMString name);
+  IDBObjectStore createObjectStore(DOMString name, optional IDBObjectStoreParameters options);
+  void           deleteObjectStore(DOMString name);
 
-// Event handlers:
-attribute EventHandler       onabort;
-attribute EventHandler       onclose;
-attribute EventHandler       onerror;
-attribute EventHandler       onversionchange;
+  // Event handlers:
+  attribute EventHandler       onabort;
+  attribute EventHandler       onclose;
+  attribute EventHandler       onerror;
+  attribute EventHandler       onversionchange;
 };
 
 dictionary IDBObjectStoreParameters {
-(DOMString or sequence&lt;DOMString&gt;)? keyPath = null;
-boolean                             autoIncrement = false;
+  (DOMString or sequence&lt;DOMString&gt;)? keyPath = null;
+  boolean                             autoIncrement = false;
 };
 </pre>
 
+The <dfn data-lt-noDefault data-lt="IDBDatabase.name">name</dfn>
+attribute's getter must return the <a data-lt="database.name">name</a>
+of the <a data-lt="connection">connected</a> <a>database</a>. The
+attribute MUST return this name even if the <a>close pending flag</a>
+is set on the <a>connection</a>. In other words, the value of this
+attribute stays constant for the lifetime of the <a>IDBDatabase</a>
+instance.
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.name">name</dfn> attribute's getter must return the <a data-lt="database.name">name</a>
-of the <a data-lt="connection">connected</a> <a>database</a>. The attribute MUST
-return this name even if the <a>close pending flag</a> is set on the <a>connection</a>.
-In other words, the value of this attribute
-stays constant for the lifetime of the <a>IDBDatabase</a> instance.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBDatabase.version">version</dfn> attribute's getter must return this
-<a>connection</a>'s <a data-lt="connection.version">version</a>.
-
+The <dfn data-lt-noDefault data-lt="IDBDatabase.version">version</dfn>
+attribute's getter must return this <a>connection</a>'s <a
+data-lt="connection.version">version</a>.
 
 <aside class="note">
-As long as the <a>connection</a> is open, this is the same as the
-connected <a>database</a>'s <a>version</a>.
+  As long as the <a>connection</a> is open, this is the same as the
+  connected <a>database</a>'s <a>version</a>.
 
-Once the <a>connection</a> has <a data-lt="database close">closed</a>,
-this attribute will not reflect changes made with a later <a>upgrade transaction</a>.
+  Once the <a>connection</a> has <a data-lt="database
+  close">closed</a>, this attribute will not reflect changes made with
+  a later <a>upgrade transaction</a>.
 </aside>
 
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.objectStoreNames">objectStoreNames</dfn> attribute's getter must return a
-<a>sorted list</a> of the <a data-lt="objectStore.name">names</a> of the
-<a>object stores</a> in this <a>connection</a>'s
-<a>object store set</a>.
-
+The <dfn data-lt-noDefault
+data-lt="IDBDatabase.objectStoreNames">objectStoreNames</dfn>
+attribute's getter must return a <a>sorted list</a> of the <a
+data-lt="objectStore.name">names</a> of the <a>object stores</a> in
+this <a>connection</a>'s <a>object store set</a>.
 
 <aside class="note">
-As long as the <a>connection</a> is open, this is the same as the
-connected <a>database</a>'s <a>object store</a> <a data-lt="objectStore.name">names</a>.
+  As long as the <a>connection</a> is open, this is the same as the
+  connected <a>database</a>'s <a>object store</a> <a
+  data-lt="objectStore.name">names</a>.
 
-Once the <a>connection</a> has <a data-lt="database close">closed</a>,
-this attribute will not reflect changes made with a later <a>upgrade transaction</a>.
+  Once the <a>connection</a> has <a data-lt="database
+  close">closed</a>, this attribute will not reflect changes made with
+  a later <a>upgrade transaction</a>.
 </aside>
 
 
 The <dfn data-lt-noDefault data-lt="IDBDatabase.createObjectStore">createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>database</var> be the <a>database</a> associated with this <a>connection</a>.
-<li>Let <var>transaction</var> be the currently running <a>upgrade transaction</a> associated with
-<var>database</var>, or <a>throw</a> an <a>InvalidStateError</a> exception if none.
+1. Let <var>database</var> be the <a>database</a> associated with this <a>connection</a>.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+2. Let <var>transaction</var> be the currently running <a>upgrade transaction</a> associated with
+    <var>database</var>, or <a>throw</a> an <a>InvalidStateError</a> exception if none.
 
-<li>If an <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> already exists in
-<var>database</var>
-<a>throw</a> a <a>ConstraintError</a> exception.
+3. If <var>transaction</var> is not <a>active</a>,
+    <a>throw</a> a <a>TransactionInactiveError</a> exception.
 
+4. If an <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> already exists in
+    <var>database</var>
+    <a>throw</a> a <a>ConstraintError</a> exception.
 
-<li>Let <var>keyPath</var> be <var>options</var>'s <code>keyPath</code> member if it is not undefined or null, or null otherwise.
-<li>If <var>keyPath</var> is not null and is not a <a>valid key path</a>,
-<a>throw</a> a <a>SyntaxError</a> exception.
+5. Let <var>keyPath</var> be <var>options</var>'s <code>keyPath</code> member if it is not undefined or null, or null otherwise.
 
+6. If <var>keyPath</var> is not null and is not a <a>valid key path</a>,
+    <a>throw</a> a <a>SyntaxError</a> exception.
 
-<li>Let <var>autoIncrement</var> be set if <var>options</var>'s <code>autoIncrement</code> member is true, or unset otherwise.
-<li>If <var>autoIncrement</var> is set and <var>keyPath</var> is an empty string or any sequence (empty or otherwise),
-<a>throw</a> an <a>InvalidAccessError</a> exception.
+7. Let <var>autoIncrement</var> be set if <var>options</var>'s <code>autoIncrement</code> member is true, or unset otherwise.
+8. If <var>autoIncrement</var> is set and <var>keyPath</var> is an empty string or any sequence (empty or otherwise),
+    <a>throw</a> an <a>InvalidAccessError</a> exception.
 
+9. Let <var>store</var> be a new <a>object store</a> in <var>database</var>.
+    Set the created <a>object store</a>'s <a data-lt="objectStore.name">name</a> to <var>name</var>.
+    If <var>autoIncrement</var> is set, then the created <a>object store</a> uses a <a>key generator</a>.
+    If <var>keyPath</var> is not null, set the created <a>object store</a>'s <a data-lt="objectStore.keyPath">key path</a> to <var>keyPath</var>.
 
-<li>
-Let <var>store</var> be a new <a>object store</a> in <var>database</var>.
-Set the created <a>object store</a>'s <a data-lt="objectStore.name">name</a> to <var>name</var>.
-If <var>autoIncrement</var> is set, then the created <a>object store</a> uses a <a>key generator</a>.
-If <var>keyPath</var> is not null, set the created <a>object store</a>'s <a data-lt="objectStore.keyPath">key path</a> to <var>keyPath</var>.
-
-
-<li>
-Return a new <a>object store handle</a> associated with <var>store</var> and <var>transaction</var>.
-
-</ol>
-
-This method creates and returns a new <a>object store</a> with the given name in the
-<a lt="connection">connected</a> <a>database</a>.
-Note that this method must only be called from within an <a>upgrade transaction</a>.
+10. Return a new <a>object store handle</a> associated with <var>store</var> and <var>transaction</var>.
 
 
-This method synchronously modifies the
-<a data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
+This method creates and returns a new <a>object store</a> with the
+given name in the <a lt="connection">connected</a> <a>database</a>.
+Note that this method must only be called from within an <a>upgrade
+transaction</a>.
+
+This method synchronously modifies the <a
+data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
 on the <a>IDBDatabase</a> instance on which it was called.
 
-
-
-In some implementations it is possible for the implementation to run into problems
-after queuing a task to create the <a>object store</a> after the <code>createObjectStore()</code> method has returned.
-For example in implementations where metadata about the newly created <a>object store</a> is inserted into the database asynchronously,
-or where the implementation might need to ask the user for permission for quota reasons.
-Such implementations MUST still create and return an <a>IDBObjectStore</a> object, and
-once the implementation determines that creating the <a>object store</a> has failed, it MUST abort the transaction
-using the <a>steps for aborting a transaction</a> using the appropriate error. For example if
-creating the <a>object store</a> failed due to quota reasons, <a>QuotaExceededError</a> MUST be used as error.
-
-
+In some implementations it is possible for the implementation to run
+into problems after queuing a task to create the <a>object store</a>
+after the <code>createObjectStore()</code> method has returned. For
+example in implementations where metadata about the newly created
+<a>object store</a> is inserted into the database asynchronously, or
+where the implementation might need to ask the user for permission for
+quota reasons. Such implementations MUST still create and return an
+<a>IDBObjectStore</a> object, and once the implementation determines
+that creating the <a>object store</a> has failed, it MUST abort the
+transaction using the <a>steps for aborting a transaction</a> using
+the appropriate error. For example if creating the <a>object store</a>
+failed due to quota reasons, <a>QuotaExceededError</a> MUST be used as
+error.
 
 The <dfn data-lt-noDefault data-lt="IDBDatabase.deleteObjectStore">deleteObjectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>database</var> be the <a>database</a> associated with this <a>connection</a>.
-<li>Let <var>transaction</var> be the currently running <a>upgrade transaction</a> associated with
-<var>database</var>, or <a>throw</a> an <a>InvalidStateError</a> exception if none.
+1. Let <var>database</var> be the <a>database</a> associated with this <a>connection</a>.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+2. Let <var>transaction</var> be the currently running <a>upgrade transaction</a> associated with
+    <var>database</var>, or <a>throw</a> an <a>InvalidStateError</a> exception if none.
 
-<li>Let <var>store</var> be the <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> in <var>database</var>,
-or <a>throw</a> a <a>NotFoundError</a> exception if none.
+3. If <var>transaction</var> is not <a>active</a>,
+    <a>throw</a> a <a>TransactionInactiveError</a> exception.
 
-<li>
-Remove <var>store</var> from this <a>connection</a>'s <a>object store set</a>.
+4. Let <var>store</var> be the <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> in <var>database</var>,
+    or <a>throw</a> a <a>NotFoundError</a> exception if none.
 
-<li>
-Destroy <var>store</var>.
+5. Remove <var>store</var> from this <a>connection</a>'s <a>object store set</a>.
 
-</ol>
+6. Destroy <var>store</var>.
 
-This method destroys the <a>object store</a> with the given name in the
-<a lt="connection">connected</a> <a>database</a>.
-Note that this method must only be called from within an <a>upgrade transaction</a>.
+This method destroys the <a>object store</a> with the given name in
+the <a lt="connection">connected</a> <a>database</a>. Note that this
+method must only be called from within an <a>upgrade transaction</a>.
 
-
-This method synchronously modifies the
-<a data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
+This method synchronously modifies the <a
+data-lt="IDBDatabase.objectStoreNames">objectStoreNames</a> property
 on the <a>IDBDatabase</a> instance on which it was called.
-
 
 
 The <dfn data-lt-noDefault data-lt="IDBDatabase.transaction">transaction(<var>storeNames</var>, <var>mode</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>If <var>mode</var> parameter is not "<code>readonly</code>" or "<code>readwrite</code>",
-<a>throw</a> a <a>TypeError</a>.
+1. If <var>mode</var> parameter is not "<code>readonly</code>" or "<code>readwrite</code>",
+    <a>throw</a> a <a>TypeError</a>.
 
-<li>If this method is called on <a>IDBDatabase</a> object for which an <a>upgrade transaction</a> is still running,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+2. If this method is called on <a>IDBDatabase</a> object for which an <a>upgrade transaction</a> is still running,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If this method is called on an <a>IDBDatabase</a> instance where the <a>close pending flag</a> is set,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If this method is called on an <a>IDBDatabase</a> instance where the <a>close pending flag</a> is set,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>
-Let <var>scope</var> be the set of unique strings in <var>storeNames</var> if it is a sequence,
-or a set containing one string equal to <var>storeNames</var> otherwise.
+4. Let <var>scope</var> be the set of unique strings in <var>storeNames</var> if it is a sequence,
+    or a set containing one string equal to <var>storeNames</var> otherwise.
 
-<li>If any string in <var>scope</var> is not the name of an <a>object store</a> in the <a data-lt="connection">connected</a> <a>database</a>,
-<a>throw</a> a <a>NotFoundError</a> exception.
+5. If any string in <var>scope</var> is not the name of an <a>object store</a> in the <a data-lt="connection">connected</a> <a>database</a>,
+    <a>throw</a> a <a>NotFoundError</a> exception.
 
-<li>If <var>scope</var> is empty,
-<a>throw</a> an <a>InvalidAccessError</a> exception.
+6. If <var>scope</var> is empty,
+    <a>throw</a> an <a>InvalidAccessError</a> exception.
 
+7. Let <var>transaction</var> be a <a data-lt="transaction create">new transaction</a>
+    with <var>connection</var>, <var>mode</var> and the set of <a>object stores</a> named in <var>scope</var>.
 
-<li>Let <var>transaction</var> be a <a data-lt="transaction create">new transaction</a>
-with <var>connection</var>, <var>mode</var> and the set of <a>object stores</a> named in <var>scope</var>.
+8. When control is returned to the event loop, the implementation MUST unset the <a>active flag</a>.
 
-<li>
-When control is returned to the event loop, the implementation MUST unset the <a>active flag</a>.
-<aside class="issue">Specify this more precisely in terms of tasks and microtasks.</aside>
+    <aside class="issue">Specify this more precisely in terms of tasks and microtasks.</aside>
 
-<li>
-Return an <a>IDBTransaction</a> object representing <var>transaction</var>.
-
-</ol>
+9. Return an <a>IDBTransaction</a> object representing <var>transaction</var>.
 
 <aside class="note">
-The created <var>transaction</var> will follow the <a>transaction lifetime</a> rules.
+  The created <var>transaction</var> will follow the <a>transaction lifetime</a> rules.
 </aside>
 
 
 The <dfn data-lt-noDefault data-lt="IDBDatabase.close">close()</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Run the <a>steps for closing a database connection</a> with this <a>connection</a>.
-</ol>
 
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onabort">onabort</dfn> attribute is the event handler for the <code>abort</code> event.
-
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onclose">onclose</dfn> attribute is the event handler for the <code>close</code> event.
-<aside class="note">&#9752; The <a>IDBDatabase.onclose</a> attribute is new in this edition. &#9752;</aside>
-
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onerror">onerror</dfn> attribute is the event handler for the <code>error</code> event.
-
-The <dfn data-lt-noDefault data-lt="IDBDatabase.onversionchange">onversionchange</dfn> attribute is the event handler for the <code>versionchange</code> event.
+1. Run the <a>steps for closing a database connection</a> with this <a>connection</a>.
 
 
+The <dfn data-lt-noDefault data-lt="IDBDatabase.onabort">onabort</dfn>
+attribute is the event handler for the <code>abort</code> event.
+
+The <dfn data-lt-noDefault data-lt="IDBDatabase.onclose">onclose</dfn>
+attribute is the event handler for the <code>close</code> event.
+<aside class="note">&#9752; The <a>IDBDatabase.onclose</a> attribute
+is new in this edition. &#9752;</aside>
+
+The <dfn data-lt-noDefault data-lt="IDBDatabase.onerror">onerror</dfn>
+attribute is the event handler for the <code>error</code> event.
+
+The <dfn data-lt-noDefault
+data-lt="IDBDatabase.onversionchange">onversionchange</dfn> attribute
+is the event handler for the <code>versionchange</code> event.
 
 
-<section class="section" id="object-store">
-<h4>The <code>IDBObjectStore</code> interface</h4>
+
+<h4 id=object-store>The <code>IDBObjectStore</code> interface</h4>
 
 The <a>IDBObjectStore</a>
 interface represents an <a>object store handle</a>.
