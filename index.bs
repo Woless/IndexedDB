@@ -2197,199 +2197,193 @@ data-lt="IDBDatabase.onversionchange">onversionchange</dfn> attribute
 is the event handler for the <code>versionchange</code> event.
 
 
-
 <h4 id=object-store>The <code>IDBObjectStore</code> interface</h4>
 
 The <a>IDBObjectStore</a>
 interface represents an <a>object store handle</a>.
 
-
 <pre class="idl">
 [Exposed=(Window,Worker)]
 interface IDBObjectStore {
-attribute DOMString      name;
-readonly    attribute any            keyPath;
-readonly    attribute DOMStringList  indexNames;
-readonly    attribute IDBTransaction transaction;
-readonly    attribute boolean        autoIncrement;
+  attribute DOMString      name;
+  readonly    attribute any            keyPath;
+  readonly    attribute DOMStringList  indexNames;
+  readonly    attribute IDBTransaction transaction;
+  readonly    attribute boolean        autoIncrement;
 
-IDBRequest put(any value, optional any key);
-IDBRequest add(any value, optional any key);
-IDBRequest delete(any query);
-IDBRequest clear();
-IDBRequest get(any query);
-IDBRequest getKey(any query);
-IDBRequest getAll(optional any query, [EnforceRange] optional unsigned long count);
-IDBRequest getAllKeys(optional any query, [EnforceRange] optional unsigned long count);
-IDBRequest count(optional any query);
+  IDBRequest put(any value, optional any key);
+  IDBRequest add(any value, optional any key);
+  IDBRequest delete(any query);
+  IDBRequest clear();
+  IDBRequest get(any query);
+  IDBRequest getKey(any query);
+  IDBRequest getAll(optional any query, [EnforceRange] optional unsigned long count);
+  IDBRequest getAllKeys(optional any query, [EnforceRange] optional unsigned long count);
+  IDBRequest count(optional any query);
 
-IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
-IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
+  IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
+  IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
 
-IDBIndex   index(DOMString name);
+  IDBIndex   index(DOMString name);
 
-IDBIndex   createIndex(DOMString name, (DOMString or sequence&lt;DOMString&gt;) keyPath, optional IDBIndexParameters options);
-void       deleteIndex(DOMString indexName);
+  IDBIndex   createIndex(DOMString name, (DOMString or sequence&lt;DOMString&gt;) keyPath, optional IDBIndexParameters options);
+  void       deleteIndex(DOMString indexName);
 };
 
 dictionary IDBIndexParameters {
-boolean unique = false;
-boolean multiEntry = false;
+  boolean unique = false;
+  boolean multiEntry = false;
 };
 </pre>
 
-
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.name">name</dfn> attribute's getter must return this
-<a>object store handle</a>'s <a data-lt="objectStore.name">name</a>.
-
+The <dfn data-lt-noDefault data-lt="IDBObjectStore.name">name</dfn>
+attribute's getter must return this <a>object store handle</a>'s <a
+data-lt="objectStore.name">name</a>.
 
 <aside class="note">
-As long as the <a>transaction</a> has not <a data-lt="transaction finish">finished</a>,
-this is the same as the associated <a>object store</a>'s <a data-lt="objectStore.name">name</a>.
+  As long as the <a>transaction</a> has not <a data-lt="transaction
+  finish">finished</a>, this is the same as the associated <a>object
+  store</a>'s <a data-lt="objectStore.name">name</a>.
 
-Once the <a>transaction</a> has <a data-lt="transaction finish">finished</a>,
-this attribute will not reflect changes made with a later <a>upgrade transaction</a>.
+  Once the <a>transaction</a> has <a data-lt="transaction
+  finish">finished</a>, this attribute will not reflect changes made
+  with a later <a>upgrade transaction</a>.
 </aside>
 
 
 The <code>name</code> attribute's setter must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>name</var> be the given value.
+1. Let <var>name</var> be the given value.
 
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+2. Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+3. Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If <var>store</var> has been deleted,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
+5. If <var>transaction</var> is not an <a>upgrade transaction</a>,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not an <a>upgrade transaction</a>,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+6. If <var>transaction</var> is not <a>active</a>,
+    <a>throw</a> a <a>TransactionInactiveError</a> exception.
 
+7. If <var>store</var>'s <a data-lt="objectStore.name">name</a> is equal to <var>name</var>, terminate these steps.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+8. If an <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> already exists in
+    <var>store</var>'s <a>database</a>,
+    <a>throw</a> a <a>ConstraintError</a> exception.
 
+9. Set <var>store</var>'s <a data-lt="objectStore.name">name</a> to <var>name</var>.
 
-<li>If <var>store</var>'s <a data-lt="objectStore.name">name</a> is equal to <var>name</var>, terminate these steps.
+10. Set this <a>object store handle</a>'s <a data-lt="objectStoreHandle.name">name</a> to <var>name</var>.
 
-<li>
-If an <a>object store</a> <a data-lt="objectStore.name">named</a> <var>name</var> already exists in
-<var>store</var>'s <a>database</a>,
-<a>throw</a> a <a>ConstraintError</a> exception.
-
-
-<li>
-Set <var>store</var>'s <a data-lt="objectStore.name">name</a> to <var>name</var>.
-
-<li>
-Set this <a>object store handle</a>'s <a data-lt="objectStoreHandle.name">name</a> to <var>name</var>.
-
-</ol>
 <aside class="note">&#9752; The <a>IDBObjectStore.name</a> attribute's setter is new in this edition. &#9752;</aside>
 
 
-
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.keyPath">keyPath</dfn> attribute's getter must return this
-<a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>'s <a data-lt="objectStore.keyPath">key path</a>,
-or null if none.
-
+The <dfn data-lt-noDefault
+data-lt="IDBObjectStore.keyPath">keyPath</dfn> attribute's getter must
+return this <a>object store handle</a>'s <a
+data-lt="objectStoreHandle.objectStore">object store</a>'s <a
+data-lt="objectStore.keyPath">key path</a>, or null if none.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic for
 <a>DOMString</a> and <a>sequence&lt;DOMString&gt;</a> values,
 as appropriate.
 
-
-The returned value is not the same instance that was used when the <a>object store</a>
-was created. However, if this attribute returns an object (specifically an <a>Array</a>),
-it returns the same object instance every time it is inspected. Changing
-the properties of the object has no effect on the <a>object store</a>.
-
-
+The returned value is not the same instance that was used when the
+<a>object store</a> was created. However, if this attribute returns an
+object (specifically an <a>Array</a>), it returns the same object
+instance every time it is inspected. Changing the properties of the
+object has no effect on the <a>object store</a>.
 
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.indexNames">indexNames</dfn> attribute's getter must return
-a <a>sorted list</a> of the <a data-lt="index.name">names</a> of <a>indexes</a>
-in this <a>object store handle</a>'s <a>index set</a>.
-
+The <dfn data-lt-noDefault
+data-lt="IDBObjectStore.indexNames">indexNames</dfn> attribute's
+getter must return a <a>sorted list</a> of the <a
+data-lt="index.name">names</a> of <a>indexes</a> in this <a>object
+store handle</a>'s <a>index set</a>.
 
 <aside class="note">
-As long as the <a>transaction</a> has not <a data-lt="transaction finish">finished</a>,
-this is the same as the associated
-<a>object store</a>'s list of <a>index</a> <a data-lt="index.name">names</a>.
+  As long as the <a>transaction</a> has not <a data-lt="transaction
+  finish">finished</a>, this is the same as the associated <a>object
+  store</a>'s list of <a>index</a> <a data-lt="index.name">names</a>.
 
-Once the <a>transaction</a> has <a data-lt="transaction finish">finished</a>,
-this attribute will not reflect changes made with a later <a>upgrade transaction</a>.
+  Once the <a>transaction</a> has <a data-lt="transaction
+  finish">finished</a>, this attribute will not reflect changes made
+  with a later <a>upgrade transaction</a>.
 </aside>
 
+The <dfn data-lt-noDefault
+data-lt="IDBObjectStore.transaction">transaction</dfn> attribute's
+getter must return this <a>object store handle</a>'s <a
+data-lt="objectStoreHandle.transaction">transaction</a>,
 
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.transaction">transaction</dfn> attribute's getter must return this
-<a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>,
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBObjectStore.autoIncrement">autoIncrement</dfn> attribute's getter must return true
-if this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>
-has a <a>key generator</a>, and false otherwise.
-
+The <dfn data-lt-noDefault
+data-lt="IDBObjectStore.autoIncrement">autoIncrement</dfn> attribute's
+getter must return true if this <a>object store handle</a>'s <a
+data-lt="objectStoreHandle.objectStore">object store</a> has a <a>key
+generator</a>, and false otherwise.
 
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.put">put(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
 
-<li>Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
 
-<li>If <var>store</var> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If <var>store</var> has been deleted,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+4. If <var>transaction</var> is not <a>active</a>,
+    <a>throw</a> a <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is a <a>read-only transaction</a>,
-<a>throw</a> a <a>ReadOnlyError</a> exception.
+5. If <var>transaction</var> is a <a>read-only transaction</a>,
+    <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-<li>If <var>store</var> uses <a>in-line keys</a> and <var>key</var> was given,
-<a>throw</a> a <a>DataError</a> exception.
+6. If <var>store</var> uses <a>in-line keys</a> and <var>key</var> was given,
+    <a>throw</a> a <a>DataError</a> exception.
 
-<li>If <var>store</var> uses <a>out-of-line keys</a> and has no <a>key generator</a>
-and <var>key</var> was not given,
-<a>throw</a> a <a>DataError</a> exception.
+7. If <var>store</var> uses <a>out-of-line keys</a> and has no <a>key generator</a>
+    and <var>key</var> was not given,
+    <a>throw</a> a <a>DataError</a> exception.
 
-<li>If <var>key</var> was given, run these substeps:
-<ol>
-<li>Let <var>r</var> be the result of running the steps to <a>convert a value to a key</a> with <var>key</var>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
-<li>Let <var>key</var> be <var>r</var>.
-</ol>
+8. If <var>key</var> was given, run these substeps:
 
+    1. Let <var>r</var> be the result of running the steps to <a>convert a value to a key</a> with <var>key</var>.
+        If this throws an exception, <a>rethrow</a> it.
 
-<li>Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
-throws an exception, <a>rethrow</a> the exception.
+    2. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
 
-<li>If <var>store</var> uses <a>in-line keys</a>, run these substeps:
-<ol>
-<li>Let <var>kpk</var> be the result of running the steps to <a>extract a key from a value using a key path</a>
-with <var>clone</var> and <var>store</var>'s <a data-lt="objectStore.keyPath">key path</a>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>kpk</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
-<li>If <var>kpk</var> is not failure, let <var>key</var> be <var>kpk</var>.
-<li>Otherwise, if <var>store</var> does not have a <a>key generator</a>,
-<a>throw</a> a <a>DataError</a> exception.
-</ol>
+    3. Let <var>key</var> be <var>r</var>.
 
+9. Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
+    throws an exception, <a>rethrow</a> the exception.
 
-<li>Run the <a>steps for asynchronously executing a request</a> and return the <a>IDBRequest</a> created by these steps.
-The steps are run with this <a>object store handle</a> as <var>source</var> and the <a>steps for
-storing a record into an object store</a> as <var>operation</var>, using
-<var>store</var>, the <var>clone</var> as <var>value</var>,
-<var>key</var>, and with the <var>no-overwrite flag</var> unset.
+10. If <var>store</var> uses <a>in-line keys</a>, run these substeps:
 
-</ol>
+    1. Let <var>kpk</var> be the result of running the steps to
+        <a>extract a key from a value using a key path</a> with
+        <var>clone</var> and <var>store</var>'s <a
+        data-lt="objectStore.keyPath">key path</a>. If this throws an
+        exception, <a>rethrow</a> it.
+
+    2. If <var>kpk</var> is invalid, <a>throw</a> a <a>DataError</a>
+        exception.
+
+    3. If <var>kpk</var> is not failure, let <var>key</var> be
+        <var>kpk</var>.
+
+    4. Otherwise, if <var>store</var> does not have a <a>key
+        generator</a>, <a>throw</a> a <a>DataError</a> exception.
+
+11. Run the <a>steps for asynchronously executing a request</a> and
+    return the <a>IDBRequest</a> created by these steps. The steps are
+    run with this <a>object store handle</a> as <var>source</var> and
+    the <a>steps for storing a record into an object store</a> as
+    <var>operation</var>, using <var>store</var>, the <var>clone</var>
+    as <var>value</var>, <var>key</var>, and with the
+    <var>no-overwrite flag</var> unset.
 
 
 The <dfn data-lt-noDefault data-lt="IDBObjectStore.add">add(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
