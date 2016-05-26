@@ -3469,179 +3469,185 @@ enum IDBCursorDirection {
 </pre>
 
 
+The <dfn data-lt-noDefault data-lt="IDBCursor.source">source</dfn>
+attribute's getter must return the <a
+data-lt="cursor.source">source</a> of this <a>cursor</a>. This
+attribute never returns null or throws an exception, even if the
+cursor is currently being iterated, has iterated past its end, or its
+<a>transaction</a> is not <a>active</a>.
 
-The <dfn data-lt-noDefault data-lt="IDBCursor.source">source</dfn> attribute's getter must return the <a data-lt="cursor.source">source</a> of this <a>cursor</a>.
-This attribute
-never returns null or throws an exception, even if the cursor is currently being iterated, has iterated past its end,
-or its <a>transaction</a> is not <a>active</a>.
+The <dfn data-lt-noDefault
+data-lt="IDBCursor.direction">direction</dfn> attribute's getter must
+return the <a>direction</a> of the <a>cursor</a>.
 
+The <dfn data-lt-noDefault data-lt="IDBCursor.key">key</dfn>
+attribute's getter must return the result of running the steps to
+<a>convert a key to a value</a> with the cursor's current <a
+data-lt="cursor.key">key</a>. Note that if this property returns an
+object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
+object instance every time it is inspected, until the cursor's <a
+data-lt="cursor.key">key</a> is changed. This means that if the object
+is modified, those modifications will be seen by anyone inspecting the
+value of the cursor. However modifying such an object does not modify
+the contents of the database.
 
-
-The <dfn data-lt-noDefault data-lt="IDBCursor.direction">direction</dfn> attribute's getter must return the
-<a>direction</a> of the <a>cursor</a>.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBCursor.key">key</dfn> attribute's getter must return
-the result of running the steps to <a>convert a key to a value</a>
-with the cursor's current <a data-lt="cursor.key">key</a>.
-Note that if this property returns an object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
-object instance every time it is inspected, until the cursor's <a data-lt="cursor.key">key</a> is changed.
-This means that if the object is modified,
-those modifications will be seen by anyone inspecting the value of the cursor. However modifying such an object
+The <dfn data-lt-noDefault
+data-lt="IDBCursor.primaryKey">primaryKey</dfn> attribute's getter
+must return the result of running the steps to <a>convert a key to a
+value</a> with the cursor's current <a>effective key</a>. Note that if
+this property returns an object (e.g. a <a>Date</a> or <a>Array</a>),
+it returns the same object instance every time it is inspected, until
+the cursor's <a>effective key</a> is changed. This means that if the
+object is modified, those modifications will be seen by anyone
+inspecting the value of the cursor. However modifying such an object
 does not modify the contents of the database.
-
-
-
-The <dfn data-lt-noDefault data-lt="IDBCursor.primaryKey">primaryKey</dfn> attribute's getter must return
-the result of running the steps to <a>convert a key to a value</a>
-with the cursor's current <a>effective key</a>.
-Note that if this property returns an object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
-object instance every time it is inspected, until the cursor's <a>effective key</a> is changed.
-This means that if the object is modified,
-those modifications will be seen by anyone inspecting the value of the cursor. However modifying such an object
-does not modify the contents of the database.
-
 
 
 The <dfn data-lt-noDefault data-lt="IDBCursor.update">update(<var>value</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>cursor</a>'s <a data-lt="cursor.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>cursor</a>'s <a
+    data-lt="cursor.transaction">transaction</a>.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If <var>transaction</var> is a <a>read-only transaction</a>,
-<a>throw</a> a <a>ReadOnlyError</a> exception.
+3. If <var>transaction</var> is a <a>read-only transaction</a>,
+    <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-<li>If the cursor's <a data-lt="cursor.source">source</a> or <a>effective object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If the cursor's <a data-lt="cursor.source">source</a> or
+    <a>effective object store</a> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If this cursor's <a>got value flag</a> is unset, indicating that the cursor is being iterated or has iterated past its end,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+5. If this cursor's <a>got value flag</a> is unset, indicating that
+    the cursor is being iterated or has iterated past its end,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If this cursor's <a>key only flag</a> is set,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+6. If this cursor's <a>key only flag</a> is set, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
-throws an exception, <a>rethrow</a> the exception.
+7. Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
+    throws an exception, <a>rethrow</a> the exception.
 
-<li>If the <a>effective object store</a> of this cursor uses <a>in-line keys</a>, run these substeps:
-<ol>
-<li>Let <var>kpk</var> be the result of running the steps to <a>extract a key from a value using a key path</a>
-with <var>clone</var> and the <a data-lt="objectStore.keyPath">key path</a> of the <a>effective object store</a>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>kpk</var> is failure, invalid, or not <a>equal to</a> the cursor's <a>effective key</a>,
-<a>throw</a> a <a>DataError</a> exception.
-</ol>
+8. If the <a>effective object store</a> of this cursor uses <a>in-line
+    keys</a>, run these substeps:
 
+    1. Let <var>kpk</var> be the result of running the steps to
+        <a>extract a key from a value using a key path</a> with
+        <var>clone</var> and the <a data-lt="objectStore.keyPath">key
+        path</a> of the <a>effective object store</a>. If this throws
+        an exception, <a>rethrow</a> it.
 
-<li>Run <a>steps for asynchronously executing a request</a> and
-return the <a>IDBRequest</a> created by these steps.
-The steps are run with this <a>cursor</a> as <var>source</var> and the <a>steps for
-storing a record into an object store</a> as <var>operation</var>, using this cursor's
-<a>effective object store</a> as <var>store</var>, the <var>clone</var> as <var>value</var>,
-this cursor's <a>effective key</a> as <var>key</var>, and with the <var>no-overwrite flag</var>
-unset.
+    2. If <var>kpk</var> is failure, invalid, or not <a>equal to</a>
+        the cursor's <a>effective key</a>, <a>throw</a> a
+        <a>DataError</a> exception.
 
-</ol>
+9. Run <a>steps for asynchronously executing a request</a> and return
+    the <a>IDBRequest</a> created by these steps. The steps are run
+    with this <a>cursor</a> as <var>source</var> and the <a>steps for
+    storing a record into an object store</a> as <var>operation</var>,
+    using this cursor's <a>effective object store</a> as
+    <var>store</var>, the <var>clone</var> as <var>value</var>, this
+    cursor's <a>effective key</a> as <var>key</var>, and with the
+    <var>no-overwrite flag</var> unset.
+
 
 <aside class="note">
-A result of running the <a>steps for storing a record into an object store</a> is that if the record
-has been deleted since the cursor moved to it, a new record will be created.
+  A result of running the <a>steps for storing a record into an object
+  store</a> is that if the record has been deleted since the cursor
+  moved to it, a new record will be created.
 </aside>
 
 
 The <dfn data-lt-noDefault data-lt="IDBCursor.advance">advance(<var>count</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>If <var>count</var> is 0 (zero),
-<a>throw</a> a <a>TypeError</a>.
+1. If <var>count</var> is 0 (zero), <a>throw</a> a <a>TypeError</a>.
 
-<li>Let <var>transaction</var> be this <a>cursor</a>'s <a data-lt="cursor.transaction">transaction</a>.
+2. Let <var>transaction</var> be this <a>cursor</a>'s <a
+    data-lt="cursor.transaction">transaction</a>.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If the cursor's <a data-lt="cursor.source">source</a> or <a>effective object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If the cursor's <a data-lt="cursor.source">source</a> or
+    <a>effective object store</a> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If this cursor's <a>got value flag</a> is unset, indicating that the cursor is being iterated or has iterated past its end,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+5. If this cursor's <a>got value flag</a> is unset, indicating that
+    the cursor is being iterated or has iterated past its end,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>Unset the <a>got value flag</a> on the cursor.
+7. Unset the <a>got value flag</a> on the cursor.
 
-<li>
-Let <var>request</var> be the <a>request</a> created when this <a>cursor</a> was created.
+8. Let <var>request</var> be the <a>request</a> created when this
+    <a>cursor</a> was created.
 
+9. Unset the <a>done flag</a> on <var>request</var>.
 
-<li>Unset the <a>done flag</a> on <var>request</var>.
+10. Run the <a>steps for asynchronously executing a request</a> with
+    the cursor's <a data-lt="cursor.source">source</a> as
+    <var>source</var> and the <a>steps for iterating a cursor</a> with
+    this <a>cursor</a> and <var>count</var>, and <var>request</var>.
 
-<li>
-Run the <a>steps for asynchronously executing a request</a>
-with the cursor's
-<a data-lt="cursor.source">source</a> as <var>source</var> and the
-<a>steps for iterating a cursor</a> with this <a>cursor</a> and <var>count</var>,
-and <var>request</var>.
-
-</ol>
 
 <aside class="note">
-Calling this method more than once before new cursor data has been loaded - for example,
-calling <code>advance()</code> twice from the same onsuccess handler -
-results in an <a>InvalidStateError</a> exception being thrown on the second call
-because the cursor's <a>got value flag</a> has been unset.
+  Calling this method more than once before new cursor data has been
+  loaded - for example, calling <code>advance()</code> twice from the
+  same onsuccess handler - results in an <a>InvalidStateError</a>
+  exception being thrown on the second call because the cursor's
+  <a>got value flag</a> has been unset.
 </aside>
-
 
 The <dfn data-lt-noDefault data-lt="IDBCursor.continue">continue(<var>key</var>)</dfn> method, when invoked, must run these steps:
 
-<ol class=algorithm>
-<li>Let <var>transaction</var> be this <a>cursor</a>'s <a data-lt="cursor.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>cursor</a>'s <a
+    data-lt="cursor.transaction">transaction</a>.
 
-<li>If <var>transaction</var> is not <a>active</a>,
-<a>throw</a> a <a>TransactionInactiveError</a> exception.
+2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
+    <a>TransactionInactiveError</a> exception.
 
-<li>If the cursor's <a data-lt="cursor.source">source</a> or <a>effective object store</a> has been deleted,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+3. If the cursor's <a data-lt="cursor.source">source</a> or
+    <a>effective object store</a> has been deleted, <a>throw</a> an
+    <a>InvalidStateError</a> exception.
 
-<li>If this cursor's <a>got value flag</a> is unset, indicating that the cursor is being iterated or has iterated past its end,
-<a>throw</a> an <a>InvalidStateError</a> exception.
+4. If this cursor's <a>got value flag</a> is unset, indicating that
+    the cursor is being iterated or has iterated past its end,
+    <a>throw</a> an <a>InvalidStateError</a> exception.
 
-<li>If <var>key</var> is given, run these substeps:
-<ol>
-<li>Let <var>r</var> be the result of running the steps to <a>convert a value to a key</a> with <var>key</var>.
-If this throws an exception, <a>rethrow</a> it.
-<li>If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
-<li>Let <var>key</var> be <var>r</var>.
+5. If <var>key</var> is given, run these substeps:
 
-<li>If <var>key</var> is <a>less than</a> or <a>equal to</a> this cursor's <a>position</a>
-and this cursor's <a>direction</a> is "<code>next</code>" or "<code>nextunique</code>",
-<a>throw</a> a <a>DataError</a> exception.
+    1. Let <var>r</var> be the result of running the steps to
+        <a>convert a value to a key</a> with <var>key</var>. If this
+        throws an exception, <a>rethrow</a> it.
 
-<li>If <var>key</var> is <a>greater than</a> or <a>equal to</a> this cursor's <a>position</a>
-and this cursor's <a>direction</a> is "<code>prev</code>" or "<code>prevunique</code>",
-<a>throw</a> a <a>DataError</a> exception.
-</ol>
+    2. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a>
+        exception.
 
+    3. Let <var>key</var> be <var>r</var>.
 
-<li>Unset the <a>got value flag</a> on the cursor.
+    4. If <var>key</var> is <a>less than</a> or <a>equal to</a> this
+        cursor's <a>position</a> and this cursor's <a>direction</a> is
+        "<code>next</code>" or "<code>nextunique</code>", <a>throw</a>
+        a <a>DataError</a> exception.
 
-<li>
-Let <var>request</var> be the <a>request</a> created when this <a>cursor</a> was created.
+    5. If <var>key</var> is <a>greater than</a> or <a>equal to</a>
+        this cursor's <a>position</a> and this cursor's
+        <a>direction</a> is "<code>prev</code>" or
+        "<code>prevunique</code>", <a>throw</a> a <a>DataError</a>
+        exception.
 
+6. Unset the <a>got value flag</a> on the cursor.
 
-<li>Unset the <a>done flag</a> on <var>request</var>.
+7. Let <var>request</var> be the <a>request</a> created when this
+    <a>cursor</a> was created.
 
-<li>
-Run the <a>steps for asynchronously executing a request</a>
-with the cursor's
-<a data-lt="cursor.source">source</a> as <var>source</var> and
-the <a>steps for iterating a cursor</a> with this <a>cursor</a> and <var>key</var> (if given),
-and <var>request</var>.
+8. Unset the <a>done flag</a> on <var>request</var>.
 
-</ol>
+9. Run the <a>steps for asynchronously executing a request</a> with
+    the cursor's <a data-lt="cursor.source">source</a> as
+    <var>source</var> and the <a>steps for iterating a cursor</a> with
+    this <a>cursor</a> and <var>key</var> (if given), and
+    <var>request</var>.
+
 
 <aside class="note">
 Calling this method more than once before new cursor data has been loaded -
