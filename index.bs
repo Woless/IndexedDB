@@ -234,71 +234,6 @@ request.onsuccess = function() {
 
 </aside>
 
-<!--
-<dl>
-<dt>DOM</dt>
-<dd>
-The terms, types, and algorithms
-<dfn><code>Event</code></dfn>,
-<dfn>canceled flag</dfn>,
-<dfn><code>EventTarget</code></dfn>,
-<dfn>get the parent</dfn>, and
-<dfn><code>DOMStringList</code></dfn>
-are defined by the DOM Standard [[!WHATWG-DOM]].
-</dd>
-<dt>File API</dt>
-<dd>
-The types
-<dfn><code>Blob</code></dfn> and
-<dfn><code>File</code></dfn>
-are defined by the File API [[!FileAPI]].
-</dd>
-<dt>ECMAScript</dt>
-<dd>
-The types and grammar productions
-<dfn><code>Array</code></dfn>,
-<dfn><code>ArrayBuffer</code></dfn>,
-<dfn><code>Date</code></dfn>,
-<dfn><code>IdentifierName</code></dfn>,
-<dfn><code>Number</code></dfn>,
-<dfn><code>Object</code></dfn>,
-<dfn><code>String</code></dfn>,
-<dfn><code>TypeError</code></dfn>, and
-<dfn><code>Uint8Array</code></dfn>
-are defined by the ECMAScript Language Specification [[!ECMA-262]].
-</dd>
-<dt>HTML</dt>
-<dd>
-The terms, types and algorithms
-<dfn>document</dfn>,
-<dfn><code>Window</code></dfn>,
-<dfn><code>EventHandler</code></dfn>,
-<dfn><code>ImageData</code></dfn>,
-<dfn>worker</dfn>,
-<dfn><code>WorkerGlobalScope</code></dfn>,
-<dfn>event handler IDL attributes</dfn>,
-<dfn>strictly split a string</dfn>,
-<dfn data-lt="origins">origin</dfn>, <dfn>same origin</dfn>, <dfn>structured clone</dfn>,
-<dfn>structured clone algorithm</dfn>, <dfn>task</dfn>, <dfn>task source</dfn>,
-and <dfn>queue a task</dfn>
-are defined by the HTML Standard [[!HTML]].
-</dd>
-<dt>WebIDL</dt>
-<dd>
-The terms, types, and algorithms
-<dfn data-lt="throws|rethrow">throw</dfn>,
-<dfn>getting a copy of the bytes held by a buffer source</dfn>,
-<dfn data-lt="octets">octet</dfn>,
-<dfn>unrestricted double</dfn>,
-<dfn>DOMString</dfn>,
-<dfn>sequence&lt;DOMString&gt;</dfn>,
-<dfn><code>DOMException</code></dfn> and
-and the interface definition language used in this spec
-are defined by Web IDL [[!WEBIDL]].</dd>
-</dl>
--->
-
-
 <!-- ============================================================ -->
 <h2 id=database-api>Indexed Database API</h2>
 <!-- ============================================================ -->
@@ -330,7 +265,7 @@ set of databases.
 </aside>
 
 Each <a>origin</a> has an associated set of <a>databases</a>. A
-<dfn>database</dfn> has zero or more <a>object stores</a> which hold
+<dfn>database</dfn> has zero or more <a for=/>object stores</a> which hold
 the data stored in the database.
 
 <div dfn-for=database>
@@ -374,7 +309,7 @@ script has indirect access via a <dfn>connection</dfn>.
 
 A <a>connection</a> object can be used to manipulate the objects of
 that <a>database</a>. It is also the only way to obtain a
-<a>transaction</a> for that <a>database</a>.
+<a for=/>transaction</a> for that <a>database</a>.
 
 The act of opening a <a>database</a> creates a <a>connection</a>.
 There MAY be multiple <a>connections</a> to a given <a>database</a> at
@@ -410,7 +345,7 @@ a permission change. If this occurs the user agent MUST run the
 <a>connection</a> and with the <var>forced flag</var> set.
 
 A <a>connection</a> has an <dfn>object store set</dfn>, which is
-initialized to the set of <a>object stores</a> in the associated
+initialized to the set of <a for=/>object stores</a> in the associated
 <a>database</a> when the <a>connection</a> is created.
 
 The contents of the set will remain constant except when an <a>upgrade
@@ -429,29 +364,29 @@ storage mechanism for storing data in a <a>database</a>.
 
 <div dfn-for=object-store>
 
-Each database has a set of <a>object stores</a>. The set of <a>object
+Each database has a set of <a for=/>object stores</a>. The set of <a for=/>object
 stores</a> can be changed, but only using an <a>upgrade
 transaction</a>, i.e. in response to an <a>upgradeneeded</a> event.
-When a new database is created it doesn't contain any <a>object
+When a new database is created it doesn't contain any <a for=/>object
 stores</a>.
 
-An <a>object store</a> has a <dfn>list of records</dfn> which hold the
+An <a for=/>object store</a> has a <dfn>list of records</dfn> which hold the
 data stored in the object store. Each <dfn>record</dfn> consists of a
-<a>key</a> and a <a>value</a>. The list is sorted according to key in
+<a>key</a> and a <a for=/>value</a>. The list is sorted according to key in
 ascending order. There can never be multiple records in a given object
 store with the same key.
 
-An <a>object store</a> has a <dfn>name</dfn>. The name can be any string
+An <a for=/>object store</a> has a <dfn>name</dfn>. The name can be any string
 value, including the empty string. At any one time, the name is unique
 within the <a>database</a> to which it belongs. Object store names are
 always compared in a case-sensitive manner, as opaque sequences of
 16-bit code units.
 
-An <a>object store</a> optionally has a <dfn>key path</dfn>. If the
+An <a for=/>object store</a> optionally has a <dfn>key path</dfn>. If the
 object store has a key path it is said to use <dfn>in-line keys</dfn>.
 Otherwise it is said to use <dfn>out-of-line keys</dfn>.
 
-An <a>object store</a> optionally has a <a>key generator</a>.
+An <a for=/>object store</a> optionally has a <a>key generator</a>.
 
 An object store can derive a <a>key</a> for a <a>record</a> from one of three sources:
 
@@ -460,7 +395,7 @@ An object store can derive a <a>key</a> for a <a>record</a> from one of three so
 
 2. Keys can be derived via a <a for=object-store>key path</a>.
 
-3. Keys can also be explicitly specified when a <a>value</a> is stored
+3. Keys can also be explicitly specified when a <a for=/>value</a> is stored
     in the object store.
 
 </div>
@@ -469,48 +404,48 @@ An object store can derive a <a>key</a> for a <a>record</a> from one of three so
 <h5 id=concept-object-store-handle>Object Store Handle</h5>
 <!-- ============================================================ -->
 
-Script does not interact with <a>object stores</a> directly. Instead,
-within a <a>transaction</a>, script has indirect access via an
+Script does not interact with <a for=/>object stores</a> directly. Instead,
+within a <a for=/>transaction</a>, script has indirect access via an
 <dfn>object store handle</dfn>.
 
-An <a>object store handle</a> has an associated <dfn data-lt-noDefault
-data-lt="objectStoreHandle.objectStore">object store</dfn> and an
-associated <dfn data-lt-noDefault
-data-lt="objectStoreHandle.transaction">transaction</dfn>. Multiple
-handles MAY be associated with the same <a>object store</a> in
-different <a>transactions</a>, but there MUST be only one <a>object
-store handle</a> associated with a particular <a>object store</a>
-within a <a>transaction</a>.
+<div dfn-for=object-store-handle>
+
+An <a>object store handle</a> has an associated <dfn>object store</dfn> and an
+associated <dfn>transaction</dfn>. Multiple
+handles MAY be associated with the same <a for=/>object store</a> in
+different <a for=/>transactions</a>, but there MUST be only one <a>object
+store handle</a> associated with a particular <a for=/>object store</a>
+within a <a for=/>transaction</a>.
 
 An <a>object store handle</a> has an <dfn>index set</dfn>, which is
 initialized to the set of <a>indexes</a> that reference the associated
-<a data-lt="objectStoreHandle.objectStore">object store</a> when the
+<a for=object-store-handle>object store</a> when the
 <a>object store handle</a> is created.
 
 The contents of the set will remain constant except when an <a>upgrade
 transaction</a> is running.
 
-An <a>object store handle</a> has a <dfn data-lt-noDefault
-data-lt="objectStoreHandle.name">name</dfn>, which is initialized to
+An <a>object store handle</a> has a <dfn>name</dfn>, which is initialized to
 the <a for=object-store>name</a> of the associated <a
-data-lt="objectStoreHandle.objectStore">object store</a> when the
+for=object-store-handle>object store</a> when the
 <a>object store handle</a> is created.
 
 The name will remain constant except when an <a>upgrade
 transaction</a> is running.
 
+</div>
 
 <!-- ============================================================ -->
 <h4 id=value-construct>Values</h4>
 <!-- ============================================================ -->
 
-Each record is associated with a <dfn data-lt="values">value</dfn>.
+Each record is associated with a <dfn>value</dfn>.
 User agents MUST support any ECMAScript [[!ECMA-262]] value supported
 by the <a>structured clone algorithm</a> [[!HTML]]. This includes
 simple types such as <a>String</a> primitive values and <a>Date</a>
 objects as well as <a>Object</a> and <a>Array</a> instances, {{File}}
 objects, {{Blob}} objects, {{ImageData}}} objects, and so on. Record
-<a>values</a> are stored and retrieved by value rather than by
+<a for=/>values</a> are stored and retrieved by value rather than by
 reference; later changes to a value have no effect on the record
 stored in the database.
 
@@ -520,10 +455,12 @@ stored in the database.
 <!-- ============================================================ -->
 
 In order to efficiently retrieve <a>records</a> stored in an indexed
-database, each <a>record</a> is organized according to its <dfn
-data-lt="keys">key</dfn>.
+database, each <a>record</a> is organized according to its
+<dfn>key</dfn>.
 
-A <a>key</a> has an associated <dfn data-lt="key.type">type</dfn> which is one of:
+<div dfn-for=key>
+
+A <a>key</a> has an associated <dfn>type</dfn> which is one of:
 <i>number</i>,
 <i>date</i>,
 <i>string</i>,
@@ -533,13 +470,14 @@ or
 
 <aside class=note>&#9752; Support for <i>binary</i> keys is new in this edition. &#9752;</aside>
 
-A <a>key</a> also has an associated <dfn data-lt-noDefault data-lt="key.value">value</dfn>, which will
+A <a>key</a> also has an associated <dfn>value</dfn>, which will
 be either:
 an <a>unrestricted double</a> if type is <i>number</i> or <i>date</i>,
 a <a>DOMString</a> if type is <i>string</i>,
 a list of <a>octets</a> if type is <i>binary</i>,
 or a list of other <a>keys</a> if type is <i>array</i>.
 
+</div>
 
 An ECMAScript [[!ECMA-262]] value can be converted to a <a>key</a> by
 following the steps to <a>convert a value to a key</a>.
@@ -557,16 +495,16 @@ Attempting to convert other ECMAScript values to a <a>key</a> will fail.
 </aside>
 
 An <dfn data-lt="array keys">array key</dfn> is a <a>key</a> with <a
-data-lt="key.type">type</a> <i>array</i>. The <dfn>subkeys</dfn> of an
+for=key>type</a> <i>array</i>. The <dfn>subkeys</dfn> of an
 <a>array key</a> are the members of the <a>array key</a>'s <a
-data-lt="key.value">value</a> list.
+for=key>value</a> list.
 
 To <dfn>compare two keys</dfn> <var>a</var> and <var>b</var>, run these steps:
 
 
-1. Let <var>ta</var> be the <a data-lt="key.type">type</a> of <var>a</var>.
+1. Let <var>ta</var> be the <a for=key>type</a> of <var>a</var>.
 
-2. Let <var>tb</var> be the <a data-lt="key.type">type</a> of <var>b</var>.
+2. Let <var>tb</var> be the <a for=key>type</a> of <var>b</var>.
 
 3. If <var>ta</var> is <i>array</i> and <var>tb</var> is
     <i>binary</i>, <i>string</i>, <i>date</i> or <i>number</i>,
@@ -598,8 +536,8 @@ To <dfn>compare two keys</dfn> <var>a</var> and <var>b</var>, run these steps:
 
 11. Assert: <var>ta</var> and <var>tb</var> are equal.
 
-12. Let <var>va</var> be the <a data-lt="key.value">value</a> of <var>a</var>.
-13. Let <var>vb</var> be the <a data-lt="key.value">value</a> of <var>b</var>.
+12. Let <var>va</var> be the <a for=key>value</a> of <var>a</var>.
+13. Let <var>vb</var> be the <a for=key>value</a> of <var>b</var>.
 
 14. Switch on <var>ta</var>:
 
@@ -698,7 +636,7 @@ Members of <i>binary</i> keys are compared as unsigned octet values
 
 A <dfn data-lt="key paths">key path</dfn> is a <a>DOMString</a> or
 <a>sequence&lt;DOMString&gt;</a> that defines how to extract a
-<a>key</a> from a <a>value</a>. A <dfn>valid key path</dfn> is one of:
+<a>key</a> from a <a for=/>value</a>. A <dfn>valid key path</dfn> is one of:
 
 * An empty <a>DOMString</a>.
 * An <dfn data-lt="identifiers">identifier</dfn>, which is a <a>DOMString</a> matching
@@ -729,25 +667,25 @@ following type-specific properties:
 <h4 id=index-concept>Index</h4>
 <!-- ============================================================ -->
 
-It is sometimes useful to retrieve <a>records</a> in an <a>object
+It is sometimes useful to retrieve <a>records</a> in an <a for=/>object
 store</a> through other means than their <a>key</a>. An <dfn
 data-lt="indexes">index</dfn> allows looking up <a>records</a> in an
-<a>object store</a> using properties of the <a>values</a> in the
-<a>object stores</a> <a>records</a>.
+<a for=/>object store</a> using properties of the <a for=/>values</a> in the
+<a for=/>object stores</a> <a>records</a>.
 
 An index is a specialized persistent key-value storage and has a <dfn
-data-lt="reference|references">referenced</dfn> <a>object store</a>.
+data-lt="reference|references">referenced</dfn> <a for=/>object store</a>.
 The index has a <dfn data-lt-noDefault data-lt="index record
 list">list of records</dfn> which hold the data stored in the index.
 The records in an index are automatically populated whenever records
 in the <a>referenced</a> object store are inserted, updated or
 deleted. There can be several <a>indexes</a> referencing the same
-<a>object store</a>, in which changes to the object store cause all
+<a for=/>object store</a>, in which changes to the object store cause all
 such indexes to get updated.
 
 The values in the index's <a>records</a> are always values of
 <a>keys</a> in the index's <a>referenced</a> object store. The keys
-are derived from the referenced object store's <a>values</a> using a
+are derived from the referenced object store's <a for=/>values</a> using a
 <dfn data-lt-noDefault data-lt="index.keyPath">key path</dfn>. If a
 given <a>record</a> with key <var>X</var> in the object store
 referenced by the index has the value <var>A</var>, and <a
@@ -790,13 +728,13 @@ The <a>records</a> in an index are always sorted according to the
 <a>record</a>'s key. However unlike object stores, a given index can
 contain multiple records with the same key. Such records are
 additionally sorted according to the <a>index</a>'s <a>record</a>'s
-value (meaning the key of the record in the referenced <a>object
+value (meaning the key of the record in the referenced <a for=/>object
 store</a>).
 
 An <a>index</a> has a <dfn data-lt-noDefault
 data-lt="index.name">name</dfn>. The name can be any string value,
 including the empty string. At any one time, the name is unique within
-index's <a>referenced</a> <a>object store</a>. Index names are always
+index's <a>referenced</a> <a for=/>object store</a>. Index names are always
 compared in a case-sensitive manner, as opaque sequences of 16-bit
 code units.
 
@@ -822,7 +760,7 @@ the index for each of the <a>subkeys</a>.
 <!-- ============================================================ -->
 
 Script does not interact with <a>indexes</a> directly. Instead, within
-a <a>transaction</a>, script has indirect access via an <dfn>index
+a <a for=/>transaction</a>, script has indirect access via an <dfn>index
 handle</dfn>.
 
 An <a>index handle</a> has an associated <dfn data-lt-noDefault
@@ -831,11 +769,11 @@ data-lt-noDefault data-lt="indexHandle.objectStoreHandle">object store
 handle</dfn>. The <dfn data-lt-noDefault
 data-lt="indexHandle.transaction">transaction</dfn> of an <a>index
 handle</a> is the <a
-data-lt="objectStoreHandle.transaction">transaction</a> of its
+for=object-store-handle>transaction</a> of its
 associated <a>object store handle</a>. Multiple handles MAY be
 associated with the same <a>index</a> in different
-<a>transactions</a>, but there MUST be only one <a>index handle</a>
-associated with a particular <a>index</a> within a <a>transaction</a>.
+<a for=/>transactions</a>, but there MUST be only one <a>index handle</a>
+associated with a particular <a>index</a> within a <a for=/>transaction</a>.
 
 An <a>index handle</a> has a <dfn data-lt-noDefault
 data-lt="indexHandle.name">name</dfn>, which is initialized to the <a
@@ -853,28 +791,28 @@ transaction</a> is running.
 
 A <dfn data-lt="transactions">Transaction</dfn> is used to interact
 with the data in a <a>database</a>. Whenever data is read or written
-to the database it is done by using a <a>transaction</a>.
+to the database it is done by using a <a for=/>transaction</a>.
 
-<a>transactions</a> offer some protection from application and system
-failures. A <a>transaction</a> may be used to store multiple data
+<a for=/>transactions</a> offer some protection from application and system
+failures. A <a for=/>transaction</a> may be used to store multiple data
 records or to conditionally modify certain data records. A
-<a>transaction</a> represents an atomic and durable set of data access
+<a for=/>transaction</a> represents an atomic and durable set of data access
 and data mutation operations.
 
 All transactions are created through a <a>connection</a>, which is the
 transaction's <dfn data-lt-noDefault
 data-lt="transaction.connection">connection</dfn>.
 
-A <a>transaction</a> has a <dfn data-lt="scopes">scope</dfn> that
-determines the <a>object stores</a> with which the transaction may
+A <a for=/>transaction</a> has a <dfn data-lt="scopes">scope</dfn> that
+determines the <a for=/>object stores</a> with which the transaction may
 interact. A transaction's scope remains fixed for the lifetime of that
 transaction.
 
-A <a>transaction</a> has a <dfn data-lt="modes">mode</dfn> that
+A <a for=/>transaction</a> has a <dfn data-lt="modes">mode</dfn> that
 determines which types of interactions can be performed upon that
 transaction. The <a>mode</a> is set when the transaction is created
 and remains fixed for the life of the transaction. A
-<a>transaction</a>'s <a>mode</a> is one of the following:
+<a for=/>transaction</a>'s <a>mode</a> is one of the following:
 
 <dl>
   <dt>"<code>readonly</code>"</dt>
@@ -909,19 +847,19 @@ and remains fixed for the life of the transaction. A
   </dd>
 </dl>
 
-A <a>transaction</a> has an <dfn>active flag</dfn>, which determines
+A <a for=/>transaction</a> has an <dfn>active flag</dfn>, which determines
 if new <a>requests</a> can be made against the transaction. A
 transaction is said to be <dfn>active</dfn> if its <a>active flag</a>
 is set.
 
-A <a>transaction</a> has a <dfn>request list</dfn> of <a>requests</a>
+A <a for=/>transaction</a> has a <dfn>request list</dfn> of <a>requests</a>
 which have been made against the transaction.
 
-A <a>transaction</a> has a <dfn data-lt-noDefault data-lt="transaction
-error">error</dfn> which is set if the <a>transaction</a> is <a
+A <a for=/>transaction</a> has a <dfn data-lt-noDefault data-lt="transaction
+error">error</dfn> which is set if the <a for=/>transaction</a> is <a
 data-lt="transaction abort">aborted</a>.
 
-A <a>transaction</a>'s <a>get the parent</a> algorithm returns the
+A <a for=/>transaction</a>'s <a>get the parent</a> algorithm returns the
 transaction's <a data-lt="transaction.connection">connection</a>.
 
 Transactions are expected to be short lived. This is encouraged by the
@@ -935,7 +873,7 @@ bad user experience.
 </aside>
 
 The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
-<a>transaction</a> is as follows:
+<a for=/>transaction</a> is as follows:
 
 1. A transaction is <dfn data-lt="transaction create">created</dfn> with a <a>scope</a> and a <a>mode</a>.
     When a transaction is created its <a>active flag</a> is initially set.
@@ -979,8 +917,8 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
     start">started</a>. When a transaction is aborted the
     implementation MUST undo (roll back) any changes that were made to
     the <a>database</a> during that transaction. This includes both
-    changes to the contents of <a>object stores</a> as well as
-    additions and removals of <a>object stores</a> and <a>indexes</a>.
+    changes to the contents of <a for=/>object stores</a> as well as
+    additions and removals of <a for=/>object stores</a> and <a>indexes</a>.
 
 6. A transaction can fail for reasons not tied to a particular
     <a>request</a>. For example due to IO errors when committing the
@@ -1021,17 +959,17 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
     transaction.
 
 A <dfn data-lt="read-only transactions">read-only transaction</dfn> is
-a <a>transaction</a> with <a>mode</a> "<code>readonly</code>".
+a <a for=/>transaction</a> with <a>mode</a> "<code>readonly</code>".
 
 A <dfn data-lt="read/write transactions">read/write transaction</dfn>
-is a <a>transaction</a> with <a>mode</a> "<code>readwrite</code>".
+is a <a for=/>transaction</a> with <a>mode</a> "<code>readwrite</code>".
 
-The following constraints define when a <a>transaction</a> can be <a
+The following constraints define when a <a for=/>transaction</a> can be <a
 data-lt="transaction start">started</a>:
 
 * Any number of <a>read-only transactions</a> are allowed to run
     concurrently, even if the transaction's <a>scope</a> overlap and
-    include the same <a>object stores</a>. As long as a <a>read-only
+    include the same <a for=/>object stores</a>. As long as a <a>read-only
     transaction</a> is running, the data that the implementation
     returns through <a>requests</a> created with that transaction MUST
     remain constant. That is, two requests to read the same piece of
@@ -1046,18 +984,18 @@ data-lt="transaction start">started</a>:
       <a>read-only transaction</a>, from starting until the
       <a>read-only transaction</a> finishes. Or the implementation
       could allow the <a>read-only transaction</a> to see a snapshot
-      of the contents of the <a>object stores</a> which is taken when
+      of the contents of the <a for=/>object stores</a> which is taken when
       the <a>read-only transaction</a> started.
     </aside>
 
 * Similarly, implementations MUST ensure that a <a>read/write
-    transaction</a> is only affected by changes to <a>object
+    transaction</a> is only affected by changes to <a for=/>object
     stores</a> that are made using the transaction itself. For
     example, the implementation MUST ensure that another transaction
-    does not modify the contents of <a>object stores</a> in the
+    does not modify the contents of <a for=/>object stores</a> in the
     <a>read/write transaction</a>'s <a>scope</a>. The implementation
     MUST also ensure that if the <a>read/write transaction</a>
-    completes successfully, the changes written to <a>object
+    completes successfully, the changes written to <a for=/>object
     stores</a> using the transaction can be committed to the
     <a>database</a> without merge conflicts. An implementation MUST
     NOT abort a transaction due to merge conflicts.
@@ -1076,10 +1014,10 @@ data-lt="transaction start">started</a>:
     <a>read/write transaction</a>. So if a <a>read/write
     transaction</a>, A, is created, and later another transaction B,
     is created, and the two transactions have overlapping
-    <a>scopes</a>, then B MUST see any changes made to any <a>object
+    <a>scopes</a>, then B MUST see any changes made to any <a for=/>object
     stores</a> that are part of that overlapping <a>scope</a>. Due to
     the requirements in the previous paragraph, this also means that
-    the B transaction does not have access to any <a>object stores</a>
+    the B transaction does not have access to any <a for=/>object stores</a>
     in that overlapping <a>scope</a> until the A transaction is <a
     data-lt="transaction finish">finished</a>.
 
@@ -1104,14 +1042,14 @@ data-lt="transaction start">started</a>:
 <!-- ============================================================ -->
 
 An <dfn data-lt="upgrade transactions">upgrade transaction</dfn> is a
-<a>transaction</a> with <a>mode</a> "<code>versionchange</code>".
+<a for=/>transaction</a> with <a>mode</a> "<code>versionchange</code>".
 
 An <a>upgrade transaction</a> is automatically created when running
 <a>steps for running an upgrade transaction</a> after a
 <a>connection</a> is opened to a <a>database</a> giving a greater <a
 for=database>version</a> than the current <a for=database>version</a>.
-This <a>transaction</a> will be active inside the <a>upgradeneeded</a>
-event handler, allowing the creation of new <a>object stores</a> and
+This <a for=/>transaction</a> will be active inside the <a>upgradeneeded</a>
+event handler, allowing the creation of new <a for=/>object stores</a> and
 <a>indexes</a>.
 
 An <a>upgrade transaction</a> is never run concurrently with other
@@ -1155,7 +1093,7 @@ of which are accessible until the <a>done flag</a> is set.
 A <a>request</a> has a <dfn data-lt-noDefault
 data-lt="request.transaction">transaction</dfn> which is initially
 null. This will be set when a request is <dfn data-lt="place
-request">placed</dfn> against a <a>transaction</a> using the <a>steps
+request">placed</dfn> against a <a for=/>transaction</a> using the <a>steps
 for asynchronously executing a request</a>.
 
 When a request is made, a new <a>request</a> is returned with its
@@ -1204,7 +1142,7 @@ An <a>open request</a>'s <a>get the parent</a> algorithm returns null.
 <h4 id=range-concept>Key Range</h4>
 <!-- ============================================================ -->
 
-Records can be retrieved from <a>object stores</a> and <a>indexes</a>
+Records can be retrieved from <a for=/>object stores</a> and <a>indexes</a>
 using either <a>keys</a> or <a>key ranges</a>. A <dfn data-lt="key
 ranges">key range</dfn> is a continuous interval over some data type
 used for keys.
@@ -1289,18 +1227,18 @@ follows:
 <!-- ============================================================ -->
 
 A <dfn>cursor</dfn> is used to iterate over a range of records in an
-<a>index</a> or an <a>object store</a> in a specific direction.
+<a>index</a> or an <a for=/>object store</a> in a specific direction.
 
 A <a>cursor</a> has a <dfn data-lt-noDefault
-data-lt="cursor.transaction">transaction</dfn>, the <a>transaction</a>
+data-lt="cursor.transaction">transaction</dfn>, the <a for=/>transaction</a>
 that was <a>active</a> when the cursor was created.
 
 A <a>cursor</a> has a <dfn>range</dfn> of records in either an
-<a>index</a> or an <a>object store</a>.
+<a>index</a> or an <a for=/>object store</a>.
 
 A <a>cursor</a> has a <dfn data-lt-noDefault
 data-lt="cursor.source">source</dfn> that indicates which <a>index</a>
-or an <a>object store</a> is associated with the records over which
+or an <a for=/>object store</a> is associated with the records over which
 the <a>cursor</a> is iterating.
 
 A <a>cursor</a> has a <dfn>direction</dfn> that determines whether it
@@ -1329,7 +1267,7 @@ data-lt="cursor.source">source</a> or at its end. A cursor's
     otherwise yield all records, in monotonically increasing order of
     keys. For every key with duplicate values, only the first record
     is yielded. When the <a data-lt="cursor.source">source</a> is an
-    <a>object store</a> or an <a>index</a> with the <a>unique flag</a>
+    <a for=/>object store</a> or an <a>index</a> with the <a>unique flag</a>
     set, this direction has exactly the same behavior as
     "<code>next</code>".
   </dd>
@@ -1350,7 +1288,7 @@ data-lt="cursor.source">source</a> or at its end. A cursor's
     otherwise yield all records, in monotonically decreasing order of
     keys. For every key with duplicate values, only the first record
     is yielded. When the <a data-lt="cursor.source">source</a> is an
-    <a>object store</a> or an <a>index</a> with the <a>unique flag</a>
+    <a for=/>object store</a> or an <a>index</a> with the <a>unique flag</a>
     set, this direction has exactly the same behavior as
     "<code>prev</code>".
   </dd>
@@ -1370,16 +1308,16 @@ previously returned.
 
 For cursors iterating indexes the situation is a little bit more
 complicated since multiple records can have the same key and are
-therefore also sorted by <a>value</a>. When iterating indexes the
+therefore also sorted by <a for=/>value</a>. When iterating indexes the
 <a>cursor</a> also has an <dfn>object store position</dfn>, which
-indicates the <a>value</a> of the previously found <a>record</a> in
+indicates the <a for=/>value</a> of the previously found <a>record</a> in
 the index. Both <a>position</a> and the <a>object store position</a>
 are used when finding the next appropriate record.
 
 A <a>cursor</a> has a <dfn data-lt-noDefault
 data-lt="cursor.key">key</dfn> and a <dfn data-lt-noDefault
 data-lt="cursor.value">value</dfn> which represent the <a>key</a> and
-the <a>value</a> of the last iterated <a>record</a>.
+the <a for=/>value</a> of the last iterated <a>record</a>.
 
 A <a>cursor</a> has a <dfn>got value flag</dfn>. When this flag unset,
 the cursor is either in the process of loading the next value or it
@@ -1388,7 +1326,7 @@ that the cursor is currently holding a value and that it is ready to
 iterate to the next one.
 
 If the <a data-lt="cursor.source">source</a> of a cursor is an
-<a>object store</a>, the <dfn>effective object store</dfn> of the
+<a for=/>object store</a>, the <dfn>effective object store</dfn> of the
 cursor is that object store and the <dfn>effective key</dfn> of the
 cursor is the cursor's <a>position</a>. If the <a
 data-lt="cursor.source">source</a> of a cursor is an <a>index</a>, the
@@ -1405,7 +1343,7 @@ via the API. Unless stated otherwise it is unset.
 <h4 id=key-generator-concept>Key Generators</h4>
 <!-- ============================================================ -->
 
-When a <a>object store</a> is created it can be specified to use a
+When a <a for=/>object store</a> is created it can be specified to use a
 <dfn data-lt="key generators">key generator</dfn>. A <a>key
 generator</a> keeps an internal <dfn>current number</dfn>. The
 <a>current number</a> is always a positive integer. Whenever the key
@@ -1420,17 +1358,17 @@ when a <a>key generator</a> is used.
     the key generator of any other object store.
 
 * The <a>current number</a> of a <a>key generator</a> is always set to
-    1 when the <a>object store</a> for that key generator is first
+    1 when the <a for=/>object store</a> for that key generator is first
     created.
 
 * When a key generator is used to generate a new <a>key</a> for a
-    <a>object store</a>, the key generator's <a>current number</a> is
+    <a for=/>object store</a>, the key generator's <a>current number</a> is
     used as the new key value and then the key generator's <a>current
     number</a> is increased by 1.
 
 * When a <a>record</a> is stored and a <a>key</a> is specified in the
-    call to store the record, if <a data-lt="key.type">type</a> of the
-    key is <i>number</i> and the <a data-lt="key.value">value</a> is
+    call to store the record, if <a for=key>type</a> of the
+    key is <i>number</i> and the <a for=key>value</a> is
     greater than or equal to the key generator's <a>current
     number</a>, then the key generator's <a>current number</a> is set
     to the smallest integer number <a>greater than</a> the explicit
@@ -1441,15 +1379,15 @@ when a <a>key generator</a> is used.
     passing a key argument to the call to store the <a>record</a>.
 
     <aside class=note>
-      Only specified keys of <a data-lt="key.type">type</a>
+      Only specified keys of <a for=key>type</a>
       <i>number</i> may affect the <a>current number</a> of the key
-      generator. Keys of <a data-lt="key.type">type</a> <i>date</i>,
+      generator. Keys of <a for=key>type</a> <i>date</i>,
       <i>array</i> (regardless of the other keys they contain),
       <i>binary</i>, or <i>string</i> (regardless of whether they
       could be parsed as numbers) have no effect on the <a>current
       number</a> of the key generator. Keys of <a
-      data-lt="key.type">type</a> <i>number</i> with <a
-      data-lt="key.value">value</a> less than 1 do not affect the
+      for=key>type</a> <i>number</i> with <a
+      for=key>value</a> less than 1 do not affect the
       <a>current number</a> since they are always lower than the
       <a>current number</a>.
     </aside>
@@ -1464,10 +1402,10 @@ when a <a>key generator</a> is used.
     stored with a key value specified in the call to store the
     <a>record</a>.
 
-* Likewise, if a <a>transaction</a> is aborted, the <a>current
-    number</a> of the key generator for each <a>object store</a> in
+* Likewise, if a <a for=/>transaction</a> is aborted, the <a>current
+    number</a> of the key generator for each <a for=/>object store</a> in
     the transaction's <a>scope</a> is reverted to the value it had
-    before the <a>transaction</a> was started.
+    before the <a for=/>transaction</a> was started.
 
 * When the <a>current number</a> of a key generator reaches above the
     value 2<sup>53</sup> (9007199254740992) any attempts to use the
@@ -1486,7 +1424,7 @@ when a <a>key generator</a> is used.
 
 * The <a>current number</a> for a key generator never decreases, other
     than as a result of database operations being reverted. Deleting a
-    <a>record</a> from an <a>object store</a> never affects the object
+    <a>record</a> from an <a for=/>object store</a> never affects the object
     store's key generator. Even clearing all records from an object
     store, for example using the {{clear()}} method,
     does not affect the <a>current number</a> of the object store's
@@ -1584,11 +1522,11 @@ store_t2.put("d"); // Will get key 2
 
 The following examples illustrate the different behaviors when trying
 to use in-line <a>keys</a> and <a>key generators</a> to save an object
-to an <a>object store</a>.
+to an <a for=/>object store</a>.
 
 If the following conditions are true:
 
-* The <a>object store</a> has a <a>key generator</a>.
+* The <a for=/>object store</a> has a <a>key generator</a>.
 
 * There is no in-line value for the <a for=object-store>key path</a>
     property.
@@ -1598,7 +1536,7 @@ populate the key value. In the example below the <a
 for=object-store>key path</a> for the object store is
 "<code>foo.bar</code>". The actual object has no value for the
 <code>bar</code> property, <code>{ foo: {} }</code>. When the object
-is saved in the <a>object store</a> the <code>bar</code> property is
+is saved in the <a for=/>object store</a> the <code>bar</code> property is
 assigned a value of 1 because that is the next <a>key</a> generated by
 the <a>key generator</a>.
 
@@ -1612,17 +1550,17 @@ store.put({ foo: {} }).onsuccess = function(e) {
 
 If the following conditions are true:
 
-* The <a>object store</a> has a <a>key generator</a>.
+* The <a for=/>object store</a> has a <a>key generator</a>.
 
 * There is a value for the <a for=object-store>key path</a>
     property.
 
 Then the value associated with the <a for=object-store>key path</a>
 property is used. The auto-generated <a>key</a> is not used. In the
-example below the <a for=object-store>key path</a> for the <a>object
+example below the <a for=object-store>key path</a> for the <a for=/>object
 store</a> is "<code>foo.bar</code>". The actual object has a value of
 10 for the <code>bar</code> property, <code>{ foo: { bar: 10}
-}</code>. When the object is saved in the <a>object store</a> the
+}</code>. When the object is saved in the <a for=/>object store</a> the
 <code>bar</code> property keeps its value of 10, because that is the
 key value.
 
@@ -1641,9 +1579,9 @@ the <a>key generator</a> is then used to populate the key value and
 the system is responsible for creating as many properties as it
 requires to suffice the property dependencies on the hierarchy chain.
 In the example below the <a for=object-store>key path</a> for the
-<a>object store</a> is "<code>foo.bar.baz</code>". The actual object
+<a for=/>object store</a> is "<code>foo.bar.baz</code>". The actual object
 has no value for the <code>foo</code> property, <code>{ zip: {}
-}</code>. When the object is saved in the <a>object store</a> the
+}</code>. When the object is saved in the <a for=/>object store</a> the
 <code>foo</code>, <code>bar</code>, and <code>baz</code> properties
 are created each as a child of the other until a value for
 <code>foo.bar.baz</code> can be assigned. The value for
@@ -2132,12 +2070,12 @@ for=connection>version</a>.
 
 The {{IDBDatabase/objectStoreNames}}
 attribute's getter must return a <a>sorted list</a> of the <a
-for=object-store>names</a> of the <a>object stores</a> in
+for=object-store>names</a> of the <a for=/>object stores</a> in
 this <a>connection</a>'s <a>object store set</a>.
 
 <aside class=note>
   As long as the <a>connection</a> is open, this is the same as the
-  connected <a>database</a>'s <a>object store</a> <a
+  connected <a>database</a>'s <a for=/>object store</a> <a
   for=object-store>names</a>.
 
   Once the <a>connection</a> has <a for=connection>closed</a>, this
@@ -2157,7 +2095,7 @@ The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options<
 3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
 
-4. If an <a>object store</a> <a for=object-store>named</a>
+4. If an <a for=/>object store</a> <a for=object-store>named</a>
     <var>name</var> already exists in <var>database</var> <a>throw</a>
     a <a>ConstraintError</a> exception.
 
@@ -2174,19 +2112,19 @@ The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options<
     empty string or any sequence (empty or otherwise), <a>throw</a> an
     <a>InvalidAccessError</a> exception.
 
-9. Let <var>store</var> be a new <a>object store</a> in
-    <var>database</var>. Set the created <a>object store</a>'s <a
+9. Let <var>store</var> be a new <a for=/>object store</a> in
+    <var>database</var>. Set the created <a for=/>object store</a>'s <a
     for=object-store>name</a> to <var>name</var>. If
-    <var>autoIncrement</var> is set, then the created <a>object
+    <var>autoIncrement</var> is set, then the created <a for=/>object
     store</a> uses a <a>key generator</a>. If <var>keyPath</var> is
-    not null, set the created <a>object store</a>'s <a
+    not null, set the created <a for=/>object store</a>'s <a
     for=object-store>key path</a> to <var>keyPath</var>.
 
 10. Return a new <a>object store handle</a> associated with
     <var>store</var> and <var>transaction</var>.
 
 
-This method creates and returns a new <a>object store</a> with the
+This method creates and returns a new <a for=/>object store</a> with the
 given name in the <a lt="connection">connected</a> <a>database</a>.
 Note that this method must only be called from within an <a>upgrade
 transaction</a>.
@@ -2196,16 +2134,16 @@ This method synchronously modifies the
 instance on which it was called.
 
 In some implementations it is possible for the implementation to run
-into problems after queuing a task to create the <a>object store</a>
+into problems after queuing a task to create the <a for=/>object store</a>
 after the <code>createObjectStore()</code> method has returned. For
 example in implementations where metadata about the newly created
-<a>object store</a> is inserted into the database asynchronously, or
+<a for=/>object store</a> is inserted into the database asynchronously, or
 where the implementation might need to ask the user for permission for
 quota reasons. Such implementations MUST still create and return an
 {{IDBObjectStore}} object, and once the implementation determines
-that creating the <a>object store</a> has failed, it MUST abort the
+that creating the <a for=/>object store</a> has failed, it MUST abort the
 transaction using the <a>steps for aborting a transaction</a> using
-the appropriate error. For example if creating the <a>object store</a>
+the appropriate error. For example if creating the <a for=/>object store</a>
 failed due to quota reasons, <a>QuotaExceededError</a> MUST be used as
 error.
 
@@ -2221,7 +2159,7 @@ The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method,
 3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
 
-4. Let <var>store</var> be the <a>object store</a> <a
+4. Let <var>store</var> be the <a for=/>object store</a> <a
     for=object-store>named</a> <var>name</var> in <var>database</var>,
     or <a>throw</a> a <a>NotFoundError</a> exception if none.
 
@@ -2230,7 +2168,7 @@ The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method,
 
 6. Destroy <var>store</var>.
 
-This method destroys the <a>object store</a> with the given name in
+This method destroys the <a for=/>object store</a> with the given name in
 the <a lt="connection">connected</a> <a>database</a>. Note that this
 method must only be called from within an <a>upgrade transaction</a>.
 
@@ -2253,14 +2191,14 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 4. Let <var>scope</var> be the set of unique strings in <var>storeNames</var> if it is a sequence,
     or a set containing one string equal to <var>storeNames</var> otherwise.
 
-5. If any string in <var>scope</var> is not the name of an <a>object store</a> in the <a data-lt="connection">connected</a> <a>database</a>,
+5. If any string in <var>scope</var> is not the name of an <a for=/>object store</a> in the <a data-lt="connection">connected</a> <a>database</a>,
     <a>throw</a> a <a>NotFoundError</a> exception.
 
 6. If <var>scope</var> is empty,
     <a>throw</a> an <a>InvalidAccessError</a> exception.
 
 7. Let <var>transaction</var> be a <a data-lt="transaction create">new transaction</a>
-    with <var>connection</var>, <var>mode</var> and the set of <a>object stores</a> named in <var>scope</var>.
+    with <var>connection</var>, <var>mode</var> and the set of <a for=/>object stores</a> named in <var>scope</var>.
 
 8. When control is returned to the event loop, the implementation MUST unset the <a>active flag</a>.
 
@@ -2338,11 +2276,11 @@ The {{IDBObjectStore/name}} attribute's getter must return this <a>object store
 handle</a>'s <a for=object-store>name</a>.
 
 <aside class=note>
-  As long as the <a>transaction</a> has not <a data-lt="transaction
-  finish">finished</a>, this is the same as the associated <a>object
+  As long as the <a for=/>transaction</a> has not <a data-lt="transaction
+  finish">finished</a>, this is the same as the associated <a for=/>object
   store</a>'s <a for=object-store>name</a>.
 
-  Once the <a>transaction</a> has <a data-lt="transaction
+  Once the <a for=/>transaction</a> has <a data-lt="transaction
   finish">finished</a>, this attribute will not reflect changes made
   with a later <a>upgrade transaction</a>.
 </aside>
@@ -2352,9 +2290,9 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 1. Let <var>name</var> be the given value.
 
-2. Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+2. Let <var>transaction</var> be this <a>object store handle</a>'s <a for=object-store-handle>transaction</a>.
 
-3. Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+3. Let <var>store</var> be this <a>object store handle</a>'s <a for=object-store-handle>object store</a>.
 
 4. If <var>store</var> has been deleted,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -2367,20 +2305,20 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 7. If <var>store</var>'s <a for=object-store>name</a> is equal to <var>name</var>, terminate these steps.
 
-8. If an <a>object store</a> <a for=object-store>named</a> <var>name</var> already exists in
+8. If an <a for=/>object store</a> <a for=object-store>named</a> <var>name</var> already exists in
     <var>store</var>'s <a>database</a>,
     <a>throw</a> a <a>ConstraintError</a> exception.
 
 9. Set <var>store</var>'s <a for=object-store>name</a> to <var>name</var>.
 
-10. Set this <a>object store handle</a>'s <a data-lt="objectStoreHandle.name">name</a> to <var>name</var>.
+10. Set this <a>object store handle</a>'s <a for=object-store-handle>name</a> to <var>name</var>.
 
 <aside class=note>&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
 The {{IDBObjectStore/keyPath}} attribute's getter must
 return this <a>object store handle</a>'s <a
-data-lt="objectStoreHandle.objectStore">object store</a>'s <a
+for=object-store-handle>object store</a>'s <a
 for=object-store>key path</a>, or null if none.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic for
@@ -2388,10 +2326,10 @@ The conversion is done following the normal [[!WEBIDL]] binding logic for
 as appropriate.
 
 The returned value is not the same instance that was used when the
-<a>object store</a> was created. However, if this attribute returns an
+<a for=/>object store</a> was created. However, if this attribute returns an
 object (specifically an <a>Array</a>), it returns the same object
 instance every time it is inspected. Changing the properties of the
-object has no effect on the <a>object store</a>.
+object has no effect on the <a for=/>object store</a>.
 
 
 The {{IDBObjectStore/indexNames}} attribute's
@@ -2400,30 +2338,30 @@ data-lt="index.name">names</a> of <a>indexes</a> in this <a>object
 store handle</a>'s <a>index set</a>.
 
 <aside class=note>
-  As long as the <a>transaction</a> has not <a data-lt="transaction
-  finish">finished</a>, this is the same as the associated <a>object
+  As long as the <a for=/>transaction</a> has not <a data-lt="transaction
+  finish">finished</a>, this is the same as the associated <a for=/>object
   store</a>'s list of <a>index</a> <a data-lt="index.name">names</a>.
 
-  Once the <a>transaction</a> has <a data-lt="transaction
+  Once the <a for=/>transaction</a> has <a data-lt="transaction
   finish">finished</a>, this attribute will not reflect changes made
   with a later <a>upgrade transaction</a>.
 </aside>
 
 The {{IDBObjectStore/transaction}} attribute's
 getter must return this <a>object store handle</a>'s <a
-data-lt="objectStoreHandle.transaction">transaction</a>,
+for=object-store-handle>transaction</a>,
 
 The {{IDBObjectStore/autoIncrement}} attribute's
 getter must return true if this <a>object store handle</a>'s <a
-data-lt="objectStoreHandle.objectStore">object store</a> has a <a>key
+for=object-store-handle>object store</a> has a <a>key
 generator</a>, and false otherwise.
 
 
 The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.transaction">transaction</a>.
+1. Let <var>transaction</var> be this <a>object store handle</a>'s <a for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a data-lt="objectStoreHandle.objectStore">object store</a>.
+2. Let <var>store</var> be this <a>object store handle</a>'s <a for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -2482,10 +2420,10 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
 The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2546,10 +2484,10 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
 The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2585,10 +2523,10 @@ the risk that a small bug would clear a whole object store.
 The <dfn method for=IDBObjectStore>clear()</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2609,10 +2547,10 @@ The <dfn method for=IDBObjectStore>clear()</dfn> method, when invoked, must run 
 The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2653,7 +2591,7 @@ The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when i
     data-lt="indexHandle.transaction">transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2684,10 +2622,10 @@ the first existing key in that range.
 The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2717,10 +2655,10 @@ records in range, only the first <var>count</var> will be retrieved.
 The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2752,10 +2690,10 @@ only the first <var>count</var> will be retrieved.
 The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2782,10 +2720,10 @@ range</a> is used.
 The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2821,10 +2759,10 @@ If null or not given, an <a>unbounded key range</a> is used.
 The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -2863,10 +2801,10 @@ or not given, an <a>unbounded key range</a> is used.
 The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -2908,7 +2846,7 @@ The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</va
 
 
 This method creates and returns a new <a>index</a> with the given name
-in the <a>object store</a>. Note that this method must only be called
+in the <a for=/>object store</a>. Note that this method must only be called
 from within an <a>upgrade transaction</a>.
 
 The index that is requested to be created can contain constraints on
@@ -2959,7 +2897,7 @@ At the point where <code>createIndex</code> called, neither of the
 duplicate name is created. Since the index creation is considered an
 asynchronous <a>request</a>, the index's <a data-lt="unique
 flag">uniqueness</a> constraint does not cause the second
-<a>request</a> to fail. Instead, the <a>transaction</a> will be <a
+<a>request</a> to fail. Instead, the <a for=/>transaction</a> will be <a
 data-lt="transaction abort">aborted</a> when the index is created and
 the constraint fails.
 
@@ -2968,10 +2906,10 @@ the constraint fails.
 The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
@@ -3004,10 +2942,10 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
 The <dfn method for=IDBObjectStore>deleteIndex(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.transaction">transaction</a>.
+    for=object-store-handle>transaction</a>.
 
 2. Let <var>store</var> be this <a>object store handle</a>'s <a
-    data-lt="objectStoreHandle.objectStore">object store</a>.
+    for=object-store-handle>object store</a>.
 
 3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -3029,7 +2967,7 @@ The <dfn method for=IDBObjectStore>deleteIndex(<var>name</var>)</dfn> method, wh
 8. Destroy <var>index</var>.
 
 This method destroys the <a>index</a> with the given name in the
-<a>object store</a>. Note that this method must only be called from
+<a for=/>object store</a>. Note that this method must only be called from
 within an <a>upgrade transaction</a>.
 
 This method synchronously modifies the {{IDBObjectStore/indexNames}}
@@ -3072,11 +3010,11 @@ attribute's getter must return this <a>index handle</a>'s <a
 data-lt="index.name">name</a>.
 
 <aside class=note>
-  As long as the <a>transaction</a> has not <a data-lt="transaction
+  As long as the <a for=/>transaction</a> has not <a data-lt="transaction
   finish">finished</a>, this is the same as the associated
   <a>index</a>'s <a data-lt="index.name">name</a>.
 
-  Once the <a>transaction</a> has <a data-lt="transaction
+  Once the <a for=/>transaction</a> has <a data-lt="transaction
   finish">finished</a>, this attribute will not reflect changes made
   with a later <a>upgrade transaction</a>.
 </aside>
@@ -3098,14 +3036,14 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
 5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
 
-6. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+6. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 7. If <var>index</var>'s <a data-lt="index.name">name</a> is equal to
     <var>name</var>, terminate these steps.
 
 8. If an <a>index</a> <a data-lt="index.name">named</a>
-    <var>name</var> already exists in <var>index</var>'s <a>object
+    <var>name</var> already exists in <var>index</var>'s <a for=/>object
     store</a>, <a>throw</a> a <a>ConstraintError</a> exception.
 
 9. Set <var>index</var>'s <a data-lt="index.name">name</a> to
@@ -3151,7 +3089,7 @@ The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, m
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3193,7 +3131,7 @@ The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3225,7 +3163,7 @@ The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> me
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3259,7 +3197,7 @@ The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3294,7 +3232,7 @@ The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked,
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3325,7 +3263,7 @@ The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)<
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3364,7 +3302,7 @@ The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     data-lt="indexHandle.index">index</a>.
 
-3. If <var>index</var> or <var>index</var>'s <a>object store</a> has
+3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
     been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
@@ -3558,7 +3496,7 @@ The {{IDBCursor/source}} attribute's getter must return the <a
 data-lt="cursor.source">source</a> of this <a>cursor</a>. This
 attribute never returns null or throws an exception, even if the
 cursor is currently being iterated, has iterated past its end, or its
-<a>transaction</a> is not <a>active</a>.
+<a for=/>transaction</a> is not <a>active</a>.
 
 The {{IDBCursor/direction}} attribute's getter must return the <a>direction</a>
 of the <a>cursor</a>.
@@ -3882,7 +3820,7 @@ does not modify the contents of the database.
 <h4 id=transaction>The <code>IDBTransaction</code> interface</h4>
 <!-- ============================================================ -->
 
-<a>Transaction</a> objects implement the following interface:
+<a for=/>Transaction</a> objects implement the following interface:
 
 <pre class=idl>
 [Exposed=(Window,Worker)]
@@ -3911,13 +3849,13 @@ enum IDBTransactionMode {
 The {{IDBTransaction/objectStoreNames}} attribute's getter must run
 the following steps:
 
-1. If this <a>transaction</a> is an <a>upgrade transaction</a>, return a
+1. If this <a for=/>transaction</a> is an <a>upgrade transaction</a>, return a
     <a>sorted list</a> of the <a for=object-store>names</a>
-    of the <a>object stores</a> in this <a>transaction</a>'s
+    of the <a for=/>object stores</a> in this <a for=/>transaction</a>'s
     <a>connection</a>'s <a>object store set</a>.
 
 2. Otherwise, return a <a>sorted list</a> of the <a for=object-store>names</a>
-    of the <a>object stores</a> in this <a>transaction</a>'s <a>scope</a>.
+    of the <a for=/>object stores</a> in this <a for=/>transaction</a>'s <a>scope</a>.
 
 
 <aside class=note>&#9752; The {{IDBTransaction/objectStoreNames}} attribute is new in this edition. &#9752;</aside>
@@ -3926,29 +3864,29 @@ the following steps:
   The contents of each list returned by this attribute does not
   change, but subsequent calls to this attribute during an <a>upgrade
   transaction</a> may return lists with different contents as
-  <a>object stores</a> are created and deleted.
+  <a for=/>object stores</a> are created and deleted.
 </aside>
 
 The {{IDBTransaction/mode}} attribute's getter must return the
-<a>mode</a> of the <a>transaction</a>.
+<a>mode</a> of the <a for=/>transaction</a>.
 
 The {{IDBTransaction/db}} attribute's getter must return the
-<a>database</a> <a>connection</a> of which this <a>transaction</a> is
+<a>database</a> <a>connection</a> of which this <a for=/>transaction</a> is
 a part.
 
 The {{IDBTransaction/error}} attribute's getter must return this
-<a>transaction</a>'s <a data-lt="transaction error">error</a>, or null
+<a for=/>transaction</a>'s <a data-lt="transaction error">error</a>, or null
 if none.
 
 <aside class=note>
-  If this <a>transaction</a> was aborted due to a failed
+  If this <a for=/>transaction</a> was aborted due to a failed
   <a>request</a>, this will be the same as the <a>request</a>'s <a
   data-lt="request.error">error</a>.
 
-  If this <a>transaction</a> was aborted due to an uncaught exception
+  If this <a for=/>transaction</a> was aborted due to an uncaught exception
   in a event handler, the error will be <a>AbortError</a>.
 
-  If the <a>transaction</a> was aborted due to an error while
+  If the <a for=/>transaction</a> was aborted due to an error while
   committing, it will reflect the reason for the failure (e.g.
   <a>QuotaExceededError</a>, <a>ConstraintError</a>, or
   <a>UnknownError</a>).
@@ -3961,13 +3899,13 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
     finish">finished</a>, <a>throw</a> an <a>InvalidStateError</a>
     exception.
 
-2. Let <var>store</var> be the <a>object store</a> <a
+2. Let <var>store</var> be the <a for=/>object store</a> <a
     for=object-store>named</a> <var>name</var> in this
-    <a>transaction</a>'s <a>scope</a>, or <a>throw</a> a
+    <a for=/>transaction</a>'s <a>scope</a>, or <a>throw</a> a
     <a>NotFoundError</a> exception if none.
 
 3. Return an <a>object store handle</a> associated with
-    <var>store</var> and this <a>transaction</a>.
+    <var>store</var> and this <a for=/>transaction</a>.
 
 <aside class=note>
   Each call to this method on the same {{IDBTransaction}} instance
@@ -3984,10 +3922,10 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
 
 The <dfn method for=IDBTransaction>abort()</dfn> method, when invoked, must run these steps:
 
-1. If this <a>transaction</a> is <a data-lt="transaction finish">finished</a>,
+1. If this <a for=/>transaction</a> is <a data-lt="transaction finish">finished</a>,
     <a>throw</a> an <a>InvalidStateError</a> exception.
 
-2. Unset the <a>transaction</a>'s <a>active flag</a> and run the
+2. Unset the <a for=/>transaction</a>'s <a>active flag</a> and run the
     <a>steps for aborting a transaction</a> with null as <var>error</var>.
 
 
@@ -4001,10 +3939,10 @@ The {{IDBTransaction/onerror}} attribute is the event handler for the
 <code>error</code> event.
 
 <aside class=note>
-  To determine if a <a>transaction</a> has completed successfully,
-  listen to the <a>transaction</a>'s <code>complete</code> event
+  To determine if a <a for=/>transaction</a> has completed successfully,
+  listen to the <a for=/>transaction</a>'s <code>complete</code> event
   rather than the <code>success</code> event of a particular
-  <a>request</a>, because the <a>transaction</a> may still fail after
+  <a>request</a>, because the <a for=/>transaction</a> may still fail after
   the <code>success</code> event fires.
 </aside>
 
@@ -4065,7 +4003,7 @@ let <var>version</var> be 1 if <var>db</var> is null, or <var>db</var>'s <a for=
 <li>
 If <var>db</var> is null, let <var>db</var> be a new <a>database</a> with
 <a for=database>name</a> <var>name</var>, <a for=database>version</a> 0 (zero) as <a for=database>version</a>,
-and with no <a>object stores</a>.
+and with no <a for=/>object stores</a>.
 
 <li>
 If <var>db</var>'s <a for=database>version</a> is greater than <var>version</var>, abort these steps and return
@@ -4239,12 +4177,12 @@ and <var>error</var>.
 <ol class=algorithm>
 <li>
 All the changes made to the <a>database</a> by the
-<a>transaction</a> are reverted.
+<a for=/>transaction</a> are reverted.
 
 For <a>upgrade transactions</a> this includes changes to
-the set of <a>object stores</a> and <a>indexes</a>,
+the set of <a for=/>object stores</a> and <a>indexes</a>,
 as well as the change to the <a for=database>version</a>. Any
-<a>object stores</a> and <a>indexes</a> which were
+<a for=/>object stores</a> and <a>indexes</a> which were
 created during the transaction are now considered
 deleted for the purposes of other algorithms.
 
@@ -4299,12 +4237,12 @@ following algorithm. The algorithm takes a <var>source</var> object and an <var>
 perform on a database, and an optional <var>request</var>.
 
 
-These steps can be aborted at any point if the <a>transaction</a> the created <a>request</a> belongs
+These steps can be aborted at any point if the <a for=/>transaction</a> the created <a>request</a> belongs
 to is <a data-lt="transaction abort">aborted</a> using the <a>steps for aborting a transaction</a>
 
 <ol class=algorithm>
 <li>
-Let <var>transaction</var> be the <a>transaction</a> associated with <var>source</var>.
+Let <var>transaction</var> be the <a for=/>transaction</a> associated with <var>source</var>.
 
 <li>
 If <var>transaction</var> is not <a>active</a>
@@ -4382,13 +4320,13 @@ their transactions are <a data-lt="transaction finish">finished</a>.
 
 <li>
 Let <var>transaction</var> be a new <a>upgrade transaction</a> with <var>connection</var> used as <a>connection</a>.
-The <a>scope</a> of <var>transaction</var> includes every <a>object store</a> in <var>connection</var>.
+The <a>scope</a> of <var>transaction</var> includes every <a for=/>object store</a> in <var>connection</var>.
 
 <li>
 Unset <var>transaction</var>'s <a>active flag</a>.
 
 <li>
-Start <var>transaction</var>. Note that until this <a>transaction</a> is finished,
+Start <var>transaction</var>. Note that until this <a for=/>transaction</a> is finished,
 no other <a>connections</a> can be opened to the same <a>database</a>.
 
 <li>
@@ -4396,7 +4334,7 @@ Let <var>old version</var> be <var>database</var>'s <a for=database>version</a>.
 
 <li>
 Set the version of <var>database</var> to <var>version</var>. This change is considered part of the
-<a>transaction</a>, and so if the transaction is <a data-lt="transaction abort">aborted</a>, this change is reverted.
+<a for=/>transaction</a>, and so if the transaction is <a data-lt="transaction abort">aborted</a>, this change is reverted.
 
 <li>
 <a>Queue a task</a> to run the following steps:
@@ -4445,7 +4383,7 @@ The <dfn>steps for aborting an upgrade transaction</dfn> <var>transaction</var> 
 
 <aside class=note>
 The steps are run after the normal <a>steps for aborting a transaction</a>, which revert
-changes to the <a>database</a> including the set of associated <a>object stores</a>
+changes to the <a>database</a> including the set of associated <a for=/>object stores</a>
 and <a>indexes</a>, as well as the change to the <a for=database>version</a>.
 </aside>
 <ol class=algorithm>
@@ -4465,7 +4403,7 @@ This reverts the value of <code>version</code> returned by the {{IDBDatabase}} o
 
 <li>
 Set <var>connection</var>'s <a>object store set</a> to the
-set of <a>object stores</a> in <var>database</var>
+set of <a for=/>object stores</a> in <var>database</var>
 if <var>database</var> previously existed,
 or the empty set if <var>database</var> was newly created.
 <aside class=note>
@@ -4474,25 +4412,25 @@ This reverts the value of <code>objectStoreNames</code> returned by the {{IDBDat
 
 <li>
 For each <a>object store handle</a> <var>handle</var> associated with <var>transaction</var>,
-including <a data-lt="object store handle">handles</a> for <a>object stores</a>
+including <a data-lt="object store handle">handles</a> for <a for=/>object stores</a>
 that were deleted during <var>transaction</var>, run these substeps:
 <ol>
 <li>
-Set <var>handle</var>'s <a data-lt="objectStoreHandle.name">name</a> to
-its <a data-lt="objectStoreHandle.objectStore">object store</a>'s <a for=object-store>name</a>.
+Set <var>handle</var>'s <a for=object-store-handle>name</a> to
+its <a for=object-store-handle>object store</a>'s <a for=object-store>name</a>.
 
 <li>
 Set <var>handle</var>'s <a>index set</a> to the
-set of <a>indexes</a> that reference its <a data-lt="objectStoreHandle.objectStore">object store</a>.
+set of <a>indexes</a> that reference its <a for=object-store-handle>object store</a>.
 
 </ol>
 <aside class=note>
 This reverts the values of <code>name</code> and <code>indexNames</code> returned by related {{IDBObjectStore}} objects.
 
 
-Although script cannot access an <a>object store</a> by using the
+Although script cannot access an <a for=/>object store</a> by using the
 <code>objectStore()</code> method on an {{IDBTransaction}} instance after
-the <a>transaction</a> is aborted, it may still have references to
+the <a for=/>transaction</a> is aborted, it may still have references to
 {{IDBObjectStore}} instances where the <code>name</code> and <code>indexNames</code> properties
 can be queried.
 
@@ -4514,7 +4452,7 @@ This reverts the value of <code>name</code> returned by related {{IDBIndex}} obj
 
 Although script cannot access an <a>index</a> by using the
 <code>index()</code> method on an {{IDBObjectStore}} instance after
-the <a>transaction</a> is aborted, it may still have references to
+the <a for=/>transaction</a> is aborted, it may still have references to
 {{IDBIndex}} instances where the <code>name</code> property
 can be queried.
 
@@ -4537,7 +4475,7 @@ the implementation MUST run the following steps:
 
 <ol class=algorithm>
 <li>
-Set <var>transaction</var> to the <a>transaction</a> associated with the <a data-lt="request.source">source</a>.
+Set <var>transaction</var> to the <a for=/>transaction</a> associated with the <a data-lt="request.source">source</a>.
 
 <li>
 Set the <a>active flag</a> of <var>transaction</var>.
@@ -4567,7 +4505,7 @@ the implementation MUST run the following steps:
 
 <ol class=algorithm>
 <li>
-Set <var>transaction</var> to the <a>transaction</a> associated with the <a data-lt="request.source">source</a>.
+Set <var>transaction</var> to the <a for=/>transaction</a> associated with the <a data-lt="request.source">source</a>.
 
 <li>
 Set the <a>active flag</a> of <var>transaction</var>.
@@ -4604,7 +4542,7 @@ using <var>transaction</var> and <a>request</a>'s <a data-lt="request.error">err
 <h3 id=database-operations>Database operations</h3>
 <!-- ============================================================ -->
 
-This section describes various operations done on the data in <a>object stores</a> and <a>indexes</a>
+This section describes various operations done on the data in <a for=/>object stores</a> and <a>indexes</a>
 in a <a>database</a>. These operations are run by the <a>steps for asynchronously executing a request</a>.
 
 <!-- ============================================================ -->
@@ -4650,8 +4588,8 @@ If <var>store</var> also uses <a>in-line keys</a>, then run the steps to
 </ol>
 
 <li>
-Otherwise, if the <a data-lt="key.type">type</a> of <var>key</var> is <i>number</i>
-and the <a data-lt="key.value">value</a> is greater than or equal to the <a>key generator</a>'s
+Otherwise, if the <a for=key>type</a> of <var>key</var> is <i>number</i>
+and the <a for=key>value</a> is greater than or equal to the <a>key generator</a>'s
 <a>current number</a>, set the <a>current number</a> to lowest integer greater than <var>key</var>.
 
 </ol>
@@ -4883,7 +4821,7 @@ if any.
 If <var>record</var> was not found, return undefined.
 
 <li>
-Return <var>record</var>'s <a>value</a>.
+Return <var>record</var>'s <a for=/>value</a>.
 
 </ol>
 
@@ -4990,7 +4928,7 @@ The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <aside class=note>
 <var>records</var> is always sorted in ascending <a>key</a> order. In the case of
 <var>source</var> being an <a>index</a>, <var>records</var> is secondarily sorted in ascending
-<a>value</a> order (where the value in an <a>index</a> is the <a>key</a> of the <a>record</a> in the referenced <a>object store</a>).
+<a for=/>value</a> order (where the value in an <a>index</a> is the <a>key</a> of the <a>record</a> in the referenced <a for=/>object store</a>).
 </aside>
 
 <li>Let <var>range</var> be <var>cursor</var>'s <a>range</a>.
@@ -5019,7 +4957,7 @@ and the record's value is <a>greater than</a> or <a>equal to</a> <var>primaryKey
 the record's key is <a>greater than</a> <var>key</var>.
 
 <li>
-If <var>position</var> is defined, and <var>source</var> is an <a>object store</a>, the record's
+If <var>position</var> is defined, and <var>source</var> is an <a for=/>object store</a>, the record's
 key is <a>greater than</a> <var>position</var>.
 
 <li>
@@ -5063,7 +5001,7 @@ and the record's value is <a>less than</a> or <a>equal to</a> <var>primaryKey</v
 the record's key is <a>less than</a> <var>key</var>.
 
 <li>
-If <var>position</var> is defined, and <var>source</var> is an <a>object store</a>, the record's
+If <var>position</var> is defined, and <var>source</var> is an <a for=/>object store</a>, the record's
 key is <a>less than</a> <var>position</var>.
 
 <li>
@@ -5271,7 +5209,7 @@ CreateDataProperty(<var>value</var>, <var>last</var>, <var>keyValue</var>)
 
 <aside class=note>
 The <a for=/>key path</a> used here is always a string and never a sequence,
-since it is not possible to create a <a>object store</a> which has a
+since it is not possible to create a <a for=/>object store</a> which has a
 <a>key generator</a> and also has a <a for=object-store>key path</a>
 that is a sequence.
 </aside>
@@ -5291,8 +5229,8 @@ The steps to <dfn>convert a key to a value</dfn> are as follows. These
 steps take one argument, <var>key</var>, and return an ECMAScript value.
 
 <ol class=algorithm>
-<li>Let <var>type</var> be <var>key</var>'s <a data-lt="key.type">type</a>.
-<li>Let <var>value</var> be <var>key</var>'s <a data-lt="key.value">value</a>.
+<li>Let <var>type</var> be <var>key</var>'s <a for=key>type</a>.
+<li>Let <var>value</var> be <var>key</var>'s <a for=key>value</a>.
 <li>Switch on <var>type</var>:
 <dl class=switch>
 <dt><i>number</i></dt>
@@ -5366,8 +5304,8 @@ or the steps may throw an exception.
 <dd>
 <ol>
 <li>If <var>input</var> is NaN then return invalid.
-<li>Otherwise, return a new <a>key</a> with <a data-lt="key.type">type</a> <i>number</i>
-and <a data-lt="key.value">value</a> <var>input</var>
+<li>Otherwise, return a new <a>key</a> with <a for=key>type</a> <i>number</i>
+and <a for=key>value</a> <var>input</var>
 </ol>
 </dd>
 
@@ -5377,7 +5315,7 @@ and <a data-lt="key.value">value</a> <var>input</var>
 <ol>
 <li>Let <var>ms</var> be the value of <var>input</var>'s [<span>[</span>DateValue]] internal slot.
 <li>If <var>ms</var> is NaN then return invalid.
-<li>Otherwise, return a new <a>key</a> with <a data-lt="key.type">type</a> <i>date</i> and <a data-lt="key.value">value</a> <var>ms</var>.
+<li>Otherwise, return a new <a>key</a> with <a for=key>type</a> <i>date</i> and <a for=key>value</a> <var>ms</var>.
 </ol>
 </dd>
 
@@ -5385,7 +5323,7 @@ and <a data-lt="key.value">value</a> <var>input</var>
 <dt>If Type(<var>input</var>) is String</dt>
 <dd>
 <ol>
-<li>Return a new <a>key</a> with <a data-lt="key.type">type</a> <i>string</i> and <a data-lt="key.value">value</a> <var>input</var>.
+<li>Return a new <a>key</a> with <a for=key>type</a> <i>string</i> and <a for=key>value</a> <var>input</var>.
 </ol>
 </dd>
 
@@ -5399,7 +5337,7 @@ Let <var>octets</var> be the result of running the steps for
 <a>getting a copy of the bytes held by a buffer source</a> with <var>value</var>.
 If this throws an exception, <a>rethrow</a> it.
 
-<li>Return a new <a>key</a> with <a data-lt="key.type">type</a> <i>binary</i> and <a data-lt="key.value">value</a> <var>octets</var>.
+<li>Return a new <a>key</a> with <a for=key>type</a> <i>binary</i> and <a for=key>value</a> <var>octets</var>.
 </ol>
 </dd>
 
@@ -5424,7 +5362,7 @@ with arguments <var>entry</var> and <var>seen</var>
 <li>Increase <var>index</var> by 1
 </ol>
 
-<li>Return a new <a>array key</a> with <a data-lt="key.value">value</a> <var>keys</var>.
+<li>Return a new <a>array key</a> with <a for=key>value</a> <var>keys</var>.
 </ol>
 </dd>
 
@@ -5462,7 +5400,7 @@ if there are no other members of <var>keys</var> <a>equal to</a> <var>key</var>
 <li>Increase <var>index</var> by 1
 </ol>
 
-<li>Return a new <a>array key</a> with <a data-lt="key.value">value</a> set to
+<li>Return a new <a>array key</a> with <a for=key>value</a> set to
 a list of the members of <var>keys</var>.
 
 </ol>
