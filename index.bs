@@ -307,51 +307,51 @@ database can be deleted.
 Script does not interact with <a>databases</a> directly. Instead,
 script has indirect access via a <dfn>connection</dfn>.
 
-A <a>connection</a> object can be used to manipulate the objects of
+A <a for=/>connection</a> object can be used to manipulate the objects of
 that <a>database</a>. It is also the only way to obtain a
 <a for=/>transaction</a> for that <a>database</a>.
 
-The act of opening a <a>database</a> creates a <a>connection</a>.
-There MAY be multiple <a>connections</a> to a given <a>database</a> at
+The act of opening a <a>database</a> creates a <a for=/>connection</a>.
+There MAY be multiple <a for=/>connections</a> to a given <a>database</a> at
 any given time.
 
 <div dfn-for=connection>
 
-A <a>connection</a> has a <dfn>version</dfn>, which is set when the
-<a>connection</a> is created. It remains constant for the lifetime of
-the <a>connection</a> unless an <a data-lt="steps for aborting an
+A <a for=/>connection</a> has a <dfn>version</dfn>, which is set when the
+<a for=/>connection</a> is created. It remains constant for the lifetime of
+the <a for=/>connection</a> unless an <a data-lt="steps for aborting an
 upgrade transaction">upgrade is aborted</a>, in which case it is set
 to the previous version of the <a>database</a>. Once the
-<a>connection</a> is closed the <a for=connection>version</a> does not change.
+<a for=/>connection</a> is closed the <a for=connection>version</a> does not change.
 
 
 Each connection has a <dfn>close pending flag</dfn> which is initially
 unset.
 
-When a <a>connection</a> is initially created it is in
+When a <a for=/>connection</a> is initially created it is in
 <dfn>opened</dfn> state. The connection can be <dfn>closed</dfn>
 through several means. If the execution context where the
-<a>connection</a> was created is destroyed (for example due to the
+<a for=/>connection</a> was created is destroyed (for example due to the
 user navigating away from that page), the connection is closed. The
 connection can also be closed explicitly using the <a>steps for
 closing a database connection</a>. When the connection is closed the
 <a>close pending flag</a> is always set if it hasn't already been.
 
 
-A <a>connection</a> may be closed by a user agent in exceptional
+A <a for=/>connection</a> may be closed by a user agent in exceptional
 circumstances, for example due to loss of access to the file system or
 a permission change. If this occurs the user agent MUST run the
 <a>steps for closing a database connection</a> with the
-<a>connection</a> and with the <var>forced flag</var> set.
+<a for=/>connection</a> and with the <var>forced flag</var> set.
 
-A <a>connection</a> has an <dfn>object store set</dfn>, which is
+A <a for=/>connection</a> has an <dfn>object store set</dfn>, which is
 initialized to the set of <a for=/>object stores</a> in the associated
-<a>database</a> when the <a>connection</a> is created.
+<a>database</a> when the <a for=/>connection</a> is created.
 
 The contents of the set will remain constant except when an <a>upgrade
 transaction</a> is running.
 
-A <a>connection</a>'s <a>get the parent</a> algorithm returns null.
+A <a for=/>connection</a>'s <a>get the parent</a> algorithm returns null.
 
 </div>
 
@@ -410,25 +410,25 @@ within a <a for=/>transaction</a>, script has indirect access via an
 
 <div dfn-for=object-store-handle>
 
-An <a>object store handle</a> has an associated <dfn>object store</dfn> and an
+An <a for=/>object store handle</a> has an associated <dfn>object store</dfn> and an
 associated <dfn>transaction</dfn>. Multiple
 handles MAY be associated with the same <a for=/>object store</a> in
-different <a for=/>transactions</a>, but there MUST be only one <a>object
+different <a for=/>transactions</a>, but there MUST be only one <a for=/>object
 store handle</a> associated with a particular <a for=/>object store</a>
 within a <a for=/>transaction</a>.
 
-An <a>object store handle</a> has an <dfn>index set</dfn>, which is
+An <a for=/>object store handle</a> has an <dfn>index set</dfn>, which is
 initialized to the set of <a for=/>indexes</a> that reference the associated
 <a for=object-store-handle>object store</a> when the
-<a>object store handle</a> is created.
+<a for=/>object store handle</a> is created.
 
 The contents of the set will remain constant except when an <a>upgrade
 transaction</a> is running.
 
-An <a>object store handle</a> has a <dfn>name</dfn>, which is initialized to
+An <a for=/>object store handle</a> has a <dfn>name</dfn>, which is initialized to
 the <a for=object-store>name</a> of the associated <a
 for=object-store-handle>object store</a> when the
-<a>object store handle</a> is created.
+<a for=/>object store handle</a> is created.
 
 The name will remain constant except when an <a>upgrade
 transaction</a> is running.
@@ -764,19 +764,16 @@ handle</dfn>.
 
 <div dfn-for=index-handle>
 
-An <a>index handle</a> has an associated <dfn>index</dfn> and an associated <dfn
-data-lt-noDefault data-lt="indexHandle.objectStoreHandle">object store
-handle</dfn>. The <dfn data-lt-noDefault
-data-lt="indexHandle.transaction">transaction</dfn> of an <a>index
+An <a>index handle</a> has an associated <dfn>index</dfn> and an associated <dfn>object store
+handle</dfn>. The <dfn>transaction</dfn> of an <a>index
 handle</a> is the <a
 for=object-store-handle>transaction</a> of its
-associated <a>object store handle</a>. Multiple handles MAY be
+associated <a for=/>object store handle</a>. Multiple handles MAY be
 associated with the same <a for=/>index</a> in different
 <a for=/>transactions</a>, but there MUST be only one <a>index handle</a>
 associated with a particular <a for=/>index</a> within a <a for=/>transaction</a>.
 
-An <a>index handle</a> has a <dfn data-lt-noDefault
-data-lt="indexHandle.name">name</dfn>, which is initialized to the <a
+An <a>index handle</a> has a <dfn>name</dfn>, which is initialized to the <a
 for=index>name</a> of the associated <a
 for=index-handle>index</a> when the <a>index handle</a> is
 created.
@@ -790,9 +787,11 @@ transaction</a> is running.
 <h4 id=transaction-construct>Transactions</h4>
 <!-- ============================================================ -->
 
-A <dfn data-lt="transactions">Transaction</dfn> is used to interact
+A <dfn id=transaction-concept>Transaction</dfn> is used to interact
 with the data in a <a>database</a>. Whenever data is read or written
 to the database it is done by using a <a for=/>transaction</a>.
+
+<div dfn-for=transaction>
 
 <a for=/>transactions</a> offer some protection from application and system
 failures. A <a for=/>transaction</a> may be used to store multiple data
@@ -800,16 +799,15 @@ records or to conditionally modify certain data records. A
 <a for=/>transaction</a> represents an atomic and durable set of data access
 and data mutation operations.
 
-All transactions are created through a <a>connection</a>, which is the
-transaction's <dfn data-lt-noDefault
-data-lt="transaction.connection">connection</dfn>.
+All transactions are created through a <a for=/>connection</a>, which is the
+transaction's <dfn>connection</dfn>.
 
-A <a for=/>transaction</a> has a <dfn data-lt="scopes">scope</dfn> that
+A <a for=/>transaction</a> has a <dfn>scope</dfn> that
 determines the <a for=/>object stores</a> with which the transaction may
 interact. A transaction's scope remains fixed for the lifetime of that
 transaction.
 
-A <a for=/>transaction</a> has a <dfn data-lt="modes">mode</dfn> that
+A <a for=/>transaction</a> has a <dfn>mode</dfn> that
 determines which types of interactions can be performed upon that
 transaction. The <a>mode</a> is set when the transaction is created
 and remains fixed for the life of the transaction. A
@@ -856,15 +854,14 @@ is set.
 A <a for=/>transaction</a> has a <dfn>request list</dfn> of <a>requests</a>
 which have been made against the transaction.
 
-A <a for=/>transaction</a> has a <dfn data-lt-noDefault data-lt="transaction
-error">error</dfn> which is set if the <a for=/>transaction</a> is <a
-data-lt="transaction abort">aborted</a>.
+A <a for=/>transaction</a> has a <dfn>error</dfn> which is set if the
+<a for=/>transaction</a> is <a>aborted</a>.
 
 A <a for=/>transaction</a>'s <a>get the parent</a> algorithm returns the
-transaction's <a data-lt="transaction.connection">connection</a>.
+transaction's <a for=transaction>connection</a>.
 
 Transactions are expected to be short lived. This is encouraged by the
-<a data-lt="transaction commit">automatic committing</a> functionality
+<a for=transaction lt=commit>automatic committing</a> functionality
 described below.
 
 <aside class=note>
@@ -911,7 +908,7 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
     against different transactions can execute in any order without
     affecting what resulting data is stored in the database.
 
-5. A transaction can be <dfn data-lt="transaction abort">aborted</dfn>
+5. A transaction can be <dfn lt="abort|aborting|aborted">aborted</dfn>
     at any time before it is <a data-lt="transaction
     finish">finished</a>, even if the transaction isn't currently
     <a>active</a> or hasn't yet <a data-lt="transaction
@@ -934,9 +931,8 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
     <var>error</var>.
 
 7. When a transaction can no longer become <a>active</a>, the
-    implementation MUST attempt to <dfn data-lt="transaction
-    commit">commit</dfn> it, as long as the transaction has not been
-    <a data-lt="transaction abort">aborted</a>. This usually happens
+    implementation MUST attempt to <dfn lt="commit|committing|committed">commit</dfn> it, as long as the transaction has not been
+    <a>aborted</a>. This usually happens
     after all requests placed against the transaction have been
     executed and their returned results handled, and no new requests
     have been placed against the transaction. When a transaction is
@@ -945,18 +941,17 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
     transaction. That is, either all of the changes MUST be written,
     or if an error occurs, such as a disk write error, the
     implementation MUST NOT write any of the changes to the database.
-    If such an error occurs, the implementation MUST <a
-    data-lt="transaction abort">abort</a> the transaction by following
+    If such an error occurs, the implementation MUST <a>abort</a> the transaction by following
     the <a>steps for aborting a transaction</a>, otherwise it MUST <a
-    data-lt="transaction commit">commit</a> the transaction by
+    for=transaction>commit</a> the transaction by
     following the <a>steps for committing a transaction</a>.
 
-8. When a transaction is <a data-lt="transaction commit">committed</a>
-    or <a data-lt="transaction abort">aborted</a>, it is said to be
+8. When a transaction is <a for=transaction>committed</a>
+    or <a>aborted</a>, it is said to be
     <dfn data-lt="transaction finish">finished</dfn>. If a transaction
     can't be finished, for example due to the implementation crashing
     or the user taking some explicit action to cancel it, the
-    implementation MUST <a data-lt="transaction abort">abort</a> the
+    implementation MUST <a>abort</a> the
     transaction.
 
 A <dfn data-lt="read-only transactions">read-only transaction</dfn> is
@@ -1037,6 +1032,7 @@ data-lt="transaction start">started</a>:
     <a>read/write transaction</a> from <a data-lt="transaction
     start">starting</a>.
 
+</div>
 
 <!-- ============================================================ -->
 <h5 id=upgrade-transaction>Upgrade Transactions</h5>
@@ -1047,7 +1043,7 @@ An <dfn data-lt="upgrade transactions">upgrade transaction</dfn> is a
 
 An <a>upgrade transaction</a> is automatically created when running
 <a>steps for running an upgrade transaction</a> after a
-<a>connection</a> is opened to a <a>database</a> giving a greater <a
+<a for=/>connection</a> is opened to a <a>database</a> giving a greater <a
 for=database>version</a> than the current <a for=database>version</a>.
 This <a for=/>transaction</a> will be active inside the <a>upgradeneeded</a>
 event handler, allowing the creation of new <a for=/>object stores</a> and
@@ -1060,13 +1056,13 @@ for=database>version</a>, a new <a>upgrade transaction</a> is
 automatically created and made available through the <a>open
 request</a> when the <a>upgradeneeded</a> event is fired. The
 <a>upgradeneeded</a> event isn't fired, and thus the <a>upgrade
-transaction</a> isn't started, until all other <a>connections</a> to
+transaction</a> isn't started, until all other <a for=/>connections</a> to
 the same <a>database</a> are closed. This ensures that all other
 transactions are <a data-lt="transaction finish">finished</a>.
 
 As long as an <a>upgrade transaction</a> is running, attempts to open
-more <a>connections</a> to the same <a>database</a> are delayed, and
-any attempts to use the same <a>connection</a> to start additional
+more <a for=/>connections</a> to the same <a>database</a> are delayed, and
+any attempts to use the same <a for=/>connection</a> to start additional
 transactions will result in an exception being thrown. Thus <a>upgrade
 transactions</a> not only ensure that no other transactions are
 running concurrently, but also ensure that no other transactions are
@@ -1112,7 +1108,7 @@ A <a>request</a>'s <a>get the parent</a> algorithm
 returns the request's <a data-lt="request.transaction">transaction</a>.
 
 An <dfn>open request</dfn> is a special type of <a>request</a> used
-when opening a <a>connection</a> or deleting a <a>database</a>. In
+when opening a <a for=/>connection</a> or deleting a <a>database</a>. In
 addition to <code>success</code> and <code>error</code> events,
 <a>blocked</a> and <a>upgradeneeded</a> may be fired at an <a>open
 request</a> to indicate progress.
@@ -2010,15 +2006,15 @@ The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> me
 <!-- ============================================================ -->
 
 The {{IDBDatabase}}
-interface represents a <a>connection</a> to a <a>database</a>.
+interface represents a <a for=/>connection</a> to a <a>database</a>.
 
 An {{IDBDatabase}} object MUST NOT be garbage collected if its
-associated <a>connection</a>'s <a>close pending flag</a> is unset
+associated <a for=/>connection</a>'s <a>close pending flag</a> is unset
 and it has one or more event listeners registers whose type is one of
 <code>abort</code>, <code>error</code>, or <code>versionchange</code>.
 
 If an {{IDBDatabase}} object is garbage collected, the
-associated <a>connection</a> must be <a for=connection>closed</a>.
+associated <a for=/>connection</a> must be <a for=connection>closed</a>.
 
 
 <pre class=idl>
@@ -2051,19 +2047,19 @@ The {{IDBDatabase/name}}
 attribute's getter must return the <a for="database">name</a>
 of the <a data-lt="connection">connected</a> <a>database</a>. The
 attribute MUST return this name even if the <a>close pending flag</a>
-is set on the <a>connection</a>. In other words, the value of this
+is set on the <a for=/>connection</a>. In other words, the value of this
 attribute stays constant for the lifetime of the {{IDBDatabase}}
 instance.
 
 The {{IDBDatabase/version}}
-attribute's getter must return this <a>connection</a>'s <a
+attribute's getter must return this <a for=/>connection</a>'s <a
 for=connection>version</a>.
 
 <aside class=note>
-  As long as the <a>connection</a> is open, this is the same as the
+  As long as the <a for=/>connection</a> is open, this is the same as the
   connected <a>database</a>'s <a for=database>version</a>.
 
-  Once the <a>connection</a> has <a for=connection>closed</a>, this
+  Once the <a for=/>connection</a> has <a for=connection>closed</a>, this
   attribute will not reflect changes made with a later <a>upgrade
   transaction</a>.
 </aside>
@@ -2072,14 +2068,14 @@ for=connection>version</a>.
 The {{IDBDatabase/objectStoreNames}}
 attribute's getter must return a <a>sorted list</a> of the <a
 for=object-store>names</a> of the <a for=/>object stores</a> in
-this <a>connection</a>'s <a>object store set</a>.
+this <a for=/>connection</a>'s <a>object store set</a>.
 
 <aside class=note>
-  As long as the <a>connection</a> is open, this is the same as the
+  As long as the <a for=/>connection</a> is open, this is the same as the
   connected <a>database</a>'s <a for=/>object store</a> <a
   for=object-store>names</a>.
 
-  Once the <a>connection</a> has <a for=connection>closed</a>, this
+  Once the <a for=/>connection</a> has <a for=connection>closed</a>, this
   attribute will not reflect changes made with a later <a>upgrade
   transaction</a>.
 </aside>
@@ -2087,7 +2083,7 @@ this <a>connection</a>'s <a>object store set</a>.
 The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>database</var> be the <a>database</a> associated with this
-    <a>connection</a>.
+    <a for=/>connection</a>.
 
 2. Let <var>transaction</var> be the currently running <a>upgrade
     transaction</a> associated with <var>database</var>, or
@@ -2121,7 +2117,7 @@ The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options<
     not null, set the created <a for=/>object store</a>'s <a
     for=object-store>key path</a> to <var>keyPath</var>.
 
-10. Return a new <a>object store handle</a> associated with
+10. Return a new <a for=/>object store handle</a> associated with
     <var>store</var> and <var>transaction</var>.
 
 
@@ -2151,7 +2147,7 @@ error.
 The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>database</var> be the <a>database</a> associated with this
-    <a>connection</a>.
+    <a for=/>connection</a>.
 
 2. Let <var>transaction</var> be the currently running <a>upgrade
     transaction</a> associated with <var>database</var>, or
@@ -2164,7 +2160,7 @@ The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method,
     for=object-store>named</a> <var>name</var> in <var>database</var>,
     or <a>throw</a> a <a>NotFoundError</a> exception if none.
 
-5. Remove <var>store</var> from this <a>connection</a>'s <a>object
+5. Remove <var>store</var> from this <a for=/>connection</a>'s <a>object
     store set</a>.
 
 6. Destroy <var>store</var>.
@@ -2214,7 +2210,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 
 The <dfn method for=IDBDatabase>close()</dfn> method, when invoked, must run these steps:
 
-1. Run the <a>steps for closing a database connection</a> with this <a>connection</a>.
+1. Run the <a>steps for closing a database connection</a> with this <a for=/>connection</a>.
 
 
 The {{IDBDatabase/onabort}} attribute is the event handler for the
@@ -2237,7 +2233,7 @@ The {{IDBDatabase/onversionchange}} attribute is the event handler for the
 <!-- ============================================================ -->
 
 The {{IDBObjectStore}}
-interface represents an <a>object store handle</a>.
+interface represents an <a for=/>object store handle</a>.
 
 <pre class=idl>
 [Exposed=(Window,Worker)]
@@ -2273,7 +2269,7 @@ dictionary IDBIndexParameters {
 };
 </pre>
 
-The {{IDBObjectStore/name}} attribute's getter must return this <a>object store
+The {{IDBObjectStore/name}} attribute's getter must return this <a for=/>object store
 handle</a>'s <a for=object-store>name</a>.
 
 <aside class=note>
@@ -2291,9 +2287,9 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 1. Let <var>name</var> be the given value.
 
-2. Let <var>transaction</var> be this <a>object store handle</a>'s <a for=object-store-handle>transaction</a>.
+2. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a for=object-store-handle>transaction</a>.
 
-3. Let <var>store</var> be this <a>object store handle</a>'s <a for=object-store-handle>object store</a>.
+3. Let <var>store</var> be this <a for=/>object store handle</a>'s <a for=object-store-handle>object store</a>.
 
 4. If <var>store</var> has been deleted,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -2312,13 +2308,13 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 9. Set <var>store</var>'s <a for=object-store>name</a> to <var>name</var>.
 
-10. Set this <a>object store handle</a>'s <a for=object-store-handle>name</a> to <var>name</var>.
+10. Set this <a for=/>object store handle</a>'s <a for=object-store-handle>name</a> to <var>name</var>.
 
 <aside class=note>&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
 The {{IDBObjectStore/keyPath}} attribute's getter must
-return this <a>object store handle</a>'s <a
+return this <a for=/>object store handle</a>'s <a
 for=object-store-handle>object store</a>'s <a
 for=object-store>key path</a>, or null if none.
 
@@ -2335,7 +2331,7 @@ object has no effect on the <a for=/>object store</a>.
 
 The {{IDBObjectStore/indexNames}} attribute's
 getter must return a <a>sorted list</a> of the <a
-for=index>names</a> of <a for=/>indexes</a> in this <a>object
+for=index>names</a> of <a for=/>indexes</a> in this <a for=/>object
 store handle</a>'s <a>index set</a>.
 
 <aside class=note>
@@ -2349,20 +2345,20 @@ store handle</a>'s <a>index set</a>.
 </aside>
 
 The {{IDBObjectStore/transaction}} attribute's
-getter must return this <a>object store handle</a>'s <a
+getter must return this <a for=/>object store handle</a>'s <a
 for=object-store-handle>transaction</a>,
 
 The {{IDBObjectStore/autoIncrement}} attribute's
-getter must return true if this <a>object store handle</a>'s <a
+getter must return true if this <a for=/>object store handle</a>'s <a
 for=object-store-handle>object store</a> has a <a>key
 generator</a>, and false otherwise.
 
 
 The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a for=object-store-handle>transaction</a>.
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a for=object-store-handle>object store</a>.
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted,
     <a>throw</a> an <a>InvalidStateError</a> exception.
@@ -2411,7 +2407,7 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
 
 11. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for storing a record into an object store</a> as
     <var>operation</var>, using <var>store</var>, the <var>clone</var>
     as <var>value</var>, <var>key</var>, and with the
@@ -2420,10 +2416,10 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
 
 The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2476,7 +2472,7 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
 
 11. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for storing a record into an object store</a> as
     <var>operation</var>, using <var>store</var>, <var>clone</var> as
     <var>value</var>, <var>key</var>, and with the <var>no-overwrite
@@ -2484,10 +2480,10 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
 
 The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2506,7 +2502,7 @@ The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when i
 
 7. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for deleting records from an object store</a> as
     <var>operation</var>, using <var>store</var> and <var>range</var>.
 
@@ -2523,10 +2519,10 @@ the risk that a small bug would clear a whole object store.
 
 The <dfn method for=IDBObjectStore>clear()</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2540,17 +2536,17 @@ The <dfn method for=IDBObjectStore>clear()</dfn> method, when invoked, must run 
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for clearing an object store</a> as
     <var>operation</var>, using <var>store</var>.
 
 
 The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2566,7 +2562,7 @@ The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invo
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
-      are run with this <a>object store handle</a> as
+      are run with this <a for=/>object store handle</a> as
       <var>source</var> and the <a>steps for retrieving a value from
       an object store</a> as <var>operation</var>, using
       <var>store</var> and <var>range</var>.
@@ -2589,9 +2585,9 @@ that range.
 The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2607,7 +2603,7 @@ The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when i
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
-      are run with this <a>object store handle</a> as
+      are run with this <a for=/>object store handle</a> as
       <var>source</var> and the <a>steps for retrieving a key from an
       object store</a> as <var>operation</var>, using <var>store</var>
       and <var>range</var>.
@@ -2622,10 +2618,10 @@ the first existing key in that range.
 
 The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2640,7 +2636,7 @@ The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</d
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for retrieving multiple values from an object
     store</a> as <var>operation</var>, using <var>store</var>,
     <var>range</var>, and <var>count</var> if given.
@@ -2655,10 +2651,10 @@ records in range, only the first <var>count</var> will be retrieved.
 
 The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2673,7 +2669,7 @@ The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for retrieving multiple keys from an object store</a>
     as <var>operation</var>, using <var>store</var>, <var>range</var>,
     and <var>count</var> if given.
@@ -2690,10 +2686,10 @@ only the first <var>count</var> will be retrieved.
 
 The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2708,7 +2704,7 @@ The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when in
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps to count the records in a range</a> as
     <var>operation</var>, with <var>source</var> and <var>range</var>.
 
@@ -2720,10 +2716,10 @@ range</a> is used.
 
 The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2748,7 +2744,7 @@ The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</
 
 7. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
 
@@ -2759,10 +2755,10 @@ If null or not given, an <a>unbounded key range</a> is used.
 
 The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2788,7 +2784,7 @@ The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>directio
 
 7. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
-    run with this <a>object store handle</a> as <var>source</var> and
+    run with this <a for=/>object store handle</a> as <var>source</var> and
     the <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
 
@@ -2801,10 +2797,10 @@ or not given, an <a>unbounded key range</a> is used.
 
 The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</var>, <var>options</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
@@ -2839,11 +2835,11 @@ The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</va
     <var>index</var>'s <a>unique flag</a>. If <var>multiEntry</var> is
     set, set <var>index</var>'s <a>multiEntry flag</a>.
 
-12. Add <var>index</var> to this <a>object store handle</a>'s <a>index
+12. Add <var>index</var> to this <a for=/>object store handle</a>'s <a>index
       set</a>.
 
 13. Return a new <a>index handle</a> associated with <var>index</var>
-    and this <a>object store handle</a>.
+    and this <a for=/>object store handle</a>.
 
 
 This method creates and returns a new <a for=/>index</a> with the given name
@@ -2898,18 +2894,17 @@ At the point where <code>createIndex</code> called, neither of the
 duplicate name is created. Since the index creation is considered an
 asynchronous <a>request</a>, the index's <a data-lt="unique
 flag">uniqueness</a> constraint does not cause the second
-<a>request</a> to fail. Instead, the <a for=/>transaction</a> will be <a
-data-lt="transaction abort">aborted</a> when the index is created and
+<a>request</a> to fail. Instead, the <a for=/>transaction</a> will be <a>aborted</a> when the index is created and
 the constraint fails.
 
 </aside>
 
 The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
@@ -2920,12 +2915,12 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
     exception.
 
 5. Let <var>index</var> be the <a for=/>index</a> <a
-    for=index>named</a> <var>name</var> in this <a>object
+    for=index>named</a> <var>name</var> in this <a for=/>object
     store handle</a>'s <a>index set</a> if one exists, or <a>throw</a>
     a <a>NotFoundError</a> exception otherwise.
 
 6. Return an <a>index handle</a> associated with <var>index</var> and
-    this <a>object store handle</a>.
+    this <a for=/>object store handle</a>.
 
 <aside class=note>
   Each call to this method on the same {{IDBObjectStore}} instance
@@ -2942,10 +2937,10 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
 
 The <dfn method for=IDBObjectStore>deleteIndex(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-1. Let <var>transaction</var> be this <a>object store handle</a>'s <a
+1. Let <var>transaction</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>transaction</a>.
 
-2. Let <var>store</var> be this <a>object store handle</a>'s <a
+2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a
     for=object-store-handle>object store</a>.
 
 3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
@@ -2962,7 +2957,7 @@ The <dfn method for=IDBObjectStore>deleteIndex(<var>name</var>)</dfn> method, wh
     if one exists, or <a>throw</a> a <a>NotFoundError</a> exception
     otherwise.
 
-7. Remove <var>index</var> from this <a>object store handle</a>'s
+7. Remove <var>index</var> from this <a for=/>object store handle</a>'s
     <a>index set</a>.
 
 8. Destroy <var>index</var>.
@@ -3026,7 +3021,7 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
 1. Let <var>name</var> be the given value.
 
 2. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 3. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3051,14 +3046,14 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
     <var>name</var>.
 
 10. Set this <a>index handle</a>'s <a
-    data-lt="indexHandle.name">name</a> to <var>name</var>.
+    for=index-handle>name</a> to <var>name</var>.
 
 <aside class=note>&#9752; The {{IDBIndex/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
 The {{IDBIndex/objectStore}} attribute's getter
 must return this <a>index handle</a>'s <a
-data-lt="indexHandle.objectStoreHandle">object store handle</a>.
+for=index-handle>object store handle</a>.
 
 The {{IDBIndex/keyPath}} attribute's getter must return this <a>index
 handle</a>'s <a for=index-handle>index</a>'s <a
@@ -3085,7 +3080,7 @@ The {{IDBIndex/unique}} attribute's getter must return true if this
 The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3127,7 +3122,7 @@ that range.
 The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3159,7 +3154,7 @@ in that range.
 The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3193,7 +3188,7 @@ records in range, only the first <var>count</var> will be retrieved.
 The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3228,7 +3223,7 @@ be retrieved.
 The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3259,7 +3254,7 @@ If null or not given, an <a>unbounded key range</a> is used.
 The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3298,7 +3293,7 @@ or not given, an <a>unbounded key range</a> is used.
 The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>index handle</a>'s <a
-    data-lt="indexHandle.transaction">transaction</a>.
+    for=index-handle>transaction</a>.
 
 2. Let <var>index</var> be this <a>index handle</a>'s <a
     for=index-handle>index</a>.
@@ -3853,7 +3848,7 @@ the following steps:
 1. If this <a for=/>transaction</a> is an <a>upgrade transaction</a>, return a
     <a>sorted list</a> of the <a for=object-store>names</a>
     of the <a for=/>object stores</a> in this <a for=/>transaction</a>'s
-    <a>connection</a>'s <a>object store set</a>.
+    <a for=/>connection</a>'s <a>object store set</a>.
 
 2. Otherwise, return a <a>sorted list</a> of the <a for=object-store>names</a>
     of the <a for=/>object stores</a> in this <a for=/>transaction</a>'s <a>scope</a>.
@@ -3872,11 +3867,11 @@ The {{IDBTransaction/mode}} attribute's getter must return the
 <a>mode</a> of the <a for=/>transaction</a>.
 
 The {{IDBTransaction/db}} attribute's getter must return the
-<a>database</a> <a>connection</a> of which this <a for=/>transaction</a> is
+<a>database</a> <a for=/>connection</a> of which this <a for=/>transaction</a> is
 a part.
 
 The {{IDBTransaction/error}} attribute's getter must return this
-<a for=/>transaction</a>'s <a data-lt="transaction error">error</a>, or null
+<a for=/>transaction</a>'s <a for=transaction>error</a>, or null
 if none.
 
 <aside class=note>
@@ -3905,7 +3900,7 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
     <a for=/>transaction</a>'s <a>scope</a>, or <a>throw</a> a
     <a>NotFoundError</a> exception if none.
 
-3. Return an <a>object store handle</a> associated with
+3. Return an <a for=/>object store handle</a> associated with
     <var>store</var> and this <a for=/>transaction</a>.
 
 <aside class=note>
@@ -3976,7 +3971,7 @@ If <var>db</var> is not null, run these substeps:
 <li>Wait until the following conditions are all fulfilled:
 <ul>
 <li>
-No already existing <a>connections</a> to <var>db</var>, have
+No already existing <a for=/>connections</a> to <var>db</var>, have
 non-<a data-lt="transaction finish">finished</a> <a>upgrade transaction</a>.
 
 <li>
@@ -4011,7 +4006,7 @@ If <var>db</var>'s <a for=database>version</a> is greater than <var>version</var
 a new <a>VersionError</a>.
 
 <li>
-Let <var>connection</var> be a new <a>connection</a> to <var>db</var>.
+Let <var>connection</var> be a new <a for=/>connection</a> to <var>db</var>.
 
 <li>
 Set <var>connection</var>'s <a for=connection>version</a> to <var>version</var>.
@@ -4077,9 +4072,9 @@ Once the <a>close pending flag</a> has been set no new transactions can be
 throw an exception if it is set.
 </aside>
 <aside class=note>
-Once the <a>connection</a> is closed, this can unblock the <a>steps for running an upgrade
+Once the <a for=/>connection</a> is closed, this can unblock the <a>steps for running an upgrade
 transaction</a>, and the <a>steps for deleting a database</a>, which <a href="#delete-close-block">both</a>
-<a href="#version-change-close-block">wait</a> for <a>connections</a> to a given <a>database</a> to be closed
+<a href="#version-change-close-block">wait</a> for <a for=/>connections</a> to a given <a>database</a> to be closed
 before continuing.
 </aside>
 
@@ -4103,7 +4098,7 @@ if one exists. Otherwise, return 0 (zero).
 Set <var>db</var>'s <a>delete pending flag</a>.
 
 <li>
-Let <var>openConnections</var> be the set of all <a>connections</a>
+Let <var>openConnections</var> be the set of all <a for=/>connections</a>
 associated with <var>db</var>.
 
 <li>
@@ -4116,12 +4111,12 @@ the <code>versionchange</code> event MUST NOT be fired at those objects if that 
 </aside>
 
 <li>
-If any of the <a>connections</a> in <var>openConnections</var> are still not closed,
+If any of the <a for=/>connections</a> in <var>openConnections</var> are still not closed,
 <a>fire a version change event</a> named <code>blocked</code>
 at <var>request</var> with <var>db</var>'s <a for=database>version</a> and null.
 
 <li id="delete-close-block">
-Wait until all <a>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
+Wait until all <a for=/>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
 their transactions are <a data-lt="transaction finish">finished</a>.
 
 <li>
@@ -4191,13 +4186,13 @@ deleted for the purposes of other algorithms.
 If <var>transaction</var> is an <a>upgrade transactions</a>,
 run the  <a>steps for aborting an upgrade transaction</a>
 with <var>transaction</var>. This reverts changes to all
-<a>connection</a>,
-<a>object store handle</a>, and
+<a for=/>connection</a>,
+<a for=/>object store handle</a>, and
 <a>index handle</a>
 instances associated with <var>transaction</var>.
 
 <li>
-If <var>error</var> is not null, set <var>transaction</var>'s <a data-lt="transaction error">error</a>
+If <var>error</var> is not null, set <var>transaction</var>'s <a for=transaction>error</a>
 to <var>error</var>.
 
 <li>
@@ -4217,7 +4212,7 @@ The event bubbles and is cancelable.
 </ol>
 <aside class=note>
 This does not always result in any <code>error</code> events being fired. For example if a transaction is aborted
-due to an error while <a data-lt="transaction commit">committing</a> the transaction, or if it was the last remaining request
+due to an error while <a for=transaction>committing</a> the transaction, or if it was the last remaining request
 that failed.
 </aside>
 
@@ -4239,7 +4234,7 @@ perform on a database, and an optional <var>request</var>.
 
 
 These steps can be aborted at any point if the <a for=/>transaction</a> the created <a>request</a> belongs
-to is <a data-lt="transaction abort">aborted</a> using the <a>steps for aborting a transaction</a>
+to is <a>aborted</a> using the <a>steps for aborting a transaction</a>
 
 <ol class=algorithm>
 <li>
@@ -4298,7 +4293,7 @@ and a <var>request</var>.
 
 <ol class=algorithm>
 <li>
-Let <var>openConnections</var> be the set of all <a>connections</a>,
+Let <var>openConnections</var> be the set of all <a for=/>connections</a>,
 except <var>connection</var>, connected to the same <a>database</a> as <var>connection</var>.
 
 <li>
@@ -4311,16 +4306,16 @@ the <code>versionchange</code> event MUST NOT be fired at those objects if that 
 </aside>
 
 <li>
-If any of the <a>connections</a> in <var>openConnections</var> are still not closed,
+If any of the <a for=/>connections</a> in <var>openConnections</var> are still not closed,
 <a>fire a version change event</a> named <dfn><code>blocked</code></dfn>
 at <var>request</var> with <var>db</var>'s <a for=database>version</a> and <var>version</var>.
 
 <li id="version-change-close-block">
-Wait until all <a>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
+Wait until all <a for=/>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
 their transactions are <a data-lt="transaction finish">finished</a>.
 
 <li>
-Let <var>transaction</var> be a new <a>upgrade transaction</a> with <var>connection</var> used as <a>connection</a>.
+Let <var>transaction</var> be a new <a>upgrade transaction</a> with <var>connection</var> used as <a for=/>connection</a>.
 The <a>scope</a> of <var>transaction</var> includes every <a for=/>object store</a> in <var>connection</var>.
 
 <li>
@@ -4328,14 +4323,14 @@ Unset <var>transaction</var>'s <a>active flag</a>.
 
 <li>
 Start <var>transaction</var>. Note that until this <a for=/>transaction</a> is finished,
-no other <a>connections</a> can be opened to the same <a>database</a>.
+no other <a for=/>connections</a> can be opened to the same <a>database</a>.
 
 <li>
 Let <var>old version</var> be <var>database</var>'s <a for=database>version</a>.
 
 <li>
 Set the version of <var>database</var> to <var>version</var>. This change is considered part of the
-<a for=/>transaction</a>, and so if the transaction is <a data-lt="transaction abort">aborted</a>, this change is reverted.
+<a for=/>transaction</a>, and so if the transaction is <a>aborted</a>, this change is reverted.
 
 <li>
 <a>Queue a task</a> to run the following steps:
@@ -4389,7 +4384,7 @@ and <a for=/>indexes</a>, as well as the change to the <a for=database>version</
 </aside>
 <ol class=algorithm>
 <li>
-Let <var>connection</var> be <var>transaction</var>'s <a>connection</a>.
+Let <var>connection</var> be <var>transaction</var>'s <a for=/>connection</a>.
 
 <li>
 Let <var>database</var> be <var>connection</var>'s <a>database</a>.
@@ -4412,7 +4407,7 @@ This reverts the value of <code>objectStoreNames</code> returned by the {{IDBDat
 </aside>
 
 <li>
-For each <a>object store handle</a> <var>handle</var> associated with <var>transaction</var>,
+For each <a for=/>object store handle</a> <var>handle</var> associated with <var>transaction</var>,
 including <a data-lt="object store handle">handles</a> for <a for=/>object stores</a>
 that were deleted during <var>transaction</var>, run these substeps:
 <ol>
@@ -4443,7 +4438,7 @@ including <a data-lt="index handle">handles</a> for <a for=/>indexes</a>
 that were deleted during <var>transaction</var>, run these substeps:
 <ol>
 <li>
-Set <var>handle</var>'s <a data-lt="indexHandle.name">name</a> to
+Set <var>handle</var>'s <a for=index-handle>name</a> to
 its <a for=index-handle>index</a>'s <a for=index>name</a>.
 
 </ol>
