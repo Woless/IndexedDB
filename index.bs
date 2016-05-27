@@ -32,15 +32,12 @@ spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
     urlPrefix: infrastructure.html
         type: dfn
             text: strictly splitting the string; url: #strictly-split-a-string
-            text: structured clone; url: #safe-passing-of-structured-data
+            text: structured clone; url: #structuredclone
             text: structured clone algorithm; url: #safe-passing-of-structured-data
     urlPrefix: webappapis.html
         type: dfn
             text: queue a task; url: #queue-a-task
             text: event handler idl attributes; url: #event-handler-idl-attributes
-spec: dom; urlPrefix: https://dom.spec.whatwg.org
-    type: idl
-        text: DOMError; url: #domerror
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
         text: String; url: #sec-ecmascript-language-types-string-type
@@ -55,9 +52,6 @@ spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
         text: TypeError; url: #sec-native-error-types-used-in-this-standard-typeerror
 spec: webidl; urlPrefix: https://heycam.github.io/webidl/
     type: dfn
-        text: unrestricted double; url: #idl-unrestricted-double
-        text: DOMString; url: #idl-DOMString
-        text: DOMException; url: #idl-DOMException
         text: sequence<DOMString>; url: #idl-sequence
         text: octet; url: #idl-octet
         text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
@@ -487,8 +481,8 @@ or
 
 A <a for=/>key</a> also has an associated <dfn>value</dfn>, which will
 be either:
-an <a>unrestricted double</a> if type is <i>number</i> or <i>date</i>,
-a <a>DOMString</a> if type is <i>string</i>,
+an {{unrestricted double}} if type is <i>number</i> or <i>date</i>,
+a {{DOMString}} if type is <i>string</i>,
 a list of <a>octets</a> if type is <i>binary</i>,
 or a list of other <a for=/>keys</a> if type is <i>array</i>.
 
@@ -649,14 +643,14 @@ keys</a> with |a| and |b| is 0.
 <h3 id=key-path-construct>Key Path</h3>
 <!-- ============================================================ -->
 
-A <dfn>key path</dfn> is a <a>DOMString</a> or
+A <dfn>key path</dfn> is a {{DOMString}} or
 <a>sequence&lt;DOMString&gt;</a> that defines how to extract a
 <a for=/>key</a> from a <a for=/>value</a>. A <dfn>valid key path</dfn> is one of:
 
-* An empty <a>DOMString</a>.
-* An <dfn>identifier</dfn>, which is a <a>DOMString</a> matching
+* An empty {{DOMString}}.
+* An <dfn>identifier</dfn>, which is a {{DOMString}} matching
     the <a>IdentifierName</a> production from the ECMAScript Language Specification [[!ECMA-262]].
-* A <a>DOMString</a> consisting of two or more <a>identifiers</a> separated by
+* A {{DOMString}} consisting of two or more <a>identifiers</a> separated by
     periods (ASCII character code 46, U+002E FULL STOP).
 * A non-empty <a>sequence&lt;DOMString&gt;</a> containing only strings conforming to
     the above requirements.
@@ -1212,8 +1206,7 @@ follows:
     set, or return an <a>unbounded key range</a> otherwise.
 
 3. Let |key| be the result of running the steps to <a>convert
-    a value to a key</a> with |value|. If this throws an
-    exception, <a lt=throw>rethrow</a> it.
+    a value to a key</a> with |value|. Rethrow any exceptions.
 
 4. If |key| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -1624,7 +1617,7 @@ store.put([10]); // will throw DataError
 <!-- ============================================================ -->
 
 Each of the exceptions defined in this document is a
-<a>DOMException</a> with a specific type. The exception types and
+{{DOMException}} with a specific type. The exception types and
 properties such as code value are defined in [[!WEBIDL]].
 
 <table class=props dfn-for=exceptions>
@@ -2006,14 +1999,12 @@ The <dfn method for=IDBFactory>deleteDatabase(|name|)</dfn> method, when invoked
 The <dfn method for=IDBFactory>cmp(|first|, |second|)</dfn> method, when invoked, must run these steps:
 
 1. Let |a| be the result of running the steps to <a>convert a
-    value to a key</a> with |first|. If this throws an
-    exception, <a lt=throw>rethrow</a> it.
+    value to a key</a> with |first|. Rethrow any exceptions.
 
 2. If |a| is invalid, <a>throw</a> a {{DataError}} exception.
 
 3. Let |b| be the result of running the steps to <a>convert a
-    value to a key</a> with |second|. If this throws an
-    exception, <a lt=throw>rethrow</a> it.
+    value to a key</a> with |second|. Rethrow any exceptions.
 
 4. If |b| is invalid, <a>throw</a> a {{DataError}} exception.
 
@@ -2344,7 +2335,7 @@ for=/>object store handle</a>'s <a for=object-store-handle>object
 store</a>'s <a for=object-store>key path</a>, or null if none.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic
-for <a>DOMString</a> and <a>sequence&lt;DOMString&gt;</a> values, as
+for {{DOMString}} and <a>sequence&lt;DOMString&gt;</a> values, as
 appropriate.
 
 The returned value is not the same instance that was used when the <a
@@ -2404,21 +2395,21 @@ The <dfn method for=IDBObjectStore>put(|value|, |key|)</dfn> method, when invoke
 8. If |key| was given, run these substeps:
 
     1. Let |r| be the result of running the steps to <a>convert a value to a key</a> with |key|.
-        If this throws an exception, <a lt=throw>rethrow</a> it.
+        Rethrow any exceptions.
 
     2. If |r| is invalid, <a>throw</a> a {{DataError}} exception.
 
     3. Let |key| be |r|.
 
-9. Let |clone| be <a>structured clone</a> of |value|. If this
-    throws an exception, <a lt=throw>rethrow</a> the exception.
+9. Let |clone| be <a>structured clone</a> of |value|.
+    Rethrow any exceptions.
 
 10. If |store| uses <a>in-line keys</a>, run these substeps:
 
     1. Let |kpk| be the result of running the steps to <a>extract a
         key from a value using a key path</a> with |clone| and
-        |store|'s <a for=object-store>key path</a>. If this throws an
-        exception, <a lt=throw>rethrow</a> it.
+        |store|'s <a for=object-store>key path</a>. Rethrow any
+        exceptions.
 
     2. If |kpk| is invalid, <a>throw</a> a {{DataError}} exception.
 
@@ -2462,24 +2453,21 @@ The <dfn method for=IDBObjectStore>add(|value|, |key|)</dfn> method, when invoke
 8. If |key| was given, run these substeps:
 
     1. Let |r| be the result of running the steps to <a>convert a
-        value to a key</a> with |key|. If this throws an exception, <a
-        lt=throw>rethrow</a> it.
+        value to a key</a> with |key|. Rethrow any exceptions.
 
     2. If |r| is invalid, <a>throw</a> a {{DataError}} exception.
 
     3. Let |key| be |r|.
 
-9. Let |clone| be <a>structured clone</a> of
-    |value|. If this throws an exception, <a lt=throw>rethrow</a> the
-    exception.
+9. Let |clone| be <a>structured clone</a> of |value|. Rethrow any
+    exceptions.
 
 10. If |store| uses <a>in-line keys</a>, run these substeps:
 
-    1. Let |kpk| be the result of running the steps to
-        <a>extract a key from a value using a key path</a> with
-        |clone| and |store|'s <a
-        for=object-store>key path</a>. If this throws an
-        exception, <a lt=throw>rethrow</a> it.
+    1. Let |kpk| be the result of running the steps to <a>extract a
+        key from a value using a key path</a> with |clone| and
+        |store|'s <a for=object-store>key path</a>. Rethrow any
+        exceptions.
 
     2. If |kpk| is invalid, <a>throw</a> a {{DataError}}
         exception.
@@ -2518,8 +2506,7 @@ The <dfn method for=IDBObjectStore>delete(|query|)</dfn> method, when invoked, m
 
 6. Let |range| be the result of running the steps to
     <a>convert a value to a key range</a> with |query| and
-    |null disallowed flag| set. If this throws an exception,
-    <a lt=throw>rethrow</a> it.
+    |null disallowed flag| set. Rethrow any exceptions.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2578,8 +2565,7 @@ The <dfn method for=IDBObjectStore>get(|query|)</dfn> method, when invoked, must
 
 5. Let |range| be the result of running the steps to
     <a>convert a value to a key range</a> with |query| and
-    |null disallowed flag| set. If this throws an exception,
-    <a lt=throw>rethrow</a> it.
+    |null disallowed flag| set. Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
@@ -2619,8 +2605,7 @@ The <dfn method for=IDBObjectStore>getKey(|query|)</dfn> method, when invoked, m
 
 5. Let |range| be the result of running the steps to
     <a>convert a value to a key range</a> with |query| and
-    |null disallowed flag| set. If this throws an exception,
-    <a lt=throw>rethrow</a> it.
+    |null disallowed flag| set. Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
@@ -2652,8 +2637,8 @@ The <dfn method for=IDBObjectStore>getAll(|query|, |count|)</dfn> method, when i
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2686,8 +2671,8 @@ The <dfn method for=IDBObjectStore>getAllKeys(|query|, |count|)</dfn> method, wh
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2721,8 +2706,8 @@ The <dfn method for=IDBObjectStore>count(|query|)</dfn> method, when invoked, mu
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2751,8 +2736,8 @@ The <dfn method for=IDBObjectStore>openCursor(|query|, |direction|)</dfn> method
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Let |cursor| be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -2790,8 +2775,8 @@ The <dfn method for=IDBObjectStore>openKeyCursor(|query|, |direction|)</dfn> met
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Let |cursor| be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -3081,7 +3066,7 @@ handle</a>'s <a for=index-handle>index</a>'s <a
 for=object-store>key path</a>.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic
-for <a>DOMString</a> and <a>sequence&lt;DOMString&gt;</a> values, as
+for {{DOMString}} and <a>sequence&lt;DOMString&gt;</a> values, as
 appropriate.
 
 The returned value is not the same instance that was used when the
@@ -3115,8 +3100,7 @@ The <dfn method for=IDBIndex>get(|query|)</dfn> method, when invoked, must run t
 
 5. Let |range| be the result of running the steps to
     <a>convert a value to a key range</a> with |query| and
-    |null disallowed flag| set. If this throws an exception,
-    <a lt=throw>rethrow</a> it.
+    |null disallowed flag| set. Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
@@ -3157,8 +3141,7 @@ The <dfn method for=IDBIndex>getKey(|query|)</dfn> method, when invoked, must ru
 
 5. Let |range| be the result of running the steps to
     <a>convert a value to a key range</a> with |query| and
-    |null disallowed flag| set. If this throws an exception,
-    <a lt=throw>rethrow</a> it.
+    |null disallowed flag| set. Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps
@@ -3188,8 +3171,8 @@ The <dfn method for=IDBIndex>getAll(|query|, |count|)</dfn> method, when invoked
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -3222,8 +3205,8 @@ The <dfn method for=IDBIndex>getAllKeys(|query|, |count|)</dfn> method, when inv
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps
@@ -3257,9 +3240,8 @@ The <dfn method for=IDBIndex>count(|query|)</dfn> method, when invoked, must run
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
-
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -3288,8 +3270,8 @@ The <dfn method for=IDBIndex>openCursor(|query|, |direction|)</dfn> method, when
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 6. Let |cursor| be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -3327,8 +3309,8 @@ The <dfn method for=IDBIndex>openKeyCursor(|query|, |direction|)</dfn> method, w
     {{TransactionInactiveError}} exception.
 
 5. Let |range| be the result of running the steps to
-    <a>convert a value to a key range</a> with |query|. If
-    this throws an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key range</a> with |query|.
+    Rethrow any exceptions.
 
 7. Let |cursor| be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -3398,8 +3380,7 @@ the <a>upper open flag</a> is set, and false otherwise.
 The <dfn method for=IDBKeyRange>only(|value|)</dfn> method, when invoked, must run these steps:
 
 1. Let |key| be the result of running the steps to <a>convert
-    a value to a key</a> with |value|. If this throws an an
-    exception, <a lt=throw>rethrow</a> it.
+    a value to a key</a> with |value|. Rethrow any exceptions.
 
 2. If |key| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3411,8 +3392,8 @@ The <dfn method for=IDBKeyRange>only(|value|)</dfn> method, when invoked, must r
 The <dfn method for=IDBKeyRange>lowerBound(|lower|, |lowerOpen|)</dfn> method, when invoked, must run these steps:
 
 1. Let |lowerKey| be the result of running the steps to
-    <a>convert a value to a key</a> with |lower|. If this
-    throws an an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key</a> with |lower|.
+    Rethrow any exceptions.
 
 2. If |lowerKey| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3426,9 +3407,8 @@ The <dfn method for=IDBKeyRange>lowerBound(|lower|, |lowerOpen|)</dfn> method, w
 
 The <dfn method for=IDBKeyRange>upperBound(|upper|, |upperOpen|)</dfn> method, when invoked, must run these steps:
 
-1. Let
-    |upperKey| be the result of running the steps to <a>convert a value to a key</a> with |upper|.
-    If this throws an an exception, <a lt=throw>rethrow</a> it.
+1. Let |upperKey| be the result of running the steps to <a>convert a
+    value to a key</a> with |upper|. Rethrow any exceptions.
 
 2. If |upperKey| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3443,15 +3423,15 @@ The <dfn method for=IDBKeyRange>upperBound(|upper|, |upperOpen|)</dfn> method, w
 The <dfn method for=IDBKeyRange>bound(|lower|, |upper|, |lowerOpen|, |upperOpen|)</dfn> method, when invoked, must run these steps:
 
 1. Let |lowerKey| be the result of running the steps to
-    <a>convert a value to a key</a> with |lower|. If this
-    throws an an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key</a> with |lower|.
+    Rethrow any exceptions.
 
 2. If |lowerKey| is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Let |upperKey| be the result of running the steps to
-    <a>convert a value to a key</a> with |upper|. If this
-    throws an an exception, <a lt=throw>rethrow</a> it.
+    <a>convert a value to a key</a> with |upper|.
+    Rethrow any exceptions.
 
 4. If |upperKey| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3469,8 +3449,7 @@ The <dfn method for=IDBKeyRange>bound(|lower|, |upper|, |lowerOpen|, |upperOpen|
 The <dfn method for=IDBKeyRange>includes(|key|)</dfn> method, when invoked, must run these steps:
 
 1. Let |k| be the result of running the steps to <a>convert a
-    value to a key</a> with |key|. If this throws an an
-    exception, <a lt=throw>rethrow</a> it.
+    value to a key</a> with |key|. Rethrow any exceptions.
 
 2. If |k| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3567,8 +3546,8 @@ The <dfn method for=IDBCursor>update(|value|)</dfn> method, when invoked, must r
 6. If this cursor's <a>key only flag</a> is set, <a>throw</a> an
     {{InvalidStateError}} exception.
 
-7. Let |clone| be <a>structured clone</a> of |value|. If this
-    throws an exception, <a lt=throw>rethrow</a> the exception.
+7. Let |clone| be <a>structured clone</a> of |value|.
+    Rethrow any exceptions.
 
 8. If the <a>effective object store</a> of this cursor uses <a>in-line
     keys</a>, run these substeps:
@@ -3576,8 +3555,8 @@ The <dfn method for=IDBCursor>update(|value|)</dfn> method, when invoked, must r
     1. Let |kpk| be the result of running the steps to
         <a>extract a key from a value using a key path</a> with
         |clone| and the <a for=object-store>key
-        path</a> of the <a>effective object store</a>. If this throws
-        an exception, <a lt=throw>rethrow</a> it.
+        path</a> of the <a>effective object store</a>.
+        Rethrow any exceptions.
 
     2. If |kpk| is failure, invalid, or not <a>equal to</a>
         the cursor's <a>effective key</a>, <a>throw</a> a
@@ -3659,8 +3638,8 @@ The <dfn method for=IDBCursor>continue(|key|)</dfn> method, when invoked, must r
 5. If |key| is given, run these substeps:
 
     1. Let |r| be the result of running the steps to
-        <a>convert a value to a key</a> with |key|. If this
-        throws an exception, <a lt=throw>rethrow</a> it.
+        <a>convert a value to a key</a> with |key|.
+        Rethrow any exceptions.
 
     2. If |r| is invalid, <a>throw</a> a {{DataError}}
         exception.
@@ -3725,8 +3704,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(|key|, |primaryKey|)</dfn> meth
     <a>throw</a> an {{InvalidStateError}} exception.
 
 7. Let |r| be the result of running the steps to <a>convert a
-    value to a key</a> with |key|. If this throws an
-    exception, <a lt=throw>rethrow</a> it.
+    value to a key</a> with |key|. Rethrow any exceptions.
 
 8. If |r| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3734,8 +3712,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(|key|, |primaryKey|)</dfn> meth
 9. Let |key| be |r|.
 
 10. Let |r| be the result of running the steps to <a>convert
-     a value to a key</a> with |primaryKey|. If this throws
-     an exception, <a lt=throw>rethrow</a> it.
+     a value to a key</a> with |primaryKey|. Rethrow any exceptions.
 
 11. If |r| is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -5152,13 +5129,13 @@ or the steps may throw an exception.
 <li>
 Let |r| be the result of running the steps to
 <a>evaluate a key path on a value</a> with |value| and |keyPath|.
-If this throws an exception, <a lt=throw>rethrow</a> it.
+Rethrow any exceptions.
 
 <li>If |r| is failure, return failure.
 <li>Let |key| be
 the result of running the steps to <a>convert a value to a key</a> with |r| if the |multiEntry flag| is unset, and
 the result of running the steps to <a>convert a value to a multiEntry key</a> with |r| otherwise.
-If this throws an exception, <a lt=throw>rethrow</a> it.
+Rethrow any exceptions.
 <li>If |key| is invalid, return invalid.
 <li>Return |key|.
 </ol>
@@ -5394,7 +5371,7 @@ or an [<span>[</span>ViewedArrayBuffer]] internal slot</dt>
 <li>
 Let |octets| be the result of running the steps for
 <a>getting a copy of the bytes held by a buffer source</a> with |value|.
-If this throws an exception, <a lt=throw>rethrow</a> it.
+Rethrow any exceptions.
 
 <li>Return a new <a for=/>key</a> with <a for=key>type</a> <i>binary</i> and <a for=key>value</a> |octets|.
 </ol>
@@ -5713,7 +5690,7 @@ document's Revision History</a>.
     {{IDBIndex/getAllKeys()}} on {{IDBIndex}}.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=16595">bug #16595</a>)
 
-* Replaced {{DOMError}} with <a>DOMException</a>.
+* Replaced {{DOMError}} with {{DOMException}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/16">bug #16</a>)
 
 * Added {{IDBTransaction/objectStoreNames}} on {{IDBTransaction}}.

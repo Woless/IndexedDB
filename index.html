@@ -1840,8 +1840,8 @@ or <i>array</i>.</p>
     <aside class="note" role="note">☘ Support for <i>binary</i> keys is new in this edition. ☘</aside>
     <p>A <a data-link-type="dfn" href="#key" id="ref-for-key-4">key</a> also has an associated <dfn class="dfn-paneled" data-dfn-for="key" data-dfn-type="dfn" data-lt="value" data-noexport="" id="key-value">value<span class="dfn-panel" data-deco=""><b><a href="#key-value">#key-value</a></b><b>Referenced in:</b><span><a href="#ref-for-key-value-1">2.4. Keys</a> <a href="#ref-for-key-value-2">(2)</a> <a href="#ref-for-key-value-3">(3)</a></span><span><a href="#ref-for-key-value-4">2.11. Key Generators</a> <a href="#ref-for-key-value-5">(2)</a></span><span><a href="#ref-for-key-value-6">6.1. Object Store Storage Operation</a></span><span><a href="#ref-for-key-value-7">6.11. Steps to convert a key to a value</a></span><span><a href="#ref-for-key-value-8">6.12. Steps to convert a value to a key</a> <a href="#ref-for-key-value-9">(2)</a> <a href="#ref-for-key-value-10">(3)</a> <a href="#ref-for-key-value-11">(4)</a> <a href="#ref-for-key-value-12">(5)</a> <a href="#ref-for-key-value-13">(6)</a></span></span></dfn>, which will
 be either:
-an <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-unrestricted-double">unrestricted double</a> if type is <i>number</i> or <i>date</i>,
-a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> if type is <i>string</i>,
+an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#dom-unrestricteddouble">unrestricted double</a></code> if type is <i>number</i> or <i>date</i>,
+a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> if type is <i>string</i>,
 a list of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-octet">octets</a> if type is <i>binary</i>,
 or a list of other <a data-link-type="dfn" href="#key" id="ref-for-key-5">keys</a> if type is <i>array</i>.</p>
    </div>
@@ -2014,15 +2014,15 @@ keys</a> with <var>a</var> and <var>b</var> is 0.</p>
   (in the range [0, 255]) rather than signed bytes (in the range
   [-128, 127]). </aside>
    <h3 class="heading settled" data-level="2.5" id="key-path-construct"><span class="secno">2.5. </span><span class="content">Key Path</span><a class="self-link" href="#key-path-construct"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="key path" data-noexport="" id="key-path">key path<span class="dfn-panel" data-deco=""><b><a href="#key-path">#key-path</a></b><b>Referenced in:</b><span><a href="#ref-for-key-path-1">2.5. Key Path</a></span><span><a href="#ref-for-key-path-2">6.8. ECMAScript binding</a></span><span><a href="#ref-for-key-path-3">6.9. Steps to extract a key from a value using a key path</a> <a href="#ref-for-key-path-4">(2)</a></span><span><a href="#ref-for-key-path-5">6.10. Steps to inject a key into a value using a key path</a></span></span></dfn> is a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> or <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> that defines how to extract a <a data-link-type="dfn" href="#key" id="ref-for-key-21">key</a> from a <a data-link-type="dfn" href="#value" id="ref-for-value-4">value</a>. A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="valid key path" data-noexport="" id="valid-key-path">valid key path<span class="dfn-panel" data-deco=""><b><a href="#valid-key-path">#valid-key-path</a></b><b>Referenced in:</b><span><a href="#ref-for-valid-key-path-1">4.4. The IDBDatabase interface</a></span><span><a href="#ref-for-valid-key-path-2">4.5. The IDBObjectStore interface</a></span></span></dfn> is one of:</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="key path" data-noexport="" id="key-path">key path<span class="dfn-panel" data-deco=""><b><a href="#key-path">#key-path</a></b><b>Referenced in:</b><span><a href="#ref-for-key-path-1">2.5. Key Path</a></span><span><a href="#ref-for-key-path-2">6.8. ECMAScript binding</a></span><span><a href="#ref-for-key-path-3">6.9. Steps to extract a key from a value using a key path</a> <a href="#ref-for-key-path-4">(2)</a></span><span><a href="#ref-for-key-path-5">6.10. Steps to inject a key into a value using a key path</a></span></span></dfn> is a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> or <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> that defines how to extract a <a data-link-type="dfn" href="#key" id="ref-for-key-21">key</a> from a <a data-link-type="dfn" href="#value" id="ref-for-value-4">value</a>. A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="valid key path" data-noexport="" id="valid-key-path">valid key path<span class="dfn-panel" data-deco=""><b><a href="#valid-key-path">#valid-key-path</a></b><b>Referenced in:</b><span><a href="#ref-for-valid-key-path-1">4.4. The IDBDatabase interface</a></span><span><a href="#ref-for-valid-key-path-2">4.5. The IDBObjectStore interface</a></span></span></dfn> is one of:</p>
    <ul>
     <li data-md="">
-     <p>An empty <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>.</p>
+     <p>An empty <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code>.</p>
     <li data-md="">
-     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="identifier" data-noexport="" id="identifier">identifier<span class="dfn-panel" data-deco=""><b><a href="#identifier">#identifier</a></b><b>Referenced in:</b><span><a href="#ref-for-identifier-1">2.5. Key Path</a></span></span></dfn>, which is a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> matching
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="identifier" data-noexport="" id="identifier">identifier<span class="dfn-panel" data-deco=""><b><a href="#identifier">#identifier</a></b><b>Referenced in:</b><span><a href="#ref-for-identifier-1">2.5. Key Path</a></span></span></dfn>, which is a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> matching
 the <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#prod-IdentifierName">IdentifierName</a> production from the ECMAScript Language Specification <a data-link-type="biblio" href="#biblio-ecma-262">[ECMA-262]</a>.</p>
     <li data-md="">
-     <p>A <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> consisting of two or more <a data-link-type="dfn" href="#identifier" id="ref-for-identifier-1">identifiers</a> separated by
+     <p>A <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> consisting of two or more <a data-link-type="dfn" href="#identifier" id="ref-for-identifier-1">identifiers</a> separated by
 periods (ASCII character code 46, U+002E FULL STOP).</p>
     <li data-md="">
      <p>A non-empty <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> containing only strings conforming to
@@ -2398,8 +2398,7 @@ follows:</p>
 set, or return an <a data-link-type="dfn" href="#unbounded-key-range" id="ref-for-unbounded-key-range-2">unbounded key range</a> otherwise.</p>
     <li data-md="">
      <p>Let <var>key</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-2">convert
-a value to a key</a> with <var>value</var>. If this throws an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+a value to a key</a> with <var>value</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>key</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-2">DataError</a></code> exception.</p>
     <li data-md="">
@@ -2677,7 +2676,7 @@ property on the array fails.</p>
 <span class="nx">store</span><span class="p">.</span><span class="nx">put</span><span class="p">([</span><span class="mi">10</span><span class="p">]);</span> <span class="c1">// will throw DataError</span></pre>
    </aside>
    <h2 class="heading settled" data-level="3" id="exceptions"><span class="secno">3. </span><span class="content">Exceptions</span><a class="self-link" href="#exceptions"></a></h2>
-   <p>Each of the exceptions defined in this document is a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMException">DOMException</a> with a specific type. The exception types and
+   <p>Each of the exceptions defined in this document is a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#dfn-DOMException">DOMException</a></code> with a specific type. The exception types and
 properties such as code value are defined in <a data-link-type="biblio" href="#biblio-webidl">[WEBIDL]</a>.</p>
    <table class="props">
     <tbody>
@@ -2917,14 +2916,12 @@ event</a> named <code>success</code> at <a data-link-type="dfn" href="#request" 
    <ol>
     <li data-md="">
      <p>Let <var>a</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-3">convert a
-value to a key</a> with <var>first</var>. If this throws an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+value to a key</a> with <var>first</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>a</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-3">DataError</a></code> exception.</p>
     <li data-md="">
      <p>Let <var>b</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-4">convert a
-value to a key</a> with <var>second</var>. If this throws an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+value to a key</a> with <var>second</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>b</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-4">DataError</a></code> exception.</p>
     <li data-md="">
@@ -3155,7 +3152,7 @@ dictionary <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-exp
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-idbobjectstore-keypath" id="ref-for-dom-idbobjectstore-keypath-1">keyPath</a></code> attribute’s getter must return this <a data-link-type="dfn" href="#object-store-handle" id="ref-for-object-store-handle-14">object store handle</a>’s <a data-link-type="dfn" href="#object-store-handle-object-store" id="ref-for-object-store-handle-object-store-4">object
 store</a>’s <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-12">key path</a>, or null if none.</p>
    <p>The conversion is done following the normal <a data-link-type="biblio" href="#biblio-webidl">[WEBIDL]</a> binding logic
-for <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> and <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> values, as
+for <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> and <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> values, as
 appropriate.</p>
    <p>The returned value is not the same instance that was used when the <a data-link-type="dfn" href="#object-store" id="ref-for-object-store-69">object store</a> was created. However, if this attribute returns
 an object (specifically an <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-array-objects">Array</a>), it returns the same object
@@ -3194,22 +3191,22 @@ and false otherwise.</p>
      <ol>
       <li data-md="">
        <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-5">convert a value to a key</a> with <var>key</var>.
-If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+Rethrow any exceptions.</p>
       <li data-md="">
        <p>If <var>r</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-7">DataError</a></code> exception.</p>
       <li data-md="">
        <p>Let <var>key</var> be <var>r</var>.</p>
      </ol>
     <li data-md="">
-     <p>Let <var>clone</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>value</var>. If this
-throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> the exception.</p>
+     <p>Let <var>clone</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>value</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>store</var> uses <a data-link-type="dfn" href="#object-store-in-line-keys" id="ref-for-object-store-in-line-keys-3">in-line keys</a>, run these substeps:</p>
      <ol>
       <li data-md="">
        <p>Let <var>kpk</var> be the result of running the steps to <a data-link-type="dfn" href="#extract-a-key-from-a-value-using-a-key-path" id="ref-for-extract-a-key-from-a-value-using-a-key-path-2">extract a
-key from a value using a key path</a> with <var>clone</var> and <var>store</var>’s <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-13">key path</a>. If this throws an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+key from a value using a key path</a> with <var>clone</var> and <var>store</var>’s <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-13">key path</a>. Rethrow any
+exceptions.</p>
       <li data-md="">
        <p>If <var>kpk</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-8">DataError</a></code> exception.</p>
       <li data-md="">
@@ -3245,21 +3242,22 @@ with the <var>no-overwrite flag</var> unset.</p>
      <ol>
       <li data-md="">
        <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-6">convert a
-value to a key</a> with <var>key</var>. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+value to a key</a> with <var>key</var>. Rethrow any exceptions.</p>
       <li data-md="">
        <p>If <var>r</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-12">DataError</a></code> exception.</p>
       <li data-md="">
        <p>Let <var>key</var> be <var>r</var>.</p>
      </ol>
     <li data-md="">
-     <p>Let <var>clone</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>value</var>. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> the
-exception.</p>
+     <p>Let <var>clone</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>value</var>. Rethrow any
+exceptions.</p>
     <li data-md="">
      <p>If <var>store</var> uses <a data-link-type="dfn" href="#object-store-in-line-keys" id="ref-for-object-store-in-line-keys-5">in-line keys</a>, run these substeps:</p>
      <ol>
       <li data-md="">
-       <p>Let <var>kpk</var> be the result of running the steps to <a data-link-type="dfn" href="#extract-a-key-from-a-value-using-a-key-path" id="ref-for-extract-a-key-from-a-value-using-a-key-path-3">extract a key from a value using a key path</a> with <var>clone</var> and <var>store</var>’s <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-14">key path</a>. If this throws an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+       <p>Let <var>kpk</var> be the result of running the steps to <a data-link-type="dfn" href="#extract-a-key-from-a-value-using-a-key-path" id="ref-for-extract-a-key-from-a-value-using-a-key-path-3">extract a
+key from a value using a key path</a> with <var>clone</var> and <var>store</var>’s <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-14">key path</a>. Rethrow any
+exceptions.</p>
       <li data-md="">
        <p>If <var>kpk</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-13">DataError</a></code> exception.</p>
       <li data-md="">
@@ -3288,7 +3286,7 @@ flag</var> set.</p>
     <li data-md="">
      <p>If <var>transaction</var> is a <a data-link-type="dfn" href="#transaction-read-only-transaction" id="ref-for-transaction-read-only-transaction-11">read-only transaction</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-readonlyerror" id="ref-for-exceptiondef-exceptions-readonlyerror-3">ReadOnlyError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-1">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-1">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-4">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-20">IDBRequest</a></code> created by these steps. The steps are
@@ -3328,7 +3326,7 @@ the <a data-link-type="dfn" href="#steps-for-clearing-an-object-store" id="ref-f
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-13">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-9">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-2">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-2">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-6">steps for asynchronously executing a request</a> and
   return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-22">IDBRequest</a></code> created by these steps. The steps
@@ -3354,7 +3352,7 @@ that range.</p>
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-14">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-10">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-3">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-3">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-7">steps for asynchronously executing a request</a> and
   return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-23">IDBRequest</a></code> created by these steps. The steps
@@ -3376,8 +3374,8 @@ the first existing key in that range.</p>
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-15">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-11">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-4">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-4">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-8">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-24">IDBRequest</a></code> created by these steps. The steps are
@@ -3399,8 +3397,8 @@ null or not given, an <a data-link-type="dfn" href="#unbounded-key-range" id="re
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-16">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-12">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-5">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-5">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-9">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-25">IDBRequest</a></code> created by these steps. The steps are
@@ -3425,8 +3423,8 @@ only the first <var>count</var> will be retrieved.</p>
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-17">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-13">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-6">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-6">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-10">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-26">IDBRequest</a></code> created by these steps. The steps are
@@ -3447,8 +3445,8 @@ range</a> is used.</p>
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-18">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-14">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-7">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-7">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Let <var>cursor</var> be a new <a data-link-type="dfn" href="#cursor" id="ref-for-cursor-16">cursor</a> with <a data-link-type="dfn" href="#cursor-transaction" id="ref-for-cursor-transaction-1">transaction</a> set to <var>transaction</var>, an undefined <a data-link-type="dfn" href="#cursor-position" id="ref-for-cursor-position-4">position</a>, <a data-link-type="dfn" href="#cursor-direction" id="ref-for-cursor-direction-2">direction</a> set to <var>direction</var>, <a data-link-type="dfn" href="#cursor-got-value-flag" id="ref-for-cursor-got-value-flag-1">got value
 flag</a> unset, and undefined <a data-link-type="dfn" href="#cursor-key" id="ref-for-cursor-key-1">key</a> and <a data-link-type="dfn" href="#cursor-value" id="ref-for-cursor-value-2">value</a>. The <a data-link-type="dfn" href="#cursor-source" id="ref-for-cursor-source-10">source</a> of <var>cursor</var> is <var>store</var>. The <a data-link-type="dfn" href="#cursor-range" id="ref-for-cursor-range-3">range</a> of <var>cursor</var> is <var>range</var>.</p>
@@ -3471,8 +3469,8 @@ If null or not given, an <a data-link-type="dfn" href="#unbounded-key-range" id=
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-19">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-15">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-8">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-8">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Let <var>cursor</var> be a new <a data-link-type="dfn" href="#cursor" id="ref-for-cursor-18">cursor</a> with <a data-link-type="dfn" href="#cursor-transaction" id="ref-for-cursor-transaction-2">transaction</a> set to <var>transaction</var>, an undefined <a data-link-type="dfn" href="#cursor-position" id="ref-for-cursor-position-5">position</a>, <a data-link-type="dfn" href="#cursor-direction" id="ref-for-cursor-direction-3">direction</a> set to <var>direction</var>, <a data-link-type="dfn" href="#cursor-got-value-flag" id="ref-for-cursor-got-value-flag-2">got value
 flag</a> unset, and undefined <a data-link-type="dfn" href="#cursor-key" id="ref-for-cursor-key-2">key</a> and <a data-link-type="dfn" href="#cursor-value" id="ref-for-cursor-value-3">value</a>. The <a data-link-type="dfn" href="#cursor-source" id="ref-for-cursor-source-11">source</a> of <var>cursor</var> is <var>store</var>. The <a data-link-type="dfn" href="#cursor-range" id="ref-for-cursor-range-5">range</a> of <var>cursor</var> is <var>range</var>. The <a data-link-type="dfn" href="#cursor-key-only-flag" id="ref-for-cursor-key-only-flag-1">key only flag</a> of <var>cursor</var> is
@@ -3664,7 +3662,7 @@ must return this <a data-link-type="dfn" href="#index-handle" id="ref-for-index-
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-idbindex-keypath" id="ref-for-dom-idbindex-keypath-1">keyPath</a></code> attribute’s getter must return this <a data-link-type="dfn" href="#index-handle" id="ref-for-index-handle-15">index
 handle</a>’s <a data-link-type="dfn" href="#index-handle-index" id="ref-for-index-handle-index-3">index</a>’s <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-15">key path</a>.</p>
    <p>The conversion is done following the normal <a data-link-type="biblio" href="#biblio-webidl">[WEBIDL]</a> binding logic
-for <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> and <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> values, as
+for <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> and <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;DOMString></a> values, as
 appropriate.</p>
    <p>The returned value is not the same instance that was used when the <a data-link-type="dfn" href="#index-concept" id="ref-for-index-concept-30">index</a> was created. However, if this attribute returns an object
 (specifically an <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-array-objects">Array</a>), it returns the same object instance
@@ -3685,7 +3683,7 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-23">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-19">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-9">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-9">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-13">steps for asynchronously executing a request</a> and
   return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-38">IDBRequest</a></code> created by these steps. The steps
@@ -3712,7 +3710,7 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-24">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-20">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-10">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-10">convert a value to a key range</a> with <var>query</var> and <var>null disallowed flag</var> set. Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-14">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-39">IDBRequest</a></code> created by these steps. The steps
@@ -3734,8 +3732,8 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-25">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-21">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-11">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-11">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-15">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-40">IDBRequest</a></code> created by these steps. The steps are
@@ -3757,8 +3755,8 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-26">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-22">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-12">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-12">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-16">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-41">IDBRequest</a></code> created by these steps. The steps
@@ -3782,8 +3780,8 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-27">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-23">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-13">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-13">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Run the <a data-link-type="dfn" href="#steps-for-asynchronously-executing-a-request" id="ref-for-steps-for-asynchronously-executing-a-request-17">steps for asynchronously executing a request</a> and
 return the <code class="idl"><a data-link-type="idl" href="#idbrequest" id="ref-for-idbrequest-42">IDBRequest</a></code> created by these steps. The steps are
@@ -3803,8 +3801,8 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-28">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-24">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-14">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-14">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Let <var>cursor</var> be a new <a data-link-type="dfn" href="#cursor" id="ref-for-cursor-20">cursor</a> with <a data-link-type="dfn" href="#cursor-transaction" id="ref-for-cursor-transaction-3">transaction</a> set to <var>transaction</var>, an undefined <a data-link-type="dfn" href="#cursor-position" id="ref-for-cursor-position-6">position</a>, <a data-link-type="dfn" href="#cursor-direction" id="ref-for-cursor-direction-4">direction</a> set to <var>direction</var>, <a data-link-type="dfn" href="#cursor-got-value-flag" id="ref-for-cursor-got-value-flag-3">got value
 flag</a> unset, and undefined <a data-link-type="dfn" href="#cursor-key" id="ref-for-cursor-key-3">key</a> and <a data-link-type="dfn" href="#cursor-value" id="ref-for-cursor-value-4">value</a>. The <a data-link-type="dfn" href="#cursor-source" id="ref-for-cursor-source-12">source</a> of <var>cursor</var> is <var>index</var>. The <a data-link-type="dfn" href="#cursor-range" id="ref-for-cursor-range-7">range</a> of <var>cursor</var> is <var>range</var>.</p>
@@ -3827,8 +3825,8 @@ been deleted, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn
     <li data-md="">
      <p>If <var>transaction</var> is not <a data-link-type="dfn" href="#transaction-active" id="ref-for-transaction-active-29">active</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-transactioninactiveerror" id="ref-for-exceptiondef-exceptions-transactioninactiveerror-25">TransactionInactiveError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-15">convert a value to a key range</a> with <var>query</var>. If
-this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>range</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key-range" id="ref-for-convert-a-value-to-a-key-range-15">convert a value to a key range</a> with <var>query</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>Let <var>cursor</var> be a new <a data-link-type="dfn" href="#cursor" id="ref-for-cursor-22">cursor</a> with <a data-link-type="dfn" href="#cursor-transaction" id="ref-for-cursor-transaction-4">transaction</a> set to <var>transaction</var>, an undefined <a data-link-type="dfn" href="#cursor-position" id="ref-for-cursor-position-7">position</a>, <a data-link-type="dfn" href="#cursor-direction" id="ref-for-cursor-direction-5">direction</a> set to <var>direction</var>, <a data-link-type="dfn" href="#cursor-got-value-flag" id="ref-for-cursor-got-value-flag-4">got value
 flag</a> unset, and undefined <a data-link-type="dfn" href="#cursor-key" id="ref-for-cursor-key-4">key</a> and <a data-link-type="dfn" href="#cursor-value" id="ref-for-cursor-value-5">value</a>. The <a data-link-type="dfn" href="#cursor-source" id="ref-for-cursor-source-13">source</a> of <var>cursor</var> is <var>index</var>. The <a data-link-type="dfn" href="#cursor-range" id="ref-for-cursor-range-9">range</a> of <var>cursor</var> is <var>range</var>. The <a data-link-type="dfn" href="#cursor-key-only-flag" id="ref-for-cursor-key-only-flag-2">key only flag</a> of <var>cursor</var> is
@@ -3875,8 +3873,7 @@ the <a data-link-type="dfn" href="#upper-open-flag" id="ref-for-upper-open-flag-
    <ol>
     <li data-md="">
      <p>Let <var>key</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-7">convert
-a value to a key</a> with <var>value</var>. If this throws an an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+a value to a key</a> with <var>value</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>key</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-15">DataError</a></code> exception.</p>
     <li data-md="">
@@ -3885,8 +3882,8 @@ exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-th
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="IDBKeyRange" data-dfn-type="method" data-export="" data-lt="lowerBound(lower, open)|lowerBound(lower)" id="dom-idbkeyrange-lowerbound">lowerBound(<var>lower</var>, <var>lowerOpen</var>)<span class="dfn-panel" data-deco=""><b><a href="#dom-idbkeyrange-lowerbound">#dom-idbkeyrange-lowerbound</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-idbkeyrange-lowerbound-1">4.7. The IDBKeyRange interface</a></span></span></dfn> method, when invoked, must run these steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>lowerKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-8">convert a value to a key</a> with <var>lower</var>. If this
-throws an an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>lowerKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-8">convert a value to a key</a> with <var>lower</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>lowerKey</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-16">DataError</a></code> exception.</p>
     <li data-md="">
@@ -3895,8 +3892,8 @@ throws an an exception, <a data-link-type="dfn" href="https://heycam.github.io/w
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="IDBKeyRange" data-dfn-type="method" data-export="" data-lt="upperBound(upper, open)|upperBound(upper)" id="dom-idbkeyrange-upperbound">upperBound(<var>upper</var>, <var>upperOpen</var>)<span class="dfn-panel" data-deco=""><b><a href="#dom-idbkeyrange-upperbound">#dom-idbkeyrange-upperbound</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-idbkeyrange-upperbound-1">4.7. The IDBKeyRange interface</a></span></span></dfn> method, when invoked, must run these steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>upperKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-9">convert a value to a key</a> with <var>upper</var>.
-If this throws an an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>upperKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-9">convert a
+value to a key</a> with <var>upper</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>upperKey</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-17">DataError</a></code> exception.</p>
     <li data-md="">
@@ -3905,13 +3902,13 @@ If this throws an an exception, <a data-link-type="dfn" href="https://heycam.git
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="IDBKeyRange" data-dfn-type="method" data-export="" data-lt="bound(lower, upper, lowerOpen, upperOpen)|bound(lower, upper, lowerOpen)|bound(lower, upper)" id="dom-idbkeyrange-bound">bound(<var>lower</var>, <var>upper</var>, <var>lowerOpen</var>, <var>upperOpen</var>)<span class="dfn-panel" data-deco=""><b><a href="#dom-idbkeyrange-bound">#dom-idbkeyrange-bound</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-idbkeyrange-bound-1">4.7. The IDBKeyRange interface</a></span></span></dfn> method, when invoked, must run these steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>lowerKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-10">convert a value to a key</a> with <var>lower</var>. If this
-throws an an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>lowerKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-10">convert a value to a key</a> with <var>lower</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>lowerKey</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-18">DataError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>upperKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-11">convert a value to a key</a> with <var>upper</var>. If this
-throws an an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+     <p>Let <var>upperKey</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-11">convert a value to a key</a> with <var>upper</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>upperKey</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-19">DataError</a></code> exception.</p>
     <li data-md="">
@@ -3923,8 +3920,7 @@ throws an an exception, <a data-link-type="dfn" href="https://heycam.github.io/w
    <ol>
     <li data-md="">
      <p>Let <var>k</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-12">convert a
-value to a key</a> with <var>key</var>. If this throws an an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+value to a key</a> with <var>key</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>k</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-21">DataError</a></code> exception.</p>
     <li data-md="">
@@ -3992,16 +3988,16 @@ the cursor is being iterated or has iterated past its end, <a data-link-type="df
     <li data-md="">
      <p>If this cursor’s <a data-link-type="dfn" href="#cursor-key-only-flag" id="ref-for-cursor-key-only-flag-3">key only flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> an <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-invalidstateerror" id="ref-for-exceptiondef-exceptions-invalidstateerror-37">InvalidStateError</a></code> exception.</p>
     <li data-md="">
-     <p>Let <var>clone</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>value</var>. If this
-throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> the exception.</p>
+     <p>Let <var>clone</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>value</var>.
+Rethrow any exceptions.</p>
     <li data-md="">
      <p>If the <a data-link-type="dfn" href="#cursor-effective-object-store" id="ref-for-cursor-effective-object-store-3">effective object store</a> of this cursor uses <a data-link-type="dfn" href="#object-store-in-line-keys" id="ref-for-object-store-in-line-keys-6">in-line
 keys</a>, run these substeps:</p>
      <ol>
       <li data-md="">
        <p>Let <var>kpk</var> be the result of running the steps to <a data-link-type="dfn" href="#extract-a-key-from-a-value-using-a-key-path" id="ref-for-extract-a-key-from-a-value-using-a-key-path-4">extract a key from a value using a key path</a> with <var>clone</var> and the <a data-link-type="dfn" href="#object-store-key-path" id="ref-for-object-store-key-path-16">key
-path</a> of the <a data-link-type="dfn" href="#cursor-effective-object-store" id="ref-for-cursor-effective-object-store-4">effective object store</a>. If this throws
-an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+path</a> of the <a data-link-type="dfn" href="#cursor-effective-object-store" id="ref-for-cursor-effective-object-store-4">effective object store</a>.
+Rethrow any exceptions.</p>
       <li data-md="">
        <p>If <var>kpk</var> is failure, invalid, or not <a data-link-type="dfn" href="#equal-to" id="ref-for-equal-to-4">equal to</a> the cursor’s <a data-link-type="dfn" href="#cursor-effective-key" id="ref-for-cursor-effective-key-4">effective key</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-22">DataError</a></code> exception.</p>
      </ol>
@@ -4058,8 +4054,8 @@ the cursor is being iterated or has iterated past its end, <a data-link-type="df
      <p>If <var>key</var> is given, run these substeps:</p>
      <ol>
       <li data-md="">
-       <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-13">convert a value to a key</a> with <var>key</var>. If this
-throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+       <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-13">convert a value to a key</a> with <var>key</var>.
+Rethrow any exceptions.</p>
       <li data-md="">
        <p>If <var>r</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-23">DataError</a></code> exception.</p>
       <li data-md="">
@@ -4101,16 +4097,14 @@ this <a data-link-type="dfn" href="#cursor" id="ref-for-cursor-35">cursor</a> an
 the cursor is being iterated or has iterated past its end, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> an <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-invalidstateerror" id="ref-for-exceptiondef-exceptions-invalidstateerror-45">InvalidStateError</a></code> exception.</p>
     <li data-md="">
      <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-14">convert a
-value to a key</a> with <var>key</var>. If this throws an
-exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+value to a key</a> with <var>key</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>r</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-26">DataError</a></code> exception.</p>
     <li data-md="">
      <p>Let <var>key</var> be <var>r</var>.</p>
     <li data-md="">
      <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-15">convert
- a value to a key</a> with <var>primaryKey</var>. If this throws
- an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it.</p>
+ a value to a key</a> with <var>primaryKey</var>. Rethrow any exceptions.</p>
     <li data-md="">
      <p>If <var>r</var> is invalid, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="#exceptiondef-exceptions-dataerror" id="ref-for-exceptiondef-exceptions-dataerror-27">DataError</a></code> exception.</p>
     <li data-md="">
@@ -4617,7 +4611,7 @@ and secondarily on the records values, in ascending order.
     <li> Let <var>record</var> be the first <a data-link-type="dfn" href="#object-store-record" id="ref-for-object-store-record-41">record</a> in <var>store</var>’s <a data-link-type="dfn" href="#object-store-list-of-records" id="ref-for-object-store-list-of-records-2">list of records</a> whose key is <a data-link-type="dfn" href="#in-a-key-range" id="ref-for-in-a-key-range-3">in</a> <var>range</var>,
 if any. 
     <li> If <var>record</var> was not found, return undefined. 
-    <li> Return a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>record</var>’s value. 
+    <li> Return a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>record</var>’s value. 
    </ol>
    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="steps for retrieving multiple values from an object store" data-noexport="" id="steps-for-retrieving-multiple-values-from-an-object-store">steps for retrieving multiple values from an object store<span class="dfn-panel" data-deco=""><b><a href="#steps-for-retrieving-multiple-values-from-an-object-store">#steps-for-retrieving-multiple-values-from-an-object-store</a></b><b>Referenced in:</b><span><a href="#ref-for-steps-for-retrieving-multiple-values-from-an-object-store-1">4.5. The IDBObjectStore interface</a></span></span></dfn> with <var>store</var>, <var>range</var> and optional <var>count</var> are as follows:</p>
    <ol class="algorithm">
@@ -4628,7 +4622,7 @@ if any.
     <li>
      For each <var>record</var> in <var>records</var>, run these substeps: 
      <ol>
-      <li>Let <var>entry</var> be a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>record</var>’s value. 
+      <li>Let <var>entry</var> be a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>record</var>’s value. 
       <li>Let <var>status</var> be CreateDataProperty(<var>array</var>, <var>index</var>, <var>entry</var>). 
       <li>Assert: <var>status</var> is true. 
       <li>Increase <var>index</var> by 1. 
@@ -4664,7 +4658,7 @@ if any.
     <li> Let <var>record</var> be the first <a data-link-type="dfn" href="#object-store-record" id="ref-for-object-store-record-45">record</a> in <var>index</var>’s <a data-link-type="dfn" href="#index-list-of-records" id="ref-for-index-list-of-records-3">list of records</a> whose key is <a data-link-type="dfn" href="#in-a-key-range" id="ref-for-in-a-key-range-7">in</a> <var>range</var>,
 if any. 
     <li> If <var>record</var> was not found, return undefined. 
-    <li> Return a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>record</var>’s <a data-link-type="dfn" href="#index-referenced-value" id="ref-for-index-referenced-value-3">referenced value</a>. 
+    <li> Return a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>record</var>’s <a data-link-type="dfn" href="#index-referenced-value" id="ref-for-index-referenced-value-3">referenced value</a>. 
    </ol>
    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="steps for retrieving multiple referenced values from an index" data-noexport="" id="steps-for-retrieving-multiple-referenced-values-from-an-index">steps for retrieving multiple referenced values from an index<span class="dfn-panel" data-deco=""><b><a href="#steps-for-retrieving-multiple-referenced-values-from-an-index">#steps-for-retrieving-multiple-referenced-values-from-an-index</a></b><b>Referenced in:</b><span><a href="#ref-for-steps-for-retrieving-multiple-referenced-values-from-an-index-1">4.6. The IDBIndex interface</a></span></span></dfn> with <var>index</var>, <var>range</var> and optional <var>count</var> are as follows:</p>
    <ol class="algorithm">
@@ -4675,7 +4669,7 @@ if any.
     <li>
      For each <var>record</var> in <var>records</var>, run these substeps: 
      <ol>
-      <li>Let <var>entry</var> be a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>record</var>’s <a data-link-type="dfn" href="#index-referenced-value" id="ref-for-index-referenced-value-4">referenced value</a>. 
+      <li>Let <var>entry</var> be a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>record</var>’s <a data-link-type="dfn" href="#index-referenced-value" id="ref-for-index-referenced-value-4">referenced value</a>. 
       <li>Let <var>status</var> be CreateDataProperty(<var>array</var>, <var>index</var>, <var>entry</var>). 
       <li>Assert: <var>status</var> is true. 
       <li>Increase <var>index</var> by 1. 
@@ -4819,7 +4813,7 @@ let <var>object store position</var> be <var>found record</var>’s value.
 set <var>cursor</var>’s <a data-link-type="dfn" href="#cursor-object-store-position" id="ref-for-cursor-object-store-position-7">object store position</a> to <var>object store position</var>. 
     <li>Set <var>cursor</var>’s <a data-link-type="dfn" href="#cursor-key" id="ref-for-cursor-key-8">key</a> to <var>found record</var>’s key. 
     <li>If <var>cursor</var>’s <a data-link-type="dfn" href="#cursor-key-only-flag" id="ref-for-cursor-key-only-flag-7">key only flag</a> is unset,
-set <var>cursor</var>’s <a data-link-type="dfn" href="#cursor-value" id="ref-for-cursor-value-9">value</a> to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a> of <var>found record</var>’s <a data-link-type="dfn" href="#index-referenced-value" id="ref-for-index-referenced-value-5">referenced value</a>. 
+set <var>cursor</var>’s <a data-link-type="dfn" href="#cursor-value" id="ref-for-cursor-value-9">value</a> to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a> of <var>found record</var>’s <a data-link-type="dfn" href="#index-referenced-value" id="ref-for-index-referenced-value-5">referenced value</a>. 
     <li>Set <var>cursor</var>’s <a data-link-type="dfn" href="#cursor-got-value-flag" id="ref-for-cursor-got-value-flag-16">got value flag</a>. 
     <li>Return <var>cursor</var>. 
    </ol>
@@ -4836,12 +4830,12 @@ The result of these steps is a <a data-link-type="dfn" href="#key" id="ref-for-k
 or the steps may throw an exception.</p>
    <ol class="algorithm">
     <li> Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#evaluate-a-key-path-on-a-value" id="ref-for-evaluate-a-key-path-on-a-value-1">evaluate a key path on a value</a> with <var>value</var> and <var>keyPath</var>.
-If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it. 
+Rethrow any exceptions. 
     <li>If <var>r</var> is failure, return failure. 
     <li>Let <var>key</var> be
 the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-key" id="ref-for-convert-a-value-to-a-key-16">convert a value to a key</a> with <var>r</var> if the <var>multiEntry flag</var> is unset, and
 the result of running the steps to <a data-link-type="dfn" href="#convert-a-value-to-a-multientry-key" id="ref-for-convert-a-value-to-a-multientry-key-1">convert a value to a multiEntry key</a> with <var>r</var> otherwise.
-If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it. 
+Rethrow any exceptions. 
     <li>If <var>key</var> is invalid, return invalid. 
     <li>Return <var>key</var>. 
    </ol>
@@ -5000,7 +4994,7 @@ or an [<span>[</span>ViewedArrayBuffer]] internal slot
       <dd>
        <ol>
         <li> Let <var>octets</var> be the result of running the steps for <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">getting a copy of the bytes held by a buffer source</a> with <var>value</var>.
-If this throws an exception, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">rethrow</a> it. 
+Rethrow any exceptions. 
         <li>Return a new <a data-link-type="dfn" href="#key" id="ref-for-key-71">key</a> with <a data-link-type="dfn" href="#key-type" id="ref-for-key-type-13">type</a> <i>binary</i> and <a data-link-type="dfn" href="#key-value" id="ref-for-key-value-11">value</a> <var>octets</var>. 
        </ol>
       <dt>If IsArray(<var>input</var>)
@@ -5218,7 +5212,7 @@ and define abstract types such as <a data-link-type="dfn" href="#key" id="ref-fo
      <p>Added <code class="idl"><a data-link-type="idl" href="#dom-idbobjectstore-getall" id="ref-for-dom-idbobjectstore-getall-3">getAll()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-idbobjectstore-getallkeys" id="ref-for-dom-idbobjectstore-getallkeys-3">getAllKeys()</a></code> on <code class="idl"><a data-link-type="idl" href="#idbobjectstore" id="ref-for-idbobjectstore-21">IDBObjectStore</a></code>, and <code class="idl"><a data-link-type="idl" href="#dom-idbindex-getall" id="ref-for-dom-idbindex-getall-3">getAll()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-idbindex-getallkeys" id="ref-for-dom-idbindex-getallkeys-3">getAllKeys()</a></code> on <code class="idl"><a data-link-type="idl" href="#idbindex" id="ref-for-idbindex-15">IDBIndex</a></code>.
 (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=16595">bug #16595</a>)</p>
     <li data-md="">
-     <p>Replaced <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#domerror">DOMError</a></code> with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#idl-DOMException">DOMException</a>.
+     <p>Replaced <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#domerror">DOMError</a></code> with <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#dfn-DOMException">DOMException</a></code>.
 (<a href="https://github.com/w3c/IndexedDB/issues/16">bug #16</a>)</p>
     <li data-md="">
      <p>Added <code class="idl"><a data-link-type="idl" href="#dom-idbtransaction-objectstorenames" id="ref-for-dom-idbtransaction-objectstorenames-3">objectStoreNames</a></code> on <code class="idl"><a data-link-type="idl" href="#idbtransaction" id="ref-for-idbtransaction-10">IDBTransaction</a></code>.
@@ -5847,7 +5841,7 @@ handle</a><span>, in §2.6.1</span>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#origin">origin</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">queue a task</a>
      <li><a href="https://html.spec.whatwg.org/multipage/infrastructure.html#strictly-split-a-string">strictly splitting the string</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/infrastructure.html#structuredclone">structured clone</a>
      <li><a href="https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data">structured clone algorithm</a>
      <li><a href="https://html.spec.whatwg.org/multipage/workers.html#worker">worker</a>
     </ul>
@@ -5855,13 +5849,12 @@ handle</a><span>, in §2.6.1</span>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
     <ul>
      <li><a href="https://heycam.github.io/webidl/#dfn-DOMException">DOMException</a>
-     <li><a href="https://heycam.github.io/webidl/#idl-DOMException">domexception</a>
-     <li><a href="https://heycam.github.io/webidl/#idl-DOMString">domstring</a>
+     <li><a href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>
      <li><a href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">getting a copy of the bytes held by a buffer source</a>
      <li><a href="https://heycam.github.io/webidl/#idl-octet">octet</a>
      <li><a href="https://heycam.github.io/webidl/#idl-sequence">sequence&lt;domstring></a>
      <li><a href="https://heycam.github.io/webidl/#dfn-throw">throw</a>
-     <li><a href="https://heycam.github.io/webidl/#idl-unrestricted-double">unrestricted double</a>
+     <li><a href="https://heycam.github.io/webidl/#dom-unrestricteddouble">unrestricted double</a>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
