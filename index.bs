@@ -2877,7 +2877,7 @@ At the point where <code>createIndex</code> called, neither of the
 <a>requests</a> have executed. When the second request executes, a
 duplicate name is created. Since the index creation is considered an
 asynchronous <a>request</a>, the index's <a data-lt="unique
-flag">uniqueness</a> constraint does not cause the second
+flag">uniqueness constraint</a> does not cause the second
 <a>request</a> to fail. Instead, the <a for=/>transaction</a> will be <a>aborted</a> when the index is created and
 the constraint fails.
 
