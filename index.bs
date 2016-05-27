@@ -20,6 +20,9 @@ Test Suite: https://github.com/w3c/web-platform-tests/tree/master/IndexedDB
 
 <pre class=anchors>
 spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
+    urlPrefix: dom.html
+        type: interface
+            text: Document; url: #document
     urlPrefix: browsers.html
         type: dfn
             text: origin; url: #origin
@@ -58,22 +61,21 @@ spec: webidl; urlPrefix: https://heycam.github.io/webidl/
         text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
 </pre>
 <style>
-    table.props {
-      border-collapse: collapse;
-      border-style: hidden hidden none hidden;
-      border-bottom:
-    }
-    table.props thead, table.props tbody {
-      border-bottom: solid;
-    }
-    table.props td, table.props th {
-      border-bottom: solid thin;
-      border-left: solid;
-      border-right: solid;
-      padding: 0.5em;
-      text-align: left;
-      vertical-align: top;
-    }
+table.props {
+  border-collapse: collapse;
+  border-style: hidden hidden none hidden;
+}
+table.props thead, table.props tbody {
+  border-bottom: solid;
+}
+table.props td, table.props th {
+  border-bottom: solid thin;
+  border-left: solid;
+  border-right: solid;
+  padding: 0.5em;
+  text-align: left;
+  vertical-align: top;
+}
 </style>
 
 This is the Second Edition of Indexed Database API. The
@@ -274,7 +276,7 @@ set of databases.
 
 <aside class=note>
   The database origin is not affected by changes to
-  <code>document.domain</code>.
+  the {{Document}}'s {{Document/domain}}.
 </aside>
 
 Each <a>origin</a> has an associated set of <a>databases</a>. A
@@ -901,7 +903,7 @@ The <dfn>lifetime</dfn> of a
     <a>active</a>. If an attempt is made to place a request against a
     transaction when that transaction is not <a>active</a>, the
     implementation MUST reject the attempt by throwing a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 3. Once an implementation is able to enforce the constraints defined
     for the transaction <a>scope</a> and <a>mode</a>, defined below,
@@ -935,8 +937,8 @@ The <dfn>lifetime</dfn> of a
     aborting a transaction</a> using the transaction as
     <var>transaction</var> and the appropriate error type as
     <var>error</var>. For example if quota was exceeded then
-    <a>QuotaExceededError</a> should be used as <var>error</var>, and
-    if an IO error happened, <a>UnknownError</a> should be used as
+    {{QuotaExceededError}} should be used as <var>error</var>, and
+    if an IO error happened, {{UnknownError}} should be used as
     <var>error</var>.
 
 7. When a transaction can no longer become <a>active</a>, the
@@ -1208,14 +1210,14 @@ follows:
 1. If <var>value</var> is a <a>key range</a>, return <var>value</var>.
 
 2. If <var>value</var> is undefined or is null, then <a>throw</a> a
-    <a>DataError</a> exception if <var>null disallowed flag</var> is
+    {{DataError}} exception if <var>null disallowed flag</var> is
     set, or return an <a>unbounded key range</a> otherwise.
 
 3. Let <var>key</var> be the result of running the steps to <a>convert
     a value to a key</a> with <var>value</var>. If this throws an
     exception, <a>rethrow</a> it.
 
-4. If <var>key</var> is invalid, <a>throw</a> a <a>DataError</a>
+4. If <var>key</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 5. Return a <a>key range</a> <a>containing only</a> <var>key</var>.
@@ -1408,7 +1410,7 @@ when a <a>key generator</a> is used.
 * When the <a>current number</a> of a key generator reaches above the
     value 2<sup>53</sup> (9007199254740992) any attempts to use the
     key generator to generate a new <a for=/>key</a> will result in a
-    <a>ConstraintError</a>. It is still possible to insert
+    {{ConstraintError}}. It is still possible to insert
     <a>records</a> into the object store by specifying an explicit
     key, however the only way to use a key generator again for the
     object store is to delete the object store and create a new one.
@@ -1628,69 +1630,69 @@ Each of the exceptions defined in this document is a
 <a>DOMException</a> with a specific type. The exception types and
 properties such as code value are defined in [[!WEBIDL]].
 
-<table class=props>
+<table class=props dfn-for=exceptions>
 <tr>
 <th>Type</th>
 <th>Description</th>
 </tr>
 <tr>
-<td><code><dfn>AbortError</dfn></code></td>
+<td><dfn enum-value><code>AbortError</code></dfn></td>
 <td>A request was aborted.</td>
 </tr>
 <tr>
-<td><code><dfn>ConstraintError</dfn></code></td>
+<td><dfn enum-value><code>ConstraintError</code></dfn></td>
 <td>A mutation operation in the transaction failed because a constraint was not satisfied.</td>
 </tr>
 <tr>
-<td><code><dfn>DataCloneError</dfn></code></td>
+<td><dfn enum-value><code>DataCloneError</code></dfn></td>
 <td>The data being stored could not be cloned by the internal structured cloning algorithm.</td>
 </tr>
 <tr>
-<td><code><dfn>DataError</dfn></code></td>
+<td><dfn enum-value><code>DataError</code></dfn></td>
 <td>Data provided to an operation does not meet requirements.</td>
 </tr>
 <tr>
-<td><code><dfn>InvalidAccessError</dfn></code></td>
+<td><dfn enum-value><code>InvalidAccessError</code></dfn></td>
 <td>An invalid operation was performed on an object.</td>
 </tr>
 <tr>
-<td><code><dfn>InvalidStateError</dfn></code></td>
+<td><dfn enum-value><code>InvalidStateError</code></dfn></td>
 <td>
 An operation was called on an object on which it is not allowed or at a time when it is not allowed,
 or if a request is made on a source object that has been deleted or removed.
 </td>
 </tr>
 <tr>
-<td><code><dfn>NotFoundError</dfn></code></td>
+<td><dfn enum-value><code>NotFoundError</code></dfn></td>
 <td>
 The operation failed because the requested database object could not be found.
 </td>
 </tr>
 <tr>
-<td><code><dfn>QuotaExceededError</dfn></code></td>
+<td><dfn enum-value><code>QuotaExceededError</code></dfn></td>
 <td>
 The operation failed because there was not enough remaining storage space,
 or the storage quota was reached and the user declined to give more space to the database.
 </td>
 </tr>
 <tr>
-<td><code><dfn>SyntaxError</dfn></code></td>
+<td><dfn enum-value><code>SyntaxError</code></dfn></td>
 <td>The keyPath argument contains an invalid key path.</td>
 </tr>
 <tr>
-<td><code><dfn>ReadOnlyError</dfn></code></td>
+<td><dfn enum-value><code>ReadOnlyError</code></dfn></td>
 <td>The mutating operation was attempted in a read-only transaction.</td>
 </tr>
 <tr>
-<td><code><dfn>TransactionInactiveError</dfn></code></td>
+<td><dfn enum-value><code>TransactionInactiveError</code></dfn></td>
 <td>A request was placed against a transaction which is currently not active, or which is finished.</td>
 </tr>
 <tr>
-<td><code><dfn>UnknownError</dfn></code></td>
+<td><dfn enum-value><code>UnknownError</code></dfn></td>
 <td>The operation failed for reasons unrelated to the database itself and not covered by any other errors.</td>
 </tr>
 <tr>
-<td><code><dfn>VersionError</dfn></code></td>
+<td><dfn enum-value><code>VersionError</code></dfn></td>
 <td>An attempt was made to open a database using a lower version than the existing version.</td>
 </tr>
 </table>
@@ -1765,13 +1767,13 @@ enum IDBRequestReadyState {
 </pre>
 
 The {{IDBRequest/result}}
-attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
+attribute's getter must <a>throw</a> an {{InvalidStateError}}
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
 getter must return the <a for=request>result</a> of the
 request, or undefined if the request.resulted in an error.
 
 The {{IDBRequest/error}}
-attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
+attribute's getter must <a>throw</a> an {{InvalidStateError}}
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
 getter must return the <a for=request>error</a> of the
 request, or null if no error occurred.
@@ -1990,13 +1992,13 @@ The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> me
     value to a key</a> with <var>first</var>. If this throws an
     exception, <a>rethrow</a> it.
 
-2. If <var>a</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
+2. If <var>a</var> is invalid, <a>throw</a> a {{DataError}} exception.
 
 3. Let <var>b</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>second</var>. If this throws an
     exception, <a>rethrow</a> it.
 
-4. If <var>b</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
+4. If <var>b</var> is invalid, <a>throw</a> a {{DataError}} exception.
 
 5. Return the results of running the steps to <a>compare two keys</a>
     with <var>a</var> and <var>b</var>.
@@ -2088,28 +2090,28 @@ The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options<
 
 2. Let <var>transaction</var> be the currently running <a>upgrade
     transaction</a> associated with <var>database</var>, or
-    <a>throw</a> an <a>InvalidStateError</a> exception if none.
+    <a>throw</a> an {{InvalidStateError}} exception if none.
 
 3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 4. If an <a for=/>object store</a> <a for=object-store>named</a>
     <var>name</var> already exists in <var>database</var> <a>throw</a>
-    a <a>ConstraintError</a> exception.
+    a {{ConstraintError}} exception.
 
 5. Let <var>keyPath</var> be <var>options</var>'s
     {{IDBObjectStoreParameters/keyPath}} member if it is not undefined
     or null, or null otherwise.
 
 6. If <var>keyPath</var> is not null and is not a <a>valid key
-    path</a>, <a>throw</a> a <a>SyntaxError</a> exception.
+    path</a>, <a>throw</a> a {{SyntaxError}} exception.
 
 7. Let <var>autoIncrement</var> be set if <var>options</var>'s
     {{IDBObjectStoreParameters/autoIncrement}} member is true, or unset otherwise.
 
 8. If <var>autoIncrement</var> is set and <var>keyPath</var> is an
     empty string or any sequence (empty or otherwise), <a>throw</a> an
-    <a>InvalidAccessError</a> exception.
+    {{InvalidAccessError}} exception.
 
 9. Let <var>store</var> be a new <a for=/>object store</a> in
     <var>database</var>. Set the created <a for=/>object store</a>'s <a
@@ -2143,7 +2145,7 @@ quota reasons. Such implementations MUST still create and return an
 that creating the <a for=/>object store</a> has failed, it MUST abort the
 transaction using the <a>steps for aborting a transaction</a> using
 the appropriate error. For example if creating the <a for=/>object store</a>
-failed due to quota reasons, <a>QuotaExceededError</a> MUST be used as
+failed due to quota reasons, {{QuotaExceededError}} MUST be used as
 error.
 
 The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
@@ -2153,14 +2155,14 @@ The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method,
 
 2. Let <var>transaction</var> be the currently running <a>upgrade
     transaction</a> associated with <var>database</var>, or
-    <a>throw</a> an <a>InvalidStateError</a> exception if none.
+    <a>throw</a> an {{InvalidStateError}} exception if none.
 
 3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 4. Let <var>store</var> be the <a for=/>object store</a> <a
     for=object-store>named</a> <var>name</var> in <var>database</var>,
-    or <a>throw</a> a <a>NotFoundError</a> exception if none.
+    or <a>throw</a> a {{NotFoundError}} exception if none.
 
 5. Remove <var>store</var> from this <a for=/>connection</a>'s <a>object
     store set</a>.
@@ -2182,19 +2184,19 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
     <a>throw</a> a <a>TypeError</a>.
 
 2. If this method is called on {{IDBDatabase}} object for which an <a>upgrade transaction</a> is still running,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 3. If this method is called on an {{IDBDatabase}} instance where the <a>close pending flag</a> is set,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 4. Let <var>scope</var> be the set of unique strings in <var>storeNames</var> if it is a sequence,
     or a set containing one string equal to <var>storeNames</var> otherwise.
 
 5. If any string in <var>scope</var> is not the name of an <a for=/>object store</a> in the <a>connected</a> <a>database</a>,
-    <a>throw</a> a <a>NotFoundError</a> exception.
+    <a>throw</a> a {{NotFoundError}} exception.
 
 6. If <var>scope</var> is empty,
-    <a>throw</a> an <a>InvalidAccessError</a> exception.
+    <a>throw</a> an {{InvalidAccessError}} exception.
 
 7. Let <var>transaction</var> be a newly <a>created</a> <a for=/>transaction</a>
     with <var>connection</var>, <var>mode</var> and the set of <a for=/>object stores</a> named in <var>scope</var>.
@@ -2294,19 +2296,19 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 3. Let <var>store</var> be this <a for=/>object store handle</a>'s <a for=object-store-handle>object store</a>.
 
 4. If <var>store</var> has been deleted,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 5. If <var>transaction</var> is not an <a>upgrade transaction</a>,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 6. If <var>transaction</var> is not <a>active</a>,
-    <a>throw</a> a <a>TransactionInactiveError</a> exception.
+    <a>throw</a> a {{TransactionInactiveError}} exception.
 
 7. If <var>store</var>'s <a for=object-store>name</a> is equal to <var>name</var>, terminate these steps.
 
 8. If an <a for=/>object store</a> <a for=object-store>named</a> <var>name</var> already exists in
     <var>store</var>'s <a>database</a>,
-    <a>throw</a> a <a>ConstraintError</a> exception.
+    <a>throw</a> a {{ConstraintError}} exception.
 
 9. Set <var>store</var>'s <a for=object-store>name</a> to <var>name</var>.
 
@@ -2361,27 +2363,27 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
 2. Let <var>store</var> be this <a for=/>object store handle</a>'s <a for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>,
-    <a>throw</a> a <a>TransactionInactiveError</a> exception.
+    <a>throw</a> a {{TransactionInactiveError}} exception.
 
 5. If <var>transaction</var> is a <a>read-only transaction</a>,
-    <a>throw</a> a <a>ReadOnlyError</a> exception.
+    <a>throw</a> a {{ReadOnlyError}} exception.
 
 6. If <var>store</var> uses <a>in-line keys</a> and <var>key</var> was given,
-    <a>throw</a> a <a>DataError</a> exception.
+    <a>throw</a> a {{DataError}} exception.
 
 7. If <var>store</var> uses <a>out-of-line keys</a> and has no <a>key generator</a>
     and <var>key</var> was not given,
-    <a>throw</a> a <a>DataError</a> exception.
+    <a>throw</a> a {{DataError}} exception.
 
 8. If <var>key</var> was given, run these substeps:
 
     1. Let <var>r</var> be the result of running the steps to <a>convert a value to a key</a> with <var>key</var>.
         If this throws an exception, <a>rethrow</a> it.
 
-    2. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a> exception.
+    2. If <var>r</var> is invalid, <a>throw</a> a {{DataError}} exception.
 
     3. Let <var>key</var> be <var>r</var>.
 
@@ -2396,14 +2398,14 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
         for=object-store>key path</a>. If this throws an
         exception, <a>rethrow</a> it.
 
-    2. If <var>kpk</var> is invalid, <a>throw</a> a <a>DataError</a>
+    2. If <var>kpk</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
 
     3. If <var>kpk</var> is not failure, let <var>key</var> be
         <var>kpk</var>.
 
     4. Otherwise, if <var>store</var> does not have a <a>key
-        generator</a>, <a>throw</a> a <a>DataError</a> exception.
+        generator</a>, <a>throw</a> a {{DataError}} exception.
 
 11. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2423,20 +2425,20 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. If <var>transaction</var> is a <a>read-only transaction</a>,
-    <a>throw</a> a <a>ReadOnlyError</a> exception.
+    <a>throw</a> a {{ReadOnlyError}} exception.
 
 6. If <var>store</var> uses <a>in-line keys</a> and <var>key</var> was given,
-    <a>throw</a> a <a>DataError</a> exception.
+    <a>throw</a> a {{DataError}} exception.
 
 7. If <var>store</var> uses <a>out-of-line keys</a> and has no <a>key generator</a>
     and <var>key</var> was not given,
-    <a>throw</a> a <a>DataError</a> exception.
+    <a>throw</a> a {{DataError}} exception.
 
 8. If <var>key</var> was given, run these substeps:
 
@@ -2444,7 +2446,7 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
         <a>convert a value to a key</a> with <var>key</var>. If this
         throws an exception, <a>rethrow</a> it.
 
-    2. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a>
+    2. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
 
     3. Let <var>key</var> be <var>r</var>.
@@ -2461,14 +2463,14 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
         for=object-store>key path</a>. If this throws an
         exception, <a>rethrow</a> it.
 
-    2. If <var>kpk</var> is invalid, <a>throw</a> a <a>DataError</a>
+    2. If <var>kpk</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
 
     3. If <var>kpk</var> is not failure, let <var>key</var> be
         <var>kpk</var>.
 
     4. Otherwise, if <var>store</var> does not have a <a>key
-        generator</a>, <a>throw</a> a <a>DataError</a> exception.
+        generator</a>, <a>throw</a> a {{DataError}} exception.
 
 11. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2487,13 +2489,13 @@ The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when i
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. If <var>transaction</var> is a <a>read-only transaction</a>,
-    <a>throw</a> a <a>ReadOnlyError</a> exception.
+    <a>throw</a> a {{ReadOnlyError}} exception.
 
 6. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
@@ -2526,13 +2528,13 @@ The <dfn method for=IDBObjectStore>clear()</dfn> method, when invoked, must run 
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. If <var>transaction</var> is a <a>read-only transaction</a>,
-    <a>throw</a> a <a>ReadOnlyError</a> exception.
+    <a>throw</a> a {{ReadOnlyError}} exception.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2550,10 +2552,10 @@ The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invo
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
@@ -2591,10 +2593,10 @@ The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when i
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
@@ -2625,10 +2627,10 @@ The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</d
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -2658,10 +2660,10 @@ The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -2693,10 +2695,10 @@ The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when in
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -2723,10 +2725,10 @@ The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -2762,10 +2764,10 @@ The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>directio
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -2804,20 +2806,20 @@ The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</va
     for=object-store-handle>object store</a>.
 
 3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 6. If an <a for=/>index</a> <a for=index>named</a>
     <var>name</var> already exists in <var>store</var>, <a>throw</a> a
-    <a>ConstraintError</a> exception.
+    {{ConstraintError}} exception.
 
 7. If <var>keyPath</var> is not a <a>valid key path</a>, <a>throw</a>
-    a <a>SyntaxError</a> exception.
+    a {{SyntaxError}} exception.
 
 8. Let <var>unique</var> be set if <var>options</var>'s
     {{IDBIndexParameters/unique}} member is true, and unset otherwise.
@@ -2826,7 +2828,7 @@ The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</va
     {{IDBIndexParameters/multiEntry}} member is true, and unset otherwise.
 
 10. If <var>keyPath</var> is a sequence and <var>multiEntry</var> is
-    set, <a>throw</a> an <a>InvalidAccessError</a> exception.
+    set, <a>throw</a> an {{InvalidAccessError}} exception.
 
 11. Let <var>index</var> be a new <a for=/>index</a> in <var>store</var>.
     Set <var>index</var>'s <a for=index>name</a> to
@@ -2875,9 +2877,9 @@ object, and once the implementation determines that creating the index
 has failed, it MUST abort the transaction using the <a>steps for
 aborting a transaction</a> using an appropriate error as
 <var>error</var>. For example if creating the <a for=/>index</a> failed due
-to quota reasons, <a>QuotaExceededError</a> MUST be used as error and
+to quota reasons, {{QuotaExceededError}} MUST be used as error and
 if the index can't be created due to <a>unique flag</a> constraints,
-<a>ConstraintError</a> MUST be used as error.
+{{ConstraintError}} MUST be used as error.
 
 <aside class=example>
 
@@ -2908,15 +2910,15 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
     for=object-store-handle>object store</a>.
 
 3. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
-4. If <var>transaction</var> has <a>finished</a>, <a>throw</a> an <a>InvalidStateError</a>
+4. If <var>transaction</var> has <a>finished</a>, <a>throw</a> an {{InvalidStateError}}
     exception.
 
 5. Let <var>index</var> be the <a for=/>index</a> <a
     for=index>named</a> <var>name</var> in this <a for=/>object
     store handle</a>'s <a>index set</a> if one exists, or <a>throw</a>
-    a <a>NotFoundError</a> exception otherwise.
+    a {{NotFoundError}} exception otherwise.
 
 6. Return an <a>index handle</a> associated with <var>index</var> and
     this <a for=/>object store handle</a>.
@@ -2943,17 +2945,17 @@ The <dfn method for=IDBObjectStore>deleteIndex(<var>name</var>)</dfn> method, wh
     for=object-store-handle>object store</a>.
 
 3. If <var>transaction</var> is not an <a>upgrade transaction</a>,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>store</var> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 6. Let <var>index</var> be the <a for=/>index</a> <a
     for=index>named</a> <var>name</var> in <var>store</var>
-    if one exists, or <a>throw</a> a <a>NotFoundError</a> exception
+    if one exists, or <a>throw</a> a {{NotFoundError}} exception
     otherwise.
 
 7. Remove <var>index</var> from this <a for=/>object store handle</a>'s
@@ -3024,20 +3026,20 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
     for=index-handle>index</a>.
 
 4. If <var>transaction</var> is not an <a>upgrade transaction</a>,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 5. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 6. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 7. If <var>index</var>'s <a for=index>name</a> is equal to
     <var>name</var>, terminate these steps.
 
 8. If an <a for=/>index</a> <a for=index>named</a>
     <var>name</var> already exists in <var>index</var>'s <a for=/>object
-    store</a>, <a>throw</a> a <a>ConstraintError</a> exception.
+    store</a>, <a>throw</a> a {{ConstraintError}} exception.
 
 9. Set <var>index</var>'s <a for=index>name</a> to
     <var>name</var>.
@@ -3083,10 +3085,10 @@ The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, m
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
@@ -3125,10 +3127,10 @@ The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
@@ -3157,10 +3159,10 @@ The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> me
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -3191,10 +3193,10 @@ The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -3226,10 +3228,10 @@ The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked,
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -3257,10 +3259,10 @@ The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)<
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -3296,10 +3298,10 @@ The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var
     for=index-handle>index</a>.
 
 3. If <var>index</var> or <var>index</var>'s <a for=/>object store</a> has
-    been deleted, <a>throw</a> an <a>InvalidStateError</a> exception.
+    been deleted, <a>throw</a> an {{InvalidStateError}} exception.
 
 4. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
@@ -3372,7 +3374,7 @@ The <dfn method for=IDBKeyRange>only(<var>value</var>)</dfn> method, when invoke
     a value to a key</a> with <var>value</var>. If this throws an an
     exception, <a>rethrow</a> it.
 
-2. If <var>key</var> is invalid, <a>throw</a> a <a>DataError</a>
+2. If <var>key</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Create and return a new <a>key range</a> <a>containing only</a>
@@ -3385,7 +3387,7 @@ The <dfn method for=IDBKeyRange>lowerBound(<var>lower</var>, <var>lowerOpen</var
     <a>convert a value to a key</a> with <var>lower</var>. If this
     throws an an exception, <a>rethrow</a> it.
 
-2. If <var>lowerKey</var> is invalid, <a>throw</a> a <a>DataError</a>
+2. If <var>lowerKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Create and return a new <a>key range</a> with
@@ -3401,7 +3403,7 @@ The <dfn method for=IDBKeyRange>upperBound(<var>upper</var>, <var>upperOpen</var
     <var>upperKey</var> be the result of running the steps to <a>convert a value to a key</a> with <var>upper</var>.
     If this throws an an exception, <a>rethrow</a> it.
 
-2. If <var>upperKey</var> is invalid, <a>throw</a> a <a>DataError</a>
+2. If <var>upperKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Create and return a new <a>key range</a> with
@@ -3416,18 +3418,18 @@ The <dfn method for=IDBKeyRange>bound(<var>lower</var>, <var>upper</var>, <var>l
     <a>convert a value to a key</a> with <var>lower</var>. If this
     throws an an exception, <a>rethrow</a> it.
 
-2. If <var>lowerKey</var> is invalid, <a>throw</a> a <a>DataError</a>
+2. If <var>lowerKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Let <var>upperKey</var> be the result of running the steps to
     <a>convert a value to a key</a> with <var>upper</var>. If this
     throws an an exception, <a>rethrow</a> it.
 
-4. If <var>upperKey</var> is invalid, <a>throw</a> a <a>DataError</a>
+4. If <var>upperKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 5. If <var>lowerKey</var> is <a>greater than</a> <var>upperKey</var>,
-    <a>throw</a> a <a>DataError</a> exception.
+    <a>throw</a> a {{DataError}} exception.
 
 6. Create and return a new <a>key range</a> with
     <a>lower bound</a> set to <var>lowerKey</var>,
@@ -3442,7 +3444,7 @@ The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invo
     value to a key</a> with <var>key</var>. If this throws an an
     exception, <a>rethrow</a> it.
 
-2. If <var>k</var> is invalid, <a>throw</a> a <a>DataError</a>
+2. If <var>k</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Return true if <var>k</var> is <a data-lt="in a key range">in</a>
@@ -3520,21 +3522,21 @@ The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoke
     for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 3. If <var>transaction</var> is a <a>read-only transaction</a>,
-    <a>throw</a> a <a>ReadOnlyError</a> exception.
+    <a>throw</a> a {{ReadOnlyError}} exception.
 
 4. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 5. If this cursor's <a>got value flag</a> is unset, indicating that
     the cursor is being iterated or has iterated past its end,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 6. If this cursor's <a>key only flag</a> is set, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 7. Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
     throws an exception, <a>rethrow</a> the exception.
@@ -3550,7 +3552,7 @@ The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoke
 
     2. If <var>kpk</var> is failure, invalid, or not <a>equal to</a>
         the cursor's <a>effective key</a>, <a>throw</a> a
-        <a>DataError</a> exception.
+        {{DataError}} exception.
 
 9. Run <a>steps for asynchronously executing a request</a> and return
     the {{IDBRequest}} created by these steps. The steps are run
@@ -3577,15 +3579,15 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
     for=cursor>transaction</a>.
 
 3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 4. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 5. If this cursor's <a>got value flag</a> is unset, indicating that
     the cursor is being iterated or has iterated past its end,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 7. Unset the <a>got value flag</a> on the cursor.
 
@@ -3603,7 +3605,7 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
 <aside class=note>
   Calling this method more than once before new cursor data has been
   loaded - for example, calling {{advance()}} twice from the
-  same onsuccess handler - results in an <a>InvalidStateError</a>
+  same onsuccess handler - results in an {{InvalidStateError}}
   exception being thrown on the second call because the cursor's
   <a>got value flag</a> has been unset.
 </aside>
@@ -3614,15 +3616,15 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
     for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 3. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If this cursor's <a>got value flag</a> is unset, indicating that
     the cursor is being iterated or has iterated past its end,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 5. If <var>key</var> is given, run these substeps:
 
@@ -3630,7 +3632,7 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
         <a>convert a value to a key</a> with <var>key</var>. If this
         throws an exception, <a>rethrow</a> it.
 
-    2. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a>
+    2. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
 
     3. Let <var>key</var> be <var>r</var>.
@@ -3638,12 +3640,12 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
     4. If <var>key</var> is <a>less than</a> or <a>equal to</a> this
         cursor's <a>position</a> and this cursor's <a>direction</a> is
         {{"next"}} or {{"nextunique"}}, <a>throw</a>
-        a <a>DataError</a> exception.
+        a {{DataError}} exception.
 
     5. If <var>key</var> is <a>greater than</a> or <a>equal to</a>
         this cursor's <a>position</a> and this cursor's
         <a>direction</a> is {{"prev"}} or
-        {{"prevunique"}}, <a>throw</a> a <a>DataError</a>
+        {{"prevunique"}}, <a>throw</a> a {{DataError}}
         exception.
 
 6. Unset the <a>got value flag</a> on the cursor.
@@ -3663,7 +3665,7 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
 <aside class=note>
   Calling this method more than once before new cursor data has been
   loaded - for example, calling {{continue()}} twice from the
-  same onsuccess handler - results in an <a>InvalidStateError</a>
+  same onsuccess handler - results in an {{InvalidStateError}}
   exception being thrown on the second call because the cursor's
   <a>got value flag</a> has been unset.
 </aside>
@@ -3675,28 +3677,28 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
     for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 3. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 4. If this cursor's <a for=cursor>source</a> is not an
-    <a for=/>index</a> <a>throw</a> an <a>InvalidAccessError</a> exception.
+    <a for=/>index</a> <a>throw</a> an {{InvalidAccessError}} exception.
 
 5. If this cursor's <a>direction</a> is not {{"next"}} or
-    {{"prev"}}, <a>throw</a> an <a>InvalidAccessError</a>
+    {{"prev"}}, <a>throw</a> an {{InvalidAccessError}}
     exception.
 
 6. If this cursor's <a>got value flag</a> is unset, indicating that
     the cursor is being iterated or has iterated past its end,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 7. Let <var>r</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>key</var>. If this throws an
     exception, <a>rethrow</a> it.
 
-8. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a>
+8. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 9. Let <var>key</var> be <var>r</var>.
@@ -3705,7 +3707,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
      a value to a key</a> with <var>primaryKey</var>. If this throws
      an exception, <a>rethrow</a> it.
 
-11. If <var>r</var> is invalid, <a>throw</a> a <a>DataError</a>
+11. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 12. Let <var>primaryKey</var> be <var>r</var>.
@@ -3713,25 +3715,25 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 13. If <var>key</var> is <a>less than</a> or <a>equal to</a> this
     cursor's <a>position</a> and this cursor's <a>direction</a> is
     {{"next"}} or {{"nextunique"}}, <a>throw</a> a
-    <a>DataError</a> exception.
+    {{DataError}} exception.
 
 14. If <var>key</var> is <a>greater than</a> or <a>equal to</a> this
     cursor's <a>position</a> and this cursor's <a>direction</a> is
     {{"prev"}} or {{"prevunique"}}, <a>throw</a> a
-    <a>DataError</a> exception.
+    {{DataError}} exception.
 
 15. If <var>key</var> is <a>equal to</a> this cursor's <a>position</a>
     and <var>primaryKey</var> is <a>less than</a> or <a>equal to</a>
     this cursor's <a>object store position</a> and this cursor's
     <a>direction</a> is {{"next"}} or
-    {{"nextunique"}}, <a>throw</a> a <a>DataError</a>
+    {{"nextunique"}}, <a>throw</a> a {{DataError}}
     exception.
 
 16. If <var>key</var> is <a>equal to</a> this cursor's <a>position</a>
     and <var>primaryKey</var> is <a>greater than</a> or <a>equal
     to</a> this cursor's <a>object store position</a> and this
     cursor's <a>direction</a> is {{"prev"}} or
-    {{"prevunique"}}, <a>throw</a> a <a>DataError</a>
+    {{"prevunique"}}, <a>throw</a> a {{DataError}}
     exception.
 
 17. Unset the <a>got value flag</a> on the cursor.
@@ -3753,7 +3755,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
   Calling this method more than once before new cursor data has been
   loaded - for example, calling {{continuePrimaryKey()}}
   twice from the same onsuccess handler - results in an
-  <a>InvalidStateError</a> exception being thrown on the second call
+  {{InvalidStateError}} exception being thrown on the second call
   because the cursor's <a>got value flag</a> has been unset.
 </aside>
 
@@ -3764,21 +3766,21 @@ The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run thes
     for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
-    <a>TransactionInactiveError</a> exception.
+    {{TransactionInactiveError}} exception.
 
 3. If <var>transaction</var> is a <a>read-only transaction</a>,
-    <a>throw</a> a <a>ReadOnlyError</a> exception.
+    <a>throw</a> a {{ReadOnlyError}} exception.
 
 4. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 5. If this cursor's <a>got value flag</a> is unset, indicating that
     the cursor is being iterated or has iterated past its end,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 6. If this cursor's <a>key only flag</a> is set, <a>throw</a> an
-    <a>InvalidStateError</a> exception.
+    {{InvalidStateError}} exception.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -3877,24 +3879,24 @@ if none.
   for=request>error</a>.
 
   If this <a for=/>transaction</a> was aborted due to an uncaught exception
-  in a event handler, the error will be <a>AbortError</a>.
+  in an event handler, the error will be {{AbortError}}.
 
   If the <a for=/>transaction</a> was aborted due to an error while
   committing, it will reflect the reason for the failure (e.g.
-  <a>QuotaExceededError</a>, <a>ConstraintError</a>, or
-  <a>UnknownError</a>).
+  {{QuotaExceededError}}, {{ConstraintError}}, or
+  {{UnknownError}}).
 </aside>
 
 
 The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-1. If <var>transaction</var> has <a>finished</a>, <a>throw</a> an <a>InvalidStateError</a>
+1. If <var>transaction</var> has <a>finished</a>, <a>throw</a> an {{InvalidStateError}}
     exception.
 
 2. Let <var>store</var> be the <a for=/>object store</a> <a
     for=object-store>named</a> <var>name</var> in this
     <a for=/>transaction</a>'s <a>scope</a>, or <a>throw</a> a
-    <a>NotFoundError</a> exception if none.
+    {{NotFoundError}} exception if none.
 
 3. Return an <a for=/>object store handle</a> associated with
     <var>store</var> and this <a for=/>transaction</a>.
@@ -3915,7 +3917,7 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
 The <dfn method for=IDBTransaction>abort()</dfn> method, when invoked, must run these steps:
 
 1. If this <a for=/>transaction</a> is <a>finished</a>,
-    <a>throw</a> an <a>InvalidStateError</a> exception.
+    <a>throw</a> an {{InvalidStateError}} exception.
 
 2. Unset the <a for=/>transaction</a>'s <a>active flag</a> and run the
     <a>steps for aborting a transaction</a> with null as <var>error</var>.
@@ -3999,7 +4001,7 @@ and with no <a for=/>object stores</a>.
 
 <li>
 If <var>db</var>'s <a for=database>version</a> is greater than <var>version</var>, abort these steps and return
-a new <a>VersionError</a>.
+a new {{VersionError}}.
 
 <li>
 Let <var>connection</var> be a new <a for=/>connection</a> to <var>db</var>.
@@ -4016,12 +4018,12 @@ using <var>connection</var>, <var>version</var> and <var>request</var>.
 
 <li>
 If <var>connection</var> was <a for=connection>closed</a>,
-create and return a new <a>AbortError</a> exception and abort these steps.
+create and return a new {{AbortError}} exception and abort these steps.
 
 <li>
 If the <a>upgrade transaction</a> was aborted,
 run the <a>steps for closing a database connection</a> with <var>connection</var>,
-create and return a new <a>AbortError</a> exception and abort these steps.
+create and return a new {{AbortError}} exception and abort these steps.
 
 </ol>
 
@@ -4047,7 +4049,7 @@ Set the <a>close pending flag</a> of <var>connection</var>.
 <li>
 If the <var>forced flag</var> is set, then for each <var>transaction</var> <a>created</a>
 using <var>connection</var> run the <a>steps for aborting a transaction</a> with
-<var>transaction</var> and newly created <a>AbortError</a> exception.
+<var>transaction</var> and newly created {{AbortError}} exception.
 
 <li>
 Wait for all transactions <a>created</a> using <var>connection</var> to complete.
@@ -4141,7 +4143,7 @@ All the changes made to the <a>database</a> by <var>transaction</var> are writte
 <li>
 If an error occurs while writing the changes to the <a>database</a>, abort the transaction by following
 the <a>steps for aborting a transaction</a> with <var>transaction</var>
-and an appropriate for the error, for example <a>QuotaExceededError</a> or <a>UnknownError</a>.
+and an appropriate for the error, for example {{QuotaExceededError}} or {{UnknownError}}.
 
 <li>
 <a>Queue a task</a> to dispatch an event at <var>transaction</var>.
@@ -4199,7 +4201,7 @@ abort the <a>steps for asynchronously executing a request</a> for <var>request</
 <ol>
 <li>Set the <a>done flag</a> on <var>request</var>.
 <li>Set the <a for=request>result</a> of <var>request</var> to undefined.
-<li>Set the <a for=request>error</a> of <var>request</var> to a newly created <a>AbortError</a> exception.
+<li>Set the <a for=request>error</a> of <var>request</var> to a newly created {{AbortError}} exception.
 <li>
 Dispatch an event at <var>request</var>. The event must use
 the <a>Event</a> interface and have its {{Event/type}} set to "<code>error</code>".
@@ -4238,7 +4240,7 @@ Let <var>transaction</var> be the <a for=/>transaction</a> associated with <var>
 
 <li>
 If <var>transaction</var> is not <a>active</a>
-throw a <a>TransactionInactiveError</a> exception.
+throw a {{TransactionInactiveError}} exception.
 
 <li>
 If <var>request</var> was not given, let <var>request</var> be a new <var>request</var> with
@@ -4347,7 +4349,7 @@ at <var>request</var> with <var>old version</var> and <var>version</var>.
 <li>
 If an exception was propagated out from any event handler while dispatching the event in the previous step, abort
 the transaction by following the <a>steps for aborting a transaction</a> with the <var>error</var> property set to
-a newly created <a>AbortError</a> exception.
+a newly created {{AbortError}} exception.
 
 </ol>
 
@@ -4483,7 +4485,7 @@ Unset the <a>active flag</a> of <var>transaction</var>.
 <li>
 If an exception was propagated out from any event handler while dispatching the event in step 3,
 abort the transaction by following the <a>steps for aborting a transaction</a> with
-<var>transaction</var> and a newly created <a>AbortError</a> exception.
+<var>transaction</var> and a newly created {{AbortError}} exception.
 
 </ol>
 
@@ -4513,12 +4515,15 @@ Unset the <a>active flag</a> of <var>transaction</var>.
 <li>
 If an exception was propagated out from any event handler while dispatching the event in step 3,
 abort the transaction by following the <a>steps for aborting a transaction</a> with
-<var>transaction</var> and a newly created <a>AbortError</a> exception and terminate these steps.
+<var>transaction</var> and a newly created {{AbortError}} exception and terminate these steps.
 This is done even if the event's <a>canceled flag</a> is not set.
+
 <aside class=note>
-This means that if an error event is fired and any of the event handlers throw an exception,
-<var>transaction</var>'s {{IDBTransaction/error}} property is set to an <a>AbortError</a> exception rather than <var>request</var>'s
-<a for=request>error</a>, even if {{Event/preventDefault()}} is never called.
+  This means that if an error event is fired and any of the event
+  handlers throw an exception, <var>transaction</var>'s
+  {{IDBTransaction/error}} property is set to an {{AbortError}}
+  exception rather than <var>request</var>'s <a for=request>error</a>,
+  even if {{Event/preventDefault()}} is never called.
 </aside>
 
 <li>
@@ -4567,7 +4572,7 @@ If <var>key</var> is undefined, run these substeps:
 <ol>
 <li>
 If the <a>key generator</a>'s <a>current number</a> is greater than 2<sup>53</sup> (9007199254740992),
-then this operation failed with a <a>ConstraintError</a>. Abort this algorithm without taking
+then this operation failed with a {{ConstraintError}}. Abort this algorithm without taking
 any further steps.
 
 <li>Set <var>key</var> to the <a>key generator</a>'s <a>current number</a>
@@ -4589,7 +4594,7 @@ and the <a for=key>value</a> is greater than or equal to the <a>key generator</a
 <li>
 If the <var>no-overwrite flag</var> was given to these steps and is set, and
 a <a>record</a> already exists in <var>store</var> with its key <a>equal to</a> <var>key</var>, then
-this operation failed with a <a>ConstraintError</a>. Abort this algorithm without taking
+this operation failed with a {{ConstraintError}}. Abort this algorithm without taking
 any further steps.
 
 <li>
@@ -4619,13 +4624,13 @@ An exception thrown in this step is not rethrown.
 If <var>index</var>'s <a>multiEntry flag</a> is unset, or if <var>index key</var> is not an <a>array key</a>,
 and if <var>index</var> already contains a <a>record</a> with <a for=/>key</a> <a>equal to</a> <var>index key</var>,
 and <var>index</var> has its <a>unique flag</a> set, then this operation failed with a
-<a>ConstraintError</a>. Abort this algorithm without taking any further steps.
+{{ConstraintError}}. Abort this algorithm without taking any further steps.
 
 <li>
 If <var>index</var>'s <a>multiEntry flag</a> is set and <var>index key</var> is an <a>array key</a>,
 and if <var>index</var> already contains a <a>record</a> with <a for=/>key</a> <a>equal to</a> any of the
 <a>subkeys</a> of <var>index key</var>, and <var>index</var> has its <a>unique flag</a> set, then this operation
-failed with a <a>ConstraintError</a>. Abort this algorithm without taking any further steps.
+failed with a {{ConstraintError}}. Abort this algorithm without taking any further steps.
 
 <li>
 If <var>index</var>'s <a>multiEntry flag</a> is unset, or if <var>index key</var> is not an <a>array key</a>
@@ -5173,7 +5178,7 @@ and remove it from the list.
 <li>
 If <var>value</var> is not an <a>Object</a> object or an <a>Array</a>
 object (see <a>structured clone algorithm</a> [[!HTML]]), then
-throw a <a>DataError</a> exception.
+throw a {{DataError}} exception.
 
 <li>Let <var>hop</var> be HasOwnProperty(<var>value</var>, <var>identifier</var>)
 <li>Assert: <var>hop</var> is not an abrupt completion.
