@@ -475,7 +475,7 @@ or
 
 <aside class=advisement>
   &#x2660; Support for <i>binary</i> keys is new in this edition, but
-  not yet implemented by any browsers. &#x2660;
+  not yet shipping in any browsers. &#x2660;
 </aside>
 
 A <a for=/>key</a> also has an associated <dfn>value</dfn>, which will
@@ -2325,9 +2325,9 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 10. Set this <a for=/>object store handle</a>'s <a for=object-store-handle>name</a> to |name|.
 
-<aside class=note>
+<aside class=advisement>
   &#x2660; The {{IDBObjectStore/name}} attribute's setter is new in
-  this edition, but not yet implemented in any browsers. &#x2660;
+  this edition, but not yet shipping in any browsers. &#x2660;
 </aside>
 
 
@@ -3067,9 +3067,9 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
 10. Set this <a>index handle</a>'s <a
     for=index-handle>name</a> to |name|.
 
-<aside class=note>
+<aside class=advisement>
   &#x2660; The {{IDBIndex/name}} attribute's setter is new in this
-  edition, but not yet implemented in any browsers. &#x2660;
+  edition, but not yet shipping in any browsers. &#x2660;
 </aside>
 
 
@@ -3788,7 +3788,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(|key|, |primaryKey|)</dfn> meth
 
 <aside class=advisement>
   &#x2660; The {{IDBCursor/continuePrimaryKey()}} method is new in
-  this edition, but not yet implemented by any browsers. &#x2660;
+  this edition, but not yet shipping in any browsers. &#x2660;
 </aside>
 
 <aside class=note>
@@ -5102,6 +5102,12 @@ The record's key is <a data-lt="in a key range">in</a> |range|.
 </ul>
 If |temp record| is defined, let |found record| be the first record in |records|
 whose key is <a>equal to</a> |temp record|'s key.
+
+<aside class=note>
+  Iterating with {{"prevunique"}} visits the same records that
+  {{"nextunique"}} visits, but in reverse order.
+</aside>
+
 </dd>
 </dl>
 
@@ -5135,7 +5141,7 @@ set |cursor|'s <a for=cursor>value</a> to a <a>structured clone</a> of |found re
 
 
 <!-- ============================================================ -->
-<h3 id=binding>ECMAScript binding</h3>
+<h2 id=binding>ECMAScript binding</h2>
 <!-- ============================================================ -->
 
 This section defines how <a for=/>key</a> values defined in this specification
@@ -5498,6 +5504,8 @@ with argument |input|.
 <!-- ============================================================ -->
 <h2 id=privacy>Privacy</h2>
 <!-- ============================================================ -->
+
+<em>This section is non-normative.</em>
 
 <h3 id=user-tracking>User tracking</h3>
 
