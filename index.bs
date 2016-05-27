@@ -57,6 +57,24 @@ spec: webidl; urlPrefix: https://heycam.github.io/webidl/
         text: rethrow; url: #dfn-throw
         text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
 </pre>
+<style>
+    table.props {
+      border-collapse: collapse;
+      border-style: hidden hidden none hidden;
+      border-bottom:
+    }
+    table.props thead, table.props tbody {
+      border-bottom: solid;
+    }
+    table.props td, table.props th {
+      border-bottom: solid thin;
+      border-left: solid;
+      border-right: solid;
+      padding: 0.5em;
+      text-align: left;
+      vertical-align: top;
+    }
+</style>
 
 This is the Second Edition of Indexed Database API. The
 <a href="https://www.w3.org/TR/IndexedDB/">First Edition</a>
@@ -235,7 +253,7 @@ request.onsuccess = function() {
 </aside>
 
 <!-- ============================================================ -->
-<h2 id=database-api>Indexed Database API</h2>
+<h2 id=constructs>Constructs</h2>
 <!-- ============================================================ -->
 
 A <dfn>sorted list</dfn> is a {{DOMStringList}} containing strings
@@ -246,13 +264,8 @@ Algorithm</cite> of the ECMAScript Language Specification
 
 <aside class=issue>Make this reference more robust.</aside>
 
-
 <!-- ============================================================ -->
-<h3 id=constructs>Constructs</h3>
-<!-- ============================================================ -->
-
-<!-- ============================================================ -->
-<h4 id=database-construct>Database</h4>
+<h3 id=database-construct>Database</h4>
 <!-- ============================================================ -->
 
 A database's <a>origin</a> is the same as the <a>origin</a> of the
@@ -301,7 +314,7 @@ database can be deleted.
 </div>
 
 <!-- ============================================================ -->
-<h5 id=database-connection>Database Connection</h5>
+<h4 id=database-connection>Database Connection</h4>
 <!-- ============================================================ -->
 
 Script does not interact with <a>databases</a> directly. Instead,
@@ -356,7 +369,7 @@ A <a for=/>connection</a>'s <a>get the parent</a> algorithm returns null.
 </div>
 
 <!-- ============================================================ -->
-<h4 id=object-store-construct>Object Store</h4>
+<h3 id=object-store-construct>Object Store</h3>
 <!-- ============================================================ -->
 
 An <dfn>object store</dfn> is the primary
@@ -401,7 +414,7 @@ An object store can derive a <a for=/>key</a> for a <a>record</a> from one of th
 </div>
 
 <!-- ============================================================ -->
-<h5 id=object-store-handle-construct>Object Store Handle</h5>
+<h4 id=object-store-handle-construct>Object Store Handle</h4>
 <!-- ============================================================ -->
 
 Script does not interact with <a for=/>object stores</a> directly. Instead,
@@ -436,7 +449,7 @@ transaction</a> is running.
 </div>
 
 <!-- ============================================================ -->
-<h4 id=value-construct>Values</h4>
+<h3 id=value-construct>Values</h3>
 <!-- ============================================================ -->
 
 Each record is associated with a <dfn>value</dfn>.
@@ -451,7 +464,7 @@ stored in the database.
 
 
 <!-- ============================================================ -->
-<h4 id=key-construct>Keys</h4>
+<h3 id=key-construct>Keys</h3>
 <!-- ============================================================ -->
 
 In order to efficiently retrieve <a>records</a> stored in an indexed
@@ -631,7 +644,7 @@ Members of <i>binary</i> keys are compared as unsigned octet values
 
 
 <!-- ============================================================ -->
-<h4 id=key-path-construct>Key Path</h4>
+<h3 id=key-path-construct>Key Path</h3>
 <!-- ============================================================ -->
 
 A <dfn>key path</dfn> is a <a>DOMString</a> or
@@ -654,17 +667,19 @@ A <dfn>key path</dfn> is a <a>DOMString</a> or
 copied by the <a>structured clone algorithm</a>, as well as the
 following type-specific properties:
 
-<table>
+
+
+<table class=props>
   <tr><th>Type</th><th>Properties</th></tr>
-  <tr><td>{{Blob}}</td><td><code>size</code>, <code>type</code></td></tr>
-  <tr><td>{{File}}</td><td><code>name</code>, <code>lastModified</code>, <code>lastModifiedDate</code></td></tr>
+  <tr><td>{{Blob}}</td><td>{{Blob/size}}, {{Blob/type}}</td></tr>
+  <tr><td>{{File}}</td><td>{{File/name}}, {{File/lastModified}}, <code>lastModifiedDate</code></td></tr>
   <tr><td><a>Array</a></td><td><code>length</code></td></tr>
   <tr><td><a>String</a></td><td><code>length</code></td></tr>
 </table>
 
 
 <!-- ============================================================ -->
-<h4 id=index-construct>Index</h4>
+<h3 id=index-construct>Index</h3>
 <!-- ============================================================ -->
 
 It is sometimes useful to retrieve <a>records</a> in an <a for=/>object
@@ -755,7 +770,7 @@ the index for each of the <a>subkeys</a>.
 </div>
 
 <!-- ============================================================ -->
-<h5 id=index-handle-construct>Index Handle</h5>
+<h4 id=index-handle-construct>Index Handle</h4>
 <!-- ============================================================ -->
 
 Script does not interact with <a for=/>indexes</a> directly. Instead, within
@@ -784,7 +799,7 @@ transaction</a> is running.
 </div>
 
 <!-- ============================================================ -->
-<h4 id=transaction-construct>Transactions</h4>
+<h3 id=transaction-construct>Transactions</h3>
 <!-- ============================================================ -->
 
 A <dfn id=transaction-concept>Transaction</dfn> is used to interact
@@ -814,7 +829,7 @@ and remains fixed for the life of the transaction. A
 <a for=/>transaction</a>'s <a>mode</a> is one of the following:
 
 <dl>
-  <dt>"<code>readonly</code>"</dt>
+  <dt>{{"readonly"}}</dt>
   <dd>
     The transaction is only allowed to read data. No modifications can
     be done by this type of transaction. This has the advantage that
@@ -824,18 +839,18 @@ and remains fixed for the life of the transaction. A
     created any time once a database has been opened.
   </dd>
 
-  <dt>"<code>readwrite</code>"</dt>
+  <dt>{{"readwrite"}}</dt>
   <dd>
     The transaction is allowed to read, modify and delete data from
     existing object stores. However object stores and indexes can't be
-    added or removed. Multiple "<code>readwrite</code>" transactions
+    added or removed. Multiple {{"readwrite"}} transactions
     can't run at the same time if their <a>scopes</a> are overlapping
     since that would mean that they can modify each other's data in
     the middle of the transaction. This type of transaction can be
     created any time once a database has been opened.
   </dd>
 
-  <dt>"<code>versionchange</code>"</dt>
+  <dt>{{"versionchange"}}</dt>
   <dd>
     The transaction is allowed to read, modify and delete data from
     existing object stores, and can also create and remove object
@@ -949,10 +964,10 @@ The <dfn>lifetime</dfn> of a
     transaction.
 
 A <dfn>read-only transaction</dfn> is
-a <a for=/>transaction</a> with <a>mode</a> "<code>readonly</code>".
+a <a for=/>transaction</a> with <a>mode</a> {{"readonly"}}.
 
 A <dfn>read/write transaction</dfn>
-is a <a for=/>transaction</a> with <a>mode</a> "<code>readwrite</code>".
+is a <a for=/>transaction</a> with <a>mode</a> {{"readwrite"}}.
 
 The following constraints define when a <a for=/>transaction</a> can be <a>started</a>:
 
@@ -1025,11 +1040,11 @@ The following constraints define when a <a for=/>transaction</a> can be <a>start
 </div>
 
 <!-- ============================================================ -->
-<h5 id=upgrade-transaction-construct>Upgrade Transactions</h5>
+<h4 id=upgrade-transaction-construct>Upgrade Transactions</h4>
 <!-- ============================================================ -->
 
 An <dfn>upgrade transaction</dfn> is a
-<a for=/>transaction</a> with <a>mode</a> "<code>versionchange</code>".
+<a for=/>transaction</a> with <a>mode</a> {{"versionchange"}}.
 
 An <a>upgrade transaction</a> is automatically created when running
 <a>steps for running an upgrade transaction</a> after a
@@ -1061,7 +1076,7 @@ running.
 
 
 <!-- ============================================================ -->
-<h4 id=request-construct>Requests</h4>
+<h3 id=request-construct>Requests</h3>
 <!-- ============================================================ -->
 
 Each asynchronous operation on a <a>database</a> is done using a <dfn>request</dfn>. Every request represents one
@@ -1124,7 +1139,7 @@ An <a>open request</a>'s <a>get the parent</a> algorithm returns null.
 </div>
 
 <!-- ============================================================ -->
-<h4 id=range-construct>Key Range</h4>
+<h3 id=range-construct>Key Range</h3>
 <!-- ============================================================ -->
 
 Records can be retrieved from <a for=/>object stores</a> and <a for=/>indexes</a>
@@ -1207,7 +1222,7 @@ follows:
 
 
 <!-- ============================================================ -->
-<h4 id=cursor-construct>Cursor</h4>
+<h3 id=cursor-construct>Cursor</h3>
 <!-- ============================================================ -->
 
 A <dfn>cursor</dfn> is used to iterate over a range of records in an
@@ -1235,7 +1250,7 @@ for=cursor>source</a> or at its end. A cursor's
 
 
 <dl>
-  <dt>"<code>next</code>"</dt>
+  <dt>{{"next"}}</dt>
   <dd>
     This direction causes the cursor to be opened at the start of the
     <a for=cursor>source</a>. When iterated, the
@@ -1243,7 +1258,7 @@ for=cursor>source</a> or at its end. A cursor's
     monotonically increasing order of keys.
   </dd>
 
-  <dt>"<code>nextunique</code>"</dt>
+  <dt>{{"nextunique"}}</dt>
   <dd>
     This direction causes the cursor to be opened at the start of the
     <a for=cursor>source</a>. When iterated, the
@@ -1253,10 +1268,10 @@ for=cursor>source</a> or at its end. A cursor's
     is yielded. When the <a for=cursor>source</a> is an
     <a for=/>object store</a> or an <a for=/>index</a> with the <a>unique flag</a>
     set, this direction has exactly the same behavior as
-    "<code>next</code>".
+    {{"next"}}.
   </dd>
 
-  <dt>"<code>prev</code>"</dt>
+  <dt>{{"prev"}}</dt>
   <dd>
     This direction causes the cursor to be opened at the end of the <a
     for=cursor>source</a>. When iterated, the
@@ -1264,7 +1279,7 @@ for=cursor>source</a> or at its end. A cursor's
     monotonically decreasing order of keys.
   </dd>
 
-  <dt>"<code>prevunique</code>"</dt>
+  <dt>{{"prevunique"}}</dt>
   <dd>
     This direction causes the cursor to be opened at the end of the <a
     for=cursor>source</a>. When iterated, the
@@ -1274,7 +1289,7 @@ for=cursor>source</a> or at its end. A cursor's
     is yielded. When the <a for=cursor>source</a> is an
     <a for=/>object store</a> or an <a for=/>index</a> with the <a>unique flag</a>
     set, this direction has exactly the same behavior as
-    "<code>prev</code>".
+    {{"prev"}}.
   </dd>
 </dl>
 
@@ -1323,7 +1338,7 @@ via the API. Unless stated otherwise it is unset.
 </div>
 
 <!-- ============================================================ -->
-<h4 id=key-generator-construct>Key Generators</h4>
+<h3 id=key-generator-construct>Key Generators</h3>
 <!-- ============================================================ -->
 
 When a <a for=/>object store</a> is created it can be specified to use a
@@ -1446,7 +1461,7 @@ store.put({ ix: "b"}); // Will get key 2
 </pre>
 
 Removing items from an objectStore never affects the key generator.
-Including when <code>clear()</code> is called.
+Including when {{clear()}} is called.
 
 <pre class=lang-javascript>
 store = db.createObjectStore("store1", { autoIncrement: true });
@@ -1606,14 +1621,14 @@ store.put([10]); // will throw DataError
 
 
 <!-- ============================================================ -->
-<h3 id=exceptions>Exceptions</h3>
+<h2 id=exceptions>Exceptions</h2>
 <!-- ============================================================ -->
 
 Each of the exceptions defined in this document is a
 <a>DOMException</a> with a specific type. The exception types and
 properties such as code value are defined in [[!WEBIDL]].
 
-<table>
+<table class=props>
 <tr>
 <th>Type</th>
 <th>Description</th>
@@ -1689,7 +1704,7 @@ errors.
 </aside>
 
 <!-- ============================================================ -->
-<h3 id=async-api>API</h3>
+<h2 id=async-api>API</h2>
 <!-- ============================================================ -->
 
 The API methods return without blocking the calling thread. All
@@ -1704,7 +1719,7 @@ id="database-access-task-source">database access task source</dfn>.
 
 
 <!-- ============================================================ -->
-<h4 id=request-api>The <code>IDBRequest</code> interface</h4>
+<h3 id=request-api>The {{IDBRequest}} interface</h3>
 <!-- ============================================================ -->
 
 The {{IDBRequest}} interface provides the means to access results of
@@ -1772,8 +1787,8 @@ the <a>request</a>. This property can be null for certain requests,
 such as for <a>request</a> returned from {{IDBFactory/open()}}.
 
 The {{IDBRequest/readyState}} attribute's getter must return
-"<code>pending</code>" if the <a>done flag</a> is unset, and
-"<code>done</code>" otherwise.
+{{"pending"}} if the <a>done flag</a> is unset, and
+{{"done"}} otherwise.
 
 The {{IDBRequest/onsuccess}} attribute is the event handler for the
 <code>success</code> event.
@@ -1803,7 +1818,7 @@ The {{IDBOpenDBRequest/onupgradeneeded}} attribute is the event handler for the
 
 
 <!-- ============================================================ -->
-<h4 id=events>Event interfaces</h4>
+<h3 id=events>Event interfaces</h3>
 <!-- ============================================================ -->
 
 This specification fires events with the following custom interfaces:
@@ -1847,7 +1862,7 @@ be cancelable.
 
 
 <!-- ============================================================ -->
-<h4 id=factory-interface>The <code>IDBFactory</code> interface</h4>
+<h3 id=factory-interface>The {{IDBFactory}} interface</h3>
 <!-- ============================================================ -->
 
 <a>Database</a> objects are accessed through methods on the
@@ -1905,13 +1920,13 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
         for=request>error</a> of <var>request</var> to
         <var>result</var> and dispatch an event at <var>request</var>.
         The event must use the <a>Event</a> interface and set the
-        <code>type</code> attribute to "<code>error</code>". The event
+        {{Event/type}} attribute to "<code>error</code>". The event
         does bubble but is not cancelable.
 
     3. Otherwise, set the <a for=request>result</a> of
         <var>request</var> to <var>result</var> and dispatch an event
         at <var>request</var>. The event must use the <a>Event</a>
-        interface and set the <code>type</code> attribute to
+        interface and set the {{Event/type}} attribute to
         "<code>success</code>". The event does not bubble and is not
         cancelable. If the steps above resulted in an <a>upgrade
         transaction</a> being run, then firing the
@@ -1951,7 +1966,7 @@ The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, whe
         for=request>error</a> of <var>request</var> to
         <var>result</var> and dispatch an event at <var>request</var>.
         The event must use the <a>Event</a> interface and set the
-        <code>type</code> attribute to "<code>error</code>". The event
+        {{Event/type}} attribute to "<code>error</code>". The event
         does bubble but is not cancelable.
 
     3. Otherwise, set the <a for=request>result</a> of
@@ -1988,7 +2003,7 @@ The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> me
 
 
 <!-- ============================================================ -->
-<h4 id=database-interface>The <code>IDBDatabase</code> interface</h4>
+<h3 id=database-interface>The {{IDBDatabase}} interface</h3>
 <!-- ============================================================ -->
 
 The {{IDBDatabase}}
@@ -2082,14 +2097,15 @@ The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options<
     <var>name</var> already exists in <var>database</var> <a>throw</a>
     a <a>ConstraintError</a> exception.
 
-5. Let <var>keyPath</var> be <var>options</var>'s <code>keyPath</code>
-    member if it is not undefined or null, or null otherwise.
+5. Let <var>keyPath</var> be <var>options</var>'s
+    {{IDBObjectStoreParameters/keyPath}} member if it is not undefined
+    or null, or null otherwise.
 
 6. If <var>keyPath</var> is not null and is not a <a>valid key
     path</a>, <a>throw</a> a <a>SyntaxError</a> exception.
 
 7. Let <var>autoIncrement</var> be set if <var>options</var>'s
-    <code>autoIncrement</code> member is true, or unset otherwise.
+    {{IDBObjectStoreParameters/autoIncrement}} member is true, or unset otherwise.
 
 8. If <var>autoIncrement</var> is set and <var>keyPath</var> is an
     empty string or any sequence (empty or otherwise), <a>throw</a> an
@@ -2118,7 +2134,7 @@ instance on which it was called.
 
 In some implementations it is possible for the implementation to run
 into problems after queuing a task to create the <a for=/>object store</a>
-after the <code>createObjectStore()</code> method has returned. For
+after the {{createObjectStore()}} method has returned. For
 example in implementations where metadata about the newly created
 <a for=/>object store</a> is inserted into the database asynchronously, or
 where the implementation might need to ask the user for permission for
@@ -2162,7 +2178,7 @@ instance on which it was called.
 
 The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</var>)</dfn> method, when invoked, must run these steps:
 
-1. If <var>mode</var> parameter is not "<code>readonly</code>" or "<code>readwrite</code>",
+1. If <var>mode</var> parameter is not {{"readonly"}} or {{"readwrite"}},
     <a>throw</a> a <a>TypeError</a>.
 
 2. If this method is called on {{IDBDatabase}} object for which an <a>upgrade transaction</a> is still running,
@@ -2215,7 +2231,7 @@ The {{IDBDatabase/onversionchange}} attribute is the event handler for the
 
 
 <!-- ============================================================ -->
-<h4 id=object-store-interface>The <code>IDBObjectStore</code> interface</h4>
+<h3 id=object-store-interface>The {{IDBObjectStore}} interface</h3>
 <!-- ============================================================ -->
 
 The {{IDBObjectStore}}
@@ -2804,10 +2820,10 @@ The <dfn method for=IDBObjectStore>createIndex(<var>name</var>, <var>keyPath</va
     a <a>SyntaxError</a> exception.
 
 8. Let <var>unique</var> be set if <var>options</var>'s
-    <code>unique</code> member is true, and unset otherwise.
+    {{IDBIndexParameters/unique}} member is true, and unset otherwise.
 
 9. Let <var>multiEntry</var> be set if <var>options</var>'s
-    <code>multiEntry</code> member is true, and unset otherwise.
+    {{IDBIndexParameters/multiEntry}} member is true, and unset otherwise.
 
 10. If <var>keyPath</var> is a sequence and <var>multiEntry</var> is
     set, <a>throw</a> an <a>InvalidAccessError</a> exception.
@@ -2873,7 +2889,7 @@ var request2 = objectStore.put({name: "betty"}, 2);
 var index = objectStore.createIndex("by_name", "name", {unique: true});
 </pre>
 
-At the point where <code>createIndex</code> called, neither of the
+At the point where {{createIndex()}} called, neither of the
 <a>requests</a> have executed. When the second request executes, a
 duplicate name is created. Since the index creation is considered an
 asynchronous <a>request</a>, the index's <a data-lt="unique
@@ -2957,7 +2973,7 @@ within the <a>upgrade transaction</a>.
 
 
 <!-- ============================================================ -->
-<h4 id=index-interface>The <code>IDBIndex</code> interface</h4>
+<h3 id=index-interface>The {{IDBIndex}} interface</h3>
 <!-- ============================================================ -->
 
 The {{IDBIndex}} interface represents an <a>index handle</a>.
@@ -3312,7 +3328,7 @@ or not given, an <a>unbounded key range</a> is used.
 
 
 <!-- ============================================================ -->
-<h4 id=keyrange>The <code>IDBKeyRange</code> interface</h4>
+<h3 id=keyrange>The {{IDBKeyRange}} interface</h3>
 <!-- ============================================================ -->
 
 The {{IDBKeyRange}} interface represents a
@@ -3436,7 +3452,7 @@ The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invo
 
 
 <!-- ============================================================ -->
-<h4 id=cursor-interface>The <code>IDBCursor</code> interface</h4>
+<h3 id=cursor-interface>The {{IDBCursor}} interface</h3>
 <!-- ============================================================ -->
 
 <a>Cursor</a> objects implement the {{IDBCursor}} interface. There
@@ -3586,7 +3602,7 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
 
 <aside class=note>
   Calling this method more than once before new cursor data has been
-  loaded - for example, calling <code>advance()</code> twice from the
+  loaded - for example, calling {{advance()}} twice from the
   same onsuccess handler - results in an <a>InvalidStateError</a>
   exception being thrown on the second call because the cursor's
   <a>got value flag</a> has been unset.
@@ -3621,13 +3637,13 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
 
     4. If <var>key</var> is <a>less than</a> or <a>equal to</a> this
         cursor's <a>position</a> and this cursor's <a>direction</a> is
-        "<code>next</code>" or "<code>nextunique</code>", <a>throw</a>
+        {{"next"}} or {{"nextunique"}}, <a>throw</a>
         a <a>DataError</a> exception.
 
     5. If <var>key</var> is <a>greater than</a> or <a>equal to</a>
         this cursor's <a>position</a> and this cursor's
-        <a>direction</a> is "<code>prev</code>" or
-        "<code>prevunique</code>", <a>throw</a> a <a>DataError</a>
+        <a>direction</a> is {{"prev"}} or
+        {{"prevunique"}}, <a>throw</a> a <a>DataError</a>
         exception.
 
 6. Unset the <a>got value flag</a> on the cursor.
@@ -3646,7 +3662,7 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
 
 <aside class=note>
   Calling this method more than once before new cursor data has been
-  loaded - for example, calling <code>continue()</code> twice from the
+  loaded - for example, calling {{continue()}} twice from the
   same onsuccess handler - results in an <a>InvalidStateError</a>
   exception being thrown on the second call because the cursor's
   <a>got value flag</a> has been unset.
@@ -3668,8 +3684,8 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 4. If this cursor's <a for=cursor>source</a> is not an
     <a for=/>index</a> <a>throw</a> an <a>InvalidAccessError</a> exception.
 
-5. If this cursor's <a>direction</a> is not "<code>next</code>" or
-    "<code>prev</code>", <a>throw</a> an <a>InvalidAccessError</a>
+5. If this cursor's <a>direction</a> is not {{"next"}} or
+    {{"prev"}}, <a>throw</a> an <a>InvalidAccessError</a>
     exception.
 
 6. If this cursor's <a>got value flag</a> is unset, indicating that
@@ -3696,26 +3712,26 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 
 13. If <var>key</var> is <a>less than</a> or <a>equal to</a> this
     cursor's <a>position</a> and this cursor's <a>direction</a> is
-    "<code>next</code>" or "<code>nextunique</code>", <a>throw</a> a
+    {{"next"}} or {{"nextunique"}}, <a>throw</a> a
     <a>DataError</a> exception.
 
 14. If <var>key</var> is <a>greater than</a> or <a>equal to</a> this
     cursor's <a>position</a> and this cursor's <a>direction</a> is
-    "<code>prev</code>" or "<code>prevunique</code>", <a>throw</a> a
+    {{"prev"}} or {{"prevunique"}}, <a>throw</a> a
     <a>DataError</a> exception.
 
 15. If <var>key</var> is <a>equal to</a> this cursor's <a>position</a>
     and <var>primaryKey</var> is <a>less than</a> or <a>equal to</a>
     this cursor's <a>object store position</a> and this cursor's
-    <a>direction</a> is "<code>next</code>" or
-    "<code>nextunique</code>", <a>throw</a> a <a>DataError</a>
+    <a>direction</a> is {{"next"}} or
+    {{"nextunique"}}, <a>throw</a> a <a>DataError</a>
     exception.
 
 16. If <var>key</var> is <a>equal to</a> this cursor's <a>position</a>
     and <var>primaryKey</var> is <a>greater than</a> or <a>equal
     to</a> this cursor's <a>object store position</a> and this
-    cursor's <a>direction</a> is "<code>prev</code>" or
-    "<code>prevunique</code>", <a>throw</a> a <a>DataError</a>
+    cursor's <a>direction</a> is {{"prev"}} or
+    {{"prevunique"}}, <a>throw</a> a <a>DataError</a>
     exception.
 
 17. Unset the <a>got value flag</a> on the cursor.
@@ -3735,7 +3751,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 
 <aside class=note>
   Calling this method more than once before new cursor data has been
-  loaded - for example, calling <code>continuePrimaryKey()</code>
+  loaded - for example, calling {{continuePrimaryKey()}}
   twice from the same onsuccess handler - results in an
   <a>InvalidStateError</a> exception being thrown on the second call
   because the cursor's <a>got value flag</a> has been unset.
@@ -3794,7 +3810,7 @@ does not modify the contents of the database.
 
 
 <!-- ============================================================ -->
-<h4 id=transaction>The <code>IDBTransaction</code> interface</h4>
+<h3 id=transaction>The {{IDBTransaction}} interface</h3>
 <!-- ============================================================ -->
 
 <a for=/>Transaction</a> objects implement the following interface:
@@ -3925,11 +3941,11 @@ The {{IDBTransaction/onerror}} attribute is the event handler for the
 
 
 <!-- ============================================================ -->
-<h3 id=algorithms>Algorithms</h3>
+<h2 id=algorithms>Algorithms</h2>
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
-<h4 id=opening>Opening a database</h4>
+<h3 id=opening>Opening a database</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for opening a database</dfn> are defined in the following steps. The algorithm in these steps
@@ -4017,7 +4033,7 @@ Return <var>connection</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=closing-connection>Closing a database</h4>
+<h3 id=closing-connection>Closing a database</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for closing a database connection</dfn> are as follows.
@@ -4060,7 +4076,7 @@ before continuing.
 
 
 <!-- ============================================================ -->
-<h4 id=deleting-a-database>Deleting a database</h4>
+<h3 id=deleting-a-database>Deleting a database</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for deleting a database</dfn> are as follows.
@@ -4112,7 +4128,7 @@ Return <var>version</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=commit-transaction>Steps for committing a transaction</h4>
+<h3 id=commit-transaction>Steps for committing a transaction</h3>
 <!-- ============================================================ -->
 
 When taking the <dfn>steps for committing a transaction</dfn> the implementation MUST
@@ -4129,7 +4145,7 @@ and an appropriate for the error, for example <a>QuotaExceededError</a> or <a>Un
 
 <li>
 <a>Queue a task</a> to dispatch an event at <var>transaction</var>.
-The event must use the <a>Event</a> interface and have its <code>type</code> set to "<code>complete</code>".
+The event must use the <a>Event</a> interface and have its {{Event/type}} set to "<code>complete</code>".
 The event does not bubble and is not cancelable.
 
 <aside class=note>
@@ -4142,7 +4158,7 @@ has been successfully written is the "<code>complete</code>" event fired.
 
 
 <!-- ============================================================ -->
-<h4 id=abort-transaction>Steps for aborting a transaction</h4>
+<h3 id=abort-transaction>Steps for aborting a transaction</h3>
 <!-- ============================================================ -->
 
 When taking the <dfn>steps for aborting a transaction</dfn> the implementation MUST
@@ -4186,7 +4202,7 @@ abort the <a>steps for asynchronously executing a request</a> for <var>request</
 <li>Set the <a for=request>error</a> of <var>request</var> to a newly created <a>AbortError</a> exception.
 <li>
 Dispatch an event at <var>request</var>. The event must use
-the <a>Event</a> interface and have its <code>type</code> set to "<code>error</code>".
+the <a>Event</a> interface and have its {{Event/type}} set to "<code>error</code>".
 The event bubbles and is cancelable.
 
 </ol>
@@ -4198,14 +4214,14 @@ that failed.
 
 <li>
 <a>Queue a task</a> to dispatch an event at <var>transaction</var>.
-The event must use the <a>Event</a> interface and have its <code>type</code> set to "<code>abort</code>".
+The event must use the <a>Event</a> interface and have its {{Event/type}} set to "<code>abort</code>".
 The event does bubble but is not cancelable.
 
 </ol>
 
 
 <!-- ============================================================ -->
-<h4 id=async-execute-request>Steps for asynchronously executing a <a>request</a></h4>
+<h3 id=async-execute-request>Steps for asynchronously executing a <a>request</a></h3>
 <!-- ============================================================ -->
 
 When taking the <dfn>steps for asynchronously executing a request</dfn> the implementation MUST run the
@@ -4262,7 +4278,7 @@ Finally <a>fire a success event</a> at <var>request</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=upgrade-transaction-steps>Upgrade transaction steps</h4>
+<h3 id=upgrade-transaction-steps>Upgrade transaction steps</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for running an upgrade transaction</dfn> are
@@ -4352,7 +4368,7 @@ This MUST be done in the same task as the task firing the
 
 
 <!-- ============================================================ -->
-<h4 id=abort-upgrade-transaction>Steps for aborting an upgrade transaction</h4>
+<h3 id=abort-upgrade-transaction>Steps for aborting an upgrade transaction</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for aborting an upgrade transaction</dfn> <var>transaction</var> are as follows.
@@ -4374,7 +4390,7 @@ Set <var>connection</var>'s <a for=connection>version</a> to <var>database</var>
 if <var>database</var> previously existed,
 or 0 (zero) if <var>database</var> was newly created
 <aside class=note>
-This reverts the value of <code>version</code> returned by the {{IDBDatabase}} object.
+This reverts the value of {{IDBDatabase/version}} returned by the {{IDBDatabase}} object.
 </aside>
 
 <li>
@@ -4383,7 +4399,7 @@ set of <a for=/>object stores</a> in <var>database</var>
 if <var>database</var> previously existed,
 or the empty set if <var>database</var> was newly created.
 <aside class=note>
-This reverts the value of <code>objectStoreNames</code> returned by the {{IDBDatabase}} object.
+This reverts the value of {{IDBDatabase/objectStoreNames}} returned by the {{IDBDatabase}} object.
 </aside>
 
 <li>
@@ -4401,13 +4417,13 @@ set of <a for=/>indexes</a> that reference its <a for=object-store-handle>object
 
 </ol>
 <aside class=note>
-This reverts the values of <code>name</code> and <code>indexNames</code> returned by related {{IDBObjectStore}} objects.
+This reverts the values of {{IDBObjectStore/name}} and {{IDBObjectStore/indexNames}} returned by related {{IDBObjectStore}} objects.
 
 
 Although script cannot access an <a for=/>object store</a> by using the
-<code>objectStore()</code> method on an {{IDBTransaction}} instance after
+{{objectStore()}} method on an {{IDBTransaction}} instance after
 the <a for=/>transaction</a> is aborted, it may still have references to
-{{IDBObjectStore}} instances where the <code>name</code> and <code>indexNames</code> properties
+{{IDBObjectStore}} instances where the {{IDBObjectStore/name}} and {{IDBObjectStore/indexNames}} properties
 can be queried.
 
 </aside>
@@ -4423,13 +4439,13 @@ its <a for=index-handle>index</a>'s <a for=index>name</a>.
 
 </ol>
 <aside class=note>
-This reverts the value of <code>name</code> returned by related {{IDBIndex}} objects.
+This reverts the value of {{IDBIndex/name}} returned by related {{IDBIndex}} objects.
 
 
 Although script cannot access an <a for=/>index</a> by using the
-<code>index()</code> method on an {{IDBObjectStore}} instance after
+{{index()} method on an {{IDBObjectStore}} instance after
 the <a for=/>transaction</a> is aborted, it may still have references to
-{{IDBIndex}} instances where the <code>name</code> property
+{{IDBIndex}} instances where the {{IDBIndex/name}} property
 can be queried.
 
 </aside>
@@ -4437,13 +4453,13 @@ can be queried.
 </ol>
 
 <aside class=note>
-The <code>name</code> property of the {{IDBDatabase}} instance is not modified,
+The {{IDBDatabase/name}} property of the {{IDBDatabase}} instance is not modified,
 even if the aborted <a>upgrade transaction</a> was creating a new <a>database</a>.
 </aside>
 
 
 <!-- ============================================================ -->
-<h4 id=fire-success-event>Fire a success event</h4>
+<h3 id=fire-success-event>Fire a success event</h3>
 <!-- ============================================================ -->
 
 To <dfn>fire a success event</dfn> at a <a>request</a>,
@@ -4458,7 +4474,7 @@ Set the <a>active flag</a> of <var>transaction</var>.
 
 <li>
 Dispatch an event at <a>request</a>. The event must use
-the <a>Event</a> interface and have its <code>type</code> set to "<code>success</code>".
+the <a>Event</a> interface and have its {{Event/type}} set to "<code>success</code>".
 The event does not bubble and is not cancelable.
 
 <li>
@@ -4473,7 +4489,7 @@ abort the transaction by following the <a>steps for aborting a transaction</a> w
 
 
 <!-- ============================================================ -->
-<h4 id=fire-error-event>Fire an error event</h4>
+<h3 id=fire-error-event>Fire an error event</h3>
 <!-- ============================================================ -->
 
 To <dfn>fire an error event</dfn> at a <a><var>request</var></a>,
@@ -4488,7 +4504,7 @@ Set the <a>active flag</a> of <var>transaction</var>.
 
 <li>
 Dispatch an event at <var>request</var>. The event must use
-the <a>Event</a> interface and have its <code>type</code> set to "<code>error</code>".
+the <a>Event</a> interface and have its {{Event/type}} set to "<code>error</code>".
 The event bubbles and is cancelable.
 
 <li>
@@ -4501,8 +4517,8 @@ abort the transaction by following the <a>steps for aborting a transaction</a> w
 This is done even if the event's <a>canceled flag</a> is not set.
 <aside class=note>
 This means that if an error event is fired and any of the event handlers throw an exception,
-<var>transaction</var>'s <code>error</code> property is set to an <a>AbortError</a> exception rather than <var>request</var>'s
-<a for=request>error</a>, even if <code>preventDefault()</code> is never called.
+<var>transaction</var>'s {{IDBTransaction/error}} property is set to an <a>AbortError</a> exception rather than <var>request</var>'s
+<a for=request>error</a>, even if {{Event/preventDefault()}} is never called.
 </aside>
 
 <li>
@@ -4515,14 +4531,14 @@ using <var>transaction</var> and <a>request</a>'s <a for=request>error</a>.
 
 
 <!-- ============================================================ -->
-<h3 id=database-operations>Database operations</h3>
+<h2 id=database-operations>Database operations</h2>
 <!-- ============================================================ -->
 
 This section describes various operations done on the data in <a for=/>object stores</a> and <a for=/>indexes</a>
 in a <a>database</a>. These operations are run by the <a>steps for asynchronously executing a request</a>.
 
 <!-- ============================================================ -->
-<h4 id=object-store-storage-operation>Object Store Storage Operation</h4>
+<h3 id=object-store-storage-operation>Object Store Storage Operation</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for storing a record into an object store</dfn> with
@@ -4642,7 +4658,7 @@ Return <var>key</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=object-store-retrieval-operation>Object Store Retrieval Operations</h4>
+<h3 id=object-store-retrieval-operation>Object Store Retrieval Operations</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for retrieving a value from an object store</dfn> with
@@ -4735,7 +4751,7 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=index-retrieval-operation>Index Retrieval Operations</h4>
+<h3 id=index-retrieval-operation>Index Retrieval Operations</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for retrieving a referenced value from an index</dfn> with
@@ -4828,7 +4844,7 @@ whose key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=object-store-deletion-operation>Object Store Deletion Operation</h4>
+<h3 id=object-store-deletion-operation>Object Store Deletion Operation</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for deleting records from an object store</dfn>
@@ -4851,7 +4867,7 @@ Return undefined.
 
 
 <!-- ============================================================ -->
-<h4 id=record-counting-operation>Record Counting Operation</h4>
+<h3 id=record-counting-operation>Record Counting Operation</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps to count the records in a range</dfn> with <var>source</var> and <var>range</var> are as follows:
@@ -4868,7 +4884,7 @@ Return <var>count</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=object-store-clear-operation>Object Store Clear Operation</h4>
+<h3 id=object-store-clear-operation>Object Store Clear Operation</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for clearing an object store</dfn> with <var>store</var> are as follows.
@@ -4888,7 +4904,7 @@ Return undefined.
 
 
 <!-- ============================================================ -->
-<h4 id=cursor-iteration-operation>Cursor Iteration Operation</h4>
+<h3 id=cursor-iteration-operation>Cursor Iteration Operation</h3>
 <!-- ============================================================ -->
 
 The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
@@ -4898,7 +4914,7 @@ The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <li>Let <var>source</var> be <var>cursor</var>'s <a for=cursor>source</a>.
 <li>Let <var>direction</var> be <var>cursor</var>'s <a>direction</a>.
 <li>Assert: if <var>primaryKey</var> is given, <var>source</var> is an <a for=/>index</a> and
-<var>direction</var> is "<code>next</code>" or "<code>prev</code>".
+<var>direction</var> is {{"next"}} or {{"prev"}}.
 
 <li>Let <var>records</var> be the list of <a>records</a> in <var>source</var>.
 <aside class=note>
@@ -4918,7 +4934,7 @@ The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <li>
 Switch on <var>direction</var>:
 <dl class=switch>
-<dt>"<code>next</code>"</dt>
+<dt>{{"next"}}</dt>
 <dd>
 Let <var>found record</var> be the first record in <var>records</var> which
 satisfy all of the following requirements:
@@ -4946,7 +4962,7 @@ The record's key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 </ul>
 </dd>
-<dt>"<code>nextunique</code>"</dt>
+<dt>{{"nextunique"}}</dt>
 <dd>
 Let <var>found record</var> be the first record in <var>records</var> which
 satisfy all of the following requirements:
@@ -4962,7 +4978,7 @@ The record's key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 </ul>
 </dd>
-<dt>"<code>prev</code>"</dt>
+<dt>{{"prev"}}</dt>
 <dd>
 Let <var>found record</var> be the last record in <var>records</var> which
 satisfy all of the following requirements:
@@ -4990,7 +5006,7 @@ The record's key is <a data-lt="in a key range">in</a> <var>range</var>.
 
 </ul>
 </dd>
-<dt>"<code>prevunique</code>"</dt>
+<dt>{{"prevunique"}}</dt>
 <dd>
 Let <var>temp record</var> be the last record in
 <var>records</var> which satisfy all of the following requirements:
@@ -5057,7 +5073,7 @@ types and algorithms from the ECMAScript Language Specification. [[!ECMA-262]]
 </aside>
 
 <!-- ============================================================ -->
-<h4 id=extract-key-from-value>Steps to extract a key from a value using a <a for=/>key path</a></h4>
+<h3 id=extract-key-from-value>Steps to extract a key from a value using a <a for=/>key path</a></h3>
 <!-- ============================================================ -->
 
 
@@ -5135,7 +5151,7 @@ Return <var>value</var>.
 
 
 <!-- ============================================================ -->
-<h4 id=inject-key-into-value>Steps to inject a key into a value using a key path</h4>
+<h3 id=inject-key-into-value>Steps to inject a key into a value using a key path</h3>
 <!-- ============================================================ -->
 
 The steps to <dfn>inject a key into a value using a key path</dfn> are as follows.
@@ -5198,7 +5214,7 @@ is only applied to values that are the output of the
 
 
 <!-- ============================================================ -->
-<h4 id=convert-key-to-value>Steps to convert a key to a value</h4>
+<h3 id=convert-key-to-value>Steps to convert a key to a value</h3>
 <!-- ============================================================ -->
 
 The steps to <dfn>convert a key to a value</dfn> are as follows. These
@@ -5261,7 +5277,7 @@ with the <var>index</var>th entry of <var>value</var> as input.
 
 
 <!-- ============================================================ -->
-<h4 id=convert-value-to-key>Steps to convert a value to a key</h4>
+<h3 id=convert-value-to-key>Steps to convert a value to a key</h3>
 <!-- ============================================================ -->
 
 The steps to <dfn>convert a value to a key</dfn> are as follows. These
