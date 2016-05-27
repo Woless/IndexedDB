@@ -873,15 +873,13 @@ bad user experience.
 The <dfn>lifetime</dfn> of a
 <a for=/>transaction</a> is as follows:
 
-1. A transaction is <dfn data-lt="transaction create">created</dfn> with a <a>scope</a> and a <a>mode</a>.
+1. A transaction is <dfn>created</dfn> with a <a>scope</a> and a <a>mode</a>.
     When a transaction is created its <a>active flag</a> is initially set.
 
 2. The implementation MUST allow <a>requests</a> to be <a
     data-lt="place request">placed</a> against the transaction
     whenever the <a>active flag</a> is set. This is the case even if
-    the transaction has not yet been <a data-lt="transaction
-    start">started</a>. Until the transaction is <a
-    data-lt="transaction start">started</a> the implementation MUST
+    the transaction has not yet been <a>started</a>. Until the transaction is <a>started</a> the implementation MUST
     NOT execute these requests; however, the implementation MUST keep
     track of the <a>requests</a> and their order. Requests may be
     placed against a transaction only while that transaction is
@@ -892,12 +890,10 @@ The <dfn>lifetime</dfn> of a
 
 3. Once an implementation is able to enforce the constraints defined
     for the transaction <a>scope</a> and <a>mode</a>, defined below,
-    the implementation MUST <a>queue a task</a> to <dfn
-    data-lt="transaction start">start</dfn> the transaction
+    the implementation MUST <a>queue a task</a> to <dfn lt="start|started">start</dfn> the transaction
     asynchronously.
 
-4. Once the transaction has been <a data-lt="transaction
-    start">started</a> the implementation can start executing the
+4. Once the transaction has been <a>started</a> the implementation can start executing the
     <a>requests</a> placed against the transaction. Unless otherwise
     defined, requests MUST be executed in the order in which they were
     made against the transaction. Likewise, their results MUST be
@@ -910,8 +906,7 @@ The <dfn>lifetime</dfn> of a
 
 5. A transaction can be <dfn lt="abort|aborting|aborted">aborted</dfn>
     at any time before it is <a>finished</a>, even if the transaction isn't currently
-    <a>active</a> or hasn't yet <a data-lt="transaction
-    start">started</a>. When a transaction is aborted the
+    <a>active</a> or hasn't yet <a>started</a>. When a transaction is aborted the
     implementation MUST undo (roll back) any changes that were made to
     the <a>database</a> during that transaction. This includes both
     changes to the contents of <a for=/>object stores</a> as well as
@@ -959,8 +954,7 @@ a <a for=/>transaction</a> with <a>mode</a> "<code>readonly</code>".
 A <dfn data-lt="read/write transactions">read/write transaction</dfn>
 is a <a for=/>transaction</a> with <a>mode</a> "<code>readwrite</code>".
 
-The following constraints define when a <a for=/>transaction</a> can be <a
-data-lt="transaction start">started</a>:
+The following constraints define when a <a for=/>transaction</a> can be <a>started</a>:
 
 * Any number of <a>read-only transactions</a> are allowed to run
     concurrently, even if the transaction's <a>scope</a> overlap and
@@ -997,14 +991,13 @@ data-lt="transaction start">started</a>:
 
 * If multiple <a>read/write transactions</a> are attempting to access
     the same object store (i.e. if they have overlapping
-    <a>scope</a>), the transaction that was <a data-lt="transaction
-    create"> created</a> first MUST be the transaction which gets
+    <a>scope</a>), the transaction that was <a>created</a> first MUST be the transaction which gets
     access to the object store first. Due to the requirements in the
     previous paragraph, this also means that it is the only
     transaction which has access to the object store until the
     transaction is <a>finished</a>.
 
-* Any transaction <a data-lt="transaction create">created</a> after a
+* Any transaction <a>created</a> after a
     <a>read/write transaction</a> MUST see the changes written by the
     <a>read/write transaction</a>. So if a <a>read/write
     transaction</a>, A, is created, and later another transaction B,
@@ -1027,8 +1020,7 @@ data-lt="transaction start">started</a>:
     transactions to prevent starvation. For example, if multiple
     <a>read-only transactions</a> are started one after another the
     implementation MUST NOT indefinitely prevent a pending
-    <a>read/write transaction</a> from <a data-lt="transaction
-    start">starting</a>.
+    <a>read/write transaction</a> from <a>starting</a>.
 
 </div>
 
@@ -2192,7 +2184,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 6. If <var>scope</var> is empty,
     <a>throw</a> an <a>InvalidAccessError</a> exception.
 
-7. Let <var>transaction</var> be a <a data-lt="transaction create">new transaction</a>
+7. Let <var>transaction</var> be a newly <a>created</a> <a for=/>transaction</a>
     with <var>connection</var>, <var>mode</var> and the set of <a for=/>object stores</a> named in <var>scope</var>.
 
 8. When control is returned to the event loop, the implementation MUST unset the <a>active flag</a>.
@@ -4041,12 +4033,12 @@ optional <var>forced flag</var>.
 Set the <a>close pending flag</a> of <var>connection</var>.
 
 <li>
-If the <var>forced flag</var> is set, then for each <var>transaction</var> <a data-lt="transaction create">created</a>
+If the <var>forced flag</var> is set, then for each <var>transaction</var> <a>created</a>
 using <var>connection</var> run the <a>steps for aborting a transaction</a> with
 <var>transaction</var> and newly created <a>AbortError</a> exception.
 
 <li>
-Wait for all transactions <a data-lt="transaction create">created</a> using <var>connection</var> to complete.
+Wait for all transactions <a>created</a> using <var>connection</var> to complete.
 Once they are complete, <var>connection</var> is <a for=connection>closed</a>.
 
 <li>
@@ -4059,8 +4051,8 @@ type set to "<code>close</code>". The event MUST NOT bubble or be cancelable.
 </ol>
 <aside class=note>
 Once the <a>close pending flag</a> has been set no new transactions can be
-<a data-lt="transaction create">created</a> using <var>connection</var>. All methods that
-<a data-lt="transaction create">create</a> transactions first check the <a>close pending flag</a> first and
+<a>created</a> using <var>connection</var>. All methods that
+<a>create</a> transactions first check the <a>close pending flag</a> first and
 throw an exception if it is set.
 </aside>
 <aside class=note>
