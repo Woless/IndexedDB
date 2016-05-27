@@ -79,6 +79,7 @@ This is the Second Edition of Indexed Database API. The
 <a href="https://www.w3.org/TR/IndexedDB/">First Edition</a>
 became a W3C Recommendation on 8 January 2015.
 
+
 <!-- ============================================================ -->
 <h2 id=introduction>Introduction</h2>
 <!-- ============================================================ -->
