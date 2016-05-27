@@ -355,9 +355,8 @@ a permission change. If this occurs the user agent MUST run the
 
 A <a for=/>connection</a> has an <dfn>object store set</dfn>, which is
 initialized to the set of <a for=/>object stores</a> in the associated
-<a>database</a> when the <a for=/>connection</a> is created.
-
-The contents of the set will remain constant except when an <a>upgrade
+<a>database</a> when the <a for=/>connection</a> is created. The
+contents of the set will remain constant except when an <a>upgrade
 transaction</a> is running.
 
 A <a for=/>connection</a>'s <a>get the parent</a> algorithm returns null.
@@ -419,28 +418,24 @@ within a <a for=/>transaction</a>, script has indirect access via an
 
 <div dfn-for=object-store-handle>
 
-An <a for=/>object store handle</a> has an associated <dfn>object store</dfn> and an
-associated <dfn>transaction</dfn>. Multiple
-handles MAY be associated with the same <a for=/>object store</a> in
-different <a for=/>transactions</a>, but there MUST be only one <a for=/>object
-store handle</a> associated with a particular <a for=/>object store</a>
-within a <a for=/>transaction</a>.
+An <a for=/>object store handle</a> has an associated <dfn>object
+store</dfn> and an associated <dfn>transaction</dfn>. Multiple handles
+MAY be associated with the same <a for=/>object store</a> in different
+<a for=/>transactions</a>, but there MUST be only one <a for=/>object
+store handle</a> associated with a particular <a for=/>object
+store</a> within a <a for=/>transaction</a>.
 
-An <a for=/>object store handle</a> has an <dfn>index set</dfn>, which is
-initialized to the set of <a for=/>indexes</a> that reference the associated
-<a for=object-store-handle>object store</a> when the
-<a for=/>object store handle</a> is created.
+An <a for=/>object store handle</a> has an <dfn>index set</dfn>, which
+is initialized to the set of <a for=/>indexes</a> that reference the
+associated <a for=object-store-handle>object store</a> when the <a
+for=/>object store handle</a> is created. The contents of the set will
+remain constant except when an <a>upgrade transaction</a> is running.
 
-The contents of the set will remain constant except when an <a>upgrade
-transaction</a> is running.
-
-An <a for=/>object store handle</a> has a <dfn>name</dfn>, which is initialized to
-the <a for=object-store>name</a> of the associated <a
-for=object-store-handle>object store</a> when the
-<a for=/>object store handle</a> is created.
-
-The name will remain constant except when an <a>upgrade
-transaction</a> is running.
+An <a for=/>object store handle</a> has a <dfn>name</dfn>, which is
+initialized to the <a for=object-store>name</a> of the associated <a
+for=object-store-handle>object store</a> when the <a for=/>object
+store handle</a> is created. The name will remain constant except when
+an <a>upgrade transaction</a> is running.
 
 </div>
 
@@ -453,7 +448,7 @@ User agents MUST support any ECMAScript [[!ECMA-262]] value supported
 by the <a>structured clone algorithm</a> [[!HTML]]. This includes
 simple types such as <a>String</a> primitive values and <a>Date</a>
 objects as well as <a>Object</a> and <a>Array</a> instances, {{File}}
-objects, {{Blob}} objects, {{ImageData}}} objects, and so on. Record
+objects, {{Blob}} objects, {{ImageData}} objects, and so on. Record
 <a for=/>values</a> are stored and retrieved by value rather than by
 reference; later changes to a value have no effect on the record
 stored in the database.
@@ -773,20 +768,18 @@ handle</dfn>.
 
 <div dfn-for=index-handle>
 
-An <a>index handle</a> has an associated <dfn>index</dfn> and an associated <dfn>object store
-handle</dfn>. The <dfn>transaction</dfn> of an <a>index
-handle</a> is the <a
-for=object-store-handle>transaction</a> of its
-associated <a for=/>object store handle</a>. Multiple handles MAY be
-associated with the same <a for=/>index</a> in different
-<a for=/>transactions</a>, but there MUST be only one <a>index handle</a>
-associated with a particular <a for=/>index</a> within a <a for=/>transaction</a>.
+An <a>index handle</a> has an associated <dfn>index</dfn> and an
+associated <dfn>object store handle</dfn>. The <dfn>transaction</dfn>
+of an <a>index handle</a> is the <a
+for=object-store-handle>transaction</a> of its associated <a
+for=/>object store handle</a>. Multiple handles MAY be associated with
+the same <a for=/>index</a> in different <a for=/>transactions</a>,
+but there MUST be only one <a>index handle</a> associated with a
+particular <a for=/>index</a> within a <a for=/>transaction</a>.
 
-An <a>index handle</a> has a <dfn>name</dfn>, which is initialized to the <a
-for=index>name</a> of the associated <a
-for=index-handle>index</a> when the <a>index handle</a> is
-created.
-
+An <a>index handle</a> has a <dfn>name</dfn>, which is initialized to
+the <a for=index>name</a> of the associated <a
+for=index-handle>index</a> when the <a>index handle</a> is created.
 The name will remain constant except when an <a>upgrade
 transaction</a> is running.
 
@@ -802,7 +795,7 @@ to the database it is done by using a <a for=/>transaction</a>.
 
 <div dfn-for=transaction>
 
-<a for=/>transactions</a> offer some protection from application and system
+<a for=/>Transactions</a> offer some protection from application and system
 failures. A <a for=/>transaction</a> may be used to store multiple data
 records or to conditionally modify certain data records. A
 <a for=/>transaction</a> represents an atomic and durable set of data access
@@ -1774,39 +1767,40 @@ enum IDBRequestReadyState {
 };
 </pre>
 
-The {{IDBRequest/result}} attribute's getter must <a>throw</a> an
+The <dfn attribute for=IDBRequest>result</dfn> attribute's getter must <a>throw</a> an
 {{InvalidStateError}} exception if the <a>done flag</a> is unset.
 Otherwise, the attribute's getter must return the <a
 for=request>result</a> of the request, or undefined if the
 request.resulted in an error.
 
 
-The {{IDBRequest/error}} attribute's getter must <a>throw</a> an
-{{InvalidStateError}} exception if the <a>done flag</a> is unset.
-Otherwise, the attribute's getter must return the <a
-for=request>error</a> of the request, or null if no error occurred.
+The <dfn attribute for=IDBRequest>error</dfn> attribute's getter must
+<a>throw</a> an {{InvalidStateError}} exception if the <a>done
+flag</a> is unset. Otherwise, the attribute's getter must return the
+<a for=request>error</a> of the request, or null if no error occurred.
 
 
-The {{IDBRequest/source}} attribute's getter must return the <a
-for=request>source</a> of the <a>request</a>, or null if no <a
-for=request>source</a> is set.
+The <dfn attribute for=IDBRequest>source</dfn> attribute's getter must
+return the <a for=request>source</a> of the <a>request</a>, or null if
+no <a for=request>source</a> is set.
 
-The {{IDBRequest/transaction}} attribute's getter must return the <a
-for=request>transaction</a> of the <a>request</a>. This property can
-be null for certain requests, such as for <a>request</a> returned from
-{{IDBFactory/open()}}.
-
-
-The {{IDBRequest/readyState}} attribute's getter must return
-{{"pending"}} if the <a>done flag</a> is unset, and {{"done"}}
-otherwise.
+The <dfn attribute for=IDBRequest>transaction</dfn> attribute's getter
+must return the <a for=request>transaction</a> of the <a>request</a>.
+This property can be null for certain requests, such as for
+<a>request</a> returned from {{IDBFactory/open()}}.
 
 
-The {{IDBRequest/onsuccess}} attribute is the event handler for the
-<code>success</code> event.
+The <dfn attribute for=IDBRequest>readyState</dfn> attribute's getter
+must return {{"pending"}} if the <a>done flag</a> is unset, and
+{{"done"}} otherwise.
 
-The {{IDBRequest/onerror}} attribute is the event handler for the
-<code>error</code> event.
+
+The <dfn attribute for=IDBRequest>onsuccess</dfn> attribute is the
+event handler for the <code>success</code> event.
+
+The <dfn attribute for=IDBRequest>onerror</dfn> attribute is the event
+handler for the <code>error</code> event.
+
 
 Methods on {{IDBDatabase}} that return a <a>open request</a> use
 an extended interface to allow listening to the
@@ -1821,11 +1815,11 @@ interface IDBOpenDBRequest : IDBRequest {
 };
 </pre>
 
-The {{IDBOpenDBRequest/onblocked}} attribute is the event handler for the
-<a>blocked</a> event.
+The <dfn attribute for=IDBOpenDBRequest>onblocked</dfn> attribute is
+the event handler for the <a>blocked</a> event.
 
-The {{IDBOpenDBRequest/onupgradeneeded}} attribute is the event handler for the
-<a>upgradeneeded</a> event.
+The <dfn attribute for=IDBOpenDBRequest>onupgradeneeded</dfn>
+attribute is the event handler for the <a>upgradeneeded</a> event.
 
 
 <!-- ============================================================ -->
@@ -1848,13 +1842,13 @@ dictionary IDBVersionChangeEventInit : EventInit {
 };
 </pre>
 
-The {{IDBVersionChangeEvent/oldVersion}} attribute
-getter returns the previous version of the database.
+The <dfn attribute for=IDBVersionChangeEvent>oldVersion</dfn>
+attribute getter returns the previous version of the database.
 
 
-The {{IDBVersionChangeEvent/newVersion}} attribute
-getter returns the new version of the database, or null if the
-database is being deleted. See the <a>steps for running an upgrade
+The <dfn attribute for=IDBVersionChangeEvent>newVersion</dfn>
+attribute getter returns the new version of the database, or null if
+the database is being deleted. See the <a>steps for running an upgrade
 transaction</a>.
 
 Events are constructed as defined in <a
@@ -1890,8 +1884,9 @@ Window implements IDBEnvironment;
 WorkerGlobalScope implements IDBEnvironment;
 </pre>
 
-The {{IDBEnvironment/indexedDB}} attribute provides applications a
-mechanism for accessing capabilities of indexed databases.
+The <dfn attribute for=IDBEnvironment>indexedDB</dfn> attribute
+provides applications a mechanism for accessing capabilities of
+indexed databases.
 
 <pre class=idl>
 [Exposed=(Window,Worker)]
@@ -2055,16 +2050,17 @@ dictionary IDBObjectStoreParameters {
 };
 </pre>
 
-The {{IDBDatabase/name}} attribute's getter must return the <a
-for="database">name</a> of the <a>connected</a> <a>database</a>. The
-attribute MUST return this name even if the <a>close pending flag</a>
-is set on the <a for=/>connection</a>. In other words, the value of
-this attribute stays constant for the lifetime of the {{IDBDatabase}}
-instance.
+The <dfn attribute for=IDBDatabase>name</dfn> attribute's getter must
+return the <a for="database">name</a> of the <a>connected</a>
+<a>database</a>. The attribute MUST return this name even if the
+<a>close pending flag</a> is set on the <a for=/>connection</a>. In
+other words, the value of this attribute stays constant for the
+lifetime of the {{IDBDatabase}} instance.
 
 
-The {{IDBDatabase/version}} attribute's getter must return this <a
-for=/>connection</a>'s <a for=connection>version</a>.
+The <dfn attribute for=IDBDatabase>version</dfn> attribute's getter
+must return this <a for=/>connection</a>'s <a
+for=connection>version</a>.
 
 <aside class=note>
   As long as the <a for=/>connection</a> is open, this is the same as the
@@ -2076,10 +2072,10 @@ for=/>connection</a>'s <a for=connection>version</a>.
 </aside>
 
 
-The {{IDBDatabase/objectStoreNames}} attribute's getter must return a
-<a>sorted list</a> of the <a for=object-store>names</a> of the <a
-for=/>object stores</a> in this <a for=/>connection</a>'s <a>object
-store set</a>.
+The <dfn attribute for=IDBDatabase>objectStoreNames</dfn> attribute's
+getter must return a <a>sorted list</a> of the <a
+for=object-store>names</a> of the <a for=/>object stores</a> in this
+<a for=/>connection</a>'s <a>object store set</a>.
 
 <aside class=note>
   As long as the <a for=/>connection</a> is open, this is the same as the
@@ -2226,19 +2222,19 @@ The <dfn method for=IDBDatabase>close()</dfn> method, when invoked, must run the
 1. Run the <a>steps for closing a database connection</a> with this <a for=/>connection</a>.
 
 
-The {{IDBDatabase/onabort}} attribute is the event handler for the
-<code>abort</code> event.
+The <dfn attribute for=IDBDatabase>onabort</dfn> attribute is the
+event handler for the <code>abort</code> event.
 
-The {{IDBDatabase/onclose}} attribute is the event handler for the
-<code>close</code> event.
+The <dfn attribute for=IDBDatabase>onclose</dfn> attribute is the
+event handler for the <code>close</code> event.
 
 <aside class=note>&#9752; The {{IDBDatabase/onclose}} attribute is new in this edition. &#9752;</aside>
 
-The {{IDBDatabase/onerror}} attribute is the event handler for the
-<code>error</code> event.
+The <dfn attribute for=IDBDatabase>onerror</dfn> attribute is the
+event handler for the <code>error</code> event.
 
-The {{IDBDatabase/onversionchange}} attribute is the event handler for the
-<code>versionchange</code> event.
+The <dfn attribute for=IDBDatabase>onversionchange</dfn> attribute is
+the event handler for the <code>versionchange</code> event.
 
 
 <!-- ============================================================ -->
@@ -2286,8 +2282,9 @@ dictionary IDBIndexParameters {
 };
 </pre>
 
-The {{IDBObjectStore/name}} attribute's getter must return this <a
-for=/>object store handle</a>'s <a for=object-store>name</a>.
+The <dfn attribute for=IDBObjectStore>name</dfn> attribute's getter
+must return this <a for=/>object store handle</a>'s <a
+for=object-store>name</a>.
 
 <aside class=note>
   As long as the <a for=/>transaction</a> has not <a>finished</a>,
@@ -2330,9 +2327,10 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 <aside class=note>&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
-The {{IDBObjectStore/keyPath}} attribute's getter must return this <a
-for=/>object store handle</a>'s <a for=object-store-handle>object
-store</a>'s <a for=object-store>key path</a>, or null if none.
+The <dfn attribute for=IDBObjectStore>keyPath</dfn> attribute's getter
+must return this <a for=/>object store handle</a>'s <a
+for=object-store-handle>object store</a>'s <a for=object-store>key
+path</a>, or null if none.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic
 for {{DOMString}} and <a>sequence&lt;DOMString&gt;</a> values, as
@@ -2345,10 +2343,10 @@ instance every time it is inspected. Changing the properties of the
 object has no effect on the <a for=/>object store</a>.
 
 
-The {{IDBObjectStore/indexNames}} attribute's getter must return a
-<a>sorted list</a> of the <a for=index>names</a> of <a
-for=/>indexes</a> in this <a for=/>object store handle</a>'s <a>index
-set</a>.
+The <dfn attribute for=IDBObjectStore>indexNames</dfn> attribute's
+getter must return a <a>sorted list</a> of the <a for=index>names</a>
+of <a for=/>indexes</a> in this <a for=/>object store handle</a>'s
+<a>index set</a>.
 
 <aside class=note>
   As long as the <a for=/>transaction</a> has not <a>finished</a>, this is the same as the associated <a for=/>object
@@ -2359,13 +2357,13 @@ set</a>.
 </aside>
 
 
-The {{IDBObjectStore/transaction}} attribute's getter must return this
-<a for=/>object store handle</a>'s <a
+The <dfn attribute for=IDBObjectStore>transaction</dfn> attribute's
+getter must return this <a for=/>object store handle</a>'s <a
 for=object-store-handle>transaction</a>,
 
 
-The {{IDBObjectStore/autoIncrement}} attribute's getter must return
-true if this <a for=/>object store handle</a>'s <a
+The <dfn attribute for=IDBObjectStore>autoIncrement</dfn> attribute's
+getter must return true if this <a for=/>object store handle</a>'s <a
 for=object-store-handle>object store</a> has a <a>key generator</a>,
 and false otherwise.
 
@@ -3009,9 +3007,8 @@ interface IDBIndex {
 </pre>
 
 
-The {{IDBIndex/name}}
-attribute's getter must return this <a>index handle</a>'s <a
-for=index>name</a>.
+The <dfn attribute for=IDBIndex>name</dfn>attribute's getter must
+return this <a>index handle</a>'s <a for=index>name</a>.
 
 <aside class=note>
   As long as the <a for=/>transaction</a> has not <a>finished</a>, this is the same as the associated
@@ -3057,12 +3054,12 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
 <aside class=note>&#9752; The {{IDBIndex/name}} attribute's setter is new in this edition. &#9752;</aside>
 
 
-The {{IDBIndex/objectStore}} attribute's getter
-must return this <a>index handle</a>'s <a
-for=index-handle>object store handle</a>.
+The <dfn attribute for=IDBIndex>objectStore</dfn> attribute's getter
+must return this <a>index handle</a>'s <a for=index-handle>object
+store handle</a>.
 
-The {{IDBIndex/keyPath}} attribute's getter must return this <a>index
-handle</a>'s <a for=index-handle>index</a>'s <a
+The <dfn attribute for=IDBIndex>keyPath</dfn> attribute's getter must
+return this <a>index handle</a>'s <a for=index-handle>index</a>'s <a
 for=object-store>key path</a>.
 
 The conversion is done following the normal [[!WEBIDL]] binding logic
@@ -3075,13 +3072,15 @@ The returned value is not the same instance that was used when the
 every time it is inspected. Changing the properties of the object has
 no effect on the <a for=/>index</a>.
 
-The {{IDBIndex/multiEntry}} attribute's getter must return true if
-this <a>index handle</a>'s <a for=index-handle>index</a>'s
-<a>multiEntry flag</a> is set, and false otherwise.
+The <dfn attribute for=IDBIndex>multiEntry</dfn> attribute's getter
+must return true if this <a>index handle</a>'s <a
+for=index-handle>index</a>'s <a>multiEntry flag</a> is set, and false
+otherwise.
 
-The {{IDBIndex/unique}} attribute's getter must return true if this
-<a>index handle</a>'s <a for=index-handle>index</a>'s
-<a>unique flag</a> is set, and false otherwise.
+The <dfn attribute for=IDBIndex>unique</dfn> attribute's getter must
+return true if this <a>index handle</a>'s <a
+for=index-handle>index</a>'s <a>unique flag</a> is set, and false
+otherwise.
 
 
 The <dfn method for=IDBIndex>get(|query|)</dfn> method, when invoked, must run these steps:
@@ -3362,19 +3361,22 @@ interface IDBKeyRange {
 };
 </pre>
 
-The {{IDBKeyRange/lower}} attribute's getter must return result of
-running the steps to <a>convert a key to a value</a> with the <a>lower
-bound</a> if it is not null, or undefined otherwise.
+The <dfn attribute for=IDBKeyRange>lower</dfn> attribute's getter must
+return result of running the steps to <a>convert a key to a value</a>
+with the <a>lower bound</a> if it is not null, or undefined otherwise.
 
-The {{IDBKeyRange/upper}} attribute's getter must return the result of
-running the steps to <a>convert a key to a value</a> with the <a>upper
-bound</a> if it is not null, or undefined otherwise.
+The <dfn attribute for=IDBKeyRange>upper</dfn> attribute's getter must
+return the result of running the steps to <a>convert a key to a
+value</a> with the <a>upper bound</a> if it is not null, or undefined
+otherwise.
 
-The {{IDBKeyRange/lowerOpen}} attribute's getter must return true if
-the <a>lower open flag</a> is set, and false otherwise.
+The <dfn attribute for=IDBKeyRange>lowerOpen</dfn> attribute's getter
+must return true if the <a>lower open flag</a> is set, and false
+otherwise.
 
-The {{IDBKeyRange/upperOpen}} attribute's getter must return true if
-the <a>upper open flag</a> is set, and false otherwise.
+The <dfn attribute for=IDBKeyRange>upperOpen</dfn> attribute's getter
+must return true if the <a>upper open flag</a> is set, and false
+otherwise.
 
 
 The <dfn method for=IDBKeyRange>only(|value|)</dfn> method, when invoked, must run these steps:
@@ -3494,34 +3496,34 @@ enum IDBCursorDirection {
 };
 </pre>
 
-The {{IDBCursor/source}} attribute's getter must return the <a
-for=cursor>source</a> of this <a>cursor</a>. This
+The <dfn attribute for=IDBCursor>source</dfn> attribute's getter must
+return the <a for=cursor>source</a> of this <a>cursor</a>. This
 attribute never returns null or throws an exception, even if the
 cursor is currently being iterated, has iterated past its end, or its
 <a for=/>transaction</a> is not <a>active</a>.
 
-The {{IDBCursor/direction}} attribute's getter must return the <a>direction</a>
-of the <a>cursor</a>.
+The <dfn attribute for=IDBCursor>direction</dfn> attribute's getter
+must return the <a>direction</a> of the <a>cursor</a>.
 
-The {{IDBCursor/key}} attribute's getter must return the result of running the
-steps to <a>convert a key to a value</a> with the cursor's current <a
-for=cursor>key</a>. Note that if this property returns an
-object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
-object instance every time it is inspected, until the cursor's <a
-for=cursor>key</a> is changed. This means that if the object
-is modified, those modifications will be seen by anyone inspecting the
-value of the cursor. However modifying such an object does not modify
-the contents of the database.
+The <dfn attribute for=IDBCursor>key</dfn> attribute's getter must
+return the result of running the steps to <a>convert a key to a
+value</a> with the cursor's current <a for=cursor>key</a>. Note that
+if this property returns an object (e.g. a <a>Date</a> or
+<a>Array</a>), it returns the same object instance every time it is
+inspected, until the cursor's <a for=cursor>key</a> is changed. This
+means that if the object is modified, those modifications will be seen
+by anyone inspecting the value of the cursor. However modifying such
+an object does not modify the contents of the database.
 
-The {{IDBCursor/primaryKey}} attribute's getter must return the result of
-running the steps to <a>convert a key to a value</a> with the cursor's
-current <a>effective key</a>. Note that if this property returns an
-object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
-object instance every time it is inspected, until the cursor's
-<a>effective key</a> is changed. This means that if the object is
-modified, those modifications will be seen by anyone inspecting the
-value of the cursor. However modifying such an object does not modify
-the contents of the database.
+The <dfn attribute for=IDBCursor>primaryKey</dfn> attribute's getter
+must return the result of running the steps to <a>convert a key to a
+value</a> with the cursor's current <a>effective key</a>. Note that if
+this property returns an object (e.g. a <a>Date</a> or <a>Array</a>),
+it returns the same object instance every time it is inspected, until
+the cursor's <a>effective key</a> is changed. This means that if the
+object is modified, those modifications will be seen by anyone
+inspecting the value of the cursor. However modifying such an object
+does not modify the contents of the database.
 
 
 The <dfn method for=IDBCursor>update(|value|)</dfn> method, when invoked, must run these steps:
@@ -3797,7 +3799,8 @@ The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run thes
     store</a> and <a>effective key</a> as |store| and
     |key| respectively.
 
-A <a>cursor</a> that has the <a>key only flag</a> unset implements the {{IDBCursorWithValue}} interface as well.
+A <a>cursor</a> that has the <a>key only flag</a> unset implements the
+{{IDBCursorWithValue}} interface as well.
 
 
 <pre class=idl>
@@ -3807,15 +3810,14 @@ interface IDBCursorWithValue : IDBCursor {
 };
 </pre>
 
-The {{IDBCursorWithValue/value}} attribute's getter must return the
-cursor's current <a for=cursor>value</a>.
-
-Note that if this property returns an object, it returns the same
-object instance every time it is inspected, until the cursor's <a
-for=cursor>value</a> is changed. This means that if the
-object is modified, those modifications will be seen by anyone
-inspecting the value of the cursor. However modifying such an object
-does not modify the contents of the database.
+The <dfn attribute for=IDBCursorWithValue>value</dfn> attribute's
+getter must return the cursor's current <a for=cursor>value</a>. Note
+that if this property returns an object, it returns the same object
+instance every time it is inspected, until the cursor's <a
+for=cursor>value</a> is changed. This means that if the object is
+modified, those modifications will be seen by anyone inspecting the
+value of the cursor. However modifying such an object does not modify
+the contents of the database.
 
 
 <!-- ============================================================ -->
