@@ -40,22 +40,23 @@ spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
             text: event handler idl attributes; url: #event-handler-idl-attributes
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
+        text: IdentifierName; url: #prod-IdentifierName
         text: String; url: #sec-ecmascript-language-types-string-type
         text: Number; url: #sec-ecmascript-language-types-number-type
-        text: Promise; url: #sec-promise-objects
         text: Date; url: #sec-date-objects
         text: Object; url: #sec-object-objects
+        text: TypeError; url: #sec-native-error-types-used-in-this-standard-typeerror
         text: Array; url: #sec-array-objects
         text: ArrayBuffer; url: #sec-arraybuffer-objects
         text: Uint8Array; url: #sec-typedarray-objects
-        text: IdentifierName; url: #prod-IdentifierName
-        text: TypeError; url: #sec-native-error-types-used-in-this-standard-typeerror
+        text: Promise; url: #sec-promise-objects
 spec: webidl; urlPrefix: https://heycam.github.io/webidl/
     type: dfn
         text: sequence<DOMString>; url: #idl-sequence
         text: octet; url: #idl-octet
         text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
 </pre>
+
 <style>
 table.props {
   border-collapse: collapse;
@@ -472,7 +473,10 @@ A <a for=/>key</a> has an associated <dfn>type</dfn> which is one of:
 or
 <i>array</i>.
 
-<aside class=note>&#9752; Support for <i>binary</i> keys is new in this edition. &#9752;</aside>
+<aside class=advisement>
+  &#x2660; Support for <i>binary</i> keys is new in this edition, but
+  not yet implemented by any browsers. &#x2660;
+</aside>
 
 A <a for=/>key</a> also has an associated <dfn>value</dfn>, which will
 be either:
@@ -671,31 +675,31 @@ following type-specific properties:
 <h3 id=index-construct>Index</h3>
 <!-- ============================================================ -->
 
-It is sometimes useful to retrieve <a>records</a> in an <a for=/>object
-store</a> through other means than their <a for=/>key</a>. An <dfn id=index-concept>index</dfn> allows looking up <a>records</a> in an
-<a for=/>object store</a> using properties of the <a for=/>values</a> in the
-<a for=/>object stores</a> <a>records</a>.
+It is sometimes useful to retrieve <a>records</a> in an <a
+for=/>object store</a> through other means than their <a
+for=/>key</a>. An <dfn id=index-concept>index</dfn> allows looking up
+<a>records</a> in an <a for=/>object store</a> using properties of the
+<a for=/>values</a> in the <a for=/>object stores</a> <a>records</a>.
 
 <div dfn-for=index>
 
-An index is a specialized persistent key-value storage and has a <dfn>referenced</dfn> <a for=/>object store</a>.
-The index has a <dfn>list of records</dfn> which hold the data stored in the index.
+An index is a specialized persistent key-value storage and has a
+<dfn>referenced</dfn> <a for=/>object store</a>. The index has a
+<dfn>list of records</dfn> which hold the data stored in the index.
 The records in an index are automatically populated whenever records
 in the <a>referenced</a> object store are inserted, updated or
-deleted. There can be several <a for=/>indexes</a> referencing the same
-<a for=/>object store</a>, in which changes to the object store cause all
-such indexes to get updated.
+deleted. There can be several <a for=/>indexes</a> referencing the
+same <a for=/>object store</a>, in which changes to the object store
+cause all such indexes to get updated.
 
-The values in the index's <a>records</a> are always values of
-<a for=/>keys</a> in the index's <a>referenced</a> object store. The keys
-are derived from the referenced object store's <a for=/>values</a> using a
-<dfn>key path</dfn>. If a
-given <a>record</a> with key |X| in the object store
-referenced by the index has the value |A|, and <a
+The values in the index's <a>records</a> are always values of <a
+for=/>keys</a> in the index's <a>referenced</a> object store. The keys
+are derived from the referenced object store's <a for=/>values</a>
+using a <dfn>key path</dfn>. If a given <a>record</a> with key |X| in
+the object store referenced by the index has the value |A|, and <a
 data-lt="extract a key from a value using a key path">evaluating</a>
-the index's <a for=index>key path</a> on |A|
-yields the result |Y|, then the index will contain a record
-with key |Y| and value |X|.
+the index's <a for=index>key path</a> on |A| yields the result |Y|,
+then the index will contain a record with key |Y| and value |X|.
 
 <aside class=example>
   For example, if an index's <a>referenced</a> object store contains a
@@ -734,25 +738,25 @@ additionally sorted according to the <a for=/>index</a>'s <a>record</a>'s
 value (meaning the key of the record in the referenced <a for=/>object
 store</a>).
 
-An <a for=/>index</a> has a <dfn>name</dfn>. The name can be any string value,
-including the empty string. At any one time, the name is unique within
-index's <a>referenced</a> <a for=/>object store</a>. Index names are always
-compared in a case-sensitive manner, as opaque sequences of 16-bit
-code units.
+An <a for=/>index</a> has a <dfn>name</dfn>. The name can be any
+string value, including the empty string. At any one time, the name is
+unique within index's <a>referenced</a> <a for=/>object store</a>.
+Index names are always compared in a case-sensitive manner, as opaque
+sequences of 16-bit code units.
 
-An <a for=/>index</a> has a <dfn>unique flag</dfn>. When this flag is set,
-the index enforces that no two <a>records</a> in the index has the
-same key. If a <a>record</a> in the index's referenced object store is
-attempted to be inserted or modified such that evaluating the index's
-key path on the records new value yields a result which already exists
-in the index, then the attempted modification to the object store
-fails.
+An <a for=/>index</a> has a <dfn>unique flag</dfn>. When this flag is
+set, the index enforces that no two <a>records</a> in the index has
+the same key. If a <a>record</a> in the index's referenced object
+store is attempted to be inserted or modified such that evaluating the
+index's key path on the records new value yields a result which
+already exists in the index, then the attempted modification to the
+object store fails.
 
-An <a for=/>index</a> has a <dfn>multiEntry flag</dfn>. This flag affects
-how the index behaves when the result of evaluating the index's <a
-for=index>key path</a> yields an <a>array key</a>. If
-the <a>multiEntry flag</a> is unset, then a single <a>record</a> whose
-<a for=/>key</a> is an <a>array key</a> is added to the index. If the
+An <a for=/>index</a> has a <dfn>multiEntry flag</dfn>. This flag
+affects how the index behaves when the result of evaluating the
+index's <a for=index>key path</a> yields an <a>array key</a>. If the
+<a>multiEntry flag</a> is unset, then a single <a>record</a> whose <a
+for=/>key</a> is an <a>array key</a> is added to the index. If the
 <a>multiEntry flag</a> is true, then the one <a>record</a> is added to
 the index for each of the <a>subkeys</a>.
 
@@ -1613,7 +1617,7 @@ Each of the exceptions defined in this document is a
 {{DOMException}} with a specific type. The exception types and
 properties such as code value are defined in [[!WEBIDL]].
 
-<table class=props dfn-for=exceptions>
+<table class=props>
   <tr>
     <th>Type</th>
     <th>Description</th>
@@ -1706,6 +1710,7 @@ properties such as code value are defined in [[!WEBIDL]].
   cause of errors.
 </aside>
 
+
 <!-- ============================================================ -->
 <h2 id=async-api>API</h2>
 <!-- ============================================================ -->
@@ -1717,8 +1722,8 @@ the result of the operation. Once information becomes available, an
 event is fired on the request and the information becomes available
 through the properties of the {{IDBRequest}} instance.
 
-The <span>task source</span> for these tasks is the <dfn
-id="database-access-task-source">database access task source</dfn>.
+The <span>task source</span> for these tasks is the <dfn>database
+access task source</dfn>.
 
 
 <!-- ============================================================ -->
@@ -1855,11 +1860,9 @@ Events are constructed as defined in <a
 href="https://dom.spec.whatwg.org/#constructing-events">Constructing
 events</a>, in [[!WHATWG-DOM]].
 
-To <dfn>fire a version change event</dfn> named |e| at
-|target| given |oldVersion| and
-|newVersion|, dispatch an event at |target|.
-
-The event MUST use the {{IDBVersionChangeEvent}} interface with its
+To <dfn>fire a version change event</dfn> named |e| at |target| given
+|oldVersion| and |newVersion|, dispatch an event at |target|. The
+event MUST use the {{IDBVersionChangeEvent}} interface with its
 {{Event/type}} set to |e|, its {{IDBVersionChangeEvent/oldVersion}}
 attribute set to |oldVersion|, and its
 {{IDBVersionChangeEvent/newVersion}} attribute set to |newVersion|.
@@ -2015,12 +2018,12 @@ The {{IDBDatabase}}
 interface represents a <a for=/>connection</a> to a <a>database</a>.
 
 An {{IDBDatabase}} object MUST NOT be garbage collected if its
-associated <a for=/>connection</a>'s <a>close pending flag</a> is unset
-and it has one or more event listeners registers whose type is one of
-<code>abort</code>, <code>error</code>, or <code>versionchange</code>.
-
-If an {{IDBDatabase}} object is garbage collected, the
-associated <a for=/>connection</a> must be <a for=connection>closed</a>.
+associated <a for=/>connection</a>'s <a>close pending flag</a> is
+unset and it has one or more event listeners registers whose type is
+one of <code>abort</code>, <code>error</code>, or
+<code>versionchange</code>. If an {{IDBDatabase}} object is garbage
+collected, the associated <a for=/>connection</a> must be <a
+for=connection>closed</a>.
 
 <pre class=idl>
 [Exposed=(Window,Worker)]
@@ -2063,10 +2066,9 @@ must return this <a for=/>connection</a>'s <a
 for=connection>version</a>.
 
 <aside class=note>
-  As long as the <a for=/>connection</a> is open, this is the same as the
-  connected <a>database</a>'s <a for=database>version</a>.
-
-  Once the <a for=/>connection</a> has <a for=connection>closed</a>, this
+  As long as the <a for=/>connection</a> is open, this is the same as
+  the connected <a>database</a>'s <a for=database>version</a>. Once
+  the <a for=/>connection</a> has <a for=connection>closed</a>, this
   attribute will not reflect changes made with a later <a>upgrade
   transaction</a>.
 </aside>
@@ -2078,13 +2080,11 @@ for=object-store>names</a> of the <a for=/>object stores</a> in this
 <a for=/>connection</a>'s <a>object store set</a>.
 
 <aside class=note>
-  As long as the <a for=/>connection</a> is open, this is the same as the
-  connected <a>database</a>'s <a for=/>object store</a> <a
-  for=object-store>names</a>.
-
-  Once the <a for=/>connection</a> has <a for=connection>closed</a>, this
-  attribute will not reflect changes made with a later <a>upgrade
-  transaction</a>.
+  As long as the <a for=/>connection</a> is open, this is the same as
+  the connected <a>database</a>'s <a for=/>object store</a> <a
+  for=object-store>names</a>. Once the <a for=/>connection</a> has <a
+  for=connection>closed</a>, this attribute will not reflect changes
+  made with a later <a>upgrade transaction</a>.
 </aside>
 
 
@@ -2228,7 +2228,10 @@ event handler for the <code>abort</code> event.
 The <dfn attribute for=IDBDatabase>onclose</dfn> attribute is the
 event handler for the <code>close</code> event.
 
-<aside class=note>&#9752; The {{IDBDatabase/onclose}} attribute is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBDatabase/onclose}} attribute is new in this
+  edition. &#9752;
+</aside>
 
 The <dfn attribute for=IDBDatabase>onerror</dfn> attribute is the
 event handler for the <code>error</code> event.
@@ -2289,11 +2292,9 @@ for=object-store>name</a>.
 <aside class=note>
   As long as the <a for=/>transaction</a> has not <a>finished</a>,
   this is the same as the associated <a for=/>object store</a>'s <a
-  for=object-store>name</a>.
-
-  Once the <a for=/>transaction</a> has <a>finished</a>, this
-  attribute will not reflect changes made with a later <a>upgrade
-  transaction</a>.
+  for=object-store>name</a>. Once the <a for=/>transaction</a> has
+  <a>finished</a>, this attribute will not reflect changes made with a
+  later <a>upgrade transaction</a>.
 </aside>
 
 
@@ -2324,7 +2325,10 @@ The {{IDBObjectStore/name}} attribute's setter must run these steps:
 
 10. Set this <a for=/>object store handle</a>'s <a for=object-store-handle>name</a> to |name|.
 
-<aside class=note>&#9752; The {{IDBObjectStore/name}} attribute's setter is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#x2660; The {{IDBObjectStore/name}} attribute's setter is new in
+  this edition, but not yet implemented in any browsers. &#x2660;
+</aside>
 
 
 The <dfn attribute for=IDBObjectStore>keyPath</dfn> attribute's getter
@@ -2349,11 +2353,11 @@ of <a for=/>indexes</a> in this <a for=/>object store handle</a>'s
 <a>index set</a>.
 
 <aside class=note>
-  As long as the <a for=/>transaction</a> has not <a>finished</a>, this is the same as the associated <a for=/>object
-  store</a>'s list of <a for=/>index</a> <a for=index>names</a>.
-
-  Once the <a for=/>transaction</a> has <a>finished</a>, this attribute will not reflect changes made
-  with a later <a>upgrade transaction</a>.
+  As long as the <a for=/>transaction</a> has not <a>finished</a>,
+  this is the same as the associated <a for=/>object store</a>'s list
+  of <a for=/>index</a> <a for=index>names</a>. Once the <a
+  for=/>transaction</a> has <a>finished</a>, this attribute will not
+  reflect changes made with a later <a>upgrade transaction</a>.
 </aside>
 
 
@@ -2617,7 +2621,10 @@ The |query| parameter may be a <a for=/>key</a> or an
 retrieved. If a range is specified, the method retrieves
 the first existing key in that range.
 
-<aside class=note>&#9752; The {{IDBObjectStore/getKey()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBObjectStore/getKey()}} method is new in this
+  edition. &#9752;
+</aside>
 
 
 The <dfn method for=IDBObjectStore>getAll(|query|, |count|)</dfn> method, when invoked, must run these steps:
@@ -2651,7 +2658,10 @@ null or not given, an <a>unbounded key range</a> is used. If
 |count| is specified and there are more than |count|
 records in range, only the first |count| will be retrieved.
 
-<aside class=note>&#9752; The {{IDBObjectStore/getAll()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBObjectStore/getAll()}} method is new in this
+  edition. &#9752;
+</aside>
 
 
 The <dfn method for=IDBObjectStore>getAllKeys(|query|, |count|)</dfn> method, when invoked, must run these steps:
@@ -2686,7 +2696,10 @@ range</a> is used. If |count| is specified and
 there are more than |count| keys in range,
 only the first |count| will be retrieved.
 
-<aside class=note>&#9752; The {{IDBObjectStore/getAllKeys()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBObjectStore/getAllKeys()}} method is new in this
+  edition. &#9752;
+</aside>
 
 
 The <dfn method for=IDBObjectStore>count(|query|)</dfn> method, when invoked, must run these steps:
@@ -2797,7 +2810,10 @@ The |query| parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
-<aside class=note>&#9752; The {{IDBObjectStore/openKeyCursor()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBObjectStore/openKeyCursor()}} method is new in this
+  edition. &#9752;
+</aside>
 
 
 The <dfn method for=IDBObjectStore>createIndex(|name|, |keyPath|, |options|)</dfn> method, when invoked, must run these steps:
@@ -3007,15 +3023,15 @@ interface IDBIndex {
 </pre>
 
 
-The <dfn attribute for=IDBIndex>name</dfn>attribute's getter must
+The <dfn attribute for=IDBIndex>name</dfn> attribute's getter must
 return this <a>index handle</a>'s <a for=index>name</a>.
 
 <aside class=note>
-  As long as the <a for=/>transaction</a> has not <a>finished</a>, this is the same as the associated
-  <a for=/>index</a>'s <a for=index>name</a>.
-
-  Once the <a for=/>transaction</a> has <a>finished</a>, this attribute will not reflect changes made
-  with a later <a>upgrade transaction</a>.
+  As long as the <a for=/>transaction</a> has not <a>finished</a>,
+  this is the same as the associated <a for=/>index</a>'s <a
+  for=index>name</a>. Once the <a for=/>transaction</a> has
+  <a>finished</a>, this attribute will not reflect changes made with a
+  later <a>upgrade transaction</a>.
 </aside>
 
 
@@ -3051,7 +3067,10 @@ The {{IDBIndex/name}} attribute's setter must run these steps:
 10. Set this <a>index handle</a>'s <a
     for=index-handle>name</a> to |name|.
 
-<aside class=note>&#9752; The {{IDBIndex/name}} attribute's setter is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#x2660; The {{IDBIndex/name}} attribute's setter is new in this
+  edition, but not yet implemented in any browsers. &#x2660;
+</aside>
 
 
 The <dfn attribute for=IDBIndex>objectStore</dfn> attribute's getter
@@ -3186,7 +3205,10 @@ null or not given, an <a>unbounded key range</a> is used. If
 |count| is specified and there are more than |count|
 records in range, only the first |count| will be retrieved.
 
-<aside class=note>&#9752; The {{IDBIndex/getAll()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBIndex/getAll()}} method is new in this edition.
+  &#9752;
+</aside>
 
 
 The <dfn method for=IDBIndex>getAllKeys(|query|, |count|)</dfn> method, when invoked, must run these steps:
@@ -3221,7 +3243,10 @@ used. If |count| is specified and there are more than
 |count| keys in range, only the first |count| will
 be retrieved.
 
-<aside class=note>&#9752; The {{IDBIndex/getAllKeys()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBIndex/getAllKeys()}} method is new in this edition.
+  &#9752;
+</aside>
 
 
 The <dfn method for=IDBIndex>count(|query|)</dfn> method, when invoked, must run these steps:
@@ -3459,7 +3484,10 @@ The <dfn method for=IDBKeyRange>includes(|key|)</dfn> method, when invoked, must
 3. Return true if |k| is <a data-lt="in a key range">in</a>
     this range, and false otherwise.
 
-<aside class=note>&#9752; The {{IDBKeyRange/includes()}} method is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBKeyRange/includes()}} method is new in this
+  edition. &#9752;
+</aside>
 
 
 <!-- ============================================================ -->
@@ -3758,7 +3786,10 @@ The <dfn method for=IDBCursor>continuePrimaryKey(|key|, |primaryKey|)</dfn> meth
     this <a>cursor</a>, |key|, |primaryKey|, and
     |request|.
 
-<aside class=note>&#9752; The {{IDBCursor/continuePrimaryKey()}} method is new in this edition. &#9752;</aside>
+<aside class=advisement>
+  &#x2660; The {{IDBCursor/continuePrimaryKey()}} method is new in
+  this edition, but not yet implemented by any browsers. &#x2660;
+</aside>
 
 <aside class=note>
   Calling this method more than once before new cursor data has been
@@ -3862,7 +3893,10 @@ the following steps:
     of the <a for=/>object stores</a> in this <a for=/>transaction</a>'s <a>scope</a>.
 
 
-<aside class=note>&#9752; The {{IDBTransaction/objectStoreNames}} attribute is new in this edition. &#9752;</aside>
+<aside class=note>
+  &#9752; The {{IDBTransaction/objectStoreNames}} attribute is new in
+  this edition. &#9752;
+</aside>
 
 <aside class=note>
   The contents of each list returned by this attribute does not
