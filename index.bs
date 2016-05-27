@@ -948,7 +948,7 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
 
 8. When a transaction is <a for=transaction>committed</a>
     or <a>aborted</a>, it is said to be
-    <dfn data-lt="transaction finish">finished</dfn>. If a transaction
+    <dfn lt="finish|finished">finished</dfn>. If a transaction
     can't be finished, for example due to the implementation crashing
     or the user taking some explicit action to cancel it, the
     implementation MUST <a>abort</a> the
@@ -1003,7 +1003,7 @@ data-lt="transaction start">started</a>:
     access to the object store first. Due to the requirements in the
     previous paragraph, this also means that it is the only
     transaction which has access to the object store until the
-    transaction is <a data-lt="transaction finish">finished</a>.
+    transaction is <a>finished</a>.
 
 * Any transaction <a data-lt="transaction create">created</a> after a
     <a>read/write transaction</a> MUST see the changes written by the
@@ -1014,8 +1014,7 @@ data-lt="transaction start">started</a>:
     stores</a> that are part of that overlapping <a>scope</a>. Due to
     the requirements in the previous paragraph, this also means that
     the B transaction does not have access to any <a for=/>object stores</a>
-    in that overlapping <a>scope</a> until the A transaction is <a
-    data-lt="transaction finish">finished</a>.
+    in that overlapping <a>scope</a> until the A transaction is <a>finished</a>.
 
     <aside class=note>
       Generally speaking, the above requirements mean that any
@@ -1058,7 +1057,7 @@ request</a> when the <a>upgradeneeded</a> event is fired. The
 <a>upgradeneeded</a> event isn't fired, and thus the <a>upgrade
 transaction</a> isn't started, until all other <a for=/>connections</a> to
 the same <a>database</a> are closed. This ensures that all other
-transactions are <a data-lt="transaction finish">finished</a>.
+transactions are <a>finished</a>.
 
 As long as an <a>upgrade transaction</a> is running, attempts to open
 more <a for=/>connections</a> to the same <a>database</a> are delayed, and
@@ -3918,7 +3917,7 @@ The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, wh
 
 The <dfn method for=IDBTransaction>abort()</dfn> method, when invoked, must run these steps:
 
-1. If this <a for=/>transaction</a> is <a data-lt="transaction finish">finished</a>,
+1. If this <a for=/>transaction</a> is <a>finished</a>,
     <a>throw</a> an <a>InvalidStateError</a> exception.
 
 2. Unset the <a for=/>transaction</a>'s <a>active flag</a> and run the
@@ -3972,7 +3971,7 @@ If <var>db</var> is not null, run these substeps:
 <ul>
 <li>
 No already existing <a for=/>connections</a> to <var>db</var>, have
-non-<a data-lt="transaction finish">finished</a> <a>upgrade transaction</a>.
+non-<a>finished</a> <a>upgrade transaction</a>.
 
 <li>
 If <var>db</var> has its <a>delete pending flag</a> set, wait until <var>db</var> has
@@ -4117,7 +4116,7 @@ at <var>request</var> with <var>db</var>'s <a for=database>version</a> and null.
 
 <li id="delete-close-block">
 Wait until all <a for=/>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
-their transactions are <a data-lt="transaction finish">finished</a>.
+their transactions are <a>finished</a>.
 
 <li>
 Let <var>version</var> be <var>db</var>'s <a for=database>version</a>.
@@ -4312,7 +4311,7 @@ at <var>request</var> with <var>db</var>'s <a for=database>version</a> and <var>
 
 <li id="version-change-close-block">
 Wait until all <a for=/>connections</a> in <var>openConnections</var> are <a for=connection>closed</a> and all of
-their transactions are <a data-lt="transaction finish">finished</a>.
+their transactions are <a>finished</a>.
 
 <li>
 Let <var>transaction</var> be a new <a>upgrade transaction</a> with <var>connection</var> used as <a for=/>connection</a>.
