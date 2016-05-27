@@ -305,7 +305,7 @@ database can be deleted.
 <!-- ============================================================ -->
 
 Script does not interact with <a>databases</a> directly. Instead,
-script has indirect access via a <dfn>connection</dfn>.
+script has indirect access via a <dfn lt="connection|connected">connection</dfn>.
 
 A <a for=/>connection</a> object can be used to manipulate the objects of
 that <a>database</a>. It is also the only way to obtain a
@@ -372,7 +372,7 @@ stores</a>.
 
 An <a for=/>object store</a> has a <dfn>list of records</dfn> which hold the
 data stored in the object store. Each <dfn>record</dfn> consists of a
-<a>key</a> and a <a for=/>value</a>. The list is sorted according to key in
+<a for=/>key</a> and a <a for=/>value</a>. The list is sorted according to key in
 ascending order. There can never be multiple records in a given object
 store with the same key.
 
@@ -388,7 +388,7 @@ Otherwise it is said to use <dfn>out-of-line keys</dfn>.
 
 An <a for=/>object store</a> optionally has a <a>key generator</a>.
 
-An object store can derive a <a>key</a> for a <a>record</a> from one of three sources:
+An object store can derive a <a for=/>key</a> for a <a>record</a> from one of three sources:
 
 1. A <a>key generator</a>. A key generator generates a monotonically
     increasing numbers every time a key is needed.
@@ -460,7 +460,7 @@ database, each <a>record</a> is organized according to its
 
 <div dfn-for=key>
 
-A <a>key</a> has an associated <dfn>type</dfn> which is one of:
+A <a for=/>key</a> has an associated <dfn>type</dfn> which is one of:
 <i>number</i>,
 <i>date</i>,
 <i>string</i>,
@@ -470,16 +470,16 @@ or
 
 <aside class=note>&#9752; Support for <i>binary</i> keys is new in this edition. &#9752;</aside>
 
-A <a>key</a> also has an associated <dfn>value</dfn>, which will
+A <a for=/>key</a> also has an associated <dfn>value</dfn>, which will
 be either:
 an <a>unrestricted double</a> if type is <i>number</i> or <i>date</i>,
 a <a>DOMString</a> if type is <i>string</i>,
 a list of <a>octets</a> if type is <i>binary</i>,
-or a list of other <a>keys</a> if type is <i>array</i>.
+or a list of other <a for=/>keys</a> if type is <i>array</i>.
 
 </div>
 
-An ECMAScript [[!ECMA-262]] value can be converted to a <a>key</a> by
+An ECMAScript [[!ECMA-262]] value can be converted to a <a for=/>key</a> by
 following the steps to <a>convert a value to a key</a>.
 
 <aside class=note>
@@ -491,10 +491,10 @@ The following ECMAScript types are valid keys:
 * {{ArrayBuffer}} objects (or views on buffers such as <a>Uint8Array</a>).
 * <a>Array</a> objects, where every item is defined, is itself a valid key, and does not directly or indirectly contain itself. This includes empty arrays. Arrays may contain other arrays.
 
-Attempting to convert other ECMAScript values to a <a>key</a> will fail.
+Attempting to convert other ECMAScript values to a <a for=/>key</a> will fail.
 </aside>
 
-An <dfn>array key</dfn> is a <a>key</a> with <a
+An <dfn>array key</dfn> is a <a for=/>key</a> with <a
 for=key>type</a> <i>array</i>. The <dfn>subkeys</dfn> of an
 <a>array key</a> are the members of the <a>array key</a>'s <a
 for=key>value</a> list.
@@ -588,8 +588,8 @@ To <dfn>compare two keys</dfn> <var>a</var> and <var>b</var>, run these steps:
         2. Let <var>i</var> be 0.
         3. While <var>i</var> is less than <var>length</var>, run these substeps:
 
-            1. Let <var>u</var> be the <a>key</a> in <var>va</var> at index <var>i</var>
-            2. Let <var>v</var> be the <a>key</a> in <var>vb</var> at index <var>i</var>
+            1. Let <var>u</var> be the <a for=/>key</a> in <var>va</var> at index <var>i</var>
+            2. Let <var>v</var> be the <a for=/>key</a> in <var>vb</var> at index <var>i</var>
             3. Let <var>c</var> be the result of recursively running the steps to <a>compare two keys</a> with <var>u</var> and <var>v</var>
             4. If <var>c</var> is not 0, return <var>c</var>
             5. Increase <var>i</var> by 1
@@ -600,27 +600,27 @@ To <dfn>compare two keys</dfn> <var>a</var> and <var>b</var>, run these steps:
       </dd>
     </dl>
 
-The <a>key</a> <var>a</var> is <dfn>greater than</dfn> the <a>key</a>
+The <a for=/>key</a> <var>a</var> is <dfn>greater than</dfn> the <a for=/>key</a>
 <var>b</var> if the result of running the steps to <a>compare two
 keys</a> with <var>a</var> and <var>b</var> is 1.
 
-The <a>key</a> <var>a</var> is <dfn>less than</dfn> the <a>key</a>
+The <a for=/>key</a> <var>a</var> is <dfn>less than</dfn> the <a for=/>key</a>
 <var>b</var> if the result of running the steps to <a>compare two
 keys</a> with <var>a</var> and <var>b</var> is -1.
 
-The <a>key</a> <var>a</var> is <dfn>equal to</dfn> the <a>key</a>
+The <a for=/>key</a> <var>a</var> is <dfn>equal to</dfn> the <a for=/>key</a>
 <var>b</var> if the result of running the steps to <a>compare two
 keys</a> with <var>a</var> and <var>b</var> is 0.
 
 
 <aside class=note>
-As a result of the above rules, negative infinity is the lowest possible value for a <a>key</a>.
+As a result of the above rules, negative infinity is the lowest possible value for a <a for=/>key</a>.
 <i>Number</i> keys are less than <i>date</i> keys.
 <i>Date</i> keys are less than <i>string</i> keys.
 <i>String</i> keys are less than <i>binary</i> keys.
 <i>Binary</i> keys are less than <i>array</i> keys.
-There is no highest possible <a>key</a> value.
-This is because an array of any candidate highest <a>key</a> followed by another <a>key</a> is even higher.
+There is no highest possible <a for=/>key</a> value.
+This is because an array of any candidate highest <a for=/>key</a> followed by another <a for=/>key</a> is even higher.
 </aside>
 
 <aside class=note>
@@ -636,7 +636,7 @@ Members of <i>binary</i> keys are compared as unsigned octet values
 
 A <dfn>key path</dfn> is a <a>DOMString</a> or
 <a>sequence&lt;DOMString&gt;</a> that defines how to extract a
-<a>key</a> from a <a for=/>value</a>. A <dfn>valid key path</dfn> is one of:
+<a for=/>key</a> from a <a for=/>value</a>. A <dfn>valid key path</dfn> is one of:
 
 * An empty <a>DOMString</a>.
 * An <dfn>identifier</dfn>, which is a <a>DOMString</a> matching
@@ -668,7 +668,7 @@ following type-specific properties:
 <!-- ============================================================ -->
 
 It is sometimes useful to retrieve <a>records</a> in an <a for=/>object
-store</a> through other means than their <a>key</a>. An <dfn id=index-concept>index</dfn> allows looking up <a>records</a> in an
+store</a> through other means than their <a for=/>key</a>. An <dfn id=index-concept>index</dfn> allows looking up <a>records</a> in an
 <a for=/>object store</a> using properties of the <a for=/>values</a> in the
 <a for=/>object stores</a> <a>records</a>.
 
@@ -683,7 +683,7 @@ deleted. There can be several <a for=/>indexes</a> referencing the same
 such indexes to get updated.
 
 The values in the index's <a>records</a> are always values of
-<a>keys</a> in the index's <a>referenced</a> object store. The keys
+<a for=/>keys</a> in the index's <a>referenced</a> object store. The keys
 are derived from the referenced object store's <a for=/>values</a> using a
 <dfn>key path</dfn>. If a
 given <a>record</a> with key <var>X</var> in the object store
@@ -748,7 +748,7 @@ An <a for=/>index</a> has a <dfn>multiEntry flag</dfn>. This flag affects
 how the index behaves when the result of evaluating the index's <a
 for=index>key path</a> yields an <a>array key</a>. If
 the <a>multiEntry flag</a> is unset, then a single <a>record</a> whose
-<a>key</a> is an <a>array key</a> is added to the index. If the
+<a for=/>key</a> is an <a>array key</a> is added to the index. If the
 <a>multiEntry flag</a> is true, then the one <a>record</a> is added to
 the index for each of the <a>subkeys</a>.
 
@@ -1128,15 +1128,14 @@ An <a>open request</a>'s <a>get the parent</a> algorithm returns null.
 <!-- ============================================================ -->
 
 Records can be retrieved from <a for=/>object stores</a> and <a for=/>indexes</a>
-using either <a>keys</a> or <a>key ranges</a>. A <dfn data-lt="key
-ranges">key range</dfn> is a continuous interval over some data type
+using either <a for=/>keys</a> or <a>key ranges</a>. A <dfn>key range</dfn> is a continuous interval over some data type
 used for keys.
 
 A <a>key range</a> has an associated <dfn>lower bound</dfn> (null or a
-<a>key</a>).
+<a for=/>key</a>).
 
 A <a>key range</a> has an associated <dfn>upper bound</dfn> (null or a
-<a>key</a>).
+<a for=/>key</a>).
 
 A <a>key range</a> has an associated <dfn>lower open flag</dfn>.
 Unless otherwise stated it is unset.
@@ -1165,26 +1164,26 @@ conditions are fulfilled:
 <aside class=note>
 
   * If the <a>lower open flag</a> of a <a>key range</a> is unset, the
-    <a>lower bound</a> <a>key</a> of the <a>key range</a> is included
+    <a>lower bound</a> <a for=/>key</a> of the <a>key range</a> is included
     in the range itself.
 
   * If the <a>lower open flag</a> of a <a>key range</a> is set, the
-    <a>lower bound</a> <a>key</a> of the <a>key range</a> is excluded
+    <a>lower bound</a> <a for=/>key</a> of the <a>key range</a> is excluded
     from the range itself.
 
   * If the <a>upper open flag</a> of a <a>key range</a> is unset, the
-    <a>upper bound</a> <a>key</a> of the <a>key range</a> is included
+    <a>upper bound</a> <a for=/>key</a> of the <a>key range</a> is included
     in the range itself.
 
   * If the <a>upper open flag</a> of a <a>key range</a> is set, the
-    <a>upper bound</a> <a>key</a> of the <a>key range</a> is excluded
+    <a>upper bound</a> <a for=/>key</a> of the <a>key range</a> is excluded
     from the range itself.
 
 </aside>
 
 An <dfn>unbounded key range</dfn> is a <a>key range</a> that has both
 <a>lower bound</a> and <a>upper bound</a> equal to null. All
-<a>keys</a> are <a data-lt="in a key range">in</a> an <a>unbounded key
+<a for=/>keys</a> are <a data-lt="in a key range">in</a> an <a>unbounded key
 range</a>.
 
 The steps to <dfn>convert a value to a key range</dfn> with
@@ -1214,15 +1213,15 @@ follows:
 A <dfn>cursor</dfn> is used to iterate over a range of records in an
 <a for=/>index</a> or an <a for=/>object store</a> in a specific direction.
 
-A <a>cursor</a> has a <dfn data-lt-noDefault
-data-lt="cursor.transaction">transaction</dfn>, the <a for=/>transaction</a>
+<div dfn-for=cursor>
+
+A <a>cursor</a> has a <dfn>transaction</dfn>, the <a for=/>transaction</a>
 that was <a>active</a> when the cursor was created.
 
 A <a>cursor</a> has a <dfn>range</dfn> of records in either an
 <a for=/>index</a> or an <a for=/>object store</a>.
 
-A <a>cursor</a> has a <dfn data-lt-noDefault
-data-lt="cursor.source">source</dfn> that indicates which <a for=/>index</a>
+A <a>cursor</a> has a <dfn>source</dfn> that indicates which <a for=/>index</a>
 or an <a for=/>object store</a> is associated with the records over which
 the <a>cursor</a> is iterating.
 
@@ -1231,7 +1230,7 @@ moves in monotonically increasing or decreasing order of the
 <a>record</a> keys when iterated, and if it skips duplicated values
 when iterating indexes. The direction of a cursor also determines if
 the cursor initial position is at the start of its <a
-data-lt="cursor.source">source</a> or at its end. A cursor's
+for=cursor>source</a> or at its end. A cursor's
 <a>direction</a> is one of the following:
 
 
@@ -1239,7 +1238,7 @@ data-lt="cursor.source">source</a> or at its end. A cursor's
   <dt>"<code>next</code>"</dt>
   <dd>
     This direction causes the cursor to be opened at the start of the
-    <a data-lt="cursor.source">source</a>. When iterated, the
+    <a for=cursor>source</a>. When iterated, the
     <a>cursor</a> should yield all records, including duplicates, in
     monotonically increasing order of keys.
   </dd>
@@ -1247,11 +1246,11 @@ data-lt="cursor.source">source</a> or at its end. A cursor's
   <dt>"<code>nextunique</code>"</dt>
   <dd>
     This direction causes the cursor to be opened at the start of the
-    <a data-lt="cursor.source">source</a>. When iterated, the
+    <a for=cursor>source</a>. When iterated, the
     <a>cursor</a> should not yield records with the same key, but
     otherwise yield all records, in monotonically increasing order of
     keys. For every key with duplicate values, only the first record
-    is yielded. When the <a data-lt="cursor.source">source</a> is an
+    is yielded. When the <a for=cursor>source</a> is an
     <a for=/>object store</a> or an <a for=/>index</a> with the <a>unique flag</a>
     set, this direction has exactly the same behavior as
     "<code>next</code>".
@@ -1260,7 +1259,7 @@ data-lt="cursor.source">source</a> or at its end. A cursor's
   <dt>"<code>prev</code>"</dt>
   <dd>
     This direction causes the cursor to be opened at the end of the <a
-    data-lt="cursor.source">source</a>. When iterated, the
+    for=cursor>source</a>. When iterated, the
     <a>cursor</a> should yield all records, including duplicates, in
     monotonically decreasing order of keys.
   </dd>
@@ -1268,11 +1267,11 @@ data-lt="cursor.source">source</a> or at its end. A cursor's
   <dt>"<code>prevunique</code>"</dt>
   <dd>
     This direction causes the cursor to be opened at the end of the <a
-    data-lt="cursor.source">source</a>. When iterated, the
+    for=cursor>source</a>. When iterated, the
     <a>cursor</a> should not yield records with the same key, but
     otherwise yield all records, in monotonically decreasing order of
     keys. For every key with duplicate values, only the first record
-    is yielded. When the <a data-lt="cursor.source">source</a> is an
+    is yielded. When the <a for=cursor>source</a> is an
     <a for=/>object store</a> or an <a for=/>index</a> with the <a>unique flag</a>
     set, this direction has exactly the same behavior as
     "<code>prev</code>".
@@ -1283,12 +1282,12 @@ A <a>cursor</a> has a <dfn>position</dfn> within its range. It is
 possible for the list of records which the cursor is iterating over to
 change before the full <a>range</a> of the cursor has been iterated.
 In order to handle this, cursors maintain their <a>position</a> not as
-an index, but rather as a <a>key</a> of the previously returned
+an index, but rather as a <a for=/>key</a> of the previously returned
 record. For a forward iterating cursor, the next time the cursor is
 asked to iterate to the next record it returns the record with the
-lowest <a>key</a> <a>greater than</a> the one previously returned. For
+lowest <a for=/>key</a> <a>greater than</a> the one previously returned. For
 a backwards iterating cursor, the situation is opposite and it returns
-the record with the highest <a>key</a> <a>less than</a> the one
+the record with the highest <a for=/>key</a> <a>less than</a> the one
 previously returned.
 
 For cursors iterating indexes the situation is a little bit more
@@ -1299,9 +1298,7 @@ indicates the <a for=/>value</a> of the previously found <a>record</a> in
 the index. Both <a>position</a> and the <a>object store position</a>
 are used when finding the next appropriate record.
 
-A <a>cursor</a> has a <dfn data-lt-noDefault
-data-lt="cursor.key">key</dfn> and a <dfn data-lt-noDefault
-data-lt="cursor.value">value</dfn> which represent the <a>key</a> and
+A <a>cursor</a> has a <dfn>key</dfn> and a <dfn>value</dfn> which represent the <a for=/>key</a> and
 the <a for=/>value</a> of the last iterated <a>record</a>.
 
 A <a>cursor</a> has a <dfn>got value flag</dfn>. When this flag unset,
@@ -1310,31 +1307,32 @@ has reached the end of its <a>range</a>. When it is set, it indicates
 that the cursor is currently holding a value and that it is ready to
 iterate to the next one.
 
-If the <a data-lt="cursor.source">source</a> of a cursor is an
+If the <a for=cursor>source</a> of a cursor is an
 <a for=/>object store</a>, the <dfn>effective object store</dfn> of the
 cursor is that object store and the <dfn>effective key</dfn> of the
 cursor is the cursor's <a>position</a>. If the <a
-data-lt="cursor.source">source</a> of a cursor is an <a for=/>index</a>, the
+for=cursor>source</a> of a cursor is an <a for=/>index</a>, the
 <a>effective object store</a> of the cursor is that index's
 <a>referenced</a> object store and the <a>effective key</a> is the
 cursor's <a>object store position</a>.
 
 A <a>cursor</a> also has a <dfn>key only flag</dfn>, that indicates
-whether the cursor's <a data-lt="cursor.value">value</a> is exposed
+whether the cursor's <a for=cursor>value</a> is exposed
 via the API. Unless stated otherwise it is unset.
 
+</div>
 
 <!-- ============================================================ -->
 <h4 id=key-generator-construct>Key Generators</h4>
 <!-- ============================================================ -->
 
 When a <a for=/>object store</a> is created it can be specified to use a
-<dfn data-lt="key generators">key generator</dfn>. A <a>key
+<dfn>key generator</dfn>. A <a>key
 generator</a> keeps an internal <dfn>current number</dfn>. The
 <a>current number</a> is always a positive integer. Whenever the key
-generator is used to generate a new <a>key</a>, the generator's
+generator is used to generate a new <a for=/>key</a>, the generator's
 <a>current number</a> is returned and <strong>then</strong>
-incremented to prepare for the next time a new <a>key</a> is needed.
+incremented to prepare for the next time a new <a for=/>key</a> is needed.
 Implementations MUST use the following rules for generating numbers
 when a <a>key generator</a> is used.
 
@@ -1346,12 +1344,12 @@ when a <a>key generator</a> is used.
     1 when the <a for=/>object store</a> for that key generator is first
     created.
 
-* When a key generator is used to generate a new <a>key</a> for a
+* When a key generator is used to generate a new <a for=/>key</a> for a
     <a for=/>object store</a>, the key generator's <a>current number</a> is
     used as the new key value and then the key generator's <a>current
     number</a> is increased by 1.
 
-* When a <a>record</a> is stored and a <a>key</a> is specified in the
+* When a <a>record</a> is stored and a <a for=/>key</a> is specified in the
     call to store the record, if <a for=key>type</a> of the
     key is <i>number</i> and the <a for=key>value</a> is
     greater than or equal to the key generator's <a>current
@@ -1394,7 +1392,7 @@ when a <a>key generator</a> is used.
 
 * When the <a>current number</a> of a key generator reaches above the
     value 2<sup>53</sup> (9007199254740992) any attempts to use the
-    key generator to generate a new <a>key</a> will result in a
+    key generator to generate a new <a for=/>key</a> will result in a
     <a>ConstraintError</a>. It is still possible to insert
     <a>records</a> into the object store by specifying an explicit
     key, however the only way to use a key generator again for the
@@ -1506,7 +1504,7 @@ store_t2.put("d"); // Will get key 2
 <aside class=example>
 
 The following examples illustrate the different behaviors when trying
-to use in-line <a>keys</a> and <a>key generators</a> to save an object
+to use in-line <a for=/>keys</a> and <a>key generators</a> to save an object
 to an <a for=/>object store</a>.
 
 If the following conditions are true:
@@ -1522,7 +1520,7 @@ for=object-store>key path</a> for the object store is
 "<code>foo.bar</code>". The actual object has no value for the
 <code>bar</code> property, <code>{ foo: {} }</code>. When the object
 is saved in the <a for=/>object store</a> the <code>bar</code> property is
-assigned a value of 1 because that is the next <a>key</a> generated by
+assigned a value of 1 because that is the next <a for=/>key</a> generated by
 the <a>key generator</a>.
 
 <pre class=lang-javascript>
@@ -1541,7 +1539,7 @@ If the following conditions are true:
     property.
 
 Then the value associated with the <a for=object-store>key path</a>
-property is used. The auto-generated <a>key</a> is not used. In the
+property is used. The auto-generated <a for=/>key</a> is not used. In the
 example below the <a for=object-store>key path</a> for the <a for=/>object
 store</a> is "<code>foo.bar</code>". The actual object has a value of
 10 for the <code>bar</code> property, <code>{ foo: { bar: 10}
@@ -1558,7 +1556,7 @@ store.put({ foo: { bar: 10 } }).onsuccess = function(e) {
 </pre>
 
 The following example illustrates the scenario when the specified
-in-line <a>key</a> is defined through a <a for=object-store>key
+in-line <a for=/>key</a> is defined through a <a for=object-store>key
 path</a> but there is no property matching it. The value provided by
 the <a>key generator</a> is then used to populate the key value and
 the system is responsible for creating as many properties as it
@@ -2033,7 +2031,7 @@ dictionary IDBObjectStoreParameters {
 
 The {{IDBDatabase/name}}
 attribute's getter must return the <a for="database">name</a>
-of the <a data-lt="connection">connected</a> <a>database</a>. The
+of the <a>connected</a> <a>database</a>. The
 attribute MUST return this name even if the <a>close pending flag</a>
 is set on the <a for=/>connection</a>. In other words, the value of this
 attribute stays constant for the lifetime of the {{IDBDatabase}}
@@ -2110,7 +2108,7 @@ The <dfn method for=IDBDatabase>createObjectStore(<var>name</var>, <var>options<
 
 
 This method creates and returns a new <a for=/>object store</a> with the
-given name in the <a lt="connection">connected</a> <a>database</a>.
+given name in the <a>connected</a> <a>database</a>.
 Note that this method must only be called from within an <a>upgrade
 transaction</a>.
 
@@ -2154,7 +2152,7 @@ The <dfn method for=IDBDatabase>deleteObjectStore(<var>name</var>)</dfn> method,
 6. Destroy <var>store</var>.
 
 This method destroys the <a for=/>object store</a> with the given name in
-the <a lt="connection">connected</a> <a>database</a>. Note that this
+the <a>connected</a> <a>database</a>. Note that this
 method must only be called from within an <a>upgrade transaction</a>.
 
 This method synchronously modifies the
@@ -2176,7 +2174,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 4. Let <var>scope</var> be the set of unique strings in <var>storeNames</var> if it is a sequence,
     or a set containing one string equal to <var>storeNames</var> otherwise.
 
-5. If any string in <var>scope</var> is not the name of an <a for=/>object store</a> in the <a data-lt="connection">connected</a> <a>database</a>,
+5. If any string in <var>scope</var> is not the name of an <a for=/>object store</a> in the <a>connected</a> <a>database</a>,
     <a>throw</a> a <a>NotFoundError</a> exception.
 
 6. If <var>scope</var> is empty,
@@ -2492,7 +2490,7 @@ The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when i
     the <a>steps for deleting records from an object store</a> as
     <var>operation</var>, using <var>store</var> and <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> keys to be
 deleted.
 
@@ -2553,7 +2551,7 @@ The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invo
       an object store</a> as <var>operation</var>, using
       <var>store</var> and <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>record</a> to be retrieved. If a
 range is specified, the method retrieves the first existing value in
 that range.
@@ -2594,7 +2592,7 @@ The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when i
       object store</a> as <var>operation</var>, using <var>store</var>
       and <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>record</a> key to be
 retrieved. If a range is specified, the method retrieves
 the first existing key in that range.
@@ -2627,7 +2625,7 @@ The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</d
     store</a> as <var>operation</var>, using <var>store</var>,
     <var>range</var>, and <var>count</var> if given.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> to be retrieved. If
 null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
@@ -2660,7 +2658,7 @@ The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>
     as <var>operation</var>, using <var>store</var>, <var>range</var>,
     and <var>count</var> if given.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> keys to be
 retrieved. If null or not given, an <a>unbounded key
 range</a> is used. If <var>count</var> is specified and
@@ -2694,7 +2692,7 @@ The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when in
     the <a>steps to count the records in a range</a> as
     <var>operation</var>, with <var>source</var> and <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> keys to be
 counted. If null or not given, an <a>unbounded key
 range</a> is used.
@@ -2719,12 +2717,12 @@ The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</
     this throws an exception, <a>rethrow</a> it.
 
 6. Let <var>cursor</var> be a new <a>cursor</a> with <a
-    data-lt="cursor.transaction">transaction</a> set to
+    for=cursor>transaction</a> set to
     <var>transaction</var>, an undefined <a>position</a>,
     <a>direction</a> set to <var>direction</var>, <a>got value
-    flag</a> unset, and undefined <a data-lt="cursor.key">key</a> and
-    <a data-lt="cursor.value">value</a>. The <a
-    data-lt="cursor.source">source</a> of <var>cursor</var> is
+    flag</a> unset, and undefined <a for=cursor>key</a> and
+    <a for=cursor>value</a>. The <a
+    for=cursor>source</a> of <var>cursor</var> is
     <var>store</var>. The <a>range</a> of <var>cursor</var> is
     <var>range</var>.
 
@@ -2734,7 +2732,7 @@ The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</
     the <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>.
 If null or not given, an <a>unbounded key range</a> is used.
 
@@ -2758,12 +2756,12 @@ The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>directio
     this throws an exception, <a>rethrow</a> it.
 
 6. Let <var>cursor</var> be a new <a>cursor</a> with <a
-    data-lt="cursor.transaction">transaction</a> set to
+    for=cursor>transaction</a> set to
     <var>transaction</var>, an undefined <a>position</a>,
     <a>direction</a> set to <var>direction</var>, <a>got value
-    flag</a> unset, and undefined <a data-lt="cursor.key">key</a> and
-    <a data-lt="cursor.value">value</a>. The <a
-    data-lt="cursor.source">source</a> of <var>cursor</var> is
+    flag</a> unset, and undefined <a for=cursor>key</a> and
+    <a for=cursor>value</a>. The <a
+    for=cursor>source</a> of <var>cursor</var> is
     <var>store</var>. The <a>range</a> of <var>cursor</var> is
     <var>range</var>. The <a>key only flag</a> of <var>cursor</var> is
     set.
@@ -2774,7 +2772,7 @@ The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>directio
     the <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
@@ -3086,7 +3084,7 @@ The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, m
       as <var>operation</var>, using <var>index</var> and
       <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>record</a> to be retrieved. If a
 range is specified, the method retrieves the first existing record in
 that range.
@@ -3128,7 +3126,7 @@ The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked
     <var>operation</var>, using <var>index</var> and
     <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>record</a> key to be retrieved.
 If a range is specified, the method retrieves the first existing key
 in that range.
@@ -3159,7 +3157,7 @@ The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> me
     index</a> as <var>operation</var>, using <var>index</var>,
     <var>range</var>, and <var>count</var> if given.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> to be retrieved. If
 null or not given, an <a>unbounded key range</a> is used. If
 <var>count</var> is specified and there are more than <var>count</var>
@@ -3193,7 +3191,7 @@ The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn
     as <var>operation</var>, using <var>index</var>,
     <var>range</var>, and <var>count</var> if given.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> keys to be
 retrieved. If null or not given, an <a>unbounded key range</a> is
 used. If <var>count</var> is specified and there are more than
@@ -3229,7 +3227,7 @@ The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked,
     <var>operation</var>, with <a for=/>index</a> as <var>source</var> and
     <var>range</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} identifying the <a>records</a> keys to be counted.
 If null or not given, an <a>unbounded key range</a> is used.
 
@@ -3253,12 +3251,12 @@ The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)<
     this throws an exception, <a>rethrow</a> it.
 
 6. Let <var>cursor</var> be a new <a>cursor</a> with <a
-    data-lt="cursor.transaction">transaction</a> set to
+    for=cursor>transaction</a> set to
     <var>transaction</var>, an undefined <a>position</a>,
     <a>direction</a> set to <var>direction</var>, <a>got value
-    flag</a> unset, and undefined <a data-lt="cursor.key">key</a> and
-    <a data-lt="cursor.value">value</a>. The <a
-    data-lt="cursor.source">source</a> of <var>cursor</var> is
+    flag</a> unset, and undefined <a for=cursor>key</a> and
+    <a for=cursor>value</a>. The <a
+    for=cursor>source</a> of <var>cursor</var> is
     <var>index</var>. The <a>range</a> of <var>cursor</var> is
     <var>range</var>.
 
@@ -3268,7 +3266,7 @@ The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)<
     <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
@@ -3292,12 +3290,12 @@ The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var
     this throws an exception, <a>rethrow</a> it.
 
 7. Let <var>cursor</var> be a new <a>cursor</a> with <a
-    data-lt="cursor.transaction">transaction</a> set to
+    for=cursor>transaction</a> set to
     <var>transaction</var>, an undefined <a>position</a>,
     <a>direction</a> set to <var>direction</var>, <a>got value
-    flag</a> unset, and undefined <a data-lt="cursor.key">key</a> and
-    <a data-lt="cursor.value">value</a>. The <a
-    data-lt="cursor.source">source</a> of <var>cursor</var> is
+    flag</a> unset, and undefined <a for=cursor>key</a> and
+    <a for=cursor>value</a>. The <a
+    for=cursor>source</a> of <var>cursor</var> is
     <var>index</var>. The <a>range</a> of <var>cursor</var> is
     <var>range</var>. The <a>key only flag</a> of <var>cursor</var> is
     set.
@@ -3308,7 +3306,7 @@ The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var
     <a>steps for iterating a cursor</a> with <var>cursor</var> as
     <var>operation</var>.
 
-The <var>query</var> parameter may be a <a>key</a> or an
+The <var>query</var> parameter may be a <a for=/>key</a> or an
 {{IDBKeyRange}} to use as the <a>cursor</a>'s <a>range</a>. If null
 or not given, an <a>unbounded key range</a> is used.
 
@@ -3472,7 +3470,7 @@ enum IDBCursorDirection {
 </pre>
 
 The {{IDBCursor/source}} attribute's getter must return the <a
-data-lt="cursor.source">source</a> of this <a>cursor</a>. This
+for=cursor>source</a> of this <a>cursor</a>. This
 attribute never returns null or throws an exception, even if the
 cursor is currently being iterated, has iterated past its end, or its
 <a for=/>transaction</a> is not <a>active</a>.
@@ -3482,10 +3480,10 @@ of the <a>cursor</a>.
 
 The {{IDBCursor/key}} attribute's getter must return the result of running the
 steps to <a>convert a key to a value</a> with the cursor's current <a
-data-lt="cursor.key">key</a>. Note that if this property returns an
+for=cursor>key</a>. Note that if this property returns an
 object (e.g. a <a>Date</a> or <a>Array</a>), it returns the same
 object instance every time it is inspected, until the cursor's <a
-data-lt="cursor.key">key</a> is changed. This means that if the object
+for=cursor>key</a> is changed. This means that if the object
 is modified, those modifications will be seen by anyone inspecting the
 value of the cursor. However modifying such an object does not modify
 the contents of the database.
@@ -3503,7 +3501,7 @@ the contents of the database.
 The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
-    data-lt="cursor.transaction">transaction</a>.
+    for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
@@ -3511,7 +3509,7 @@ The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoke
 3. If <var>transaction</var> is a <a>read-only transaction</a>,
     <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-4. If the cursor's <a data-lt="cursor.source">source</a> or
+4. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
 
@@ -3560,12 +3558,12 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
 1. If <var>count</var> is 0 (zero), <a>throw</a> a <a>TypeError</a>.
 
 2. Let <var>transaction</var> be this <a>cursor</a>'s <a
-    data-lt="cursor.transaction">transaction</a>.
+    for=cursor>transaction</a>.
 
 3. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
 
-4. If the cursor's <a data-lt="cursor.source">source</a> or
+4. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
 
@@ -3581,7 +3579,7 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
 9. Unset the <a>done flag</a> on <var>request</var>.
 
 10. Run the <a>steps for asynchronously executing a request</a> with
-    the cursor's <a data-lt="cursor.source">source</a> as
+    the cursor's <a for=cursor>source</a> as
     <var>source</var> and the <a>steps for iterating a cursor</a> with
     this <a>cursor</a> and <var>count</var>, and <var>request</var>.
 
@@ -3597,12 +3595,12 @@ The <dfn method for=IDBCursor>advance(<var>count</var>)</dfn> method, when invok
 The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
-    data-lt="cursor.transaction">transaction</a>.
+    for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
 
-3. If the cursor's <a data-lt="cursor.source">source</a> or
+3. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
 
@@ -3640,7 +3638,7 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
 8. Unset the <a>done flag</a> on <var>request</var>.
 
 9. Run the <a>steps for asynchronously executing a request</a> with
-    the cursor's <a data-lt="cursor.source">source</a> as
+    the cursor's <a for=cursor>source</a> as
     <var>source</var> and the <a>steps for iterating a cursor</a> with
     this <a>cursor</a> and <var>key</var> (if given), and
     <var>request</var>.
@@ -3658,16 +3656,16 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
 The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey</var>)</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
-    data-lt="cursor.transaction">transaction</a>.
+    for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
 
-3. If the cursor's <a data-lt="cursor.source">source</a> or
+3. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
 
-4. If this cursor's <a data-lt="cursor.source">source</a> is not an
+4. If this cursor's <a for=cursor>source</a> is not an
     <a for=/>index</a> <a>throw</a> an <a>InvalidAccessError</a> exception.
 
 5. If this cursor's <a>direction</a> is not "<code>next</code>" or
@@ -3728,7 +3726,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 19. Unset the <a>done flag</a> on <var>request</var>.
 
 20. Run the <a>steps for asynchronously executing a request</a> with
-    the cursor's <a data-lt="cursor.source">source</a> as
+    the cursor's <a for=cursor>source</a> as
     <var>source</var> and the <a>steps for iterating a cursor</a> with
     this <a>cursor</a>, <var>key</var>, <var>primaryKey</var>, and
     <var>request</var>.
@@ -3747,7 +3745,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run these steps:
 
 1. Let <var>transaction</var> be this <a>cursor</a>'s <a
-    data-lt="cursor.transaction">transaction</a>.
+    for=cursor>transaction</a>.
 
 2. If <var>transaction</var> is not <a>active</a>, <a>throw</a> a
     <a>TransactionInactiveError</a> exception.
@@ -3755,7 +3753,7 @@ The <dfn method for=IDBCursor>delete()</dfn> method, when invoked, must run thes
 3. If <var>transaction</var> is a <a>read-only transaction</a>,
     <a>throw</a> a <a>ReadOnlyError</a> exception.
 
-4. If the cursor's <a data-lt="cursor.source">source</a> or
+4. If the cursor's <a for=cursor>source</a> or
     <a>effective object store</a> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
 
@@ -3785,11 +3783,11 @@ interface IDBCursorWithValue : IDBCursor {
 </pre>
 
 The {{IDBCursorWithValue/value}} attribute's getter must return the
-cursor's current <a data-lt="cursor.value">value</a>.
+cursor's current <a for=cursor>value</a>.
 
 Note that if this property returns an object, it returns the same
 object instance every time it is inspected, until the cursor's <a
-data-lt="cursor.value">value</a> is changed. This means that if the
+for=cursor>value</a> is changed. This means that if the
 object is modified, those modifications will be seen by anyone
 inspecting the value of the cursor. However modifying such an object
 does not modify the contents of the database.
@@ -4390,7 +4388,7 @@ This reverts the value of <code>objectStoreNames</code> returned by the {{IDBDat
 
 <li>
 For each <a for=/>object store handle</a> <var>handle</var> associated with <var>transaction</var>,
-including <a data-lt="object store handle">handles</a> for <a for=/>object stores</a>
+including those for <a for=/>object stores</a>
 that were deleted during <var>transaction</var>, run these substeps:
 <ol>
 <li>
@@ -4416,7 +4414,7 @@ can be queried.
 
 <li>
 For each <a>index handle</a> <var>handle</var> associated with <var>transaction</var>,
-including <a data-lt="index handle">handles</a> for <a for=/>indexes</a>
+including those for <a for=/>indexes</a>
 that were deleted during <var>transaction</var>, run these substeps:
 <ol>
 <li>
@@ -4603,13 +4601,13 @@ An exception thrown in this step is not rethrown.
 
 <li>
 If <var>index</var>'s <a>multiEntry flag</a> is unset, or if <var>index key</var> is not an <a>array key</a>,
-and if <var>index</var> already contains a <a>record</a> with <a>key</a> <a>equal to</a> <var>index key</var>,
+and if <var>index</var> already contains a <a>record</a> with <a for=/>key</a> <a>equal to</a> <var>index key</var>,
 and <var>index</var> has its <a>unique flag</a> set, then this operation failed with a
 <a>ConstraintError</a>. Abort this algorithm without taking any further steps.
 
 <li>
 If <var>index</var>'s <a>multiEntry flag</a> is set and <var>index key</var> is an <a>array key</a>,
-and if <var>index</var> already contains a <a>record</a> with <a>key</a> <a>equal to</a> any of the
+and if <var>index</var> already contains a <a>record</a> with <a for=/>key</a> <a>equal to</a> any of the
 <a>subkeys</a> of <var>index key</var>, and <var>index</var> has its <a>unique flag</a> set, then this operation
 failed with a <a>ConstraintError</a>. Abort this algorithm without taking any further steps.
 
@@ -4897,16 +4895,16 @@ The <dfn>steps for iterating a cursor</dfn> with <var>cursor</var>, an optional
 <var>key</var> and <var>primaryKey</var> to iterate to, and an optional <var>count</var> are as follows.
 
 <ol class=algorithm>
-<li>Let <var>source</var> be <var>cursor</var>'s <a data-lt="cursor.source">source</a>.
+<li>Let <var>source</var> be <var>cursor</var>'s <a for=cursor>source</a>.
 <li>Let <var>direction</var> be <var>cursor</var>'s <a>direction</a>.
 <li>Assert: if <var>primaryKey</var> is given, <var>source</var> is an <a for=/>index</a> and
 <var>direction</var> is "<code>next</code>" or "<code>prev</code>".
 
 <li>Let <var>records</var> be the list of <a>records</a> in <var>source</var>.
 <aside class=note>
-<var>records</var> is always sorted in ascending <a>key</a> order. In the case of
+<var>records</var> is always sorted in ascending <a for=/>key</a> order. In the case of
 <var>source</var> being an <a for=/>index</a>, <var>records</var> is secondarily sorted in ascending
-<a for=/>value</a> order (where the value in an <a for=/>index</a> is the <a>key</a> of the <a>record</a> in the referenced <a for=/>object store</a>).
+<a for=/>value</a> order (where the value in an <a for=/>index</a> is the <a for=/>key</a> of the <a>record</a> in the referenced <a for=/>object store</a>).
 </aside>
 
 <li>Let <var>range</var> be <var>cursor</var>'s <a>range</a>.
@@ -5015,11 +5013,11 @@ whose key is <a>equal to</a> <var>temp record</var>'s key.
 <li>
 If <var>found record</var> is not defined, run these substeps:
 <ol>
-<li>Set <var>cursor</var>'s <a data-lt="cursor.key">key</a> to undefined.
+<li>Set <var>cursor</var>'s <a for=cursor>key</a> to undefined.
 <li>If <var>source</var> is an <a for=/>index</a>,
 set <var>cursor</var>'s <a>object store position</a> to undefined.
 <li>If <var>cursor</var>'s <a>key only flag</a> is unset,
-set <var>cursor</var>'s <a data-lt="cursor.value">value</a> to undefined.
+set <var>cursor</var>'s <a for=cursor>value</a> to undefined.
 <li>Return null.
 </ol>
 
@@ -5033,9 +5031,9 @@ let <var>object store position</var> be <var>found record</var>'s value.
 <li>Set <var>cursor</var>'s <a>position</a> to <var>position</var>.
 <li>If <var>source</var> is an <a for=/>index</a>,
 set <var>cursor</var>'s <a>object store position</a> to <var>object store position</var>.
-<li>Set <var>cursor</var>'s <a data-lt="cursor.key">key</a> to <var>found record</var>'s key.
+<li>Set <var>cursor</var>'s <a for=cursor>key</a> to <var>found record</var>'s key.
 <li>If <var>cursor</var>'s <a>key only flag</a> is unset,
-set <var>cursor</var>'s <a data-lt="cursor.value">value</a> to a <a>structured clone</a> of <var>found record</var>'s <a>referenced value</a>.
+set <var>cursor</var>'s <a for=cursor>value</a> to a <a>structured clone</a> of <var>found record</var>'s <a>referenced value</a>.
 <li>Set <var>cursor</var>'s <a>got value flag</a>.
 <li>Return <var>cursor</var>.
 </ol>
@@ -5046,7 +5044,7 @@ set <var>cursor</var>'s <a data-lt="cursor.value">value</a> to a <a>structured c
 <h3 id=binding>ECMAScript binding</h3>
 <!-- ============================================================ -->
 
-This section defines how <a>key</a> values defined in this specification
+This section defines how <a for=/>key</a> values defined in this specification
 are converted to and from ECMAScript values, and how they may be
 extracted from and injected into ECMAScript values using <a for=/>key paths</a>.
 This section references
@@ -5066,7 +5064,7 @@ types and algorithms from the ECMAScript Language Specification. [[!ECMA-262]]
 The steps to <dfn>extract a key from a value using a key path</dfn>
 with <var>value</var>, <var>keyPath</var> and an optional
 <var>multiEntry flag</var> are as follows.
-The result of these steps is a <a>key</a>, invalid, or failure,
+The result of these steps is a <a for=/>key</a>, invalid, or failure,
 or the steps may throw an exception.
 
 <ol class=algorithm>
@@ -5268,7 +5266,7 @@ with the <var>index</var>th entry of <var>value</var> as input.
 
 The steps to <dfn>convert a value to a key</dfn> are as follows. These
 steps take two arguments, an ECMAScript value <var>input</var>, and
-an optional set <var>seen</var>. The result of these steps is a <a>key</a> or invalid,
+an optional set <var>seen</var>. The result of these steps is a <a for=/>key</a> or invalid,
 or the steps may throw an exception.
 
 <ol class=algorithm>
@@ -5282,7 +5280,7 @@ or the steps may throw an exception.
 <dd>
 <ol>
 <li>If <var>input</var> is NaN then return invalid.
-<li>Otherwise, return a new <a>key</a> with <a for=key>type</a> <i>number</i>
+<li>Otherwise, return a new <a for=/>key</a> with <a for=key>type</a> <i>number</i>
 and <a for=key>value</a> <var>input</var>
 </ol>
 </dd>
@@ -5293,7 +5291,7 @@ and <a for=key>value</a> <var>input</var>
 <ol>
 <li>Let <var>ms</var> be the value of <var>input</var>'s [<span>[</span>DateValue]] internal slot.
 <li>If <var>ms</var> is NaN then return invalid.
-<li>Otherwise, return a new <a>key</a> with <a for=key>type</a> <i>date</i> and <a for=key>value</a> <var>ms</var>.
+<li>Otherwise, return a new <a for=/>key</a> with <a for=key>type</a> <i>date</i> and <a for=key>value</a> <var>ms</var>.
 </ol>
 </dd>
 
@@ -5301,7 +5299,7 @@ and <a for=key>value</a> <var>input</var>
 <dt>If Type(<var>input</var>) is String</dt>
 <dd>
 <ol>
-<li>Return a new <a>key</a> with <a for=key>type</a> <i>string</i> and <a for=key>value</a> <var>input</var>.
+<li>Return a new <a for=/>key</a> with <a for=key>type</a> <i>string</i> and <a for=key>value</a> <var>input</var>.
 </ol>
 </dd>
 
@@ -5315,7 +5313,7 @@ Let <var>octets</var> be the result of running the steps for
 <a>getting a copy of the bytes held by a buffer source</a> with <var>value</var>.
 If this throws an exception, <a>rethrow</a> it.
 
-<li>Return a new <a>key</a> with <a for=key>type</a> <i>binary</i> and <a for=key>value</a> <var>octets</var>.
+<li>Return a new <a for=/>key</a> with <a for=key>type</a> <i>binary</i> and <a for=key>value</a> <var>octets</var>.
 </ol>
 </dd>
 
@@ -5353,7 +5351,7 @@ with arguments <var>entry</var> and <var>seen</var>
 
 The steps to <dfn>convert a value to a multiEntry key</dfn> are as follows. These
 steps take one argument, an ECMAScript value <var>input</var>.
-The result of these steps is a <a>key</a> or invalid, or the steps may throw an exception.
+The result of these steps is a <a for=/>key</a> or invalid, or the steps may throw an exception.
 
 <ol class=algorithm>
 <!-- Array -->
@@ -5622,7 +5620,7 @@ document's Revision History</a>.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22540">bug #22540</a>)
 
 * Converted specification to a more algorithmic style,
-    and define abstract types such as <a>key</a> more rigorously.
+    and define abstract types such as <a for=/>key</a> more rigorously.
     (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=17681">bug #17681</a>)
 
 * Added
@@ -5638,7 +5636,7 @@ document's Revision History</a>.
 * Added {{IDBTransaction/objectStoreNames}} on {{IDBTransaction}}.
     (<a href="https://github.com/w3c/IndexedDB/issues/18">bug #18</a>)
 
-* Added <i>binary</i> <a>keys</a>, including comparisons and ECMAScript bindings.
+* Added <i>binary</i> <a for=/>keys</a>, including comparisons and ECMAScript bindings.
     (<a href="https://github.com/w3c/IndexedDB/issues/21">bug #21</a>)
 
 * Allow renaming stores and indexes via {{IDBObjectStore}}'s {{IDBObjectStore/name}}
