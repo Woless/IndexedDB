@@ -43,9 +43,13 @@ spec: dom; urlPrefix: https://dom.spec.whatwg.org
         text: DOMError; url: #domerror
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
+        text: String; url: #sec-ecmascript-language-types-string-type
+        text: Number; url: #sec-ecmascript-language-types-number-type
         text: Promise; url: #sec-promise-objects
         text: Date; url: #sec-date-objects
+        text: Object; url: #sec-object-objects
         text: Array; url: #sec-array-objects
+        text: ArrayBuffer; url: #sec-arraybuffer-objects
         text: Uint8Array; url: #sec-typedarray-objects
         text: IdentifierName; url: #prod-IdentifierName
         text: TypeError; url: #sec-native-error-types-used-in-this-standard-typeerror
@@ -57,7 +61,6 @@ spec: webidl; urlPrefix: https://heycam.github.io/webidl/
         text: sequence<DOMString>; url: #idl-sequence
         text: octet; url: #idl-octet
         text: throw; url: #dfn-throw
-        text: rethrow; url: #dfn-throw
         text: getting a copy of the bytes held by a buffer source; url: #dfn-get-buffer-source-copy
 </pre>
 <style>
@@ -503,7 +506,7 @@ The following ECMAScript types are valid keys:
 * <a>Number</a> primitive values, except NaN. This includes Infinity and -Infinity.
 * <a>Date</a> objects, except where the [<span>[</span>DateValue]] internal slot is NaN
 * <a>String</a> primitive values.
-* {{ArrayBuffer}} objects (or views on buffers such as <a>Uint8Array</a>).
+* <a>ArrayBuffer</a> objects (or views on buffers such as <a>Uint8Array</a>).
 * <a>Array</a> objects, where every item is defined, is itself a valid key, and does not directly or indirectly contain itself. This includes empty arrays. Arrays may contain other arrays.
 
 Attempting to convert other ECMAScript values to a <a for=/>key</a> will fail.
@@ -515,7 +518,6 @@ for=key>type</a> <i>array</i>. The <dfn>subkeys</dfn> of an
 for=key>value</a> list.
 
 To <dfn>compare two keys</dfn> <var>a</var> and <var>b</var>, run these steps:
-
 
 1. Let <var>ta</var> be the <a for=key>type</a> of <var>a</var>.
 
@@ -1215,7 +1217,7 @@ follows:
 
 3. Let <var>key</var> be the result of running the steps to <a>convert
     a value to a key</a> with <var>value</var>. If this throws an
-    exception, <a>rethrow</a> it.
+    exception, <a lt=throw>rethrow</a> it.
 
 4. If <var>key</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -1749,15 +1751,15 @@ request.onerror = function(evt) {...};
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBRequest : EventTarget {
-  readonly    attribute any                                        result;
-  readonly    attribute DOMException                               error;
-  readonly    attribute (IDBObjectStore or IDBIndex or IDBCursor)? source;
-  readonly    attribute IDBTransaction                             transaction;
-  readonly    attribute IDBRequestReadyState                       readyState;
+  readonly attribute any                                        result;
+  readonly attribute DOMException                               error;
+  readonly attribute (IDBObjectStore or IDBIndex or IDBCursor)? source;
+  readonly attribute IDBTransaction                             transaction;
+  readonly attribute IDBRequestReadyState                       readyState;
 
   // Event handlers:
-  attribute EventHandler                               onsuccess;
-  attribute EventHandler                               onerror;
+  attribute EventHandler onsuccess;
+  attribute EventHandler onerror;
 };
 
 enum IDBRequestReadyState {
@@ -1826,10 +1828,11 @@ The {{IDBOpenDBRequest/onupgradeneeded}} attribute is the event handler for the
 This specification fires events with the following custom interfaces:
 
 <pre class=idl>
-[Exposed=(Window,Worker), Constructor(DOMString type, optional IDBVersionChangeEventInit eventInitDict)]
+[Exposed=(Window,Worker),
+ Constructor(DOMString type, optional IDBVersionChangeEventInit eventInitDict)]
 interface IDBVersionChangeEvent : Event {
-  readonly    attribute unsigned long long  oldVersion;
-  readonly    attribute unsigned long long? newVersion;
+  readonly attribute unsigned long long  oldVersion;
+  readonly attribute unsigned long long? newVersion;
 };
 
 dictionary IDBVersionChangeEventInit : EventInit {
@@ -1876,7 +1879,7 @@ Indexed DB operations.
 <pre class=idl>
 [NoInterfaceObject]
 interface IDBEnvironment {
-  readonly    attribute IDBFactory indexedDB;
+  readonly attribute IDBFactory indexedDB;
 };
 Window implements IDBEnvironment;
 WorkerGlobalScope implements IDBEnvironment;
@@ -1888,10 +1891,11 @@ mechanism for accessing capabilities of indexed databases.
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBFactory {
-  IDBOpenDBRequest open(DOMString name, [EnforceRange] optional unsigned long long version);
+  IDBOpenDBRequest open(DOMString name,
+                        [EnforceRange] optional unsigned long long version);
   IDBOpenDBRequest deleteDatabase(DOMString name);
 
-  short            cmp(any first, any second);
+  short cmp(any first, any second);
 };
 </pre>
 
@@ -1990,13 +1994,13 @@ The <dfn method for=IDBFactory>cmp(<var>first</var>, <var>second</var>)</dfn> me
 
 1. Let <var>a</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>first</var>. If this throws an
-    exception, <a>rethrow</a> it.
+    exception, <a lt=throw>rethrow</a> it.
 
 2. If <var>a</var> is invalid, <a>throw</a> a {{DataError}} exception.
 
 3. Let <var>b</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>second</var>. If this throws an
-    exception, <a>rethrow</a> it.
+    exception, <a lt=throw>rethrow</a> it.
 
 4. If <var>b</var> is invalid, <a>throw</a> a {{DataError}} exception.
 
@@ -2023,21 +2027,23 @@ associated <a for=/>connection</a> must be <a for=connection>closed</a>.
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBDatabase : EventTarget {
-  readonly    attribute DOMString          name;
-  readonly    attribute unsigned long long version;
-  readonly    attribute DOMStringList      objectStoreNames;
+  readonly attribute DOMString          name;
+  readonly attribute unsigned long long version;
+  readonly attribute DOMStringList      objectStoreNames;
 
-  IDBTransaction transaction((DOMString or sequence&lt;DOMString&gt;) storeNames, optional IDBTransactionMode mode = "readonly");
+  IDBTransaction transaction((DOMString or sequence&lt;DOMString&gt;) storeNames,
+                             optional IDBTransactionMode mode = "readonly");
   void           close();
 
-  IDBObjectStore createObjectStore(DOMString name, optional IDBObjectStoreParameters options);
+  IDBObjectStore createObjectStore(DOMString name,
+                                   optional IDBObjectStoreParameters options);
   void           deleteObjectStore(DOMString name);
 
   // Event handlers:
-  attribute EventHandler       onabort;
-  attribute EventHandler       onclose;
-  attribute EventHandler       onerror;
-  attribute EventHandler       onversionchange;
+  attribute EventHandler onabort;
+  attribute EventHandler onclose;
+  attribute EventHandler onerror;
+  attribute EventHandler onversionchange;
 };
 
 dictionary IDBObjectStoreParameters {
@@ -2242,11 +2248,11 @@ interface represents an <a for=/>object store handle</a>.
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBObjectStore {
-  attribute DOMString      name;
-  readonly    attribute any            keyPath;
-  readonly    attribute DOMStringList  indexNames;
-  readonly    attribute IDBTransaction transaction;
-  readonly    attribute boolean        autoIncrement;
+           attribute DOMString      name;
+  readonly attribute any            keyPath;
+  readonly attribute DOMStringList  indexNames;
+  readonly attribute IDBTransaction transaction;
+  readonly attribute boolean        autoIncrement;
 
   IDBRequest put(any value, optional any key);
   IDBRequest add(any value, optional any key);
@@ -2258,12 +2264,16 @@ interface IDBObjectStore {
   IDBRequest getAllKeys(optional any query, [EnforceRange] optional unsigned long count);
   IDBRequest count(optional any query);
 
-  IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
-  IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
+  IDBRequest openCursor(optional any query,
+                        optional IDBCursorDirection direction = "next");
+  IDBRequest openKeyCursor(optional any query,
+                           optional IDBCursorDirection direction = "next");
 
   IDBIndex   index(DOMString name);
 
-  IDBIndex   createIndex(DOMString name, (DOMString or sequence&lt;DOMString&gt;) keyPath, optional IDBIndexParameters options);
+  IDBIndex   createIndex(DOMString name,
+                         (DOMString or sequence&lt;DOMString&gt;) keyPath,
+                         optional IDBIndexParameters options);
   void       deleteIndex(DOMString indexName);
 };
 
@@ -2381,14 +2391,14 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
 8. If <var>key</var> was given, run these substeps:
 
     1. Let <var>r</var> be the result of running the steps to <a>convert a value to a key</a> with <var>key</var>.
-        If this throws an exception, <a>rethrow</a> it.
+        If this throws an exception, <a lt=throw>rethrow</a> it.
 
     2. If <var>r</var> is invalid, <a>throw</a> a {{DataError}} exception.
 
     3. Let <var>key</var> be <var>r</var>.
 
 9. Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
-    throws an exception, <a>rethrow</a> the exception.
+    throws an exception, <a lt=throw>rethrow</a> the exception.
 
 10. If <var>store</var> uses <a>in-line keys</a>, run these substeps:
 
@@ -2396,7 +2406,7 @@ The <dfn method for=IDBObjectStore>put(<var>value</var>, <var>key</var>)</dfn> m
         <a>extract a key from a value using a key path</a> with
         <var>clone</var> and <var>store</var>'s <a
         for=object-store>key path</a>. If this throws an
-        exception, <a>rethrow</a> it.
+        exception, <a lt=throw>rethrow</a> it.
 
     2. If <var>kpk</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
@@ -2444,7 +2454,7 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
 
     1. Let <var>r</var> be the result of running the steps to
         <a>convert a value to a key</a> with <var>key</var>. If this
-        throws an exception, <a>rethrow</a> it.
+        throws an exception, <a lt=throw>rethrow</a> it.
 
     2. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
@@ -2452,7 +2462,7 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
     3. Let <var>key</var> be <var>r</var>.
 
 9. Let <var>clone</var> be <a>structured clone</a> of
-    <var>value</var>. If this throws an exception, <a>rethrow</a> the
+    <var>value</var>. If this throws an exception, <a lt=throw>rethrow</a> the
     exception.
 
 10. If <var>store</var> uses <a>in-line keys</a>, run these substeps:
@@ -2461,7 +2471,7 @@ The <dfn method for=IDBObjectStore>add(<var>value</var>, <var>key</var>)</dfn> m
         <a>extract a key from a value using a key path</a> with
         <var>clone</var> and <var>store</var>'s <a
         for=object-store>key path</a>. If this throws an
-        exception, <a>rethrow</a> it.
+        exception, <a lt=throw>rethrow</a> it.
 
     2. If <var>kpk</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
@@ -2500,7 +2510,7 @@ The <dfn method for=IDBObjectStore>delete(<var>query</var>)</dfn> method, when i
 6. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
     <var>null disallowed flag</var> set. If this throws an exception,
-    <a>rethrow</a> it.
+    <a lt=throw>rethrow</a> it.
 
 7. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2560,7 +2570,7 @@ The <dfn method for=IDBObjectStore>get(<var>query</var>)</dfn> method, when invo
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
     <var>null disallowed flag</var> set. If this throws an exception,
-    <a>rethrow</a> it.
+    <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
@@ -2601,7 +2611,7 @@ The <dfn method for=IDBObjectStore>getKey(<var>query</var>)</dfn> method, when i
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
     <var>null disallowed flag</var> set. If this throws an exception,
-    <a>rethrow</a> it.
+    <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
@@ -2634,7 +2644,7 @@ The <dfn method for=IDBObjectStore>getAll(<var>query</var>, <var>count</var>)</d
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2667,7 +2677,7 @@ The <dfn method for=IDBObjectStore>getAllKeys(<var>query</var>, <var>count</var>
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2702,7 +2712,7 @@ The <dfn method for=IDBObjectStore>count(<var>query</var>)</dfn> method, when in
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -2732,7 +2742,7 @@ The <dfn method for=IDBObjectStore>openCursor(<var>query</var>, <var>direction</
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Let <var>cursor</var> be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -2771,7 +2781,7 @@ The <dfn method for=IDBObjectStore>openKeyCursor(<var>query</var>, <var>directio
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Let <var>cursor</var> be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -2984,11 +2994,11 @@ The {{IDBIndex}} interface represents an <a>index handle</a>.
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBIndex {
-  attribute DOMString      name;
-  readonly    attribute IDBObjectStore objectStore;
-  readonly    attribute any            keyPath;
-  readonly    attribute boolean        multiEntry;
-  readonly    attribute boolean        unique;
+           attribute DOMString      name;
+  readonly attribute IDBObjectStore objectStore;
+  readonly attribute any            keyPath;
+  readonly attribute boolean        multiEntry;
+  readonly attribute boolean        unique;
 
   IDBRequest get(any query);
   IDBRequest getKey(any query);
@@ -2996,8 +3006,10 @@ interface IDBIndex {
   IDBRequest getAllKeys(optional any query, [EnforceRange] optional unsigned long count);
   IDBRequest count(optional any query);
 
-  IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
-  IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
+  IDBRequest openCursor(optional any query,
+                        optional IDBCursorDirection direction = "next");
+  IDBRequest openKeyCursor(optional any query,
+                           optional IDBCursorDirection direction = "next");
 };
 </pre>
 
@@ -3093,7 +3105,7 @@ The <dfn method for=IDBIndex>get(<var>query</var>)</dfn> method, when invoked, m
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
     <var>null disallowed flag</var> set. If this throws an exception,
-    <a>rethrow</a> it.
+    <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
       return the {{IDBRequest}} created by these steps. The steps
@@ -3135,7 +3147,7 @@ The <dfn method for=IDBIndex>getKey(<var>query</var>)</dfn> method, when invoked
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var> and
     <var>null disallowed flag</var> set. If this throws an exception,
-    <a>rethrow</a> it.
+    <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps
@@ -3166,7 +3178,7 @@ The <dfn method for=IDBIndex>getAll(<var>query</var>, <var>count</var>)</dfn> me
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps are
@@ -3200,7 +3212,7 @@ The <dfn method for=IDBIndex>getAllKeys(<var>query</var>, <var>count</var>)</dfn
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Run the <a>steps for asynchronously executing a request</a> and
     return the {{IDBRequest}} created by these steps. The steps
@@ -3235,7 +3247,7 @@ The <dfn method for=IDBIndex>count(<var>query</var>)</dfn> method, when invoked,
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 
 6. Run the <a>steps for asynchronously executing a request</a> and
@@ -3266,7 +3278,7 @@ The <dfn method for=IDBIndex>openCursor(<var>query</var>, <var>direction</var>)<
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 6. Let <var>cursor</var> be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -3305,7 +3317,7 @@ The <dfn method for=IDBIndex>openKeyCursor(<var>query</var>, <var>direction</var
 
 5. Let <var>range</var> be the result of running the steps to
     <a>convert a value to a key range</a> with <var>query</var>. If
-    this throws an exception, <a>rethrow</a> it.
+    this throws an exception, <a lt=throw>rethrow</a> it.
 
 7. Let <var>cursor</var> be a new <a>cursor</a> with <a
     for=cursor>transaction</a> set to
@@ -3339,16 +3351,19 @@ The {{IDBKeyRange}} interface represents a
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBKeyRange {
-  readonly    attribute any     lower;
-  readonly    attribute any     upper;
-  readonly    attribute boolean lowerOpen;
-  readonly    attribute boolean upperOpen;
+  readonly attribute any     lower;
+  readonly attribute any     upper;
+  readonly attribute boolean lowerOpen;
+  readonly attribute boolean upperOpen;
 
   // Static construction methods:
   static IDBKeyRange only(any value);
   static IDBKeyRange lowerBound(any lower, optional boolean open = false);
   static IDBKeyRange upperBound(any upper, optional boolean open = false);
-  static IDBKeyRange bound(any lower, any upper, optional boolean lowerOpen = false, optional boolean upperOpen = false);
+  static IDBKeyRange bound(any lower,
+                           any upper,
+                           optional boolean lowerOpen = false,
+                           optional boolean upperOpen = false);
 
   boolean includes(any key);
 };
@@ -3372,7 +3387,7 @@ The <dfn method for=IDBKeyRange>only(<var>value</var>)</dfn> method, when invoke
 
 1. Let <var>key</var> be the result of running the steps to <a>convert
     a value to a key</a> with <var>value</var>. If this throws an an
-    exception, <a>rethrow</a> it.
+    exception, <a lt=throw>rethrow</a> it.
 
 2. If <var>key</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3385,7 +3400,7 @@ The <dfn method for=IDBKeyRange>lowerBound(<var>lower</var>, <var>lowerOpen</var
 
 1. Let <var>lowerKey</var> be the result of running the steps to
     <a>convert a value to a key</a> with <var>lower</var>. If this
-    throws an an exception, <a>rethrow</a> it.
+    throws an an exception, <a lt=throw>rethrow</a> it.
 
 2. If <var>lowerKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3401,7 +3416,7 @@ The <dfn method for=IDBKeyRange>upperBound(<var>upper</var>, <var>upperOpen</var
 
 1. Let
     <var>upperKey</var> be the result of running the steps to <a>convert a value to a key</a> with <var>upper</var>.
-    If this throws an an exception, <a>rethrow</a> it.
+    If this throws an an exception, <a lt=throw>rethrow</a> it.
 
 2. If <var>upperKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3416,14 +3431,14 @@ The <dfn method for=IDBKeyRange>bound(<var>lower</var>, <var>upper</var>, <var>l
 
 1. Let <var>lowerKey</var> be the result of running the steps to
     <a>convert a value to a key</a> with <var>lower</var>. If this
-    throws an an exception, <a>rethrow</a> it.
+    throws an an exception, <a lt=throw>rethrow</a> it.
 
 2. If <var>lowerKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
 
 3. Let <var>upperKey</var> be the result of running the steps to
     <a>convert a value to a key</a> with <var>upper</var>. If this
-    throws an an exception, <a>rethrow</a> it.
+    throws an an exception, <a lt=throw>rethrow</a> it.
 
 4. If <var>upperKey</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3442,7 +3457,7 @@ The <dfn method for=IDBKeyRange>includes(<var>key</var>)</dfn> method, when invo
 
 1. Let <var>k</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>key</var>. If this throws an an
-    exception, <a>rethrow</a> it.
+    exception, <a lt=throw>rethrow</a> it.
 
 2. If <var>k</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3466,14 +3481,14 @@ the same time.
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBCursor {
-  readonly    attribute (IDBObjectStore or IDBIndex) source;
-  readonly    attribute IDBCursorDirection           direction;
-  readonly    attribute any                          key;
-  readonly    attribute any                          primaryKey;
+  readonly attribute (IDBObjectStore or IDBIndex) source;
+  readonly attribute IDBCursorDirection           direction;
+  readonly attribute any                          key;
+  readonly attribute any                          primaryKey;
 
-  void       advance([EnforceRange] unsigned long count);
-  void       continue(optional any key);
-  void       continuePrimaryKey(any key, any primaryKey);
+  void advance([EnforceRange] unsigned long count);
+  void continue(optional any key);
+  void continuePrimaryKey(any key, any primaryKey);
 
   IDBRequest update(any value);
   IDBRequest delete();
@@ -3539,7 +3554,7 @@ The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoke
     {{InvalidStateError}} exception.
 
 7. Let <var>clone</var> be <a>structured clone</a> of <var>value</var>. If this
-    throws an exception, <a>rethrow</a> the exception.
+    throws an exception, <a lt=throw>rethrow</a> the exception.
 
 8. If the <a>effective object store</a> of this cursor uses <a>in-line
     keys</a>, run these substeps:
@@ -3548,7 +3563,7 @@ The <dfn method for=IDBCursor>update(<var>value</var>)</dfn> method, when invoke
         <a>extract a key from a value using a key path</a> with
         <var>clone</var> and the <a for=object-store>key
         path</a> of the <a>effective object store</a>. If this throws
-        an exception, <a>rethrow</a> it.
+        an exception, <a lt=throw>rethrow</a> it.
 
     2. If <var>kpk</var> is failure, invalid, or not <a>equal to</a>
         the cursor's <a>effective key</a>, <a>throw</a> a
@@ -3630,7 +3645,7 @@ The <dfn method for=IDBCursor>continue(<var>key</var>)</dfn> method, when invoke
 
     1. Let <var>r</var> be the result of running the steps to
         <a>convert a value to a key</a> with <var>key</var>. If this
-        throws an exception, <a>rethrow</a> it.
+        throws an exception, <a lt=throw>rethrow</a> it.
 
     2. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
         exception.
@@ -3696,7 +3711,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 
 7. Let <var>r</var> be the result of running the steps to <a>convert a
     value to a key</a> with <var>key</var>. If this throws an
-    exception, <a>rethrow</a> it.
+    exception, <a lt=throw>rethrow</a> it.
 
 8. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3705,7 +3720,7 @@ The <dfn method for=IDBCursor>continuePrimaryKey(<var>key</var>, <var>primaryKey
 
 10. Let <var>r</var> be the result of running the steps to <a>convert
      a value to a key</a> with <var>primaryKey</var>. If this throws
-     an exception, <a>rethrow</a> it.
+     an exception, <a lt=throw>rethrow</a> it.
 
 11. If <var>r</var> is invalid, <a>throw</a> a {{DataError}}
     exception.
@@ -3796,7 +3811,7 @@ A <a>cursor</a> that has the <a>key only flag</a> unset implements the {{IDBCurs
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBCursorWithValue : IDBCursor {
-  readonly    attribute any value;
+  readonly attribute any value;
 };
 </pre>
 
@@ -3820,18 +3835,18 @@ does not modify the contents of the database.
 <pre class=idl>
 [Exposed=(Window,Worker)]
 interface IDBTransaction : EventTarget {
-  readonly    attribute DOMStringList      objectStoreNames;
-  readonly    attribute IDBTransactionMode mode;
-  readonly    attribute IDBDatabase        db;
-  readonly    attribute DOMException       error;
+  readonly attribute DOMStringList      objectStoreNames;
+  readonly attribute IDBTransactionMode mode;
+  readonly attribute IDBDatabase        db;
+  readonly attribute DOMException       error;
 
   IDBObjectStore objectStore(DOMString name);
   void           abort();
 
   // Event handlers:
-  attribute EventHandler       onabort;
-  attribute EventHandler       oncomplete;
-  attribute EventHandler       onerror;
+  attribute EventHandler onabort;
+  attribute EventHandler oncomplete;
+  attribute EventHandler onerror;
 };
 
 enum IDBTransactionMode {
@@ -5092,13 +5107,13 @@ or the steps may throw an exception.
 <li>
 Let <var>r</var> be the result of running the steps to
 <a>evaluate a key path on a value</a> with <var>value</var> and <var>keyPath</var>.
-If this throws an exception, <a>rethrow</a> it.
+If this throws an exception, <a lt=throw>rethrow</a> it.
 
 <li>If <var>r</var> is failure, return failure.
 <li>Let <var>key</var> be
 the result of running the steps to <a>convert a value to a key</a> with <var>r</var> if the <var>multiEntry flag</var> is unset, and
 the result of running the steps to <a>convert a value to a multiEntry key</a> with <var>r</var> otherwise.
-If this throws an exception, <a>rethrow</a> it.
+If this throws an exception, <a lt=throw>rethrow</a> it.
 <li>If <var>key</var> is invalid, return invalid.
 <li>Return <var>key</var>.
 </ol>
@@ -5332,7 +5347,7 @@ or an [<span>[</span>ViewedArrayBuffer]] internal slot</dt>
 <li>
 Let <var>octets</var> be the result of running the steps for
 <a>getting a copy of the bytes held by a buffer source</a> with <var>value</var>.
-If this throws an exception, <a>rethrow</a> it.
+If this throws an exception, <a lt=throw>rethrow</a> it.
 
 <li>Return a new <a for=/>key</a> with <a for=key>type</a> <i>binary</i> and <a for=key>value</a> <var>octets</var>.
 </ol>
