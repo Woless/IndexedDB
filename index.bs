@@ -877,7 +877,7 @@ The <dfn>lifetime</dfn> of a
     When a transaction is created its <a>active flag</a> is initially set.
 
 2. The implementation MUST allow <a>requests</a> to be <a
-    data-lt="place request">placed</a> against the transaction
+    for=request>placed</a> against the transaction
     whenever the <a>active flag</a> is set. This is the case even if
     the transaction has not yet been <a>started</a>. Until the transaction is <a>started</a> the implementation MUST
     NOT execute these requests; however, the implementation MUST keep
@@ -948,10 +948,10 @@ The <dfn>lifetime</dfn> of a
     implementation MUST <a>abort</a> the
     transaction.
 
-A <dfn data-lt="read-only transactions">read-only transaction</dfn> is
+A <dfn>read-only transaction</dfn> is
 a <a for=/>transaction</a> with <a>mode</a> "<code>readonly</code>".
 
-A <dfn data-lt="read/write transactions">read/write transaction</dfn>
+A <dfn>read/write transaction</dfn>
 is a <a for=/>transaction</a> with <a>mode</a> "<code>readwrite</code>".
 
 The following constraints define when a <a for=/>transaction</a> can be <a>started</a>:
@@ -1025,10 +1025,10 @@ The following constraints define when a <a for=/>transaction</a> can be <a>start
 </div>
 
 <!-- ============================================================ -->
-<h5 id=upgrade-transaction>Upgrade Transactions</h5>
+<h5 id=upgrade-transaction-construct>Upgrade Transactions</h5>
 <!-- ============================================================ -->
 
-An <dfn data-lt="upgrade transactions">upgrade transaction</dfn> is a
+An <dfn>upgrade transaction</dfn> is a
 <a for=/>transaction</a> with <a>mode</a> "<code>versionchange</code>".
 
 An <a>upgrade transaction</a> is automatically created when running
@@ -1064,38 +1064,36 @@ running.
 <h4 id=request-construct>Requests</h4>
 <!-- ============================================================ -->
 
-Each asynchronous operation on a <a>database</a> is done using a <dfn
-data-lt="requests">request</dfn>. Every request represents one
+Each asynchronous operation on a <a>database</a> is done using a <dfn>request</dfn>. Every request represents one
 operation.
+
+<div dfn-for=request>
 
 A <a>request</a> has a <dfn>done flag</dfn> which is initially unset.
 
-A <a>request</a> has a <dfn data-lt-noDefault
-data-lt="request.source">source</dfn> object.
+A <a>request</a> has a <dfn>source</dfn> object.
 
-A <a>request</a> has a <dfn data-lt="request.result">result</dfn> and
-an <dfn data-lt-noDefault data-lt="request.error">error</dfn>, neither
+A <a>request</a> has a <dfn>result</dfn> and
+an <dfn>error</dfn>, neither
 of which are accessible until the <a>done flag</a> is set.
 
-A <a>request</a> has a <dfn data-lt-noDefault
-data-lt="request.transaction">transaction</dfn> which is initially
-null. This will be set when a request is <dfn data-lt="place
-request">placed</dfn> against a <a for=/>transaction</a> using the <a>steps
+A <a>request</a> has a <dfn>transaction</dfn> which is initially
+null. This will be set when a request is <dfn>placed</dfn> against a <a for=/>transaction</a> using the <a>steps
 for asynchronously executing a request</a>.
 
 When a request is made, a new <a>request</a> is returned with its
 <a>done flag</a> unset. If a request completes successfully, the
-<a>done flag</a> is set, the <a data-lt="request.result">result</a> is
+<a>done flag</a> is set, the <a for=request>result</a> is
 set to the result of the request, and an event with type
 <code>success</code> is fired at the <a>request</a>.
 
 If an error occurs while performing the operation, the <a>done
-flag</a> is set, the <a data-lt="request.error">error</a> is set to
+flag</a> is set, the <a for=request>error</a> is set to
 the error, and an event with type <code>error</code> is fired at the
 request.
 
 A <a>request</a>'s <a>get the parent</a> algorithm
-returns the request's <a data-lt="request.transaction">transaction</a>.
+returns the request's <a for=request>transaction</a>.
 
 An <dfn>open request</dfn> is a special type of <a>request</a> used
 when opening a <a for=/>connection</a> or deleting a <a>database</a>. In
@@ -1103,10 +1101,10 @@ addition to <code>success</code> and <code>error</code> events,
 <a>blocked</a> and <a>upgradeneeded</a> may be fired at an <a>open
 request</a> to indicate progress.
 
-The <a data-lt="request.source">source</a> of an <a>open request</a>
+The <a for=request>source</a> of an <a>open request</a>
 is always null.
 
-The <a data-lt="request.transaction">transaction</a> of an <a>open
+The <a for=request>transaction</a> of an <a>open
 request</a> is null unless an <a>upgradeneeded</a> event has been
 fired.
 
@@ -1120,10 +1118,10 @@ An <a>open request</a>'s <a>get the parent</a> algorithm returns null.
   request</a> is used for both the <a>upgradeneeded</a> event and
   final result of the open operation itself. In both cases, the
   request's <a>done flag</a> will be unset then set again, and the <a
-  data-lt="request.result">result</a> may change.
+  for=request>result</a> may change.
 </aside>
 
-
+</div>
 
 <!-- ============================================================ -->
 <h4 id=range-construct>Key Range</h4>
@@ -1756,22 +1754,22 @@ enum IDBRequestReadyState {
 The {{IDBRequest/result}}
 attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
-getter must return the <a data-lt="request.result">result</a> of the
+getter must return the <a for=request>result</a> of the
 request, or undefined if the request.resulted in an error.
 
 The {{IDBRequest/error}}
 attribute's getter must <a>throw</a> an <a>InvalidStateError</a>
 exception if the <a>done flag</a> is unset. Otherwise, the attribute's
-getter must return the <a data-lt="request.error">error</a> of the
+getter must return the <a for=request>error</a> of the
 request, or null if no error occurred.
 
 The {{IDBRequest/source}}
 attribute's getter must return the <a
-data-lt="request.source">source</a> of the <a>request</a>, or null if
-no <a data-lt="request.source">source</a> is set.
+for=request>source</a> of the <a>request</a>, or null if
+no <a for=request>source</a> is set.
 
 The {{IDBRequest/transaction}} attribute's getter
-must return the <a data-lt="request.transaction">transaction</a> of
+must return the <a for=request>transaction</a> of
 the <a>request</a>. This property can be null for certain requests,
 such as for <a>request</a> returned from {{IDBFactory/open()}}.
 
@@ -1906,13 +1904,13 @@ The <dfn method for=IDBFactory>open(<var>name</var>, <var>version</var>)</dfn> m
         </aside>
 
     2. If <var>result</var> is an error, set the <a
-        data-lt="request.error">error</a> of <var>request</var> to
+        for=request>error</a> of <var>request</var> to
         <var>result</var> and dispatch an event at <var>request</var>.
         The event must use the <a>Event</a> interface and set the
         <code>type</code> attribute to "<code>error</code>". The event
         does bubble but is not cancelable.
 
-    3. Otherwise, set the <a data-lt="request.result">result</a> of
+    3. Otherwise, set the <a for=request>result</a> of
         <var>request</var> to <var>result</var> and dispatch an event
         at <var>request</var>. The event must use the <a>Event</a>
         interface and set the <code>type</code> attribute to
@@ -1952,13 +1950,13 @@ The <dfn method for=IDBFactory>deleteDatabase(<var>name</var>)</dfn> method, whe
         <var>name</var>, and <var>request</var>.
 
     2. If <var>result</var> is an error set the <a
-        data-lt="request.error">error</a> of <var>request</var> to
+        for=request>error</a> of <var>request</var> to
         <var>result</var> and dispatch an event at <var>request</var>.
         The event must use the <a>Event</a> interface and set the
         <code>type</code> attribute to "<code>error</code>". The event
         does bubble but is not cancelable.
 
-    3. Otherwise, set the <a data-lt="request.result">result</a> of
+    3. Otherwise, set the <a for=request>result</a> of
         <var>request</var> to undefined and <a>fire a version change
         event</a> named <code>success</code> at <a>request</a> with
         <var>result</var> and null.
@@ -3862,7 +3860,7 @@ if none.
 <aside class=note>
   If this <a for=/>transaction</a> was aborted due to a failed
   <a>request</a>, this will be the same as the <a>request</a>'s <a
-  data-lt="request.error">error</a>.
+  for=request>error</a>.
 
   If this <a for=/>transaction</a> was aborted due to an uncaught exception
   in a event handler, the error will be <a>AbortError</a>.
@@ -4186,8 +4184,8 @@ abort the <a>steps for asynchronously executing a request</a> for <var>request</
 <a>queue a task</a> to run these substeps:
 <ol>
 <li>Set the <a>done flag</a> on <var>request</var>.
-<li>Set the <a data-lt="request.result">result</a> of <var>request</var> to undefined.
-<li>Set the <a data-lt="request.error">error</a> of <var>request</var> to a newly created <a>AbortError</a> exception.
+<li>Set the <a for=request>result</a> of <var>request</var> to undefined.
+<li>Set the <a for=request>error</a> of <var>request</var> to a newly created <a>AbortError</a> exception.
 <li>
 Dispatch an event at <var>request</var>. The event must use
 the <a>Event</a> interface and have its <code>type</code> set to "<code>error</code>".
@@ -4230,7 +4228,7 @@ throw a <a>TransactionInactiveError</a> exception.
 
 <li>
 If <var>request</var> was not given, let <var>request</var> be a new <var>request</var> with
-<a data-lt="request.source">source</a> as <var>source</var>
+<a for=request>source</a> as <var>source</var>
 
 <li>
 Add <var>request</var> to the end of <var>transaction</var>'s <a>request list</a>.
@@ -4248,8 +4246,8 @@ Let <var>result</var> be the result of performing <var>operation</var>.
 <li>
 If <var>result</var> is an error, then revert all changes made by <var>operation</var>,
 set the <a>done flag</a> on <var>request</var>,
-set <a data-lt="request.result">result</a> of <var>request</var>
-to undefined and set the <a data-lt="request.error">error</a> on <var>request</var>
+set <a for=request>result</a> of <var>request</var>
+to undefined and set the <a for=request>error</a> on <var>request</var>
 to <var>result</var>.
 Finally <a>fire an error event</a> at <var>request</var>.
 <aside class=note>
@@ -4258,8 +4256,8 @@ This only reverts the changes done by this request, not any other changes made b
 
 <li>
 Otherwise, set the <a>done flag</a>
-on the <var>request</var>, set <a data-lt="request.result">result</a> of <var>request</var>
-to <var>result</var> set the <a data-lt="request.error">error</a> of <var>request</var> to undefined.
+on the <var>request</var>, set <a for=request>result</a> of <var>request</var>
+to <var>result</var> set the <a for=request>error</a> of <var>request</var> to undefined.
 Finally <a>fire a success event</a> at <var>request</var>.
 
 </ol>
@@ -4320,10 +4318,10 @@ Set the version of <var>database</var> to <var>version</var>. This change is con
 <a>Queue a task</a> to run the following steps:
 <ol>
 <li>
-Set <var>request</var>'s <a data-lt="request.result">result</a> to <var>connection</var>.
+Set <var>request</var>'s <a for=request>result</a> to <var>connection</var>.
 
 <li>
-Set <var>request</var>'s <a data-lt="request.transaction">transaction</a> to <var>transaction</var>.
+Set <var>request</var>'s <a for=request>transaction</a> to <var>transaction</var>.
 
 <li>
 Set the <a>done flag</a> on the <a>request</a>.
@@ -4347,7 +4345,7 @@ If <var>transaction</var> is aborted for any reason, the <a>steps for aborting a
 
 <li>
 When <var>transaction</var> is finished,
-immediately set <var>request</var>'s <a data-lt="request.transaction">transaction</a> to null.
+immediately set <var>request</var>'s <a for=request>transaction</a> to null.
 
 This MUST be done in the same task as the task firing the
 <code>complete</code> or <code>abort</code> event, but after those events has been fired.
@@ -4455,7 +4453,7 @@ the implementation MUST run the following steps:
 
 <ol class=algorithm>
 <li>
-Set <var>transaction</var> to the <a for=/>transaction</a> associated with the <a data-lt="request.source">source</a>.
+Set <var>transaction</var> to the <a for=/>transaction</a> associated with the <a for=request>source</a>.
 
 <li>
 Set the <a>active flag</a> of <var>transaction</var>.
@@ -4485,7 +4483,7 @@ the implementation MUST run the following steps:
 
 <ol class=algorithm>
 <li>
-Set <var>transaction</var> to the <a for=/>transaction</a> associated with the <a data-lt="request.source">source</a>.
+Set <var>transaction</var> to the <a for=/>transaction</a> associated with the <a for=request>source</a>.
 
 <li>
 Set the <a>active flag</a> of <var>transaction</var>.
@@ -4506,13 +4504,13 @@ This is done even if the event's <a>canceled flag</a> is not set.
 <aside class=note>
 This means that if an error event is fired and any of the event handlers throw an exception,
 <var>transaction</var>'s <code>error</code> property is set to an <a>AbortError</a> exception rather than <var>request</var>'s
-<a data-lt="request.error">error</a>, even if <code>preventDefault()</code> is never called.
+<a for=request>error</a>, even if <code>preventDefault()</code> is never called.
 </aside>
 
 <li>
 If the event's <a>canceled flag</a> is not set,
 run the <a>steps for aborting a transaction</a>
-using <var>transaction</var> and <a>request</a>'s <a data-lt="request.error">error</a>.
+using <var>transaction</var> and <a>request</a>'s <a for=request>error</a>.
 
 </ol>
 
