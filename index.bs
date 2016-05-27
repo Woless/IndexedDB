@@ -870,7 +870,7 @@ this usage pattern is not generally recommended as it can lead to a
 bad user experience.
 </aside>
 
-The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
+The <dfn>lifetime</dfn> of a
 <a for=/>transaction</a> is as follows:
 
 1. A transaction is <dfn data-lt="transaction create">created</dfn> with a <a>scope</a> and a <a>mode</a>.
@@ -909,8 +909,7 @@ The <dfn data-lt="transaction lifetime">lifetime</dfn> of a
     affecting what resulting data is stored in the database.
 
 5. A transaction can be <dfn lt="abort|aborting|aborted">aborted</dfn>
-    at any time before it is <a data-lt="transaction
-    finish">finished</a>, even if the transaction isn't currently
+    at any time before it is <a>finished</a>, even if the transaction isn't currently
     <a>active</a> or hasn't yet <a data-lt="transaction
     start">started</a>. When a transaction is aborted the
     implementation MUST undo (roll back) any changes that were made to
@@ -2203,7 +2202,7 @@ The <dfn method for=IDBDatabase>transaction(<var>storeNames</var>, <var>mode</va
 9. Return an {{IDBTransaction}} object representing <var>transaction</var>.
 
 <aside class=note>
-  The created <var>transaction</var> will follow the <a>transaction lifetime</a> rules.
+  The created <var>transaction</var> will follow the <a for=transaction>lifetime</a> rules.
 </aside>
 
 
@@ -2272,13 +2271,13 @@ The {{IDBObjectStore/name}} attribute's getter must return this <a for=/>object 
 handle</a>'s <a for=object-store>name</a>.
 
 <aside class=note>
-  As long as the <a for=/>transaction</a> has not <a data-lt="transaction
-  finish">finished</a>, this is the same as the associated <a for=/>object
-  store</a>'s <a for=object-store>name</a>.
+  As long as the <a for=/>transaction</a> has not <a>finished</a>,
+  this is the same as the associated <a for=/>object store</a>'s <a
+  for=object-store>name</a>.
 
-  Once the <a for=/>transaction</a> has <a data-lt="transaction
-  finish">finished</a>, this attribute will not reflect changes made
-  with a later <a>upgrade transaction</a>.
+  Once the <a for=/>transaction</a> has <a>finished</a>, this
+  attribute will not reflect changes made with a later <a>upgrade
+  transaction</a>.
 </aside>
 
 
@@ -2334,12 +2333,10 @@ for=index>names</a> of <a for=/>indexes</a> in this <a for=/>object
 store handle</a>'s <a>index set</a>.
 
 <aside class=note>
-  As long as the <a for=/>transaction</a> has not <a data-lt="transaction
-  finish">finished</a>, this is the same as the associated <a for=/>object
+  As long as the <a for=/>transaction</a> has not <a>finished</a>, this is the same as the associated <a for=/>object
   store</a>'s list of <a for=/>index</a> <a for=index>names</a>.
 
-  Once the <a for=/>transaction</a> has <a data-lt="transaction
-  finish">finished</a>, this attribute will not reflect changes made
+  Once the <a for=/>transaction</a> has <a>finished</a>, this attribute will not reflect changes made
   with a later <a>upgrade transaction</a>.
 </aside>
 
@@ -2909,8 +2906,7 @@ The <dfn method for=IDBObjectStore>index(<var>name</var>)</dfn> method, when inv
 3. If <var>store</var> has been deleted, <a>throw</a> an
     <a>InvalidStateError</a> exception.
 
-4. If <var>transaction</var> has <a data-lt="transaction
-    finish">finished</a>, <a>throw</a> an <a>InvalidStateError</a>
+4. If <var>transaction</var> has <a>finished</a>, <a>throw</a> an <a>InvalidStateError</a>
     exception.
 
 5. Let <var>index</var> be the <a for=/>index</a> <a
@@ -3005,12 +3001,10 @@ attribute's getter must return this <a>index handle</a>'s <a
 for=index>name</a>.
 
 <aside class=note>
-  As long as the <a for=/>transaction</a> has not <a data-lt="transaction
-  finish">finished</a>, this is the same as the associated
+  As long as the <a for=/>transaction</a> has not <a>finished</a>, this is the same as the associated
   <a for=/>index</a>'s <a for=index>name</a>.
 
-  Once the <a for=/>transaction</a> has <a data-lt="transaction
-  finish">finished</a>, this attribute will not reflect changes made
+  Once the <a for=/>transaction</a> has <a>finished</a>, this attribute will not reflect changes made
   with a later <a>upgrade transaction</a>.
 </aside>
 
@@ -3890,8 +3884,7 @@ if none.
 
 The <dfn method for=IDBTransaction>objectStore(<var>name</var>)</dfn> method, when invoked, must run these steps:
 
-1. If <var>transaction</var> has <a data-lt="transaction
-    finish">finished</a>, <a>throw</a> an <a>InvalidStateError</a>
+1. If <var>transaction</var> has <a>finished</a>, <a>throw</a> an <a>InvalidStateError</a>
     exception.
 
 2. Let <var>store</var> be the <a for=/>object store</a> <a
